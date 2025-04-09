@@ -1,0 +1,147 @@
+/* Header Tools Container */
+.header-tools {
+    display: flex;
+    align-items: center;
+    gap: 1vh;
+    margin-right: 1.5vh;
+    position: relative;
+    z-index: 200;
+}
+
+/* Ensure the search container doesn't overlap with header tools */
+.legendary-search-container {
+    margin-right: auto;
+    max-width: calc(100% - 24vh); /* Adjusted for more tool buttons */
+}
+
+/* Make buttons more consistent */
+.notification-bell,
+.voice-nav-btn, 
+.theme-toggle,
+.lang-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 4.2vh;
+    height: 4.2vh;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(var(--border-rgb), 0.1);
+}
+
+.notification-bell:hover,
+.voice-nav-btn:hover,
+.theme-toggle:hover,
+.lang-toggle:hover {
+    background: rgba(var(--primary-rgb), 0.1);
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.15);
+}
+
+/* Add active state for better feedback */
+.notification-bell:active,
+.voice-nav-btn:active,
+.theme-toggle:active,
+.lang-toggle:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Badge styles for notification */
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff3366;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(255, 51, 102, 0.3);
+}
+
+/* Tooltips for buttons */
+.header-tool-tooltip {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.notification-bell:hover .header-tool-tooltip,
+.voice-nav-btn:hover .header-tool-tooltip,
+.theme-toggle:hover .header-tool-tooltip,
+.lang-toggle:hover .header-tool-tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: -35px;
+}
+
+/* Group language and theme toggles */
+.visual-toggles-group {
+    display: flex;
+    gap: 0.6vh;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-tools {
+        gap: 0.6vh;
+    }
+    
+    .legendary-search-container {
+        max-width: calc(100% - 22vh);
+    }
+    
+    .notification-bell,
+    .voice-nav-btn, 
+    .theme-toggle,
+    .lang-toggle {
+        font-size: 1rem;
+        width: 3.8vh;
+        height: 3.8vh;
+    }
+    
+    .header-tool-tooltip {
+        display: none; /* Hide tooltips on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .header-tools {
+        gap: 0.4vh;
+    }
+    
+    .legendary-search-container {
+        max-width: calc(100% - 18vh);
+    }
+    
+    .notification-bell,
+    .voice-nav-btn, 
+    .theme-toggle,
+    .lang-toggle {
+        width: 3.5vh;
+        height: 3.5vh;
+    }
+}
