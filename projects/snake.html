@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legendary Snake</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Press Start 2P', cursive;
+            color: #e0e0e0;
+            overflow: hidden; /* Prevent scrollbars */
+        }
+        canvas {
+            border: 3px solid #00ffff; /* Cyan border */
+            background-color: rgba(0, 0, 0, 0.2); /* Darker, slightly transparent */
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            image-rendering: pixelated; /* Keep pixels sharp */
+        }
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            width: 400px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .score-box {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        .score-box span {
+            color: #00ff00; /* Green score */
+            font-weight: bold;
+        }
+        .controls {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            font-size: 10px;
+            width: 380px;
+        }
+        .controls p {
+            margin-bottom: 8px;
+        }
+        .control-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+        button {
+            background: linear-gradient(180deg, #00ffff, #00b3b3);
+            border: 1px solid #008080;
+            padding: 8px 15px;
+            margin: 0 4px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: #1a1a2e;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
+        }
+        button:hover {
+            background: linear-gradient(180deg, #33ffff, #00cccc);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 255, 255, 0.3);
+        }
+        button:active {
+            transform: translateY(0px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+        h1 {
+            color: #00ffff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+            font-size: 28px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px #00ffff, 0 0 15px #00ffff; }
+            50% { text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; }
+            100% { text-shadow: 0 0 10px #00ffff, 0 0 15px #00ffff; }
+        }
+
+        /* Game Over Styles */
+        .game-over-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ff4d4d; /* Red */
+            font-size: 24px;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            z-index: 10;
+        }
+        .game-over-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .game-over-overlay h2 {
+             text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff0000;
+             margin-bottom: 15px;
+        }
+        .game-over-overlay p {
+            font-size: 14px;
+            color: #e0e0e0;
+            margin-bottom: 25px;
+        }
+        /* Particle Canvas */
+         #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none; /* Allow clicks through */
+            z-index: 5; /* Behind overlay, above game */
+        }
+    </style>
+</head>
+<body>
+    <h1>Legendary Snake</h1>
+
+    <div class="score-container">
+        <div class="score-box">SCORE: <span id="score">0</span></div>
+        <div class="score-box">HI-SCORE: <span id="highScore">0</span></div>
+    </div>
+
+    <div style="position: relative;">
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <canvas id="particleCanvas" width="400" height="400"></canvas>
+         <div id="gameOverOverlay" class="game-over-overlay">
+            <h2>GAME OVER!</h2>
+            <p>Press RESTART to try again!</p>
+        </div>
+    </div>
+
+
+    <div class="controls">
+        <p>USE ARROW KEYS OR BUTTONS</p>
+        <div class="control-row">
+            <button id="upBtn">UP</button>
+        </div>
+        <div class="control-row">
+            <button id="leftBtn">LEFT</button>
+            <button id="rightBtn">RIGHT</button>
+        </div>
+        <div class="control-row">
+            <button id="downBtn">DOWN</button>
+        </div>
+    </div>
+
+    <button id="restartBtn">RESTART GAME</button>
+
+    <script>
+        // Canvas setup
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const particleCanvas = document.getElementById('particleCanvas');
+        const particleCtx = particleCanvas.getContext('2d');
+        const gameOverOverlay = document.getElementById('gameOverOverlay');
+
+        // Game variables
+        const gridSize = 20;
+        const tileCount = canvas.width / gridSize;
+        let baseSpeed = 8;
+        let speed = baseSpeed;
+        let speedMultiplier = 1; // For power-ups
+
+        // Snake variables
+        let snakeX = Math.floor(tileCount / 2) * gridSize;
+        let snakeY = Math.floor(tileCount / 2) * gridSize;
+        let velocityX = 0;
+        let velocityY = 0;
+        let snakeParts = [];
+        let tailLength = 2;
+        let canChangeDirection = true; // Prevent rapid 180 turns
+
+        // Food variables
+        let foodX = getRandomGridPosition();
+        let foodY = getRandomGridPosition();
+
+        // Power-up variables
+        let powerUp = null; // { x, y, type, duration, startTime }
+        const powerUpTypes = ['SPEED_BOOST', 'SLOW_MOTION', 'SCORE_MULTIPLIER'];
+        let powerUpSpawnChance = 0.1; // 10% chance per food eaten
+        let powerUpActive = false;
+
+        // Score variables
+        let score = 0;
+        let scoreMultiplier = 1; // For power-ups
+        let highScore = localStorage.getItem('legendarySnakeHighScore') || 0;
+        document.getElementById('highScore').textContent = highScore;
+
+        // Game state
+        let gameOver = false;
+        let gameLoopTimeout;
+
+        // Particle system
+        let particles = [];
+
+        // --- Helper Functions ---
+        function getRandomGridPosition() {
+            return Math.floor(Math.random() * tileCount) * gridSize;
+        }
+
+        function resetGameVariables() {
+            gameOver = false;
+            velocityX = 0;
+            velocityY = 0;
+            snakeX = Math.floor(tileCount / 2) * gridSize;
+            snakeY = Math.floor(tileCount / 2) * gridSize;
+            snakeParts = [];
+            tailLength = 2;
+            score = 0;
+            scoreMultiplier = 1;
+            speedMultiplier = 1;
+            updateSpeed();
+            document.getElementById('score').textContent = score;
+            foodX = getRandomGridPosition();
+            foodY = getRandomGridPosition();
+            powerUp = null;
+            powerUpActive = false;
+            particles = []; // Clear particles
+            gameOverOverlay.classList.remove('show');
+            canvas.style.filter = 'none'; // Remove effects
+        }
+
+        function updateSpeed() {
+            // Speed increases logarithmically with score, capped
+             const scoreBasedIncrease = Math.log1p(score / 5); // Slower increase
+             speed = Math.min(baseSpeed + scoreBasedIncrease, 20) * speedMultiplier;
+        }
+
+        // --- Power-up Logic ---
+        function spawnPowerUp() {
+            if (powerUp || Math.random() > powerUpSpawnChance) return;
+
+            const type = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
+            let newX, newY;
+            do {
+                newX = getRandomGridPosition();
+                newY = getRandomGridPosition();
+             } while ((newX === foodX && newY === foodY) || snakeParts.some(p => p.x === newX && p.y === newY)); // Avoid food/snake overlap
+
+            powerUp = {
+                x: newX,
+                y: newY,
+                type: type,
+                duration: 5000, // 5 seconds
+                startTime: 0 // Set when collected
+            };
+        }
+
+        function collectPowerUp() {
+            if (!powerUp || snakeX !== powerUp.x || snakeY !== powerUp.y) return;
+
+            powerUp.startTime = Date.now();
+            powerUpActive = true;
+            activatePowerUpEffect(powerUp.type);
+            createBurstParticles(powerUp.x + gridSize / 2, powerUp.y + gridSize / 2, getPowerUpColor(powerUp.type), 30);
+            powerUp = null; // Remove from board
+        }
+
+        function activatePowerUpEffect(type) {
+            deactivatePowerUpEffect(); // Deactivate any existing effect first
+            switch (type) {
+                case 'SPEED_BOOST':
+                    speedMultiplier = 1.5;
+                    break;
+                case 'SLOW_MOTION':
+                    speedMultiplier = 0.6;
+                    break;
+                case 'SCORE_MULTIPLIER':
+                    scoreMultiplier = 3;
+                    break;
+            }
+            updateSpeed();
+        }
+
+        function deactivatePowerUpEffect() {
+            speedMultiplier = 1;
+            scoreMultiplier = 1;
+            updateSpeed();
+            powerUpActive = false;
+        }
+
+        function checkPowerUpTimer() {
+            if (powerUpActive && powerUp && powerUp.startTime) {
+                 if (Date.now() - powerUp.startTime > powerUp.duration) {
+                    deactivatePowerUpEffect();
+                    powerUp = null; // Ensure it's fully cleared
+                 }
+            } else if (powerUpActive) { // Clean up if state is inconsistent
+                deactivatePowerUpEffect();
+            }
+        }
+
+        function getPowerUpColor(type) {
+            switch (type) {
+                case 'SPEED_BOOST': return '#ffff00'; // Yellow
+                case 'SLOW_MOTION': return '#00ffff'; // Cyan
+                case 'SCORE_MULTIPLIER': return '#ff00ff'; // Magenta
+                default: return '#ffffff';
+            }
+        }
+
+        // --- Particle System ---
+        function createParticle(x, y, color, life) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 3 + 1;
+            return {
+                x, y,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                life: life || Math.random() * 30 + 30, // frames
+                color: color || '#e84545',
+                size: Math.random() * 3 + 1
+            };
+        }
+
+        function createBurstParticles(x, y, color, count) {
+            for (let i = 0; i < count; i++) {
+                particles.push(createParticle(x, y, color));
+            }
+        }
+
+        function updateParticles() {
+            particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life--;
+                p.vx *= 0.98; // friction
+                p.vy *= 0.98;
+
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                } else {
+                    particleCtx.fillStyle = p.color;
+                    particleCtx.globalAlpha = p.life / 60; // Fade out
+                    particleCtx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+                    particleCtx.globalAlpha = 1.0;
+                }
+            }
+        }
+
+        // --- Game Loop Functions ---
+        function gameLoop() {
+            if (gameOver) {
+                showGameOverScreen();
+                return;
+            }
+
+            canChangeDirection = true; // Allow direction change at the start of a tick
+            checkPowerUpTimer();
+            updateSnake();
+            if (gameOver) { // Check again after updateSnake in case of collision
+                 showGameOverScreen();
+                 return;
+            }
+            drawGame();
+            updateParticles(); // Update and draw particles each frame
+
+            clearTimeout(gameLoopTimeout); // Clear previous timeout
+            gameLoopTimeout = setTimeout(gameLoop, 1000 / speed);
+        }
+
+        function updateSnake() {
+            snakeX += velocityX * gridSize;
+            snakeY += velocityY * gridSize;
+
+            // Wall collision
+            if (snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height) {
+                triggerGameOver();
+                return;
+            }
+
+            // Self collision
+            for (let i = 0; i < snakeParts.length; i++) {
+                if (snakeX === snakeParts[i].x && snakeY === snakeParts[i].y) {
+                    triggerGameOver();
+                    return;
+                }
+            }
+
+            // Add new head segment
+            snakeParts.unshift({ x: snakeX, y: snakeY });
+
+            // Food collision
+            if (snakeX === foodX && snakeY === foodY) {
+                tailLength++;
+                score += (10 * scoreMultiplier); // Base score * multiplier
+                document.getElementById('score').textContent = score;
+                createBurstParticles(foodX + gridSize / 2, foodY + gridSize / 2, '#ff5733', 20); // Food eat particles
+
+                // Update high score
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem('legendarySnakeHighScore', highScore);
+                    document.getElementById('highScore').textContent = highScore;
+                }
+
+                // Spawn new food (ensure it doesn't spawn on snake or powerup)
+                let newFoodX, newFoodY;
+                do {
+                    newFoodX = getRandomGridPosition();
+                    newFoodY = getRandomGridPosition();
+                } while ((powerUp && newFoodX === powerUp.x && newFoodY === powerUp.y) || snakeParts.some(p => p.x === newFoodX && p.y === newFoodY));
+                foodX = newFoodX;
+                foodY = newFoodY;
+
+                // Update speed and try spawning power-up
+                updateSpeed();
+                spawnPowerUp();
+            } else {
+                 // Remove tail segment if no food eaten unless snake is growing
+                 if (snakeParts.length > tailLength) {
+                    snakeParts.pop();
+                 }
+            }
+
+            // Power-up collision
+             collectPowerUp();
+        }
+
+         function triggerGameOver() {
+            gameOver = true;
+            createBurstParticles(snakeX + gridSize/2, snakeY + gridSize/2, '#ff4d4d', 50); // Death particles
+            // Simple screen shake effect
+             document.body.style.animation = 'shake 0.5s linear';
+             setTimeout(() => { document.body.style.animation = 'none'; }, 500);
+             // Optional: Add a red flash effect
+             canvas.style.filter = 'brightness(1.5) sepia(1) hue-rotate(-50deg)';
+         }
+
+         function showGameOverScreen() {
+             clearTimeout(gameLoopTimeout); // Stop the game loop
+             updateParticles(); // Draw final particle state
+             gameOverOverlay.classList.add('show');
+         }
+
+        // Draw everything
+        function drawGame() {
+            // Clear canvas
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; // Slightly transparent background
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw grid (subtle)
+            ctx.strokeStyle = 'rgba(0, 255, 255, 0.05)'; // Very faint cyan grid
+            for (let i = 1; i < tileCount; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * gridSize, 0);
+                ctx.lineTo(i * gridSize, canvas.height);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(0, i * gridSize);
+                ctx.lineTo(canvas.width, i * gridSize);
+                ctx.stroke();
+            }
+
+            // Draw snake
+            for (let i = 0; i < snakeParts.length; i++) {
+                const part = snakeParts[i];
+                let R, G, B;
+                 // Gradient effect along the snake's body
+                 const t = i / Math.max(1, snakeParts.length -1); // Normalize position [0, 1]
+                 R = Math.round(0 + t * (0 - 0)); // Start: Cyan (0, 255, 255) End: Darker Cyan (0, 180, 180)
+                 G = Math.round(255 + t * (180 - 255));
+                 B = Math.round(255 + t * (180 - 255));
+
+                ctx.fillStyle = `rgb(${R}, ${G}, ${B})`;
+
+                if (i === 0) { // Head - Make it distinct
+                    ctx.fillStyle = '#ffffff'; // White head
+                    ctx.shadowColor = '#ffffff';
+                    ctx.shadowBlur = 10;
+                } else {
+                     ctx.shadowBlur = 0;
+                }
+                // Draw slightly rounded rects
+                ctx.beginPath();
+                ctx.roundRect(part.x + 1, part.y + 1, gridSize - 2, gridSize - 2, 3); // Use roundRect if available
+                ctx.fill();
+                ctx.shadowBlur = 0; // Reset shadow for next part
+            }
+
+            // Draw food (pulsing effect)
+            const pulseFactor = 0.8 + Math.sin(Date.now() / 200) * 0.2; // Value between 0.6 and 1.0
+            const foodSize = (gridSize - 4) * pulseFactor;
+            const foodOffset = (gridSize - foodSize) / 2;
+            ctx.fillStyle = '#ff5733'; // Orange-Red food
+            ctx.shadowColor = '#ff5733';
+            ctx.shadowBlur = 15;
+            ctx.beginPath();
+            ctx.roundRect(foodX + foodOffset, foodY + foodOffset, foodSize, foodSize, 5);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Draw Power-up
+            if (powerUp && !powerUpActive) { // Only draw if not collected yet
+                const powerUpColor = getPowerUpColor(powerUp.type);
+                const powerUpPulse = 0.8 + Math.sin(Date.now() / 150 + Math.PI) * 0.2; // Faster pulse, phase shifted
+                const powerUpSize = (gridSize - 6) * powerUpPulse;
+                const powerUpOffset = (gridSize - powerUpSize) / 2;
+                ctx.fillStyle = powerUpColor;
+                ctx.shadowColor = powerUpColor;
+                ctx.shadowBlur = 20;
+                 // Draw as a star or different shape
+                 drawStar(ctx, powerUp.x + gridSize / 2, powerUp.y + gridSize / 2, 5, powerUpSize / 2, powerUpSize / 4);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        // Helper to draw a star shape for powerups
+        function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius) {
+            let rot = Math.PI / 2 * 3;
+            let x = cx;
+            let y = cy;
+            let step = Math.PI / spikes;
+
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - outerRadius)
+            for (let i = 0; i < spikes; i++) {
+                x = cx + Math.cos(rot) * outerRadius;
+                y = cy + Math.sin(rot) * outerRadius;
+                ctx.lineTo(x, y)
+                rot += step;
+
+                x = cx + Math.cos(rot) * innerRadius;
+                y = cy + Math.sin(rot) * innerRadius;
+                ctx.lineTo(x, y)
+                rot += step;
+            }
+            ctx.lineTo(cx, cy - outerRadius);
+            ctx.closePath();
+        }
+
+
+        // Input handling
+        function changeDirection(e) {
+            if (!canChangeDirection) return; // Prevent changing direction multiple times per tick
+
+            // Prevent arrow keys from scrolling the page
+            if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+                e.preventDefault();
+            }
+
+            const keyPressed = e.key;
+            const goingUp = velocityY === -1;
+            const goingDown = velocityY === 1;
+            const goingLeft = velocityX === -1;
+            const goingRight = velocityX === 1;
+
+            if (keyPressed === "ArrowUp" && !goingDown) {
+                velocityX = 0; velocityY = -1; canChangeDirection = false;
+            } else if (keyPressed === "ArrowDown" && !goingUp) {
+                velocityX = 0; velocityY = 1; canChangeDirection = false;
+            } else if (keyPressed === "ArrowLeft" && !goingRight) {
+                velocityX = -1; velocityY = 0; canChangeDirection = false;
+            } else if (keyPressed === "ArrowRight" && !goingLeft) {
+                velocityX = 1; velocityY = 0; canChangeDirection = false;
+            }
+        }
+
+        // Button controls
+        function handleButtonPress(newVx, newVy) {
+             if (!canChangeDirection) return;
+
+             const goingUp = velocityY === -1;
+             const goingDown = velocityY === 1;
+             const goingLeft = velocityX === -1;
+             const goingRight = velocityX === 1;
+
+             if (newVy === -1 && !goingDown) { velocityX = 0; velocityY = -1; canChangeDirection = false; }
+             else if (newVy === 1 && !goingUp) { velocityX = 0; velocityY = 1; canChangeDirection = false; }
+             else if (newVx === -1 && !goingRight) { velocityX = -1; velocityY = 0; canChangeDirection = false; }
+             else if (newVx === 1 && !goingLeft) { velocityX = 1; velocityY = 0; canChangeDirection = false; }
+        }
+
+        document.getElementById('upBtn').addEventListener('click', () => handleButtonPress(0, -1));
+        document.getElementById('downBtn').addEventListener('click', () => handleButtonPress(0, 1));
+        document.getElementById('leftBtn').addEventListener('click', () => handleButtonPress(-1, 0));
+        document.getElementById('rightBtn').addEventListener('click', () => handleButtonPress(1, 0));
+
+        // Restart game
+        document.getElementById('restartBtn').addEventListener('click', () => {
+             resetGameVariables();
+             startGame(); // Start the game loop again
+        });
+
+        // Add keyboard event listener
+        document.addEventListener('keydown', changeDirection);
+
+        // Start game function
+        function startGame() {
+             // Initial direction if not moving (prevents waiting for first key press)
+             if (velocityX === 0 && velocityY === 0) {
+                 velocityX = 1; // Start moving right
+                 velocityY = 0;
+             }
+             resetGameVariables(); // Reset state before starting
+             velocityX = 1; velocityY = 0; // Ensure initial direction after reset
+             gameLoop();
+        }
+
+         // Add CSS for shake animation
+         const styleSheet = document.createElement("style");
+         styleSheet.type = "text/css";
+         styleSheet.innerText = `
+             @keyframes shake {
+                 0%, 100% { transform: translateX(0); }
+                 25% { transform: translateX(-5px); }
+                 50% { transform: translateX(5px); }
+                 75% { transform: translateX(-3px); }
+             }
+         `;
+         document.head.appendChild(styleSheet);
+
+        // Start game on load
+        window.onload = startGame;
+    </script>
+            <script>
+                document.addEventListener("visibilitychange", function() {
+                    if (document.hidden) {
+                        document.body.innerHTML = `
+            <style>
+              body { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Poppins', sans-serif; text-align: center; }
+              .overlay {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                background: radial-gradient(circle, #ff0000, #8b0000);
+                animation: pulse 1.5s infinite alternate;
+              }
+              @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.02); } }
+              h1 { font-size: 3rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
+              p { font-size: 1.2rem; max-width: 80%; margin: auto; }
+              .error-icon { font-size: 5rem; color: #fff; animation: blink 0.8s infinite alternate; }
+              @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
+            </style>
+            <div class="overlay">
+              <div>
+                <div class="error-icon">🚫</div>
+                <h1>Tab Change Detected</h1>
+                <p>My system detected Tab Change Attempt. Access has been blocked.<br>Refresh the page to unblock.</p>
+              </div>
+            </div>
+            `;
+                    }
+                });
+                document.addEventListener("contextmenu", (e) => e.preventDefault());
+                document.addEventListener("keydown", (e) => {
+                    const forbiddenKeys = ["u", "s", "c", "p", "x", "a", "v"];
+                    if (e.ctrlKey && forbiddenKeys.includes(e.key.toLowerCase())) {
+                        e.preventDefault();
+                    }
+                    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === "I")) {
+                        e.preventDefault();
+                    }
+                });
+                ["copy", "cut", "paste", "dragstart"].forEach((evt) => document.addEventListener(evt, (e) => e.preventDefault()));
+                setInterval(() => {
+                    if (window.outerWidth - window.innerWidth > 20 || window.outerHeight - window.innerHeight > 200) {
+                        document.body.innerHTML = `
+            <style>
+              body { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Poppins', sans-serif; text-align: center; }
+              .overlay {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                background: radial-gradient(circle, #ff0000, #8b0000);
+                animation: pulse 1.5s infinite alternate;
+              }
+              @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.02); } }
+              h1 { font-size: 3rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
+              p { font-size: 1.2rem; max-width: 80%; margin: auto; }
+              .error-icon { font-size: 5rem; color: #fff; animation: blink 0.8s infinite alternate; }
+              @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
+            </style>
+            <div class="overlay">
+              <div>
+                <div class="error-icon">🚫</div>
+                <h1>Security Violation Detected</h1>
+                <p>Our system detected an unauthorized attempt. Access has been locked.<br>Close all developer tools and refresh the page.</p>
+              </div>
+            </div>
+            `;
+                    }
+                }, 500);
+                document.addEventListener("DOMContentLoaded", () => {
+                    const tables = document.querySelectorAll("table");
+                    tables.forEach((table) => {
+                        const cells = table.querySelectorAll("td");
+                        cells.forEach((cell, index) => {
+                            cell.style.transition = "transform 0.3s ease, background 0.3s ease";
+                            cell.addEventListener("mouseenter", () => {
+                                cell.style.transform = "scale(1.1) rotateY(5deg)";
+                                cell.style.background = "rgba(255, 165, 0, 0.7)";
+                            });
+                            cell.addEventListener("mouseleave", () => {
+                                cell.style.transform = "scale(1) rotateY(0deg)";
+                                cell.style.background = "";
+                            });
+                        });
+                    });
+                });
+                const tables = document.querySelectorAll("table");
+                tables.forEach((table) => {
+                    const cells = table.querySelectorAll("td");
+                    cells.forEach((cell, index) => {
+                        const animClass = 'anim-' + ((index % 15) + 1);
+                        cell.classList.add(animClass);
+                    });
+                });
+        </script>
+</body>
+</html>
