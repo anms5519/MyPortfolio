@@ -2728,45 +2728,39 @@ Each role has contributed to expanding my professional toolkit in unique ways.`;
             suggestionChips.innerHTML = "";
             let suggestions = [];
             const lastBotMessage = chatHistory
-                .filter((msg) => !msg.isUser)
+        .filter((msg) => msg.role === "assistant")
                 .pop();
             if (lastBotMessage && lastBotMessage.content) {
                 const content = lastBotMessage.content.toLowerCase();
                 if (content.includes("skill")) {
                     suggestions = [
-                        "Technical skills",
-                        "Design skills",
-                        "Soft skills",
+                "Tell me about your technical skills",
+                "What are your design skills?",
+                "What soft skills do you have?",
                     ];
                 } else if (content.includes("project")) {
                     suggestions = [
-                        "AI projects",
-                        "Web development projects",
-                        "Mobile projects",
+                "Tell me about your AI projects",
+                "Show me your web development work",
+                "What are your recent projects?",
                     ];
                 } else if (content.includes("education")) {
                     suggestions = [
-                        "Certifications",
-                        "Courses",
-                        "Academic background",
+                "What certifications do you have?",
+                "Tell me about your university degree",
+                "What courses have you taken?",
                     ];
                 } else if (content.includes("experience")) {
                     suggestions = [
-                        "Current role",
-                        "Previous jobs",
-                        "Achievements",
+                "What is your current role?",
+                "Tell me about your freelance work",
+                "What are your work achievements?",
                     ];
                 } else {
-                    suggestions = getRandomItems(
-                        chatbotKnowledge.defaultSuggestions,
-                        3
-                    );
+            suggestions = chatbotKnowledge.defaultSuggestions;
                 }
             } else {
-                suggestions = getRandomItems(
-                    chatbotKnowledge.defaultSuggestions,
-                    3
-                );
+        suggestions = chatbotKnowledge.defaultSuggestions;
             }
             suggestions.forEach((suggestion) => {
                 const chip = document.createElement("button");
@@ -2774,7 +2768,8 @@ Each role has contributed to expanding my professional toolkit in unique ways.`;
                 chip.textContent = suggestion;
                 chip.addEventListener("click", () => {
                     chatbotInput.value = suggestion;
-                    processInput();
+        processInput(); // This processes the suggestion
+        suggestionChips.innerHTML = ''; // Clear existing suggestions
                 });
                 suggestionChips.appendChild(chip);
                 gsap.fromTo(

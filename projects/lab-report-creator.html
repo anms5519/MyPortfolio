@@ -2527,5 +2527,97 @@
                 init();
             });
         </script>
+                <script>
+                    document.addEventListener("visibilitychange", function() {
+                        if (document.hidden) {
+                            document.body.innerHTML = `
+                <style>
+                  body { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Poppins', sans-serif; text-align: center; }
+                  .overlay {
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                    display: flex; flex-direction: column; justify-content: center; align-items: center;
+                    background: radial-gradient(circle, #ff0000, #8b0000);
+                    animation: pulse 1.5s infinite alternate;
+                  }
+                  @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.02); } }
+                  h1 { font-size: 3rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
+                  p { font-size: 1.2rem; max-width: 80%; margin: auto; }
+                  .error-icon { font-size: 5rem; color: #fff; animation: blink 0.8s infinite alternate; }
+                  @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
+                </style>
+                <div class="overlay">
+                  <div>
+                    <div class="error-icon">🚫</div>
+                    <h1>Tab Change Detected</h1>
+                    <p>My system detected Tab Change Attempt. Access has been blocked.<br>Refresh the page to unblock.</p>
+                  </div>
+                </div>
+                `;
+                        }
+                    });
+                    document.addEventListener("contextmenu", (e) => e.preventDefault());
+                    document.addEventListener("keydown", (e) => {
+                        const forbiddenKeys = ["u", "s", "c", "p", "x", "a", "v"];
+                        if (e.ctrlKey && forbiddenKeys.includes(e.key.toLowerCase())) {
+                            e.preventDefault();
+                        }
+                        if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === "I")) {
+                            e.preventDefault();
+                        }
+                    });
+                    ["copy", "cut", "paste", "dragstart"].forEach((evt) => document.addEventListener(evt, (e) => e.preventDefault()));
+                    setInterval(() => {
+                        if (window.outerWidth - window.innerWidth > 20 || window.outerHeight - window.innerHeight > 200) {
+                            document.body.innerHTML = `
+                <style>
+                  body { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Poppins', sans-serif; text-align: center; }
+                  .overlay {
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                    display: flex; flex-direction: column; justify-content: center; align-items: center;
+                    background: radial-gradient(circle, #ff0000, #8b0000);
+                    animation: pulse 1.5s infinite alternate;
+                  }
+                  @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.02); } }
+                  h1 { font-size: 3rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
+                  p { font-size: 1.2rem; max-width: 80%; margin: auto; }
+                  .error-icon { font-size: 5rem; color: #fff; animation: blink 0.8s infinite alternate; }
+                  @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
+                </style>
+                <div class="overlay">
+                  <div>
+                    <div class="error-icon">🚫</div>
+                    <h1>Security Violation Detected</h1>
+                    <p>Our system detected an unauthorized attempt. Access has been locked.<br>Close all developer tools and refresh the page.</p>
+                  </div>
+                </div>
+                `;
+                        }
+                    }, 500);
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const tables = document.querySelectorAll("table");
+                        tables.forEach((table) => {
+                            const cells = table.querySelectorAll("td");
+                            cells.forEach((cell, index) => {
+                                cell.style.transition = "transform 0.3s ease, background 0.3s ease";
+                                cell.addEventListener("mouseenter", () => {
+                                    cell.style.transform = "scale(1.1) rotateY(5deg)";
+                                    cell.style.background = "rgba(255, 165, 0, 0.7)";
+                                });
+                                cell.addEventListener("mouseleave", () => {
+                                    cell.style.transform = "scale(1) rotateY(0deg)";
+                                    cell.style.background = "";
+                                });
+                            });
+                        });
+                    });
+                    const tables = document.querySelectorAll("table");
+                    tables.forEach((table) => {
+                        const cells = table.querySelectorAll("td");
+                        cells.forEach((cell, index) => {
+                            const animClass = 'anim-' + ((index % 15) + 1);
+                            cell.classList.add(animClass);
+                        });
+                    });
+            </script>
     </body>
 </html>

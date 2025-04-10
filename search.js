@@ -11,10 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchSuggestion = document.getElementById("search-suggestion");
     let currentHighlightIndex = -1;
     let searchHighlights = [];
-    let searchTimeout;
+    let searchTimeout = null;
     let isSearching = false;
     let allContent = [];
     let searchSuggestions = [];
+    const searchCache = new Map(); // Add search result caching
     let categories = [
         "skills",
         "projects",
@@ -28,24 +29,23 @@ document.addEventListener("DOMContentLoaded", function () {
         searchContainer.classList.add("legendary-initialized");
         createCategoryFilter();
         indexContent();
+const debounceSearch = debounce((searchTerm) => {
+                performSearch(searchTerm);
+                if (searchHighlights.length > 0) {
+                    currentHighlightIndex = 0;
+                    searchHighlights[currentHighlightIndex].classList.add("current");
+                    scrollToHighlight(currentHighlightIndex);
+                    showNavigationControls();
+                }
+            }, 300);
         searchInput.addEventListener("input", () => {
             if (searchTimeout) {
                 clearTimeout(searchTimeout);
             }
             searchContainer.classList.add("searching");
             provideSuggestions(searchInput.value);
-            searchTimeout = setTimeout(() => {
                 const searchTerm = searchInput.value.toLowerCase().trim();
-                performSearch(searchTerm);
-                if (searchHighlights.length > 0) {
-                    currentHighlightIndex = 0;
-                    searchHighlights[currentHighlightIndex].classList.add(
-                        "current"
-                    );
-                    scrollToHighlight(currentHighlightIndex);
-                    showNavigationControls();
-                }
-            }, 100);
+                debounceSearch(searchTerm);
         });
         searchInput.addEventListener("keydown", (e) => {
             if (e.key === "ArrowDown" || e.key === "ArrowUp") {
@@ -205,6 +205,16 @@ document.addEventListener("DOMContentLoaded", function () {
             clearSearch();
             return;
         }
+        // Check cache first
+        const cacheKey = `${searchTerm}-${currentCategory}`;
+        if (searchCache.has(cacheKey)) {
+            const cachedResults = searchCache.get(cacheKey);
+            updateSearchResults(cachedResults);
+            return;
+        }
+        currentHighlightIndex = -1;
+        searchHighlights = [];
+        searchResultsList.innerHTML = "";
         currentHighlightIndex = -1;
         searchHighlights = [];
         searchResultsList.innerHTML = "";
@@ -434,12 +444,23 @@ document.addEventListener("DOMContentLoaded", function () {
         return result;
     }
     function updateSearchUI(matchCount) {
+        const ITEMS_PER_PAGE = 20;
+        let currentPage = 0;
+        function renderResultPage(page) {
+            const start = page * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+            const pageResults = searchHighlights.slice(start, end);
+            
+            searchResultsList.innerHTML = '';
+            pageResults.forEach(result => {
+                // Render result item
+                const resultItem = createResultItem(result);
+                searchResultsList.appendChild(resultItem);
+            });
+        }
         if (searchResultCount) {
-            searchResultCount.innerHTML =
-                matchCount > 0
-                    ? `<span class="match-count">${matchCount}</span> ${
-                          matchCount === 1 ? "result" : "results"
-                      }`
+            searchResultCount.innerHTML = matchCount > 0
+                ? `<span class="match-count">${matchCount}</span> ${matchCount === 1 ? "result" : "results"}`
                     : `<span class="no-match">No matches found</span>`;
         }
         if (searchResults) {
