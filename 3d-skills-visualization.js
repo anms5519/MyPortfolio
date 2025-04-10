@@ -169,7 +169,7 @@ function initSkillsVisualization() {
             <div class="visualization-title">
                 <i class="fas fa-galaxy floating-element" style="font-size: 24px; color: #a36bdd; margin-right: 10px;"></i>
                 <h3 class="masterpiece-title">KHOLIPHA'S SKILLS COSMOS</h3>
-                <span class="premium-badge" style="background: linear-gradient(135deg, #4776E6, #8E54E9); padding: 5px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; color: white; margin-left: 10px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);">ULTRA PREMIUM</span>
+                <span class="premium-badge" style="background: linear-gradient(135deg, #4776E6, #8E54E9); padding: 5px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; color: white; margin-left: 10px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);">ANMS</span>
             </div>
             <div class="visualization-controls premium-controls" style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
                 <button class="vis-control premium-button" data-view="sphere" style="padding: 10px 15px; border-radius: 8px; background: rgba(71, 118, 230, 0.2); color: white; border: none; display: flex; align-items: center; gap: 7px;">

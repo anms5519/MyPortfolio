@@ -1,6 +1,5 @@
 (() => {
     "use strict";
-    // --- Utility Functions ---
     const $ = (selector, parent = document) => parent.querySelector(selector);
     const $$ = (selector, parent = document) =>
         parent.querySelectorAll(selector);
@@ -15,9 +14,7 @@
             timeout = setTimeout(later, wait);
         };
     };
-    // Random number utility
     const random = (min, max) => Math.random() * (max - min) + min;
-    // Animation frame utility
     const requestAnimFrame =
         window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
@@ -25,45 +22,42 @@
         window.oRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
         ((callback) => window.setTimeout(callback, 1000 / 60));
-    // --- Main Class ---
     class ProjectShowcase {
         constructor() {
             this.projects = [];
             this.currentProject = null;
-            this.currentGameInstance = null; // To hold the current game's specific logic/state/interval
+            this.currentGameInstance = null; 
             this.container = null;
             this.isDarkMode =
                 window.matchMedia &&
                 window.matchMedia("(prefers-color-scheme: dark)").matches;
             this.soundEnabled = true;
-            this.gameStates = this.loadGameStates(); // Load high scores
-            this.activeListeners = []; // Track active listeners for cleanup
-            this.audioContext = null; // Reuse AudioContext
-            this.particleEffects = true; // Enable visual effects
-            this.gamepadSupport = false; // Will be detected during init
-            this.recentlyPlayed = []; // Track recently played games
-            this.lastPlayedTime = {}; // Track last played time for each game
-            this.achievementSystem = new AchievementSystem(this); // Achievement tracking
+            this.gameStates = this.loadGameStates(); 
+            this.activeListeners = []; 
+            this.audioContext = null; 
+            this.particleEffects = true; 
+            this.gamepadSupport = false; 
+            this.recentlyPlayed = []; 
+            this.lastPlayedTime = {}; 
+            this.achievementSystem = new AchievementSystem(this); 
         }
         init() {
             this.createTriggerButton();
             this.createContainer();
             this.addEventListeners();
-            this.addStyles(); // Add base styles first
-            this.loadProjects(); // Define projects
-            this.populateGameList(); // Populate sidebar
-            this.updateFooterStats(); // Update footer counts
-            this.applyInitialTheme(); // Apply dark/light mode
-            // Initial load animation
+            this.addStyles(); 
+            this.loadProjects(); 
+            this.populateGameList(); 
+            this.updateFooterStats(); 
+            this.applyInitialTheme(); 
             setTimeout(() => {
                 this.container.classList.add("loaded");
                 this.loadRandomProject();
-            }, 500); // Delay for CSS transition
+            }, 500); 
         }
-        // --- UI Creation ---
         createContainer() {
             this.container = document.createElement("div");
-            this.container.className = "project-showcase"; // Base class, 'active' added later
+            this.container.className = "project-showcase"; 
             this.container.innerHTML = `
                 <div class="showcase-header">
                     <div class="showcase-title-area">
@@ -88,7 +82,6 @@
                             <input type="text" class="project-search" placeholder="Search legendary games...">
                         </div>
                         <div class="category-filters">
-                            <!-- Categories will be added here -->
                         </div>
                         <div class="game-tab-controls">
                             <button class="game-tab-btn active" data-tab="all"><i class="fas fa-th"></i> All Games</button>
@@ -160,11 +153,9 @@
                         <button class="random-game-btn"><i class="fas fa-dice"></i> Random Game</button>
                     </div>
                 </div>
-                <!-- Particle canvas for effects -->
                 <canvas class="particle-canvas"></canvas>
             `;
             document.body.appendChild(this.container);
-            // Initialize particle effects canvas
             this.initParticleEffects();
         }
         createTriggerButton() {
@@ -172,11 +163,9 @@
             button.className = "showcase-trigger";
             button.innerHTML = '<i class="fas fa-gamepad-alt"></i> Open Arcade';
             button.addEventListener("click", () => this.show());
-            document.body.appendChild(button); // Append to body, easier to manage z-index
+            document.body.appendChild(button); 
             this.triggerButton = button;
         }
-        // --- Event Handling ---
-        // Initialize particle effects system for visual flair
         initParticleEffects() {
             const canvas = $(".particle-canvas", this.container);
             if (!canvas) return;
@@ -184,17 +173,14 @@
             this.particleCtx = canvas.getContext("2d");
             this.particles = [];
             this.particleCount = 50;
-            // Set canvas size to match container
             this.resizeParticleCanvas();
-            // Try to load saved particle preference
             try {
                 this.particleEffects = JSON.parse(
                     localStorage.getItem("game-particles-enabled") || "true"
                 );
             } catch (e) {
-                this.particleEffects = true; // Default to enabled
+                this.particleEffects = true; 
             }
-            // Update UI
             const effectsButton = $(".toggle-effects", this.container);
             if (effectsButton) {
                 if (this.particleEffects) {
@@ -203,22 +189,17 @@
                     effectsButton.classList.remove("active");
                 }
             }
-            // Create particles
             for (let i = 0; i < this.particleCount; i++) {
                 this.createParticle();
             }
-            // Start animation if effects are enabled
             if (this.particleEffects) {
                 this.startParticleAnimation();
             }
-            // Add resize listener
             window.addEventListener("resize", () =>
                 this.resizeParticleCanvas()
             );
         }
-        // Create a new particle
         createParticle(x, y, usePremiumEffects = false) {
-            // If position not specified, use random position
             const posX =
                 x !== undefined ? x : Math.random() * this.particleCanvas.width;
             const posY =
@@ -233,10 +214,9 @@
                 speedX: (Math.random() - 0.5) * 0.5,
                 speedY: (Math.random() - 0.5) * 0.5,
                 opacity: Math.random() * 0.5 + 0.2,
-                life: 1, // Full life
-                maxLife: usePremiumEffects ? 0.5 + Math.random() * 0.5 : 1, // Premium particles fade faster
+                life: 1, 
+                maxLife: usePremiumEffects ? 0.5 + Math.random() * 0.5 : 1, 
             };
-            // For premium effects, add more properties
             if (usePremiumEffects) {
                 particle.glow = true;
                 particle.pulse = 0;
@@ -253,11 +233,11 @@
         }
         getRandomParticleColor() {
             const colors = [
-                "#fbcb5b", // Gold
-                "#e67e22", // Orange
-                "#f39c12", // Amber
-                "#3498db", // Blue
-                "#9b59b6", // Purple
+                "#fbcb5b", 
+                "#e67e22", 
+                "#f39c12", 
+                "#3498db", 
+                "#9b59b6", 
             ];
             return colors[Math.floor(Math.random() * colors.length)];
         }
@@ -279,24 +259,20 @@
                     this.particleCanvas.width,
                     this.particleCanvas.height
                 );
-                // Update and draw particles
                 for (let i = 0; i < this.particles.length; i++) {
                     const p = this.particles[i];
                     p.x += p.speedX;
                     p.y += p.speedY;
-                    // Wrap around edges
                     if (p.x < 0) p.x = this.particleCanvas.width;
                     if (p.x > this.particleCanvas.width) p.x = 0;
                     if (p.y < 0) p.y = this.particleCanvas.height;
                     if (p.y > this.particleCanvas.height) p.y = 0;
-                    // Draw particle
                     this.particleCtx.beginPath();
                     this.particleCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                     this.particleCtx.globalAlpha = p.opacity;
                     this.particleCtx.fillStyle = p.color;
                     this.particleCtx.fill();
                 }
-                // Draw connections between nearby particles
                 this.particleCtx.globalAlpha = 0.2;
                 this.particleCtx.strokeStyle = "#ffffff";
                 this.particleCtx.lineWidth = 0.5;
@@ -332,14 +308,12 @@
                 }
                 $(".toggle-effects", this.container).classList.remove("active");
             }
-            // Save preference
             try {
                 localStorage.setItem(
                     "game-particles-enabled",
                     JSON.stringify(this.particleEffects)
                 );
             } catch (e) {}
-            // Create a visual effect to show the change
             this.showParticleToggleEffect();
             this.playSound("click");
         }
@@ -359,7 +333,6 @@
             effect.style.transition = "opacity 0.5s ease-out";
             effect.style.zIndex = "1000";
             this.container.appendChild(effect);
-            // Trigger animation
             setTimeout(() => {
                 effect.style.opacity = "1";
                 setTimeout(() => {
@@ -368,26 +341,21 @@
                 }, 500);
             }, 10);
         }
-        // Check for and initialize gamepad support
         initGamepadSupport() {
-            // Feature detection
             this.gamepadSupport = "getGamepads" in navigator;
             if (!this.gamepadSupport) {
                 return;
             }
-            // Update gamepad status text
             const gamepadText = $(".gamepad-text", this.container);
             if (gamepadText) {
                 gamepadText.textContent = "Waiting for gamepad...";
             }
-            // Setup gamepad events
             window.addEventListener("gamepadconnected", (e) => {
                 this.handleGamepadConnected(e.gamepad);
             });
             window.addEventListener("gamepaddisconnected", (e) => {
                 this.handleGamepadDisconnected(e.gamepad);
             });
-            // Start polling for existing gamepads (in case they were connected before page load)
             this.pollGamepads();
         }
         pollGamepads() {
@@ -398,10 +366,9 @@
             for (let i = 0; i < gamepads.length; i++) {
                 if (gamepads[i]) {
                     this.handleGamepadConnected(gamepads[i]);
-                    break; // Just use first gamepad for now
+                    break; 
                 }
             }
-            // Re-check every 5 seconds
             setTimeout(() => this.pollGamepads(), 5000);
         }
         handleGamepadConnected(gamepad) {
@@ -413,7 +380,6 @@
                 $(".gamepad-status", this.container).classList.add("connected");
             }
             this.activeGamepad = gamepad.index;
-            // Start polling gamepad for input
             if (!this.gamepadLoopRunning) {
                 this.gamepadLoopRunning = true;
                 this.gamepadLoop();
@@ -444,9 +410,6 @@
                 this.gamepadLoopRunning = false;
                 return;
             }
-            // Process gamepad input for navigation
-            // This is just basic support - game-specific controls would be in each game module
-            // A/Cross button - select current item
             if (gamepad.buttons[0].pressed && !this.lastButtonState?.a) {
                 const selectedItem = $(
                     ".project-item.selected",
@@ -456,17 +419,13 @@
                     this.loadProject(selectedItem.dataset.id);
                 }
             }
-            // B/Circle - back/close
             if (gamepad.buttons[1].pressed && !this.lastButtonState?.b) {
                 if (this.currentProject) {
-                    // If in a game, exit it
                     this.loadProject(null);
                 } else {
-                    // Otherwise, close showcase
                     this.hide();
                 }
             }
-            // Directional navigation for game list
             const dpadUpPressed =
                 gamepad.buttons[12].pressed && !this.lastButtonState?.dpadUp;
             const dpadDownPressed =
@@ -488,7 +447,6 @@
                     dpadRightPressed
                 );
             }
-            // Update button state for edge detection
             this.lastButtonState = {
                 a: gamepad.buttons[0].pressed,
                 b: gamepad.buttons[1].pressed,
@@ -497,7 +455,6 @@
                 dpadLeft: gamepad.buttons[14].pressed,
                 dpadRight: gamepad.buttons[15].pressed,
             };
-            // Continue the loop
             requestAnimFrame(() => this.gamepadLoop());
         }
         navigateGameListWithGamepad(up, down, left, right) {
@@ -506,7 +463,6 @@
             let selectedItem = $(".project-item.selected", this.container);
             let newIndex = 0;
             if (selectedItem) {
-                // Find the current index
                 const currentIndex = Array.from(gameItems).indexOf(
                     selectedItem
                 );
@@ -515,28 +471,22 @@
                 } else if (down) {
                     newIndex = Math.min(gameItems.length - 1, currentIndex + 1);
                 } else if (right) {
-                    // Jump several items forward (for grid layouts)
                     newIndex = Math.min(gameItems.length - 1, currentIndex + 3);
                 } else if (left) {
-                    // Jump several items backward (for grid layouts)
                     newIndex = Math.max(0, currentIndex - 3);
                 }
             }
-            // Remove existing selection
             $$(".project-item.selected", this.container).forEach((item) =>
                 item.classList.remove("selected")
             );
-            // Set new selection
             gameItems[newIndex].classList.add("selected");
             gameItems[newIndex].scrollIntoView({
                 behavior: "smooth",
                 block: "nearest",
             });
-            // Play sound
             this.playSound("navigate");
         }
         addEventListeners() {
-            // Window/Container Controls
             $(".showcase-close", this.container).addEventListener("click", () =>
                 this.hide()
             );
@@ -559,7 +509,6 @@
                 "click",
                 () => this.achievementSystem.showAllAchievements()
             );
-            // Game Discovery
             const searchInput = $(".project-search", this.container);
             searchInput.addEventListener(
                 "input",
@@ -569,7 +518,6 @@
                 "click",
                 () => this.loadRandomProject()
             );
-            // Game Tab Controls
             const tabContainer = $(".game-tab-controls", this.container);
             if (tabContainer) {
                 tabContainer.addEventListener("click", (e) => {
@@ -582,7 +530,7 @@
                         const tab = btn.dataset.tab;
                         switch (tab) {
                             case "all":
-                                this.filterProjects(""); // Show all
+                                this.filterProjects(""); 
                                 break;
                             case "recent":
                                 this.showRecentlyPlayed();
@@ -595,7 +543,6 @@
                     }
                 });
             }
-            // Game Controls
             $(".game-fullscreen-btn", this.container).addEventListener(
                 "click",
                 () => this.toggleGameFullscreen()
@@ -607,7 +554,6 @@
             $(".game-sound-btn", this.container).addEventListener("click", () =>
                 this.toggleGameSound()
             );
-            // New controls
             const favoriteBtn = $(".game-favorite-btn", this.container);
             if (favoriteBtn) {
                 favoriteBtn.addEventListener("click", () =>
@@ -618,7 +564,6 @@
             if (shareBtn) {
                 shareBtn.addEventListener("click", () => this.shareGame());
             }
-            // Pause Menu
             const resumeBtn = $(".resume-btn", this.container);
             if (resumeBtn) {
                 resumeBtn.addEventListener("click", () => this.resumeGame());
@@ -634,10 +579,9 @@
             if (exitBtn) {
                 exitBtn.addEventListener("click", () => {
                     this.resumeGame();
-                    this.loadProject(null); // Exit current game
+                    this.loadProject(null); 
                 });
             }
-            // Category Filters (delegated)
             $(".category-filters", this.container).addEventListener(
                 "click",
                 (e) => {
@@ -653,24 +597,20 @@
                     }
                 }
             );
-            // Project List (delegated with enhanced selection)
             $(".project-list", this.container).addEventListener(
                 "click",
                 (e) => {
                     const item = e.target.closest(".project-item");
                     if (item) {
-                        // Remove any existing selection
                         $$(
                             ".project-item.selected",
                             this.container
                         ).forEach((i) => i.classList.remove("selected"));
-                        // Add selection to clicked item
                         item.classList.add("selected");
                         this.loadProject(item.dataset.id);
                     }
                 }
             );
-            // Mouse hover effects for game items
             $(".project-list", this.container).addEventListener(
                 "mouseover",
                 (e) => {
@@ -680,44 +620,35 @@
                     }
                 }
             );
-            // Keyboard navigation (Enhanced)
             this.addManagedListener(document, "keydown", (e) => {
-                // Only process if showcase is active
                 if (!this.container.classList.contains("active")) return;
-                // Pause menu handling
                 if (e.key === "Escape") {
-                    // Game is active and not already paused
                     if (
                         this.currentProject &&
                         !$(".game-overlay", this.container).classList.contains(
                             "visible"
                         )
                     ) {
-                        // First Escape press pauses the game
                         this.pauseGame();
                         e.preventDefault();
                         return;
                     }
-                    // Game is paused
                     else if (
                         this.currentProject &&
                         $(".game-overlay", this.container).classList.contains(
                             "visible"
                         )
                     ) {
-                        // Second Escape press resumes the game
                         this.resumeGame();
                         e.preventDefault();
                         return;
                     }
-                    // No game active, close showcase if not fullscreen
                     else if (!this.container.classList.contains("fullscreen")) {
                         this.hide();
                         e.preventDefault();
                         return;
                     }
                 }
-                // Fullscreen handling
                 if (e.key === "f") {
                     if (this.currentProject) {
                         this.toggleGameFullscreen();
@@ -727,7 +658,6 @@
                     e.preventDefault();
                     return;
                 }
-                // Handle other key commands for navigation
                 if (!this.currentProject) {
                     switch (e.key) {
                         case "ArrowUp":
@@ -750,7 +680,6 @@
                     }
                 }
             });
-            // Initialize gamepad support
             this.initGamepadSupport();
         }
         navigateGameListWithKeyboard(key) {
@@ -787,27 +716,21 @@
                             : 0;
                     break;
             }
-            // Remove existing selection
             $$(".project-item.selected", this.container).forEach((item) =>
                 item.classList.remove("selected")
             );
-            // Set new selection
             gameItems[newIndex].classList.add("selected");
             gameItems[newIndex].scrollIntoView({
                 behavior: "smooth",
                 block: "nearest",
             });
-            // Play sound
             this.playSound("navigate");
         }
         createItemHoverEffect(item) {
-            // Small particle burst when hovering over items
             const rect = item.getBoundingClientRect();
             const containerRect = this.container.getBoundingClientRect();
-            // Position relative to container
             const x = rect.left - containerRect.left + rect.width / 2;
             const y = rect.top - containerRect.top + rect.height / 2;
-            // Create 5-10 particles at position
             const particleCount = Math.floor(Math.random() * 5) + 5;
             for (let i = 0; i < particleCount; i++) {
                 const size = Math.random() * 3 + 1;
@@ -816,7 +739,6 @@
                 const opacity = Math.random() * 0.5 + 0.5;
                 const color =
                     item.dataset.color || this.getRandomParticleColor();
-                // Add temporary particle to the system
                 this.particles.push({
                     x,
                     y,
@@ -835,7 +757,6 @@
             const overlay = $(".game-overlay", this.container);
             if (overlay) {
                 overlay.classList.add("visible");
-                // Pause any game logic
                 if (
                     this.currentGameInstance &&
                     typeof this.currentGameInstance.pause === "function"
@@ -849,7 +770,6 @@
             const overlay = $(".game-overlay", this.container);
             if (overlay) {
                 overlay.classList.remove("visible");
-                // Resume game logic
                 if (
                     this.currentGameInstance &&
                     typeof this.currentGameInstance.resume === "function"
@@ -870,19 +790,15 @@
             } catch (e) {}
             const isFavorite = favorites.includes(projectId);
             if (isFavorite) {
-                // Remove from favorites
                 favorites = favorites.filter((id) => id !== projectId);
                 $(".game-favorite-btn i", this.container).className =
                     "far fa-star";
             } else {
-                // Add to favorites
                 favorites.push(projectId);
                 $(".game-favorite-btn i", this.container).className =
                     "fas fa-star";
-                // Show star burst animation
                 this.showStarBurstEffect();
             }
-            // Save favorites
             try {
                 localStorage.setItem(
                     "game-favorites",
@@ -894,7 +810,6 @@
         showStarBurstEffect() {
             const btn = $(".game-favorite-btn", this.container);
             if (!btn) return;
-            // Create stars emanating from the button
             const container = document.createElement("div");
             container.className = "star-burst-container";
             container.style.position = "absolute";
@@ -905,7 +820,6 @@
                 rect.left - parentRect.left + rect.width / 2 + "px";
             container.style.top =
                 rect.top - parentRect.top + rect.height / 2 + "px";
-            // Create stars
             for (let i = 0; i < 12; i++) {
                 const star = document.createElement("div");
                 star.className = "burst-star";
@@ -914,14 +828,12 @@
                 const distance = 60;
                 const delay = i * 50;
                 star.style.transform = `translate(-50%, -50%)`;
-                // Animation variables
                 star.style.setProperty("--angle", angle + "rad");
                 star.style.setProperty("--distance", distance + "px");
                 star.style.setProperty("--delay", delay + "ms");
                 container.appendChild(star);
             }
             this.container.appendChild(container);
-            // Remove after animation completes
             setTimeout(() => {
                 container.remove();
             }, 1500);
@@ -929,7 +841,6 @@
         shareGame() {
             if (!this.currentProject) return;
             this.playSound("click");
-            // Simple alert for sharing info
             alert(
                 `Share ${
                     this.currentProject.name
@@ -942,11 +853,9 @@
         }
         showRecentlyPlayed() {
             const projectItems = $$(".project-item", this.container);
-            // Reset current filters
             projectItems.forEach((item) => {
                 item.classList.remove("hidden");
             });
-            // Hide items not in recently played list
             if (this.recentlyPlayed.length > 0) {
                 projectItems.forEach((item) => {
                     if (!this.recentlyPlayed.includes(item.dataset.id)) {
@@ -954,7 +863,6 @@
                     }
                 });
             } else {
-                // If no recent games, show a message
                 projectItems.forEach((item) => item.classList.add("hidden"));
                 const message = document.createElement("div");
                 message.className = "no-items-message";
@@ -966,7 +874,6 @@
             }
         }
         showFavorites() {
-            // Load favorites
             let favorites = [];
             try {
                 favorites = JSON.parse(
@@ -974,11 +881,9 @@
                 );
             } catch (e) {}
             const projectItems = $$(".project-item", this.container);
-            // Reset current filters
             projectItems.forEach((item) => {
                 item.classList.remove("hidden");
             });
-            // Hide items not in favorites
             if (favorites.length > 0) {
                 projectItems.forEach((item) => {
                     if (!favorites.includes(item.dataset.id)) {
@@ -986,7 +891,6 @@
                     }
                 });
             } else {
-                // If no favorites, show a message
                 projectItems.forEach((item) => item.classList.add("hidden"));
                 const message = document.createElement("div");
                 message.className = "no-items-message";
@@ -997,12 +901,10 @@
                 $(".project-list", this.container).appendChild(message);
             }
         }
-        // Helper to manage listeners for cleanup
         addManagedListener(element, type, listener, options) {
             element.addEventListener(type, listener, options);
             this.activeListeners.push({ element, type, listener, options });
         }
-        // Cleanup listeners specific to a game or the showcase
         cleanupListeners(filterFn = () => true) {
             const listenersToRemove = this.activeListeners.filter(filterFn);
             const listenersToKeep = this.activeListeners.filter(
@@ -1015,25 +917,22 @@
             );
             this.activeListeners = listenersToKeep;
         }
-        // --- Styling and Theming ---
         addStyles() {
             const styleEl = document.createElement("style");
-            // CSS (Significantly Enhanced for "Legendary" Feel)
             styleEl.textContent = `
-                /* Showcase Container */
                 .project-showcase {
                     position: fixed;
                     bottom: 20px;
                     left: 20px;
-                    width: clamp(600px, 75vw, 1200px); /* Responsive width */
-                    height: clamp(500px, 80vh, 900px); /* Responsive height */
+                    width: clamp(600px, 75vw, 1200px); 
+                    height: clamp(500px, 80vh, 900px); 
                     background: var(--bg-gradient);
                     border-radius: 20px;
                     box-shadow: 0 20px 50px var(--shadow-color);
                     display: flex;
                     flex-direction: column;
                     overflow: hidden;
-                    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Smoother transition */
+                    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); 
                     z-index: 10000;
                     opacity: 0;
                     transform: translateY(50px) scale(0.95);
@@ -1074,8 +973,8 @@
                     --scrollbar-track: rgba(255, 255, 255, 0.05);
                     --animation-speed: 0.3s;
                 }
-                .project-showcase.loaded { /* Initial load animation */
-                     transform: translateY(20px) scale(1); /* Start slightly lower */
+                .project-showcase.loaded { 
+                     transform: translateY(20px) scale(1); 
                 }
                 .project-showcase.active {
                     opacity: 1;
@@ -1099,7 +998,6 @@
                     bottom: 0;
                     border-radius: 0;
                 }
-                /* Light Theme */
                 .project-showcase.light {
                     --bg-gradient: linear-gradient(135deg, var(--background-light-1), var(--background-light-2));
                     --text-color: var(--text-light);
@@ -1129,9 +1027,8 @@
                  .project-showcase.light .category-btn.active, .project-showcase.light .category-btn:hover { background: var(--primary-color); color: #fff; }
                  .project-showcase.light .random-game-btn { background: var(--primary-color); color: #fff; }
                  .project-showcase.light .random-game-btn:hover { background: var(--secondary-color); }
-                 .project-showcase.light .project-item-icon { color: #fff; } /* Keep icon color contrast */
+                 .project-showcase.light .project-item-icon { color: #fff; } 
                  .project-showcase.light .loading-indicator { color: var(--text-light); }
-                /* Header */
                 .showcase-header {
                     display: flex;
                     justify-content: space-between;
@@ -1145,23 +1042,23 @@
                 .showcase-header h3 {
                     margin: 0;
                     font-family: var(--font-heading);
-                    font-size: 1.6rem; /* Slightly smaller */
+                    font-size: 1.6rem; 
                     font-weight: 700;
                     text-transform: uppercase;
                     letter-spacing: 1.5px;
                     display: flex;
                     align-items: center;
                     gap: 12px;
-                    color: var(--primary-color); /* Gold title */
+                    color: var(--primary-color); 
                 }
                 .showcase-header h3 i {
-                     font-size: 1.8rem; /* Larger icon */
+                     font-size: 1.8rem; 
                 }
                 .showcase-controls button {
                     background: none;
                     border: none;
                     color: var(--text-color);
-                    font-size: 1.3rem; /* Slightly smaller */
+                    font-size: 1.3rem; 
                     margin-left: 15px;
                     cursor: pointer;
                     transition: transform 0.2s ease, color 0.2s ease;
@@ -1171,20 +1068,18 @@
                     transform: scale(1.25) rotate(5deg);
                     color: var(--primary-color);
                 }
-                /* Content Area */
                 .showcase-content {
                     display: flex;
                     flex: 1;
-                    overflow: hidden; /* Important */
+                    overflow: hidden; 
                 }
-                /* Sidebar */
                 .showcase-sidebar {
-                    width: 300px; /* Slightly wider */
+                    width: 300px; 
                     background: var(--sidebar-bg);
                     border-right: 1px solid var(--border-color);
                     display: flex;
                     flex-direction: column;
-                    padding: 0; /* Remove padding, handle internally */
+                    padding: 0; 
                     flex-shrink: 0;
                     transition: background 0.3s ease;
                 }
@@ -1197,13 +1092,13 @@
                     position: absolute;
                     left: 35px;
                     top: 50%;
-                    transform: translateY(-35%); /* Adjust for padding */
+                    transform: translateY(-35%); 
                     color: #aaa;
                     font-size: 0.9rem;
                 }
                 .project-search {
                     width: 100%;
-                    padding: 12px 15px 12px 40px; /* Space for icon */
+                    padding: 12px 15px 12px 40px; 
                     border: none;
                     border-radius: 30px;
                     font-size: 1rem;
@@ -1248,14 +1143,13 @@
                 }
                 .project-list-wrapper {
                     flex: 1;
-                    overflow: hidden; /* Needed for custom scrollbar */
+                    overflow: hidden; 
                     position: relative;
                 }
                 .project-list {
                     height: 100%;
                     overflow-y: auto;
                     padding: 10px 0;
-                    /* Custom Scrollbar */
                     scrollbar-width: thin;
                     scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
                 }
@@ -1293,7 +1187,7 @@
                     justify-content: center;
                     flex-shrink: 0;
                     font-size: 1.5rem;
-                    color: #fff; /* White icon on colored background */
+                    color: #fff; 
                     transition: transform 0.3s ease;
                 }
                 .project-item:hover .project-item-icon {
@@ -1301,7 +1195,7 @@
                 }
                 .project-item-text {
                     flex: 1;
-                    overflow: hidden; /* Prevent text overflow */
+                    overflow: hidden; 
                 }
                 .project-item-name {
                     font-weight: 600;
@@ -1315,30 +1209,29 @@
                     color: #bbb;
                     text-transform: capitalize;
                 }
-                /* Main Area */
                 .showcase-main {
                     flex: 1;
                     display: flex;
                     flex-direction: column;
                     padding: 24px;
                     background: var(--main-bg);
-                    overflow: hidden; /* Prevent content spill */
+                    overflow: hidden; 
                     transition: background 0.3s ease;
                 }
                 .project-view {
                     flex: 1;
                     display: flex;
                     flex-direction: column;
-                    overflow: hidden; /* Important for layout */
-                    gap: 16px; /* Space between elements */
+                    overflow: hidden; 
+                    gap: 16px; 
                 }
                 .project-preview-wrapper {
-                    flex: 1; /* Takes up available space */
-                    min-height: 200px; /* Minimum height */
-                    display: flex; /* Center content */
+                    flex: 1; 
+                    min-height: 200px; 
+                    display: flex; 
                     align-items: center;
                     justify-content: center;
-                    position: relative; /* For loading indicator */
+                    position: relative; 
                 }
                 .project-preview {
                     width: 100%;
@@ -1349,15 +1242,15 @@
                     align-items: center;
                     justify-content: center;
                     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                    overflow: hidden; /* Ensure canvas fits */
-                    position: relative; /* For absolute positioning of canvas/indicator */
+                    overflow: hidden; 
+                    position: relative; 
                 }
                 .project-preview canvas {
                     display: block;
                     max-width: 100%;
                     max-height: 100%;
-                    object-fit: contain; /* Scale canvas nicely */
-                    border-radius: 10px; /* Match container */
+                    object-fit: contain; 
+                    border-radius: 10px; 
                     transition: opacity 0.3s ease;
                     opacity: 1;
                 }
@@ -1378,7 +1271,7 @@
                     z-index: 10;
                     opacity: 0;
                     transition: opacity 0.3s ease;
-                    pointer-events: none; /* Allow clicks through */
+                    pointer-events: none; 
                 }
                 .loading-indicator.visible {
                     opacity: 1;
@@ -1392,13 +1285,13 @@
                     padding: 16px;
                     background: rgba(0,0,0,0.2);
                     border-radius: 10px;
-                    display: grid; /* Use grid for better layout */
-                    grid-template-columns: 1fr auto; /* Title | Controls */
-                    grid-template-rows: auto auto auto; /* Title, Desc, Stats */
-                    gap: 8px 16px; /* Row gap, Column gap */
+                    display: grid; 
+                    grid-template-columns: 1fr auto; 
+                    grid-template-rows: auto auto auto; 
+                    gap: 8px 16px; 
                     align-items: center;
                 }
-                .project-info h4 { /* Title */
+                .project-info h4 { 
                     grid-column: 1 / 2;
                     grid-row: 1 / 2;
                     margin: 0;
@@ -1407,24 +1300,24 @@
                     font-weight: 600;
                     color: var(--primary-color);
                 }
-                .project-description { /* Description */
-                    grid-column: 1 / 3; /* Span both columns */
+                .project-description { 
+                    grid-column: 1 / 3; 
                     grid-row: 2 / 3;
                     margin: 0;
                     font-size: 0.95rem;
                     color: #ccc;
                     line-height: 1.5;
                 }
-                .project-stats-display { /* Score/High Score */
+                .project-stats-display { 
                     grid-column: 1 / 2;
                     grid-row: 3 / 4;
                     font-size: 0.9rem;
                     color: #bbb;
                     font-weight: 500;
                 }
-                .project-controls { /* Buttons */
+                .project-controls { 
                     grid-column: 2 / 3;
-                    grid-row: 1 / 4; /* Span all rows vertically */
+                    grid-row: 1 / 4; 
                     display: flex;
                     gap: 12px;
                     justify-content: flex-end;
@@ -1454,13 +1347,13 @@
                     padding: 16px;
                     background: rgba(0, 0, 0, 0.2);
                     border-radius: 10px;
-                    margin-top: 0; /* Use gap from parent */
+                    margin-top: 0; 
                 }
                 .game-instructions h5 {
                     margin: 0 0 10px;
                     font-size: 1.1rem;
                     font-weight: 600;
-                    color: var(--accent-color); /* Green for info */
+                    color: var(--accent-color); 
                     display: flex;
                     align-items: center;
                     gap: 8px;
@@ -1471,7 +1364,6 @@
                     color: #ccc;
                     line-height: 1.6;
                 }
-                /* Achievement System */
                 .achievement-notifications {
                     position: fixed;
                     top: 20px;
@@ -1565,7 +1457,6 @@
                     0% { transform: translateX(-100%) rotate(45deg); }
                     100% { transform: translateX(100%) rotate(45deg); }
                 }
-                /* Achievement List Modal */
                 .achievement-list-modal {
                     position: fixed;
                     top: 0;
@@ -1734,7 +1625,6 @@
                     font-size: 10px;
                     color: #fff;
                 }
-                /* Burst Star Animation */
                 .star-burst-container {
                     z-index: 10000;
                 }
@@ -1760,7 +1650,6 @@
                         opacity: 0;
                     }
                 }
-                /* Pause Menu Styling */
                 .game-overlay {
                     position: absolute;
                     top: 0;
@@ -1836,7 +1725,6 @@
                 .pause-menu-buttons .exit-btn:hover {
                     background: var(--danger-color);
                 }
-                /* Game Tab Controls */
                 .game-tab-controls {
                     display: flex;
                     padding: 10px 15px;
@@ -1867,7 +1755,6 @@
                     background: var(--primary-color);
                     color: var(--button-hover-text);
                 }
-                /* Empty State Messages */
                 .no-items-message {
                     padding: 30px;
                     text-align: center;
@@ -1883,7 +1770,6 @@
                     color: var(--primary-color);
                     opacity: 0.5;
                 }
-                /* Gamepad Status */
                 .showcase-sidebar-footer {
                     padding: 10px 15px;
                     border-top: 1px solid var(--border-color);
@@ -1905,7 +1791,6 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
-                /* Loading Spinner */
                 .loading-spinner {
                     width: 40px;
                     height: 40px;
@@ -1918,7 +1803,6 @@
                 @keyframes spin {
                     to { transform: rotate(360deg); }
                 }
-                /* Special canvas for particles */
                 .particle-canvas {
                     position: absolute;
                     top: 0;
@@ -1928,7 +1812,6 @@
                     pointer-events: none;
                     z-index: 1;
                 }
-                /* Footer */
                 .showcase-footer {
                     display: flex;
                     justify-content: space-between;
@@ -1964,9 +1847,8 @@
                 .random-game-btn:hover {
                     transform: translateY(-3px) scale(1.03);
                     box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-                    background-color: var(--secondary-color); /* Change color on hover */
+                    background-color: var(--secondary-color); 
                 }
-                /* Trigger Button */
                 .showcase-trigger {
                     position: fixed;
                     bottom: 30px;
@@ -1982,7 +1864,7 @@
                     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
                     cursor: pointer;
                     transition: transform 0.2s ease, box-shadow 0.2s ease;
-                    z-index: 9999; /* Below showcase when open */
+                    z-index: 9999; 
                     display: flex;
                     align-items: center;
                     gap: 10px;
@@ -1994,8 +1876,7 @@
                 .showcase-trigger i {
                     font-size: 1.3rem;
                 }
-                /* Game Fullscreen Specific */
-                 .project-preview:-webkit-full-screen { /* Style canvas container in fullscreen */
+                 .project-preview:-webkit-full-screen { 
                     background-color: #000;
                     width: 100%;
                     height: 100%;
@@ -2011,11 +1892,11 @@
                     height: 100%;
                  }
                  .project-preview:fullscreen {
-                    background-color: #000; /* Ensure black background */
+                    background-color: #000; 
                     width: 100%;
                     height: 100%;
-                    padding: 0; /* Remove padding */
-                    border-radius: 0; /* Remove border radius */
+                    padding: 0; 
+                    border-radius: 0; 
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -2026,19 +1907,15 @@
                     object-fit: contain;
                     border-radius: 0;
                  }
-                /* Utility Classes */
                 .hidden { display: none !important; }
-                /* Font Awesome Load Fix */
                 .fas { font-family: 'Font Awesome 5 Free' !important; font-weight: 900; }
             `;
             document.head.appendChild(styleEl);
-            // Load Fonts (Optional but recommended for premium feel)
             const fontLink = document.createElement("link");
             fontLink.href =
                 "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap";
             fontLink.rel = "stylesheet";
             document.head.appendChild(fontLink);
-            // Load Font Awesome if not already present
             if (!document.querySelector('link[href*="fontawesome"]')) {
                 const faLink = document.createElement("link");
                 faLink.rel = "stylesheet";
@@ -2051,11 +1928,8 @@
             this.container.classList.toggle("light", !this.isDarkMode);
             this.updateDarkModeButton();
         }
-        // --- Project Loading and Management ---
         loadProjects() {
-            // Define all 30 games here
             this.projects = [
-                // --- Tier 1: Classics Enhanced ---
                 {
                     id: "breakout",
                     name: "Breakout Blast",
@@ -2182,7 +2056,6 @@
                     instructions:
                         "Click on a column to drop your disc (Red). Get four in a row before the AI (Yellow).",
                 },
-                // --- Tier 2: Simpler Concepts & Clones ---
                 {
                     id: "flappybird",
                     name: "Flappy Pipe",
@@ -2304,7 +2177,6 @@
                     instructions:
                         "Click on an empty square to place your 'X'. Try to get 3 in a row before the AI ('O').",
                 },
-                // --- Tier 3: Very Simple / Experimental ---
                 {
                     id: "arkanoid",
                     name: "Arkanoid Lite",
@@ -2429,12 +2301,11 @@
                         "Fill the grid so each row, column, and 3x3 box contains digits 1-9. (Basic implementation)",
                 },
             ];
-            // Sort projects alphabetically by name
             this.projects.sort((a, b) => a.name.localeCompare(b.name));
         }
         populateGameList() {
             const projectList = $(".project-list", this.container);
-            projectList.innerHTML = ""; // Clear existing
+            projectList.innerHTML = ""; 
             const categories = new Set();
             this.projects.forEach((project) => {
                 const projectItem = document.createElement("div");
@@ -2457,7 +2328,6 @@
                 projectList.appendChild(projectItem);
                 categories.add(project.category);
             });
-            // Populate category filters
             const categoryFilters = $(".category-filters", this.container);
             categoryFilters.innerHTML = `<button class="category-btn active" data-category="all">All (${this.projects.length})</button>`;
             const sortedCategories = [...categories].sort();
@@ -2493,7 +2363,7 @@
             const project = this.projects.find((p) => p.id === projectId);
             if (!project) return;
             this.showLoadingIndicator();
-            this.cleanupCurrentGame(); // Clean up previous game resources
+            this.cleanupCurrentGame(); 
             this.currentProject = project;
             const previewWrapper = $(
                 ".project-preview-wrapper",
@@ -2503,34 +2373,28 @@
             const title = $(".project-title", this.container);
             const description = $(".project-description", this.container);
             const instructions = $(".instructions-text", this.container);
-            // Update text content
             title.textContent = this.currentProject.name;
             description.textContent = this.currentProject.description;
             instructions.textContent =
                 this.currentProject.instructions ||
                 "No instructions available.";
-            this.updateScoreDisplay(); // Update score display for the new game
-            // Prepare preview area (clear previous, add new structure)
-            preview.innerHTML = ""; // Clear previous content
+            this.updateScoreDisplay(); 
+            preview.innerHTML = ""; 
             preview.insertAdjacentHTML(
                 "beforeend",
                 this.currentProject.preview
-            ); // Add new game structure (canvas/div)
-            // Find the main game element (canvas or div)
-            const gameElement = preview.children[0]; // Assuming the game element is the first child
+            ); 
+            const gameElement = preview.children[0]; 
             if (gameElement) {
-                // Apply necessary styles if it's a canvas
                 if (gameElement.tagName === "CANVAS") {
                     gameElement.style.width = "100%";
                     gameElement.style.height = "100%";
                     gameElement.style.display = "block";
-                    gameElement.style.objectFit = "contain"; // Ensure it scales nicely
+                    gameElement.style.objectFit = "contain"; 
                 }
-                // Add specific classes or styles if needed based on game type
-                gameElement.classList.add("game-canvas"); // Generic class
+                gameElement.classList.add("game-canvas"); 
             }
             this.highlightProjectItem(projectId);
-            // Create a start game overlay with ultra premium design
             const startGameOverlay = document.createElement("div");
             startGameOverlay.className = "start-game-overlay";
             startGameOverlay.style.position = "absolute";
@@ -2552,7 +2416,6 @@
                 "inset 0 0 100px rgba(16, 30, 62, 0.6)";
             startGameOverlay.style.border =
                 "1px solid rgba(102, 252, 241, 0.15)";
-            // Create premium card container
             const gameCard = document.createElement("div");
             gameCard.style.background =
                 "linear-gradient(135deg, rgba(40, 50, 80, 0.8) 0%, rgba(20, 30, 55, 0.9) 100%)";
@@ -2570,12 +2433,10 @@
             gameCard.style.transform = "translateY(0)";
             gameCard.style.transition =
                 "all 0.3s cubic-bezier(0.19, 1, 0.22, 1)";
-            // Create glowing header for game title
             const gameHeader = document.createElement("div");
             gameHeader.style.position = "relative";
             gameHeader.style.marginBottom = "25px";
             gameHeader.style.padding = "0 10px";
-            // Elite header decoration
             const headerDecor = document.createElement("div");
             headerDecor.style.position = "absolute";
             headerDecor.style.height = "3px";
@@ -2597,7 +2458,6 @@
             headerDecorBottom.style.borderRadius = "3px";
             headerDecorBottom.style.boxShadow =
                 "0 0 8px rgba(102, 252, 241, 0.6)";
-            // Add game info
             const gameTitle = document.createElement("div");
             gameTitle.textContent = this.currentProject.name.toUpperCase();
             gameTitle.style.color = "#fff";
@@ -2608,7 +2468,6 @@
             gameTitle.style.fontFamily = "'Raleway', sans-serif";
             gameTitle.style.textShadow =
                 "0 0 10px rgba(102, 252, 241, 0.8), 0 0 20px rgba(102, 252, 241, 0.4)";
-            // Create badge
             const gameBadge = document.createElement("div");
             gameBadge.textContent = "PREMIUM";
             gameBadge.style.position = "absolute";
@@ -2622,7 +2481,6 @@
             gameBadge.style.borderRadius = "4px";
             gameBadge.style.boxShadow = "0 0 15px rgba(102, 252, 241, 0.8)";
             gameBadge.style.transform = "rotate(15deg)";
-            // Game description with an elegant style
             const gameDesc = document.createElement("div");
             gameDesc.textContent = this.currentProject.description;
             gameDesc.style.color = "#bdd4ff";
@@ -2634,13 +2492,11 @@
             gameDesc.style.borderBottom = "1px solid rgba(102, 252, 241, 0.2)";
             gameDesc.style.paddingBottom = "20px";
             gameDesc.style.width = "100%";
-            // Create premium control panel
             const controlPanel = document.createElement("div");
             controlPanel.style.display = "flex";
             controlPanel.style.flexDirection = "column";
             controlPanel.style.alignItems = "center";
             controlPanel.style.width = "100%";
-            // Start button with elite styling
             const startButton = document.createElement("button");
             startButton.innerHTML =
                 '<span>START GAME</span><i class="fas fa-play" style="margin-left: 10px; font-size: 0.8em;"></i>';
@@ -2665,7 +2521,6 @@
             startButton.style.display = "flex";
             startButton.style.alignItems = "center";
             startButton.style.justifyContent = "center";
-            // Add shine effect element
             const shine = document.createElement("div");
             shine.style.position = "absolute";
             shine.style.top = "-50%";
@@ -2678,7 +2533,6 @@
             shine.style.transition = "all 0.5s cubic-bezier(0.19, 1, 0.22, 1)";
             shine.style.pointerEvents = "none";
             startButton.appendChild(shine);
-            // Instructions note with premium design
             const instructionsNote = document.createElement("div");
             instructionsNote.innerHTML =
                 '<i class="fas fa-info-circle" style="margin-right: 5px;"></i> Game controls shown below';
@@ -2687,7 +2541,6 @@
             instructionsNote.style.marginTop = "20px";
             instructionsNote.style.fontStyle = "italic";
             instructionsNote.style.fontFamily = "'Raleway', sans-serif";
-            // Premium hover effects
             startButton.addEventListener("mouseenter", () => {
                 startButton.style.transform = "translateY(-3px) scale(1.03)";
                 startButton.style.boxShadow =
@@ -2706,7 +2559,6 @@
                 gameCard.style.boxShadow =
                     "0 15px 35px rgba(0, 0, 0, 0.3), 0 0 25px rgba(102, 252, 241, 0.2)";
             });
-            // Create random particle elements for background
             for (let i = 0; i < 15; i++) {
                 const particle = document.createElement("div");
                 particle.style.position = "absolute";
@@ -2723,7 +2575,6 @@
                     Math.random() * 10 + 5
                 }s infinite ease-in-out`;
                 particle.style.opacity = Math.random() * 0.7 + 0.3;
-                // Create keyframes for floating animation
                 const keyframes = `
                 @keyframes floatParticle {
                     0% {
@@ -2738,13 +2589,11 @@
                         transform: translate(0, 0) rotate(360deg);
                     }
                 }`;
-                // Add the keyframes to the document
                 const style = document.createElement("style");
                 style.textContent = keyframes;
                 document.head.appendChild(style);
                 startGameOverlay.appendChild(particle);
             }
-            // Append elements to card
             gameHeader.appendChild(headerDecor);
             gameHeader.appendChild(gameTitle);
             gameHeader.appendChild(headerDecorBottom);
@@ -2754,27 +2603,21 @@
             gameCard.appendChild(gameHeader);
             gameCard.appendChild(gameDesc);
             gameCard.appendChild(controlPanel);
-            // Append game card to overlay
             startGameOverlay.appendChild(gameCard);
-            // Add overlay to the preview wrapper (not directly to the game element)
             const previewWrapperEl = $(
                 ".project-preview-wrapper",
                 this.container
             );
-            previewWrapperEl.style.position = "relative"; // Ensure positioning works
+            previewWrapperEl.style.position = "relative"; 
             previewWrapperEl.appendChild(startGameOverlay);
             this.hideLoadingIndicator();
-            // Initialize the game only when the start button is clicked
             const initializeGame = () => {
                 try {
                     this.showLoadingIndicator();
                     if (this.currentProject.init) {
-                        // CRITICAL FIX: Bind the game showcase context to the init function
-                        // This ensures functions like playSound and updateScore are properly available
                         const boundInitFunction = this.currentProject.init.bind(
                             this
                         );
-                        // Remove the overlay with a fade-out effect
                         startGameOverlay.style.opacity = "0";
                         setTimeout(() => {
                             if (startGameOverlay.parentNode) {
@@ -2782,10 +2625,7 @@
                                     startGameOverlay
                                 );
                             }
-                            // Play a start sound
                             this.playSound("click");
-                            // Pass the container element (canvas or div) to the bound init function
-                            // Important: The init MUST happen AFTER the overlay is removed
                             this.currentGameInstance = boundInitFunction(
                                 gameElement
                             );
@@ -2815,15 +2655,12 @@
                     this.hideLoadingIndicator();
                 }
             };
-            // Add click event to start button
             startButton.addEventListener("click", initializeGame);
-            // Also make the whole overlay clickable but not the text
             startGameOverlay.addEventListener("click", (e) => {
                 if (e.target === startGameOverlay) {
                     initializeGame();
                 }
             });
-            // Update game state tracking
             if (!this.gameStates[projectId]) {
                 this.gameStates[projectId] = {
                     score: 0,
@@ -2833,12 +2670,11 @@
             } else {
                 this.gameStates[projectId].lastPlayed = new Date();
             }
-            this.saveGameStates(); // Save state after loading
-            this.playSound("load"); // Play a sound for loading a new game
+            this.saveGameStates(); 
+            this.playSound("load"); 
         }
         cleanupCurrentGame() {
             if (this.currentGameInstance) {
-                // Call a specific cleanup method if the game instance provides one
                 if (typeof this.currentGameInstance.cleanup === "function") {
                     try {
                         this.currentGameInstance.cleanup();
@@ -2846,29 +2682,24 @@
                         console.error("Error during game cleanup:", error);
                     }
                 }
-                // Generic cleanup: Clear intervals/timeouts associated with the game instance
                 if (this.currentGameInstance.intervalId) {
                     clearInterval(this.currentGameInstance.intervalId);
                 }
                 if (this.currentGameInstance.timeoutIds) {
                     this.currentGameInstance.timeoutIds.forEach(clearTimeout);
                 }
-                // Remove game-specific listeners (assuming they were added via addManagedListener with a game identifier)
                 this.cleanupListeners(
                     (listener) => listener.gameId === this.currentProject?.id
                 );
             }
-            // Clear the preview area more thoroughly
             const preview = $(".project-preview", this.container);
-            preview.innerHTML = ""; // Remove canvas/div and any other elements
+            preview.innerHTML = ""; 
             this.currentGameInstance = null;
-            // Note: We don't reset this.currentProject here, it's reset when loading the *next* project.
         }
         highlightProjectItem(projectId) {
             $$(".project-item", this.container).forEach((item) => {
                 item.classList.toggle("active", item.dataset.id === projectId);
                 if (item.dataset.id === projectId) {
-                    // Smooth scroll into view if not already visible
                     item.scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
@@ -2881,14 +2712,13 @@
             const availableProjects = this.projects.filter(
                 (p) => p.id !== this.currentProject?.id
             );
-            if (availableProjects.length === 0) return; // No other projects to load
+            if (availableProjects.length === 0) return; 
             const randomIndex = Math.floor(
                 Math.random() * availableProjects.length
             );
             const randomProject = availableProjects[randomIndex];
             this.loadProject(randomProject.id);
         }
-        // --- Filtering ---
         filterProjects(searchTerm) {
             const term = searchTerm.toLowerCase().trim();
             const items = $$(".project-item", this.container);
@@ -2941,7 +2771,6 @@
                 item.classList.toggle("hidden", !isVisible);
             });
         }
-        // --- UI Toggles ---
         toggleFullscreen() {
             this.container.classList.toggle("fullscreen");
             const icon = $(".showcase-fullscreen i", this.container);
@@ -2949,7 +2778,6 @@
                 ? "fas fa-compress-arrows-alt"
                 : "fas fa-expand-arrows-alt";
             this.playSound("ui");
-            // Optional: Trigger resize/redraw for the current game if needed
             this.dispatchResizeEvent();
         }
         toggleDarkMode() {
@@ -2957,7 +2785,6 @@
             this.container.classList.toggle("light", !this.isDarkMode);
             this.updateDarkModeButton();
             this.playSound("ui");
-            // Optionally store preference
             try {
                 localStorage.setItem(
                     "projectShowcaseDarkMode",
@@ -2979,7 +2806,6 @@
             this.playSound("ui");
         }
         show() {
-            // Restore dark mode preference
             try {
                 const storedMode = localStorage.getItem(
                     "projectShowcaseDarkMode"
@@ -2992,30 +2818,24 @@
                 console.warn("Could not load dark mode preference.");
             }
             this.container.classList.add("active");
-            this.triggerButton.style.opacity = "0"; // Hide trigger button
+            this.triggerButton.style.opacity = "0"; 
             this.triggerButton.style.pointerEvents = "none";
             this.playSound("open");
-            // Focus search bar?
-            // setTimeout(() => $('.project-search', this.container)?.focus(), 600);
         }
         hide() {
             this.container.classList.remove("active");
-            // Don't remove minimized/fullscreen here, allow transitions
-            this.triggerButton.style.opacity = "1"; // Show trigger button
+            this.triggerButton.style.opacity = "1"; 
             this.triggerButton.style.pointerEvents = "all";
             this.playSound("close");
-            // Clean up the current game when closing the showcase entirely
             this.cleanupCurrentGame();
-            this.currentProject = null; // Reset current project
+            this.currentProject = null; 
         }
-        // --- Game Interaction ---
         toggleGameFullscreen() {
             if (!this.currentProject) return;
             const preview = $(".project-preview", this.container);
-            // const canvas = $("canvas", preview); // Might not always be a canvas
             if (!document.fullscreenElement) {
                 preview
-                    .requestFullscreen?.({ navigationUI: "hide" }) // Hide browser UI if possible
+                    .requestFullscreen?.({ navigationUI: "hide" }) 
                     .catch((err) =>
                         console.error("Fullscreen request failed:", err)
                     );
@@ -3027,9 +2847,9 @@
         restartCurrentGame() {
             if (!this.currentProject || !this.currentProject.init) return;
             this.showLoadingIndicator();
-            this.cleanupCurrentGame(); // Clean up previous instance first
+            this.cleanupCurrentGame(); 
             const preview = $(".project-preview", this.container);
-            preview.innerHTML = this.currentProject.preview; // Re-add game structure
+            preview.innerHTML = this.currentProject.preview; 
             const gameElement = preview.children[0];
             if (gameElement && gameElement.tagName === "CANVAS") {
                 gameElement.style.width = "100%";
@@ -3037,12 +2857,10 @@
                 gameElement.style.display = "block";
                 gameElement.style.objectFit = "contain";
             }
-            // Reset score in state
             if (this.gameStates[this.currentProject.id]) {
                 this.gameStates[this.currentProject.id].score = 0;
             }
-            this.updateScoreDisplay(); // Update UI immediately
-            // Create a premium game restart overlay
+            this.updateScoreDisplay(); 
             const startGameOverlay = document.createElement("div");
             startGameOverlay.className = "start-game-overlay";
             startGameOverlay.style.position = "absolute";
@@ -3064,7 +2882,6 @@
                 "inset 0 0 100px rgba(16, 30, 62, 0.6)";
             startGameOverlay.style.border =
                 "1px solid rgba(102, 252, 241, 0.15)";
-            // Create premium card container
             const gameCard = document.createElement("div");
             gameCard.style.background =
                 "linear-gradient(135deg, rgba(40, 50, 80, 0.8) 0%, rgba(20, 30, 55, 0.9) 100%)";
@@ -3082,12 +2899,10 @@
             gameCard.style.transform = "translateY(0)";
             gameCard.style.transition =
                 "all 0.3s cubic-bezier(0.19, 1, 0.22, 1)";
-            // Create glowing header
             const gameHeader = document.createElement("div");
             gameHeader.style.position = "relative";
             gameHeader.style.marginBottom = "25px";
             gameHeader.style.padding = "0 10px";
-            // Elite header decoration
             const headerDecor = document.createElement("div");
             headerDecor.style.position = "absolute";
             headerDecor.style.height = "3px";
@@ -3098,7 +2913,6 @@
             headerDecor.style.left = "20%";
             headerDecor.style.borderRadius = "3px";
             headerDecor.style.boxShadow = "0 0 10px rgba(102, 252, 241, 0.8)";
-            // Game title with premium styling
             const gameTitle = document.createElement("div");
             gameTitle.textContent = this.currentProject.name.toUpperCase();
             gameTitle.style.color = "#fff";
@@ -3109,7 +2923,6 @@
             gameTitle.style.fontFamily = "'Raleway', sans-serif";
             gameTitle.style.textShadow =
                 "0 0 10px rgba(102, 252, 241, 0.8), 0 0 20px rgba(102, 252, 241, 0.4)";
-            // Create restart badge
             const gameBadge = document.createElement("div");
             gameBadge.textContent = "RESTART";
             gameBadge.style.position = "absolute";
@@ -3123,14 +2936,12 @@
             gameBadge.style.borderRadius = "4px";
             gameBadge.style.boxShadow = "0 0 15px rgba(255, 184, 48, 0.8)";
             gameBadge.style.transform = "rotate(15deg)";
-            // Create premium control panel
             const controlPanel = document.createElement("div");
             controlPanel.style.display = "flex";
             controlPanel.style.flexDirection = "column";
             controlPanel.style.alignItems = "center";
             controlPanel.style.width = "100%";
             controlPanel.style.marginTop = "15px";
-            // Start button with elite styling
             const startButton = document.createElement("button");
             startButton.innerHTML =
                 '<span>RESTART GAME</span><i class="fas fa-redo-alt" style="margin-left: 10px; font-size: 0.8em;"></i>';
@@ -3155,7 +2966,6 @@
             startButton.style.display = "flex";
             startButton.style.alignItems = "center";
             startButton.style.justifyContent = "center";
-            // Add shine effect element
             const shine = document.createElement("div");
             shine.style.position = "absolute";
             shine.style.top = "-50%";
@@ -3168,7 +2978,6 @@
             shine.style.transition = "all 0.5s cubic-bezier(0.19, 1, 0.22, 1)";
             shine.style.pointerEvents = "none";
             startButton.appendChild(shine);
-            // Premium hover effects
             startButton.addEventListener("mouseenter", () => {
                 startButton.style.transform = "translateY(-3px) scale(1.03)";
                 startButton.style.boxShadow =
@@ -3187,7 +2996,6 @@
                 gameCard.style.boxShadow =
                     "0 15px 35px rgba(0, 0, 0, 0.3), 0 0 25px rgba(102, 252, 241, 0.2)";
             });
-            // Create random particle elements for background
             for (let i = 0; i < 10; i++) {
                 const particle = document.createElement("div");
                 particle.style.position = "absolute";
@@ -3204,7 +3012,6 @@
                     Math.random() * 10 + 5
                 }s infinite ease-in-out`;
                 particle.style.opacity = Math.random() * 0.7 + 0.3;
-                // Create keyframes for floating animation
                 const keyframes = `
                 @keyframes floatRestartParticle {
                     0% {
@@ -3219,39 +3026,31 @@
                         transform: translate(0, 0) rotate(360deg);
                     }
                 }`;
-                // Add the keyframes to the document
                 const style = document.createElement("style");
                 style.textContent = keyframes;
                 document.head.appendChild(style);
                 startGameOverlay.appendChild(particle);
             }
-            // Append elements to their containers
             gameHeader.appendChild(headerDecor);
             gameHeader.appendChild(gameTitle);
             gameHeader.appendChild(gameBadge);
             controlPanel.appendChild(startButton);
             gameCard.appendChild(gameHeader);
             gameCard.appendChild(controlPanel);
-            // Append game card to overlay
             startGameOverlay.appendChild(gameCard);
-            // Add overlay to the preview wrapper
             const previewWrapperElement = $(
                 ".project-preview-wrapper",
                 this.container
             );
-            previewWrapperElement.style.position = "relative"; // Ensure positioning works
+            previewWrapperElement.style.position = "relative"; 
             previewWrapperElement.appendChild(startGameOverlay);
             this.hideLoadingIndicator();
-            // Initialize the game only when the start button is clicked
             const initializeRestartedGame = () => {
                 try {
                     this.showLoadingIndicator();
-                    // CRITICAL FIX: Bind the game showcase context to the init function
-                    // This ensures functions like playSound and updateScore are properly available
                     const boundInitFunction = this.currentProject.init.bind(
                         this
                     );
-                    // Remove the overlay with a fade-out effect
                     startGameOverlay.style.opacity = "0";
                     setTimeout(() => {
                         if (startGameOverlay.parentNode) {
@@ -3259,10 +3058,7 @@
                                 startGameOverlay
                             );
                         }
-                        // Play a start sound
                         this.playSound("click");
-                        // Pass the container element (canvas or div) to the bound init function
-                        // Important: The init MUST happen AFTER the overlay is removed
                         this.currentGameInstance = boundInitFunction(
                             gameElement
                         );
@@ -3281,9 +3077,7 @@
                     this.hideLoadingIndicator();
                 }
             };
-            // Add click event to start button
             startButton.addEventListener("click", initializeRestartedGame);
-            // Also make the whole overlay clickable
             startGameOverlay.addEventListener("click", (e) => {
                 if (e.target === startGameOverlay) {
                     initializeRestartedGame();
@@ -3298,9 +3092,8 @@
                 ? "fas fa-volume-up"
                 : "fas fa-volume-mute";
             if (this.soundEnabled) {
-                this.playSound("ui"); // Play sound only when enabling
+                this.playSound("ui"); 
             }
-            // Optionally, inform the current game instance about the sound state
             if (
                 this.currentGameInstance &&
                 typeof this.currentGameInstance.setSoundEnabled === "function"
@@ -3312,7 +3105,7 @@
             const indicator = $(".loading-indicator", this.container);
             const canvas = $("canvas", this.container);
             if (indicator) indicator.classList.add("visible");
-            if (canvas) canvas.classList.add("loading"); // Dim canvas
+            if (canvas) canvas.classList.add("loading"); 
         }
         hideLoadingIndicator() {
             const indicator = $(".loading-indicator", this.container);
@@ -3321,9 +3114,7 @@
             if (canvas) canvas.classList.remove("loading");
         }
         dispatchResizeEvent() {
-            // Some games might need a resize event to redraw correctly
             window.dispatchEvent(new Event("resize"));
-            // If the game has a specific resize handler, call it
             if (
                 this.currentGameInstance &&
                 typeof this.currentGameInstance.resize === "function"
@@ -3331,7 +3122,6 @@
                 this.currentGameInstance.resize();
             }
         }
-        // --- Sound Engine ---
         getAudioContext() {
             if (!this.audioContext) {
                 try {
@@ -3341,7 +3131,7 @@
                     console.error(
                         "Web Audio API is not supported in this browser."
                     );
-                    this.soundEnabled = false; // Disable sound if context fails
+                    this.soundEnabled = false; 
                 }
             }
             return this.audioContext;
@@ -3350,107 +3140,104 @@
             if (!this.soundEnabled) return;
             const audioCtx = this.getAudioContext();
             if (!audioCtx) return;
-            // More varied sounds
             const sounds = {
-                // UI Sounds
                 click: {
                     type: "sine",
                     freq: 880,
                     duration: 0.05,
                     vol: 0.3,
                     decay: 0.04,
-                }, // Higher pitch click
+                }, 
                 ui: {
                     type: "triangle",
                     freq: 660,
                     duration: 0.06,
                     vol: 0.25,
                     decay: 0.05,
-                }, // General UI interaction
+                }, 
                 open: {
                     type: "sine",
                     freq: 523.25,
                     duration: 0.15,
                     vol: 0.4,
                     decay: 0.1,
-                }, // C5
+                }, 
                 close: {
                     type: "sine",
                     freq: 440,
                     duration: 0.15,
                     vol: 0.4,
                     decay: 0.1,
-                }, // A4
+                }, 
                 load: {
                     type: "square",
                     freq: 110,
                     duration: 0.1,
                     vol: 0.2,
                     decay: 0.08,
-                }, // Low buzz
+                }, 
                 restart: {
                     type: "sawtooth",
                     freq: [220, 440],
                     duration: 0.15,
                     vol: 0.3,
                     decay: 0.1,
-                }, // Rising sound
-                // Game Sounds
+                }, 
                 point: {
                     type: "triangle",
                     freq: 1046.5,
                     duration: 0.08,
                     vol: 0.35,
                     decay: 0.07,
-                }, // C6
+                }, 
                 shoot: {
                     type: "square",
                     freq: 440,
                     duration: 0.05,
                     vol: 0.2,
                     decay: 0.04,
-                }, // Laser-like
+                }, 
                 explosion: {
                     type: "noise",
                     duration: 0.3,
                     vol: 0.5,
                     decay: 0.25,
-                }, // White noise burst
+                }, 
                 jump: {
                     type: "sine",
                     freq: [660, 880],
                     duration: 0.1,
                     vol: 0.3,
                     decay: 0.08,
-                }, // Quick rise
+                }, 
                 hit: {
                     type: "sawtooth",
                     freq: 220,
                     duration: 0.1,
                     vol: 0.4,
                     decay: 0.09,
-                }, // Gritty hit
+                }, 
                 powerup: {
                     type: "sine",
                     freq: [523, 659, 783],
                     duration: 0.3,
                     vol: 0.4,
                     decay: 0.25,
-                }, // Arpeggio C-E-G
+                }, 
                 win: {
                     type: "sine",
                     freq: [523, 783, 1046],
                     duration: 0.5,
                     vol: 0.5,
                     decay: 0.4,
-                }, // Higher Arpeggio
+                }, 
                 gameOver: {
                     type: "sawtooth",
                     freq: [220, 110],
                     duration: 0.8,
                     vol: 0.5,
                     decay: 0.7,
-                }, // Descending fail
+                }, 
             };
             const sound = sounds[soundType];
             if (!sound) return;
@@ -3466,14 +3253,13 @@
                     );
                     const output = buffer.getChannelData(0);
                     for (let i = 0; i < bufferSize; i++) {
-                        output[i] = Math.random() * 2 - 1; // White noise
+                        output[i] = Math.random() * 2 - 1; 
                     }
                     oscillator.buffer = buffer;
                 } else {
                     oscillator = audioCtx.createOscillator();
                     oscillator.type = sound.type || "sine";
                     if (Array.isArray(sound.freq)) {
-                        // Frequency sweep or arpeggio
                         oscillator.frequency.setValueAtTime(
                             sound.freq[0],
                             audioCtx.currentTime
@@ -3497,14 +3283,13 @@
                 gainNode.gain.exponentialRampToValueAtTime(
                     0.001,
                     audioCtx.currentTime + sound.decay
-                ); // Faster decay
+                ); 
                 oscillator.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
                 oscillator.start(audioCtx.currentTime);
                 oscillator.stop(audioCtx.currentTime + sound.duration);
             } catch (error) {
                 console.error(`Error playing sound "${soundType}":`, error);
-                // If context gets interrupted, try to recreate it next time
                 if (
                     audioCtx.state === "interrupted" ||
                     audioCtx.state === "closed"
@@ -3513,7 +3298,6 @@
                 }
             }
         }
-        // --- Game State & Score ---
         updateScore(score) {
             if (!this.currentProject) return;
             const projectId = this.currentProject.id;
@@ -3530,12 +3314,10 @@
             if (score > state.highScore) {
                 state.highScore = score;
                 newHighScore = true;
-                // Maybe play a special sound or show animation for new high score?
-                // this.playSound('win'); // Could be too much
             }
-            this.updateScoreDisplay(); // Update UI
-            this.saveGameStates(); // Persist changes
-            return newHighScore; // Return if it was a new high score
+            this.updateScoreDisplay(); 
+            this.saveGameStates(); 
+            return newHighScore; 
         }
         updateScoreDisplay() {
             const scoreDisplay = $(".current-score", this.container);
@@ -3549,7 +3331,6 @@
                 scoreDisplay.textContent = `Score: ${state.score}`;
                 highScoreDisplay.textContent = `High Score: ${state.highScore}`;
             } else {
-                // Default text when no game is selected
                 scoreDisplay.textContent = "Score: -";
                 highScoreDisplay.textContent = "High Score: -";
             }
@@ -3586,13 +3367,12 @@
                 return {};
             }
         }
-        // --- Placeholder Drawing ---
         drawPlaceholder(gameElement, gameName, message) {
             if (!gameElement) return;
             if (gameElement.tagName === "CANVAS") {
                 const ctx = gameElement.getContext("2d");
                 const canvas = gameElement;
-                ctx.fillStyle = "#111"; // Dark background
+                ctx.fillStyle = "#111"; 
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.font = "bold 24px var(--font-heading)";
                 ctx.fillStyle = "var(--primary-color)";
@@ -3630,20 +3410,15 @@
                     <p style="font-size: 0.9em; margin-top: 10px;">Select another game or try restarting.</p>
                 `;
             }
-            this.hideLoadingIndicator(); // Ensure loading is hidden
+            this.hideLoadingIndicator(); 
         }
-        // ========================================================================
-        // ======================= GAME IMPLEMENTATIONS ===========================
-        // ========================================================================
-        // --- Game 1: Breakout Blast ---
         initBreakoutGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
-            const self = this; // Reference to ProjectShowcase instance
+            const self = this; 
             let animationFrameId;
             let score = 0;
             let lives = 3;
-            // Game Objects
             const ball = {
                 x: canvas.width / 2,
                 y: canvas.height - 30,
@@ -3676,11 +3451,10 @@
                 "#2ecc71",
                 "#3498db",
             ];
-            // Input State
             let rightPressed = false;
             let leftPressed = false;
             function createBricks() {
-                bricks.length = 0; // Clear existing bricks
+                bricks.length = 0; 
                 for (let c = 0; c < brickInfo.cols; c++) {
                     bricks[c] = [];
                     for (let r = 0; r < brickInfo.rows; r++) {
@@ -3743,7 +3517,6 @@
                 ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 25);
             }
             function collisionDetection() {
-                // Ball vs Bricks
                 for (let c = 0; c < brickInfo.cols; c++) {
                     for (let r = 0; r < brickInfo.rows; r++) {
                         const b = bricks[c][r];
@@ -3759,7 +3532,6 @@
                                 score += 10;
                                 self.updateScore(score);
                                 self.playSound("hit");
-                                // Check for win
                                 if (
                                     score ===
                                     brickInfo.rows * brickInfo.cols * 10
@@ -3767,15 +3539,13 @@
                                     self.playSound("win");
                                     alert("YOU WIN! CONGRATULATIONS!");
                                     cancelAnimationFrame(animationFrameId);
-                                    // Consider restarting or showing a win screen instead of reload
                                     self.restartCurrentGame();
                                 }
-                                return; // Exit after one collision per frame
+                                return; 
                             }
                         }
                     }
                 }
-                // Ball vs Walls
                 if (
                     ball.x + ball.dx > canvas.width - ball.radius ||
                     ball.x + ball.dx < ball.radius
@@ -3790,32 +3560,26 @@
                     ball.y + ball.dy >
                     canvas.height - ball.radius - paddle.height + 5
                 ) {
-                    // Check near paddle height
                     if (ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
-                        // Hit paddle
                         ball.dy = -ball.dy;
-                        // Add angle based on hit position
                         let deltaX = ball.x - (paddle.x + paddle.width / 2);
-                        ball.dx = deltaX * 0.15; // Adjust multiplier for sensitivity
-                        // Clamp dx to prevent extreme angles
+                        ball.dx = deltaX * 0.15; 
                         ball.dx = Math.max(
                             -ball.speed * 0.9,
                             Math.min(ball.speed * 0.9, ball.dx)
                         );
                         self.playSound("click");
                     } else if (ball.y + ball.dy > canvas.height - ball.radius) {
-                        // Ball hit bottom wall (missed paddle)
                         lives--;
                         self.playSound("gameOver");
                         if (!lives) {
                             alert("GAME OVER");
                             cancelAnimationFrame(animationFrameId);
-                            self.restartCurrentGame(); // Or show game over screen
+                            self.restartCurrentGame(); 
                         } else {
-                            // Reset ball and paddle
                             ball.x = canvas.width / 2;
                             ball.y = canvas.height - 30;
-                            ball.dx = 3 * (Math.random() > 0.5 ? 1 : -1); // Randomize start direction slightly
+                            ball.dx = 3 * (Math.random() > 0.5 ? 1 : -1); 
                             ball.dy = -3;
                             paddle.x = (canvas.width - paddle.width) / 2;
                         }
@@ -3845,7 +3609,6 @@
                 updateBallPosition();
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const keyDownHandler = (e) => {
                 if (e.key === "Right" || e.key === "ArrowRight")
                     rightPressed = true;
@@ -3859,13 +3622,11 @@
                     leftPressed = false;
             };
             const mouseMoveHandler = (e) => {
-                // Ensure canvas position is correctly calculated
                 const rect = canvas.getBoundingClientRect();
-                const scaleX = canvas.width / rect.width; // Handle CSS scaling
+                const scaleX = canvas.width / rect.width; 
                 const relativeX = (e.clientX - rect.left) * scaleX;
                 if (relativeX > 0 && relativeX < canvas.width) {
                     paddle.x = relativeX - paddle.width / 2;
-                    // Clamp paddle position
                     paddle.x = Math.max(
                         0,
                         Math.min(canvas.width - paddle.width, paddle.x)
@@ -3878,36 +3639,31 @@
             self.addManagedListener(document, "keyup", keyUpHandler, {
                 gameId: "breakout",
             });
-            // Listen on canvas for mouse move for better accuracy within the game area
             self.addManagedListener(canvas, "mousemove", mouseMoveHandler, {
                 gameId: "breakout",
             });
-            // Start Game
             createBricks();
             gameLoop();
-            // Return cleanup function
             return {
                 cleanup: () => {
                     cancelAnimationFrame(animationFrameId);
-                    // Listeners are removed by cleanupListeners in ProjectShowcase
                 },
             };
         }
-        // --- Game 2: Hyper Snake ---
         initSnakeGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
             const self = this;
-            const box = 20; // Size of each grid square
-            const canvasSize = canvas.width; // Assuming square canvas
+            const box = 20; 
+            const canvasSize = canvas.width; 
             const boxesCount = canvasSize / box;
             let score = 0;
             let snake;
             let food;
-            let direction; // 'LEFT', 'UP', 'RIGHT', 'DOWN'
-            let changingDirection; // Prevent 180 degree turns
+            let direction; 
+            let changingDirection; 
             let gameInterval;
-            let gameSpeed = 120; // Milliseconds per update
+            let gameSpeed = 120; 
             function initGame() {
                 snake = [
                     {
@@ -3917,8 +3673,8 @@
                 ];
                 createFood();
                 score = 0;
-                self.updateScore(score); // Reset score display
-                direction = undefined; // Start stationary or pick random? Let's wait for input.
+                self.updateScore(score); 
+                direction = undefined; 
                 changingDirection = false;
             }
             function createFood() {
@@ -3930,12 +3686,12 @@
                     snake.some(
                         (segment) => segment.x === foodX && segment.y === foodY
                     )
-                ); // Ensure food not on snake
+                ); 
                 food = { x: foodX, y: foodY };
             }
             function drawSnakePart(snakePart, index) {
-                ctx.fillStyle = index === 0 ? "#32ff7e" : "#2ecc71"; // Head slightly different
-                ctx.strokeStyle = "#1b1b1b"; // Darker border
+                ctx.fillStyle = index === 0 ? "#32ff7e" : "#2ecc71"; 
+                ctx.strokeStyle = "#1b1b1b"; 
                 ctx.fillRect(snakePart.x, snakePart.y, box, box);
                 ctx.strokeRect(snakePart.x, snakePart.y, box, box);
             }
@@ -3943,7 +3699,7 @@
                 snake.forEach(drawSnakePart);
             }
             function drawFood() {
-                ctx.fillStyle = "#ff4757"; // Red food
+                ctx.fillStyle = "#ff4757"; 
                 ctx.strokeStyle = "#darkred";
                 ctx.fillRect(food.x, food.y, box, box);
                 ctx.strokeRect(food.x, food.y, box, box);
@@ -3955,7 +3711,7 @@
                 ctx.fillText("Score: " + score, box, box);
             }
             function moveSnake() {
-                if (!direction) return; // Don't move until a direction is chosen
+                if (!direction) return; 
                 let headX = snake[0].x;
                 let headY = snake[0].y;
                 if (direction === "LEFT") headX -= box;
@@ -3963,7 +3719,6 @@
                 if (direction === "RIGHT") headX += box;
                 if (direction === "DOWN") headY += box;
                 const newHead = { x: headX, y: headY };
-                // Check for collisions (wall or self)
                 if (
                     headX < 0 ||
                     headX >= canvasSize ||
@@ -3974,24 +3729,18 @@
                     gameOver();
                     return;
                 }
-                snake.unshift(newHead); // Add new head
-                // Check for food collision
+                snake.unshift(newHead); 
                 if (headX === food.x && headY === food.y) {
                     score += 10;
                     self.updateScore(score);
                     self.playSound("point");
                     createFood();
-                    // Increase speed slightly?
-                    // gameSpeed = Math.max(50, gameSpeed - 2);
-                    // clearInterval(gameInterval);
-                    // gameInterval = setInterval(gameLoop, gameSpeed);
                 } else {
-                    snake.pop(); // Remove tail if no food eaten
+                    snake.pop(); 
                 }
-                changingDirection = false; // Allow next direction change
+                changingDirection = false; 
             }
             function didCollide(head) {
-                // Check collision with snake body (excluding the very head before it's added)
                 for (let i = 1; i < snake.length; i++) {
                     if (head.x === snake[i].x && head.y === snake[i].y) {
                         return true;
@@ -4000,7 +3749,7 @@
                 return false;
             }
             function changeDirection(event) {
-                if (changingDirection) return; // Prevent rapid direction changes
+                if (changingDirection) return; 
                 const keyPressed = event.key;
                 const goingUp = direction === "UP";
                 const goingDown = direction === "DOWN";
@@ -4060,40 +3809,34 @@
                     canvasSize / 2,
                     canvasSize / 2 + 50
                 );
-                // No automatic restart, let user click button
             }
             function gameLoop() {
-                // Clear canvas
-                ctx.fillStyle = "#1a1a2e"; // Dark background
+                ctx.fillStyle = "#1a1a2e"; 
                 ctx.fillRect(0, 0, canvasSize, canvasSize);
-                moveSnake(); // Move snake first
+                moveSnake(); 
                 if (gameInterval) {
-                    // Check if game over happened in moveSnake
                     drawFood();
                     drawSnake();
                     drawScore();
                 }
             }
-            // Setup
             self.addManagedListener(document, "keydown", changeDirection, {
                 gameId: "snake",
             });
             initGame();
             gameInterval = setInterval(gameLoop, gameSpeed);
-            // Return cleanup
             return {
                 cleanup: () => {
                     clearInterval(gameInterval);
-                    gameInterval = null; // Ensure it's cleared
+                    gameInterval = null; 
                 },
             };
         }
-        // --- Game 3: Tetris Dimensions ---
         initTetrisGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
             const self = this;
-            const scale = 30; // Size of each block
+            const scale = 30; 
             const rows = canvas.height / scale;
             const cols = canvas.width / scale;
             const colors = [
@@ -4104,13 +3847,13 @@
                 "#F538FF",
                 "#FF8E0D",
                 "#FFE138",
-                "#3877FF", // Tetromino colors
+                "#3877FF", 
             ];
-            const pieces = "TJLOSZI"; // Tetromino types
+            const pieces = "TJLOSZI"; 
             let board;
             let player;
             let dropCounter;
-            let dropInterval; // Milliseconds per drop
+            let dropInterval; 
             let lastTime;
             let score;
             let level;
@@ -4181,7 +3924,7 @@
                                 scale,
                                 scale
                             );
-                            ctx.strokeStyle = "rgba(0,0,0,0.3)"; // Subtle border
+                            ctx.strokeStyle = "rgba(0,0,0,0.3)"; 
                             ctx.strokeRect(
                                 (x + offset.x) * scale,
                                 (y + offset.y) * scale,
@@ -4193,24 +3936,17 @@
                 });
             }
             function draw() {
-                // Draw background
                 ctx.fillStyle = "#111";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                // Draw board
                 drawMatrix(board, { x: 0, y: 0 });
-                // Draw current piece
                 drawMatrix(player.matrix, player.pos);
-                // Draw Ghost Piece (optional but cool)
                 drawGhostPiece();
-                // Draw Score/Level/Lines
                 ctx.fillStyle = "#fff";
                 ctx.font = "16px var(--font-main)";
                 ctx.textAlign = "left";
                 ctx.fillText(`Score: ${score}`, 10, 25);
                 ctx.fillText(`Level: ${level}`, 10, 50);
                 ctx.fillText(`Lines: ${linesCleared}`, 10, 75);
-                // Draw Next Piece Preview (optional)
-                // drawNextPiece();
                 if (paused) {
                     ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
                     ctx.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
@@ -4221,15 +3957,13 @@
                 }
             }
             function drawGhostPiece() {
-                const ghost = { ...player }; // Shallow copy is enough here
-                ghost.matrix = player.matrix; // Share matrix reference
-                ghost.pos = { x: player.pos.x, y: player.pos.y }; // Copy position
-                // Drop ghost until collision
+                const ghost = { ...player }; 
+                ghost.matrix = player.matrix; 
+                ghost.pos = { x: player.pos.x, y: player.pos.y }; 
                 while (!collide(board, ghost)) {
                     ghost.pos.y++;
                 }
-                ghost.pos.y--; // Back up one step
-                // Draw ghost with transparency
+                ghost.pos.y--; 
                 ctx.globalAlpha = 0.2;
                 drawMatrix(ghost.matrix, ghost.pos);
                 ctx.globalAlpha = 1.0;
@@ -4238,7 +3972,6 @@
                 player.matrix.forEach((row, y) => {
                     row.forEach((value, x) => {
                         if (value !== 0) {
-                            // Check bounds before assigning
                             if (
                                 y + player.pos.y >= 0 &&
                                 y + player.pos.y < board.length &&
@@ -4254,7 +3987,6 @@
                 });
             }
             function rotate(matrix, dir) {
-                // Transpose and then reverse rows for rotation
                 for (let y = 0; y < matrix.length; ++y) {
                     for (let x = 0; x < y; ++x) {
                         [matrix[x][y], matrix[y][x]] = [
@@ -4276,58 +4008,51 @@
                 while (collide(board, player)) {
                     player.pos.x += offset;
                     offset = -(offset + (offset > 0 ? 1 : -1));
-                    // Check if rotation is impossible (e.g., piece 'I' against wall)
                     if (offset > player.matrix[0].length + 1) {
-                        // Allow slightly more offset check
-                        rotate(player.matrix, -dir); // Rotate back
-                        player.pos.x = pos; // Reset position
-                        return; // Rotation failed
+                        rotate(player.matrix, -dir); 
+                        player.pos.x = pos; 
+                        return; 
                     }
                 }
-                self.playSound("click"); // Sound for rotation
+                self.playSound("click"); 
             }
             function playerMove(offset) {
                 player.pos.x += offset;
                 if (collide(board, player)) {
-                    player.pos.x -= offset; // Move back if collision
+                    player.pos.x -= offset; 
                 }
             }
             function playerDrop() {
                 player.pos.y++;
                 if (collide(board, player)) {
-                    player.pos.y--; // Move back up
-                    merge(board, player); // Lock piece into board
-                    self.playSound("hit"); // Sound for piece landing
-                    playerReset(); // Get next piece
-                    arenaSweep(); // Check for cleared lines
-                    updateGameStats(); // Update score, level etc.
+                    player.pos.y--; 
+                    merge(board, player); 
+                    self.playSound("hit"); 
+                    playerReset(); 
+                    arenaSweep(); 
+                    updateGameStats(); 
                 }
-                dropCounter = 0; // Reset drop timer after manual drop
+                dropCounter = 0; 
             }
             function playerHardDrop() {
                 while (!collide(board, player)) {
                     player.pos.y++;
                 }
-                player.pos.y--; // Back up one step
+                player.pos.y--; 
                 merge(board, player);
                 self.playSound("hit");
                 playerReset();
                 arenaSweep();
                 updateGameStats();
-                dropCounter = 0; // Reset timer
+                dropCounter = 0; 
             }
             function collide(board, player) {
                 const [m, o] = [player.matrix, player.pos];
                 for (let y = 0; y < m.length; ++y) {
                     for (let x = 0; x < m[y].length; ++x) {
                         if (m[y][x] !== 0) {
-                            // If it's part of the piece
                             let boardY = y + o.y;
                             let boardX = x + o.x;
-                            // Check collision conditions:
-                            // 1. Piece is outside left/right bounds
-                            // 2. Piece is outside bottom bound
-                            // 3. Piece overlaps with an existing block on the board
                             if (
                                 boardX < 0 ||
                                 boardX >= cols ||
@@ -4336,21 +4061,20 @@
                                     board[boardY] &&
                                     board[boardY][boardX] !== 0)
                             ) {
-                                return true; // Collision detected
+                                return true; 
                             }
                         }
                     }
                 }
-                return false; // No collision
+                return false; 
             }
             function playerReset() {
                 const type = pieces[Math.floor(Math.random() * pieces.length)];
                 player.matrix = createPiece(type);
-                player.pos.y = 0; // Start at top
+                player.pos.y = 0; 
                 player.pos.x =
                     Math.floor(cols / 2) -
-                    Math.floor(player.matrix[0].length / 2); // Centered
-                // Game Over check
+                    Math.floor(player.matrix[0].length / 2); 
                 if (collide(board, player)) {
                     gameOver();
                 }
@@ -4360,29 +4084,25 @@
                 outer: for (let y = board.length - 1; y >= 0; --y) {
                     for (let x = 0; x < board[y].length; ++x) {
                         if (board[y][x] === 0) {
-                            continue outer; // Row not full, check next row up
+                            continue outer; 
                         }
                     }
-                    // If we reach here, the row is full
-                    const row = board.splice(y, 1)[0].fill(0); // Remove full row
-                    board.unshift(row); // Add empty row at the top
-                    ++y; // Re-check the current row index as rows shifted down
+                    const row = board.splice(y, 1)[0].fill(0); 
+                    board.unshift(row); 
+                    ++y; 
                     rowsClearedThisTurn++;
                 }
                 if (rowsClearedThisTurn > 0) {
-                    // Score based on lines cleared and level
-                    const lineScores = [0, 100, 300, 500, 800]; // 0, 1, 2, 3, 4 lines
+                    const lineScores = [0, 100, 300, 500, 800]; 
                     score += lineScores[rowsClearedThisTurn] * level;
                     linesCleared += rowsClearedThisTurn;
-                    self.playSound(rowsClearedThisTurn >= 4 ? "win" : "point"); // Special sound for Tetris
-                    // Update level based on lines cleared
+                    self.playSound(rowsClearedThisTurn >= 4 ? "win" : "point"); 
                     level = Math.floor(linesCleared / 10) + 1;
-                    // Update drop interval based on level (make it faster)
-                    dropInterval = Math.max(100, 1000 - (level - 1) * 75); // Adjust speed curve
+                    dropInterval = Math.max(100, 1000 - (level - 1) * 75); 
                 }
             }
             function updateGameStats() {
-                self.updateScore(score); // Update showcase score/highscore
+                self.updateScore(score); 
             }
             function gameOver() {
                 cancelAnimationFrame(animationFrameId);
@@ -4412,30 +4132,29 @@
                 );
             }
             function update(time = 0) {
-                if (paused || !animationFrameId) return; // Stop updates if paused or game over
+                if (paused || !animationFrameId) return; 
                 const deltaTime = time - lastTime;
                 lastTime = time;
                 dropCounter += deltaTime;
                 if (dropCounter > dropInterval) {
-                    playerDrop(); // Auto drop
+                    playerDrop(); 
                 }
                 draw();
                 animationFrameId = requestAnimationFrame(update);
             }
             function handleKeyDown(event) {
-                if (!animationFrameId) return; // Ignore input if game over
+                if (!animationFrameId) return; 
                 if (event.key === "p" || event.key === "P") {
                     paused = !paused;
                     if (!paused) {
-                        // Unpausing
-                        lastTime = performance.now(); // Reset time to avoid large jump
-                        update(); // Restart loop if it was stopped
+                        lastTime = performance.now(); 
+                        update(); 
                     }
                     self.playSound("ui");
-                    draw(); // Redraw immediately to show/hide pause overlay
-                    return; // Don't process other keys if pausing/unpausing
+                    draw(); 
+                    return; 
                 }
-                if (paused) return; // Ignore game controls if paused
+                if (paused) return; 
                 switch (event.key) {
                     case "ArrowLeft":
                     case "a":
@@ -4449,20 +4168,19 @@
                     case "s":
                         playerDrop();
                         break;
-                    case "ArrowUp": // Rotate clockwise
+                    case "ArrowUp": 
                     case "w":
                     case "x":
                         playerRotate(1);
                         break;
-                    case "z": // Rotate counter-clockwise (optional)
+                    case "z": 
                         playerRotate(-1);
                         break;
-                    case " ": // Space for Hard Drop
+                    case " ": 
                         playerHardDrop();
                         break;
                 }
             }
-            // Initialize Game State
             function startGame() {
                 board = createMatrix(cols, rows);
                 player = { pos: { x: 0, y: 0 }, matrix: null };
@@ -4473,17 +4191,15 @@
                 dropCounter = 0;
                 lastTime = 0;
                 paused = false;
-                self.updateScore(score); // Reset display
-                playerReset(); // Get first piece
-                if (animationFrameId) cancelAnimationFrame(animationFrameId); // Clear previous loop if restarting
-                animationFrameId = requestAnimationFrame(update); // Start game loop
+                self.updateScore(score); 
+                playerReset(); 
+                if (animationFrameId) cancelAnimationFrame(animationFrameId); 
+                animationFrameId = requestAnimationFrame(update); 
             }
-            // Setup
             self.addManagedListener(document, "keydown", handleKeyDown, {
                 gameId: "tetris",
             });
             startGame();
-            // Return cleanup
             return {
                 cleanup: () => {
                     if (animationFrameId) {
@@ -4493,7 +4209,6 @@
                 },
             };
         }
-        // --- Game 4: Quantum Pong ---
         initPongGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
@@ -4503,7 +4218,7 @@
                 paddleHeight = 100,
                 ballRadius = 8;
             const playerSpeed = 6,
-                aiSpeed = 4; // AI slightly slower
+                aiSpeed = 4; 
             let ball = {
                 x: canvas.width / 2,
                 y: canvas.height / 2,
@@ -4526,8 +4241,7 @@
                 height: paddleHeight,
                 score: 0,
                 dy: 0,
-            }; // AI or P2
-            // Input State (for Player 1 and potentially Player 2 if not AI)
+            }; 
             let keys = {};
             function drawRect(x, y, w, h, color) {
                 ctx.fillStyle = color;
@@ -4561,25 +4275,19 @@
             function resetBall() {
                 ball.x = canvas.width / 2;
                 ball.y = canvas.height / 2;
-                ball.dx = 5 * (Math.random() > 0.5 ? 1 : -1); // Random direction
-                ball.dy = Math.random() * 6 - 3; // Random angle (-3 to 3)
-                if (Math.abs(ball.dy) < 1) ball.dy = ball.dy < 0 ? -1 : 1; // Ensure not too horizontal
+                ball.dx = 5 * (Math.random() > 0.5 ? 1 : -1); 
+                ball.dy = Math.random() * 6 - 3; 
+                if (Math.abs(ball.dy) < 1) ball.dy = ball.dy < 0 ? -1 : 1; 
             }
             function update() {
-                // Move Paddles based on input
                 if (keys["w"] || keys["W"]) player1.y -= playerSpeed;
                 if (keys["s"] || keys["S"]) player1.y += playerSpeed;
-                // if (keys['ArrowUp']) player2.y -= playerSpeed; // Uncomment for 2-Player
-                // if (keys['ArrowDown']) player2.y += playerSpeed; // Uncomment for 2-Player
-                // AI Movement (Simple)
                 const targetY = ball.y - player2.height / 2;
                 if (player2.y + player2.height / 2 < ball.y - 10) {
-                    // Add some tolerance
                     player2.y += aiSpeed;
                 } else if (player2.y + player2.height / 2 > ball.y + 10) {
                     player2.y -= aiSpeed;
                 }
-                // Clamp paddle positions
                 player1.y = Math.max(
                     0,
                     Math.min(canvas.height - player1.height, player1.y)
@@ -4588,10 +4296,8 @@
                     0,
                     Math.min(canvas.height - player2.height, player2.y)
                 );
-                // Move Ball
                 ball.x += ball.dx;
                 ball.y += ball.dy;
-                // Ball Collision: Top/Bottom Walls
                 if (
                     ball.y - ball.radius < 0 ||
                     ball.y + ball.radius > canvas.height
@@ -4599,33 +4305,25 @@
                     ball.dy = -ball.dy;
                     self.playSound("click");
                 }
-                // Ball Collision: Paddles
                 let player = ball.x < canvas.width / 2 ? player1 : player2;
                 if (
-                    ball.x - ball.radius < player.x + player.width && // Left edge check (P1) or Right edge check (P2)
-                    ball.x + ball.radius > player.x && // Right edge check (P1) or Left edge check (P2)
-                    ball.y + ball.radius > player.y && // Top edge check
+                    ball.x - ball.radius < player.x + player.width && 
+                    ball.x + ball.radius > player.x && 
+                    ball.y + ball.radius > player.y && 
                     ball.y - ball.radius < player.y + player.height
                 ) {
-                    // Bottom edge check
-                    // Collision detected
                     ball.dx = -ball.dx;
-                    // Increase speed slightly on hit?
-                    // ball.dx *= 1.05;
-                    // ball.dy *= 1.05;
-                    // Add angle based on where it hit the paddle
                     let collidePoint = ball.y - (player.y + player.height / 2);
-                    collidePoint = collidePoint / (player.height / 2); // Normalize (-1 to 1)
-                    let angleRad = collidePoint * (Math.PI / 4); // Max 45 degrees
+                    collidePoint = collidePoint / (player.height / 2); 
+                    let angleRad = collidePoint * (Math.PI / 4); 
                     let direction = ball.x < canvas.width / 2 ? 1 : -1;
                     let speed = Math.sqrt(
                         ball.dx * ball.dx + ball.dy * ball.dy
-                    ); // Maintain speed
+                    ); 
                     ball.dx = direction * speed * Math.cos(angleRad);
                     ball.dy = speed * Math.sin(angleRad);
                     self.playSound("hit");
                 }
-                // Ball Collision: Left/Right Walls (Score)
                 if (ball.x - ball.radius < 0) {
                     player2.score++;
                     self.playSound("point");
@@ -4635,13 +4333,9 @@
                     self.playSound("point");
                     resetBall();
                 }
-                // Check for Win Condition (optional)
-                // if (player1.score >= 10 || player2.score >= 10) { ... gameOver ... }
             }
             function render() {
-                // Clear canvas
-                drawRect(0, 0, canvas.width, canvas.height, "#1a1a2e"); // Background
-                // Draw elements
+                drawRect(0, 0, canvas.width, canvas.height, "#1a1a2e"); 
                 drawNet();
                 drawRect(
                     player1.x,
@@ -4665,7 +4359,6 @@
                 render();
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleKeyDown = (e) => {
                 keys[e.key] = true;
             };
@@ -4678,10 +4371,8 @@
             self.addManagedListener(document, "keyup", handleKeyUp, {
                 gameId: "pong",
             });
-            // Start Game
-            resetBall(); // Initial ball position and velocity
+            resetBall(); 
             animationFrameId = requestAnimationFrame(gameLoop);
-            // Return cleanup
             return {
                 cleanup: () => {
                     cancelAnimationFrame(animationFrameId);
@@ -4689,7 +4380,6 @@
                 },
             };
         }
-        // --- Game 5: Galaxy Invaders ---
         initSpaceInvadersGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
@@ -4716,8 +4406,8 @@
                 speed: 0.5,
                 drop: 20,
                 fireRate: 0.01,
-            }; // Adjust fireRate (lower = more frequent)
-            let invaderDirection = 1; // 1 for right, -1 for left
+            }; 
+            let invaderDirection = 1; 
             let score = 0;
             let gameOver = false;
             let gameWon = false;
@@ -4730,7 +4420,7 @@
                             invaderInfo.padding)) /
                     2;
                 const startY = 50;
-                const colors = ["#e74c3c", "#e74c3c", "#f1c40f", "#f1c40f"]; // Different colors per row pair
+                const colors = ["#e74c3c", "#e74c3c", "#f1c40f", "#f1c40f"]; 
                 for (let r = 0; r < invaderInfo.rows; r++) {
                     for (let c = 0; c < invaderInfo.cols; c++) {
                         invaders.push({
@@ -4742,7 +4432,7 @@
                                 r *
                                     (invaderInfo.height +
                                         invaderInfo.padding +
-                                        5), // Add vertical spacing
+                                        5), 
                             width: invaderInfo.width,
                             height: invaderInfo.height,
                             color: colors[r % colors.length],
@@ -4753,7 +4443,6 @@
             }
             function drawPlayer() {
                 ctx.fillStyle = player.color;
-                // Simple triangle ship
                 ctx.beginPath();
                 ctx.moveTo(player.x + player.width / 2, player.y);
                 ctx.lineTo(player.x, player.y + player.height);
@@ -4762,11 +4451,11 @@
                 ctx.fill();
             }
             function drawBullets() {
-                ctx.fillStyle = "#00ffff"; // Cyan bullets
+                ctx.fillStyle = "#00ffff"; 
                 bullets.forEach((bullet) => {
                     ctx.fillRect(bullet.x - 2, bullet.y, 4, 10);
                 });
-                ctx.fillStyle = "#ff4757"; // Red invader bullets
+                ctx.fillStyle = "#ff4757"; 
                 invaderBullets.forEach((bullet) => {
                     ctx.fillRect(bullet.x - 2, bullet.y, 4, 8);
                 });
@@ -4781,7 +4470,6 @@
                             invader.width,
                             invader.height
                         );
-                        // Add simple details?
                         ctx.fillStyle = "black";
                         ctx.fillRect(
                             invader.x + invader.width * 0.2,
@@ -4862,7 +4550,6 @@
             }
             function shoot() {
                 if (bullets.length < 3) {
-                    // Limit bullets on screen
                     bullets.push({
                         x: player.x + player.width / 2,
                         y: player.y,
@@ -4872,13 +4559,11 @@
                 }
             }
             function updateBullets() {
-                // Player bullets
                 for (let i = bullets.length - 1; i >= 0; i--) {
                     bullets[i].y -= bullets[i].speed;
                     if (bullets[i].y < 0) {
-                        bullets.splice(i, 1); // Remove if off-screen
+                        bullets.splice(i, 1); 
                     } else {
-                        // Check collision with invaders
                         for (let j = invaders.length - 1; j >= 0; j--) {
                             const invader = invaders[j];
                             if (
@@ -4889,27 +4574,24 @@
                                 bullets[i].y < invader.y + invader.height
                             ) {
                                 invader.alive = false;
-                                bullets.splice(i, 1); // Remove bullet
+                                bullets.splice(i, 1); 
                                 score += 100;
                                 self.updateScore(score);
                                 self.playSound("explosion");
-                                // Check for win condition
                                 if (invaders.every((inv) => !inv.alive)) {
                                     gameWon = true;
                                     self.playSound("win");
                                 }
-                                break; // Bullet can only hit one invader
+                                break; 
                             }
                         }
                     }
                 }
-                // Invader bullets
                 for (let i = invaderBullets.length - 1; i >= 0; i--) {
                     invaderBullets[i].y += invaderBullets[i].speed;
                     if (invaderBullets[i].y > canvas.height) {
                         invaderBullets.splice(i, 1);
                     } else {
-                        // Check collision with player
                         if (
                             invaderBullets[i].x > player.x &&
                             invaderBullets[i].x < player.x + player.width &&
@@ -4940,18 +4622,15 @@
                             furthestRight,
                             invader.x + invader.width
                         );
-                        // Check if invaders reached player level
                         if (invader.y + invader.height >= player.y) {
                             gameOver = true;
                             self.playSound("gameOver");
                         }
-                        // Randomly fire bullets
                         if (
                             Math.random() <
                             invaderInfo.fireRate /
                                 invaders.filter((inv) => inv.alive).length
                         ) {
-                            // Adjust fire rate based on remaining invaders
                             invaderBullets.push({
                                 x: invader.x + invader.width / 2,
                                 y: invader.y + invader.height,
@@ -4960,14 +4639,11 @@
                         }
                     }
                 });
-                // Check wall collision
                 if (furthestRight > canvas.width || furthestLeft < 0) {
-                    invaderDirection *= -1; // Change direction
+                    invaderDirection *= -1; 
                     moveDown = true;
-                    // Increase speed slightly?
                     invaderInfo.speed *= 1.05;
                 }
-                // Move invaders down if wall hit
                 if (moveDown) {
                     invaders.forEach((invader) => {
                         if (invader.alive) {
@@ -4976,30 +4652,25 @@
                     });
                 }
             }
-            // Input State
             let leftPressed = false;
             let rightPressed = false;
             function gameLoop() {
                 if (gameOver || gameWon) {
-                    drawUI(); // Draw final screen
-                    return; // Stop the loop
+                    drawUI(); 
+                    return; 
                 }
-                // Handle Input
                 if (leftPressed) movePlayer(-player.speed);
                 if (rightPressed) movePlayer(player.speed);
-                // Update Game Objects
                 updateInvaders();
                 updateBullets();
-                // Draw Everything
-                ctx.fillStyle = "#111"; // Background
+                ctx.fillStyle = "#111"; 
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drawPlayer();
                 drawInvaders();
                 drawBullets();
-                drawUI(); // Score and Lives
+                drawUI(); 
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleKeyDown = (e) => {
                 if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a")
                     leftPressed = true;
@@ -5024,10 +4695,8 @@
             self.addManagedListener(document, "keyup", handleKeyUp, {
                 gameId: "spaceinvaders",
             });
-            // Start Game
             createInvaders();
             animationFrameId = requestAnimationFrame(gameLoop);
-            // Return cleanup
             return {
                 cleanup: () => {
                     cancelAnimationFrame(animationFrameId);
@@ -5035,7 +4704,6 @@
                 },
             };
         }
-        // --- Game 6: Asteroid Belt ---
         initAsteroidsGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
@@ -5045,7 +4713,7 @@
                 x: canvas.width / 2,
                 y: canvas.height / 2,
                 radius: 15,
-                angle: 0, // Angle in radians
+                angle: 0, 
                 rotation: 0,
                 thrusting: false,
                 thrust: { x: 0, y: 0 },
@@ -5055,22 +4723,21 @@
             };
             const bullets = [];
             const asteroids = [];
-            const debris = []; // For explosion effects
-            const shipTurnSpeed = 0.08; // Radians per frame
+            const debris = []; 
+            const shipTurnSpeed = 0.08; 
             const shipThrust = 0.1;
             const friction = 0.99;
             const bulletSpeed = 5;
-            const asteroidNum = 5; // Initial number
+            const asteroidNum = 5; 
             const asteroidSpeed = 1;
-            const asteroidVertices = 10; // Roughness
-            const asteroidJag = 0.4; // Jaggedness (0=none, 1=max)
+            const asteroidVertices = 10; 
+            const asteroidJag = 0.4; 
             let score = 0;
             let gameOver = false;
             function createAsteroids(count, initialSize = 60) {
                 for (let i = 0; i < count; i++) {
                     let x, y;
                     do {
-                        // Ensure asteroids don't spawn too close to the ship initially
                         x = Math.random() * canvas.width;
                         y = Math.random() * canvas.height;
                     } while (
@@ -5081,13 +4748,13 @@
                 }
             }
             function newAsteroid(x, y, radius) {
-                const lvlMult = 1 + (0.1 * score) / 1000; // Increase speed slightly with score
+                const lvlMult = 1 + (0.1 * score) / 1000; 
                 const angle = Math.random() * Math.PI * 2;
                 const vert = Math.floor(
                     Math.random() * (asteroidVertices + 1) +
                         asteroidVertices / 2
                 );
-                const offs = []; // Offsets for jaggedness
+                const offs = []; 
                 for (let i = 0; i < vert; i++) {
                     offs.push(
                         Math.random() * asteroidJag * 2 + 1 - asteroidJag
@@ -5097,7 +4764,7 @@
                     x: x,
                     y: y,
                     radius: radius,
-                    angle: Math.random() * Math.PI * 2, // Rotation angle
+                    angle: Math.random() * Math.PI * 2, 
                     vel: {
                         x:
                             Math.random() *
@@ -5111,7 +4778,7 @@
                             (Math.random() < 0.5 ? 1 : -1),
                     },
                     vert: vert,
-                    offs: offs, // Vertices and offsets
+                    offs: offs, 
                 };
             }
             function distBetweenPoints(x1, y1, x2, y2) {
@@ -5119,17 +4786,15 @@
             }
             function drawShip() {
                 if (ship.invincible && Math.floor(Date.now() / 150) % 2 === 0) {
-                    return; // Blink when invincible
+                    return; 
                 }
                 ctx.strokeStyle = "white";
                 ctx.lineWidth = ship.radius / 15;
                 ctx.beginPath();
-                // Nose
                 ctx.moveTo(
                     ship.x + ship.radius * Math.cos(ship.angle),
-                    ship.y - ship.radius * Math.sin(ship.angle) // Y is inverted in canvas
+                    ship.y - ship.radius * Math.sin(ship.angle) 
                 );
-                // Rear Left
                 ctx.lineTo(
                     ship.x -
                         ship.radius *
@@ -5138,7 +4803,6 @@
                         ship.radius *
                             (Math.sin(ship.angle) - Math.cos(ship.angle))
                 );
-                // Rear Right
                 ctx.lineTo(
                     ship.x -
                         ship.radius *
@@ -5149,34 +4813,30 @@
                 );
                 ctx.closePath();
                 ctx.stroke();
-                // Draw thrust flame
                 if (ship.thrusting && !gameOver) {
                     ctx.fillStyle = "red";
                     ctx.strokeStyle = "yellow";
                     ctx.lineWidth = ship.radius / 20;
                     ctx.beginPath();
-                    // Rear center
                     ctx.moveTo(
                         ship.x -
                             ship.radius *
                                 (1.1 * Math.cos(ship.angle) +
-                                    0.0 * Math.sin(ship.angle)), // Slightly behind center
+                                    0.0 * Math.sin(ship.angle)), 
                         ship.y +
                             ship.radius *
                                 (1.1 * Math.sin(ship.angle) -
                                     0.0 * Math.cos(ship.angle))
                     );
-                    // Flame point
                     ctx.lineTo(
                         ship.x - ship.radius * 1.8 * Math.cos(ship.angle),
                         ship.y + ship.radius * 1.8 * Math.sin(ship.angle)
                     );
-                    // Rear center again (for fill)
                     ctx.lineTo(
                         ship.x -
                             ship.radius *
                                 (1.1 * Math.cos(ship.angle) -
-                                    0.0 * Math.sin(ship.angle)), // Slightly behind center
+                                    0.0 * Math.sin(ship.angle)), 
                         ship.y +
                             ship.radius *
                                 (1.1 * Math.sin(ship.angle) +
@@ -5271,7 +4931,6 @@
             function explodeShip() {
                 ship.lives--;
                 self.playSound("explosion");
-                // Create debris
                 for (let i = 0; i < 20; i++) {
                     debris.push({
                         x: ship.x,
@@ -5280,31 +4939,28 @@
                             x: Math.random() * 10 - 5,
                             y: Math.random() * 10 - 5,
                         },
-                        life: 60, // Frames to live
+                        life: 60, 
                     });
                 }
                 if (ship.lives <= 0) {
                     gameOver = true;
                     self.playSound("gameOver");
                 } else {
-                    // Reset ship position and make invincible
                     ship.x = canvas.width / 2;
                     ship.y = canvas.height / 2;
                     ship.thrust = { x: 0, y: 0 };
                     ship.angle = 0;
                     ship.invincible = true;
-                    ship.invincibleTimer = 180; // 3 seconds at 60fps
+                    ship.invincibleTimer = 180; 
                 }
             }
             function destroyAsteroid(index) {
                 const a = asteroids[index];
                 self.playSound("explosion");
-                // Score based on size
                 if (a.radius > 40) score += 20;
                 else if (a.radius > 20) score += 50;
                 else score += 100;
                 self.updateScore(score);
-                // Create debris
                 for (let i = 0; i < a.radius / 2; i++) {
                     debris.push({
                         x: a.x,
@@ -5316,42 +4972,34 @@
                         life: 45,
                     });
                 }
-                // Split asteroid if large enough
                 if (a.radius > 15) {
                     asteroids.push(newAsteroid(a.x, a.y, a.radius / 2));
                     asteroids.push(newAsteroid(a.x, a.y, a.radius / 2));
                 }
                 asteroids.splice(index, 1);
-                // Check if level cleared
                 if (asteroids.length === 0) {
                     self.playSound("win");
-                    createAsteroids(asteroidNum + Math.floor(score / 1000)); // Add more asteroids next level
+                    createAsteroids(asteroidNum + Math.floor(score / 1000)); 
                 }
             }
             function update() {
                 if (gameOver) return;
-                // Handle invincibility timer
                 if (ship.invincible) {
                     ship.invincibleTimer--;
                     if (ship.invincibleTimer <= 0) {
                         ship.invincible = false;
                     }
                 }
-                // Rotate Ship
                 ship.angle += ship.rotation;
-                // Thrust Ship
                 if (ship.thrusting) {
                     ship.thrust.x += shipThrust * Math.cos(ship.angle);
-                    ship.thrust.y -= shipThrust * Math.sin(ship.angle); // Y is inverted
+                    ship.thrust.y -= shipThrust * Math.sin(ship.angle); 
                 } else {
-                    // Apply friction
                     ship.thrust.x *= friction;
                     ship.thrust.y *= friction;
                 }
-                // Move Ship
                 ship.x += ship.thrust.x;
                 ship.y += ship.thrust.y;
-                // Screen Wrapping
                 if (ship.x < 0 - ship.radius)
                     ship.x = canvas.width + ship.radius;
                 else if (ship.x > canvas.width + ship.radius)
@@ -5360,7 +5008,6 @@
                     ship.y = canvas.height + ship.radius;
                 else if (ship.y > canvas.height + ship.radius)
                     ship.y = 0 - ship.radius;
-                // Move Bullets
                 for (let i = bullets.length - 1; i >= 0; i--) {
                     bullets[i].x += bullets[i].vel.x;
                     bullets[i].y += bullets[i].vel.y;
@@ -5368,7 +5015,6 @@
                         Math.pow(bullets[i].vel.x, 2) +
                             Math.pow(bullets[i].vel.y, 2)
                     );
-                    // Remove bullets that travel too far or go off screen
                     if (
                         bullets[i].dist > canvas.width * 0.7 ||
                         bullets[i].x < 0 ||
@@ -5379,7 +5025,6 @@
                         bullets.splice(i, 1);
                         continue;
                     }
-                    // Bullet-Asteroid Collision
                     for (let j = asteroids.length - 1; j >= 0; j--) {
                         if (
                             distBetweenPoints(
@@ -5391,21 +5036,18 @@
                         ) {
                             bullets.splice(i, 1);
                             destroyAsteroid(j);
-                            break; // Bullet destroyed, check next bullet
+                            break; 
                         }
                     }
                 }
-                // Move Asteroids
                 asteroids.forEach((a) => {
                     a.x += a.vel.x;
                     a.y += a.vel.y;
-                    // Screen Wrapping
                     if (a.x < 0 - a.radius) a.x = canvas.width + a.radius;
                     else if (a.x > canvas.width + a.radius) a.x = 0 - a.radius;
                     if (a.y < 0 - a.radius) a.y = canvas.height + a.radius;
                     else if (a.y > canvas.height + a.radius) a.y = 0 - a.radius;
                 });
-                // Move Debris
                 for (let i = debris.length - 1; i >= 0; i--) {
                     debris[i].x += debris[i].vel.x;
                     debris[i].y += debris[i].vel.y;
@@ -5414,7 +5056,6 @@
                         debris.splice(i, 1);
                     }
                 }
-                // Ship-Asteroid Collision
                 if (!ship.invincible) {
                     for (let i = asteroids.length - 1; i >= 0; i--) {
                         if (
@@ -5427,21 +5068,19 @@
                             ship.radius + asteroids[i].radius
                         ) {
                             explodeShip();
-                            destroyAsteroid(i); // Destroy asteroid ship collided with
-                            break; // Only handle one collision per frame
+                            destroyAsteroid(i); 
+                            break; 
                         }
                     }
                 }
             }
             function render() {
-                // Clear canvas
                 ctx.fillStyle = "#111";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                // Draw elements
                 drawAsteroids();
                 drawDebris();
                 drawBullets();
-                if (!gameOver) drawShip(); // Don't draw ship if game over
+                if (!gameOver) drawShip(); 
                 drawUI();
             }
             function gameLoop() {
@@ -5449,7 +5088,6 @@
                 render();
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleKeyDown = (e) => {
                 if (gameOver) return;
                 switch (e.key) {
@@ -5465,15 +5103,14 @@
                     case "w":
                         ship.thrusting = true;
                         break;
-                    case " ": // Shoot
+                    case " ": 
                         if (bullets.length < 5) {
-                            // Limit bullets
                             bullets.push({
                                 x: ship.x + ship.radius * Math.cos(ship.angle),
                                 y: ship.y - ship.radius * Math.sin(ship.angle),
                                 vel: {
                                     x: bulletSpeed * Math.cos(ship.angle),
-                                    y: -bulletSpeed * Math.sin(ship.angle), // Y inverted
+                                    y: -bulletSpeed * Math.sin(ship.angle), 
                                 },
                                 dist: 0,
                             });
@@ -5505,10 +5142,8 @@
             self.addManagedListener(document, "keyup", handleKeyUp, {
                 gameId: "asteroids",
             });
-            // Start Game
             createAsteroids(asteroidNum);
             animationFrameId = requestAnimationFrame(gameLoop);
-            // Return cleanup
             return {
                 cleanup: () => {
                     cancelAnimationFrame(animationFrameId);
@@ -5516,17 +5151,13 @@
                 },
             };
         }
-        // --- Game 7: Dot Muncher (Pac-Man Clone) ---
         initPacmanGame(canvas) {
-            // Basic implementation - requires map data, ghost AI, etc.
-            // This will be a simplified version.
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
             const self = this;
             let animationFrameId;
-            const scale = 16; // Size of each grid cell
+            const scale = 16; 
             const map = [
-                // 0=empty, 1=wall, 2=dot, 3=power pellet, 4=ghost spawn
                 "1111111111111111111111111111",
                 "1222222222222112222222222221",
                 "1211112111112112111112111121",
@@ -5541,7 +5172,7 @@
                 "0000012110000440000112100000",
                 "0000012110111441110112100000",
                 "1111112110100000010112111111",
-                "0000002000100000010002000000", // Tunnel space
+                "0000002000100000010002000000", 
                 "1111112110111111110112111111",
                 "0000012110100000010112100000",
                 "0000012110111111110112100000",
@@ -5550,7 +5181,7 @@
                 "1222222222222112222222222221",
                 "1211112111112112111112111121",
                 "1211112111112112111112111121",
-                "132211222222200222222112231", // Player start row
+                "132211222222200222222112231", 
                 "111211211211111112112112111",
                 "111211211211111112112112111",
                 "1222222112222112222112222221",
@@ -5574,7 +5205,7 @@
                 speed: 2,
                 mouthOpen: 0,
             };
-            let ghosts = []; // Ghost objects {x, y, dx, dy, color, state: 'scatter'/'chase'/'frightened'/'eaten'}
+            let ghosts = []; 
             let score = 0;
             let dotsLeft = 0;
             let frightenedTimer = 0;
@@ -5587,7 +5218,7 @@
                 if (row >= 0 && row < rows && col >= 0 && col < cols) {
                     return map[row][col];
                 }
-                return "1"; // Treat outside as wall
+                return "1"; 
             }
             function getTileCoords(col, row) {
                 if (row >= 0 && row < rows && col >= 0 && col < cols) {
@@ -5607,14 +5238,12 @@
                         }
                     }
                 });
-                // Reset player position
                 player.x = 14 * scale + scale / 2;
                 player.y = 23 * scale + scale / 2;
                 player.dx = 0;
                 player.dy = 0;
                 player.nextDx = 0;
                 player.nextDy = 0;
-                // Reset ghosts (basic positioning)
                 ghosts = [
                     {
                         x: 13.5 * scale,
@@ -5664,10 +5293,9 @@
                         const x = c * scale;
                         const y = r * scale;
                         if (tile === "1") {
-                            ctx.fillStyle = "#0033cc"; // Blue walls
+                            ctx.fillStyle = "#0033cc"; 
                             ctx.fillRect(x, y, scale, scale);
                         } else if (tile === "2") {
-                            // Dot
                             ctx.fillStyle = "yellow";
                             ctx.fillRect(
                                 x + scale * 0.4,
@@ -5676,7 +5304,6 @@
                                 scale * 0.2
                             );
                         } else if (tile === "3") {
-                            // Power Pellet
                             ctx.fillStyle = "orange";
                             ctx.beginPath();
                             ctx.arc(
@@ -5694,7 +5321,6 @@
             function drawPlayer() {
                 ctx.fillStyle = "yellow";
                 ctx.beginPath();
-                // Calculate mouth angle based on direction and animation frame
                 let angleOffset = 0;
                 if (player.dx > 0) angleOffset = 0;
                 else if (player.dx < 0) angleOffset = Math.PI;
@@ -5703,7 +5329,7 @@
                 const mouthAngle =
                     (Math.sin((player.mouthOpen * Math.PI) / 10) + 1) *
                     0.2 *
-                    Math.PI; // 0 to 0.4 PI
+                    Math.PI; 
                 ctx.arc(
                     player.x,
                     player.y,
@@ -5711,24 +5337,22 @@
                     angleOffset + mouthAngle / 2,
                     angleOffset - mouthAngle / 2 + Math.PI * 2
                 );
-                ctx.lineTo(player.x, player.y); // Close the arc for a Pac-Man shape
+                ctx.lineTo(player.x, player.y); 
                 ctx.fill();
-                player.mouthOpen = (player.mouthOpen + 1) % 20; // Animate mouth
+                player.mouthOpen = (player.mouthOpen + 1) % 20; 
             }
             function drawGhosts() {
                 ghosts.forEach((ghost) => {
                     ctx.fillStyle =
                         ghost.state === "frightened" ? "#aaa" : ghost.color;
                     ctx.beginPath();
-                    ctx.arc(ghost.x, ghost.y, scale * 0.45, Math.PI, 0); // Head
-                    ctx.lineTo(ghost.x + scale * 0.45, ghost.y + scale * 0.4); // Bottom right
-                    // Wavy bottom (simplified)
+                    ctx.arc(ghost.x, ghost.y, scale * 0.45, Math.PI, 0); 
+                    ctx.lineTo(ghost.x + scale * 0.45, ghost.y + scale * 0.4); 
                     ctx.lineTo(ghost.x + scale * 0.15, ghost.y + scale * 0.3);
                     ctx.lineTo(ghost.x - scale * 0.15, ghost.y + scale * 0.4);
                     ctx.lineTo(ghost.x - scale * 0.45, ghost.y + scale * 0.3);
                     ctx.closePath();
                     ctx.fill();
-                    // Eyes
                     ctx.fillStyle = "white";
                     ctx.beginPath();
                     ctx.arc(
@@ -5737,14 +5361,14 @@
                         scale * 0.1,
                         0,
                         Math.PI * 2
-                    ); // Left eye
+                    ); 
                     ctx.arc(
                         ghost.x + scale * 0.15,
                         ghost.y - scale * 0.1,
                         scale * 0.1,
                         0,
                         Math.PI * 2
-                    ); // Right eye
+                    ); 
                     ctx.fill();
                 });
             }
@@ -5752,10 +5376,8 @@
                 ctx.fillStyle = "#fff";
                 ctx.font = "16px var(--font-main)";
                 ctx.textAlign = "left";
-                ctx.fillText(`Score: ${score}`, 10, scale - 4); // Top left
+                ctx.fillText(`Score: ${score}`, 10, scale - 4); 
                 ctx.textAlign = "right";
-                // Draw lives icons? (Simplified for now)
-                // ctx.fillText(`Lives: ${player.lives}`, canvas.width - 10, scale - 4);
                 if (gameOver) {
                     ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -5809,14 +5431,12 @@
                 const currentTileRow = Math.floor(player.y / scale);
                 const xOffset = player.x % scale;
                 const yOffset = player.y % scale;
-                const tolerance = player.speed * 1.1; // Allow slight overlap for turning
-                // Check if player is near center of a tile to allow turning
+                const tolerance = player.speed * 1.1; 
                 const canTurn =
                     xOffset > scale / 2 - tolerance &&
                     xOffset < scale / 2 + tolerance &&
                     yOffset > scale / 2 - tolerance &&
                     yOffset < scale / 2 + tolerance;
-                // Try to apply the next intended direction if possible
                 if (canTurn && (player.nextDx !== 0 || player.nextDy !== 0)) {
                     const nextTileX = player.x + player.nextDx * scale;
                     const nextTileY = player.y + player.nextDy * scale;
@@ -5825,27 +5445,22 @@
                         player.dy = player.nextDy;
                         player.nextDx = 0;
                         player.nextDy = 0;
-                        // Snap to grid center when turning
                         player.x = currentTileCol * scale + scale / 2;
                         player.y = currentTileRow * scale + scale / 2;
                     }
                 }
-                // Calculate next position based on current direction
                 const nextX = player.x + player.dx * player.speed;
                 const nextY = player.y + player.dy * player.speed;
                 const nextTileCol = Math.floor(nextX / scale);
                 const nextTileRow = Math.floor(nextY / scale);
-                // Wall collision check
                 if (
                     isWall(
                         nextX + Math.sign(player.dx) * player.radius,
                         nextY + Math.sign(player.dy) * player.radius
                     )
                 ) {
-                    // If moving into a wall, stop
                     player.dx = 0;
                     player.dy = 0;
-                    // Snap to edge of current tile
                     if (player.dx > 0)
                         player.x = nextTileCol * scale - player.radius;
                     else if (player.dx < 0)
@@ -5855,16 +5470,13 @@
                     else if (player.dy < 0)
                         player.y = (currentTileRow + 1) * scale + player.radius;
                 } else {
-                    // Move player
                     player.x = nextX;
                     player.y = nextY;
                 }
-                // Tunnel wrapping
                 if (player.x < -player.radius)
                     player.x = canvas.width + player.radius;
                 else if (player.x > canvas.width + player.radius)
                     player.x = -player.radius;
-                // Eat dots/pellets
                 const playerCol = Math.floor(player.x / scale);
                 const playerRow = Math.floor(player.y / scale);
                 if (
@@ -5873,10 +5485,9 @@
                     playerRow >= 0 &&
                     playerRow < rows
                 ) {
-                    const tileIndex = playerRow * cols + playerCol; // Need to update map representation
+                    const tileIndex = playerRow * cols + playerCol; 
                     const tileChar = map[playerRow][playerCol];
                     if (tileChar === "2") {
-                        // Eat dot
                         map[playerRow] =
                             map[playerRow].substring(0, playerCol) +
                             "0" +
@@ -5884,9 +5495,8 @@
                         score += 10;
                         dotsLeft--;
                         self.updateScore(score);
-                        self.playSound("click"); // Simple sound for dot
+                        self.playSound("click"); 
                     } else if (tileChar === "3") {
-                        // Eat power pellet
                         map[playerRow] =
                             map[playerRow].substring(0, playerCol) +
                             "0" +
@@ -5895,18 +5505,15 @@
                         dotsLeft--;
                         self.updateScore(score);
                         self.playSound("powerup");
-                        // Make ghosts frightened
-                        frightenedTimer = 360; // 6 seconds at 60fps
+                        frightenedTimer = 360; 
                         ghosts.forEach((g) => {
                             if (g.state !== "eaten") g.state = "frightened";
                         });
                     }
                 }
-                // Check win condition
                 if (dotsLeft <= 0) {
                     gameWon = true;
                     self.playSound("win");
-                    // Potentially load next level map here
                 }
             }
             function updateGhosts() {
@@ -5915,16 +5522,15 @@
                     if (frightenedTimer === 0) {
                         ghosts.forEach((g) => {
                             if (g.state === "frightened") g.state = "scatter";
-                        }); // Or chase
+                        }); 
                     }
                 }
                 ghosts.forEach((ghost) => {
-                    // Basic AI: Move randomly at intersections, reverse if hitting wall
                     const currentTileCol = Math.floor(ghost.x / scale);
                     const currentTileRow = Math.floor(ghost.y / scale);
                     const xOffset = ghost.x % scale;
                     const yOffset = ghost.y % scale;
-                    const tolerance = 1.5; // Ghost speed
+                    const tolerance = 1.5; 
                     const atIntersection =
                         xOffset > scale / 2 - tolerance &&
                         xOffset < scale / 2 + tolerance &&
@@ -5932,18 +5538,15 @@
                         yOffset < scale / 2 + tolerance;
                     let possibleMoves = [];
                     if (atIntersection) {
-                        // Check possible directions (up, down, left, right) excluding reverse
                         if (!isWall(ghost.x, ghost.y - scale) && ghost.dy <= 0)
-                            possibleMoves.push({ dx: 0, dy: -1 }); // Up
+                            possibleMoves.push({ dx: 0, dy: -1 }); 
                         if (!isWall(ghost.x, ghost.y + scale) && ghost.dy >= 0)
-                            possibleMoves.push({ dx: 0, dy: 1 }); // Down
+                            possibleMoves.push({ dx: 0, dy: 1 }); 
                         if (!isWall(ghost.x - scale, ghost.y) && ghost.dx <= 0)
-                            possibleMoves.push({ dx: -1, dy: 0 }); // Left
+                            possibleMoves.push({ dx: -1, dy: 0 }); 
                         if (!isWall(ghost.x + scale, ghost.y) && ghost.dx >= 0)
-                            possibleMoves.push({ dx: 1, dy: 0 }); // Right
+                            possibleMoves.push({ dx: 1, dy: 0 }); 
                         if (possibleMoves.length > 0) {
-                            // Choose a random valid direction (simplistic AI)
-                            // TODO: Implement Scatter/Chase/Frightened logic
                             const move =
                                 possibleMoves[
                                     Math.floor(
@@ -5952,33 +5555,26 @@
                                 ];
                             ghost.dx = move.dx;
                             ghost.dy = move.dy;
-                            // Snap to grid
                             ghost.x = currentTileCol * scale + scale / 2;
                             ghost.y = currentTileRow * scale + scale / 2;
                         } else {
-                            // Dead end, reverse
                             ghost.dx *= -1;
                             ghost.dy *= -1;
                         }
                     }
-                    // Move ghost
-                    const ghostSpeed = ghost.state === "frightened" ? 0.8 : 1.2; // Slower when frightened
+                    const ghostSpeed = ghost.state === "frightened" ? 0.8 : 1.2; 
                     const nextX = ghost.x + ghost.dx * ghostSpeed;
                     const nextY = ghost.y + ghost.dy * ghostSpeed;
-                    // Check wall collision for ghost
                     if (
                         isWall(
                             nextX + Math.sign(ghost.dx) * scale * 0.4,
                             nextY + Math.sign(ghost.dy) * scale * 0.4
                         )
                     ) {
-                        // If hitting wall, force turn at next intersection (or reverse if stuck)
                         if (!atIntersection) {
-                            // Move until intersection
                             ghost.x = nextX;
                             ghost.y = nextY;
                         } else {
-                            // Stuck at intersection wall, reverse
                             ghost.dx *= -1;
                             ghost.dy *= -1;
                         }
@@ -5986,33 +5582,26 @@
                         ghost.x = nextX;
                         ghost.y = nextY;
                     }
-                    // Tunnel wrapping for ghosts
                     if (ghost.x < -scale / 2)
                         ghost.x = canvas.width + scale / 2;
                     else if (ghost.x > canvas.width + scale / 2)
                         ghost.x = -scale / 2;
-                    // Player-Ghost Collision
                     const dx = player.x - ghost.x;
                     const dy = player.y - ghost.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     if (distance < player.radius + scale * 0.45) {
-                        // Collision radius
                         if (ghost.state === "frightened") {
-                            // Eat ghost
-                            score += 200; // Score for eating ghost
+                            score += 200; 
                             self.updateScore(score);
                             self.playSound("explosion");
                             ghost.state = "eaten";
-                            // Send ghost back to spawn (simplified)
                             ghost.x = 13.5 * scale;
                             ghost.y = 11.5 * scale;
-                            // TODO: Pathfind back to spawn box
                             setTimeout(() => {
                                 if (ghost.state === "eaten")
                                     ghost.state = "scatter";
-                            }, 3000); // Respawn after delay
+                            }, 3000); 
                         } else if (ghost.state !== "eaten") {
-                            // Player caught
                             gameOver = true;
                             self.playSound("gameOver");
                         }
@@ -6026,7 +5615,6 @@
                 }
                 updatePlayer();
                 updateGhosts();
-                // Draw everything
                 ctx.fillStyle = "#000";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drawMap();
@@ -6035,7 +5623,6 @@
                 drawUI();
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleKeyDown = (e) => {
                 if (gameOver || gameWon) return;
                 switch (e.key) {
@@ -6064,10 +5651,8 @@
             self.addManagedListener(document, "keydown", handleKeyDown, {
                 gameId: "pacman",
             });
-            // Start Game
             initLevel();
             animationFrameId = requestAnimationFrame(gameLoop);
-            // Return cleanup
             return {
                 cleanup: () => {
                     cancelAnimationFrame(animationFrameId);
@@ -6075,14 +5660,12 @@
                 },
             };
         }
-        // --- Game 8: Road Hopper (Frogger Clone) ---
         initFroggerGame(canvas) {
-            // Simplified Frogger
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
             const self = this;
             let animationFrameId;
-            const scale = 40; // Size of grid squares
+            const scale = 40; 
             const cols = canvas.width / scale;
             const rows = canvas.height / scale;
             let player = {
@@ -6090,15 +5673,13 @@
                 y: rows - 1,
                 width: scale * 0.8,
                 height: scale * 0.8,
-            }; // Grid coords
+            }; 
             let score = 0;
-            let lives = 3; // Not implemented yet
-            let homes = [false, false, false, false, false]; // 5 homes at the top
+            let lives = 3; 
+            let homes = [false, false, false, false, false]; 
             let gameWon = false;
             let gameOver = false;
-            // Obstacles (Cars, Logs) - Simplified rows
             const obstacles = [];
-            // Row definitions: y-coord (grid), type ('car'/'log'), speed, direction (-1/1), length (grid units), spacing (grid units)
             const rowDefs = [
                 {
                     y: rows - 2,
@@ -6136,7 +5717,6 @@
                     space: 4,
                     color: "#9b59b6",
                 },
-                // Safe Zone
                 {
                     y: rows - 7,
                     type: "log",
@@ -6185,20 +5765,20 @@
                     ) {
                         obstacles.push({
                             x: currentX,
-                            y: def.y * scale + (scale - scale * 0.8) / 2, // Center vertically
+                            y: def.y * scale + (scale - scale * 0.8) / 2, 
                             width: def.len * scale,
                             height: scale * 0.8,
                             speed: def.speed * def.dir,
                             type: def.type,
                             color: def.color,
-                            rowY: def.y, // Store original row index
+                            rowY: def.y, 
                         });
                         currentX += (def.len + def.space) * scale * def.dir;
                     }
                 });
             }
             function drawPlayer() {
-                ctx.fillStyle = "#2ecc71"; // Green frog
+                ctx.fillStyle = "#2ecc71"; 
                 ctx.fillRect(
                     player.x * scale + (scale - player.width) / 2,
                     player.y * scale + (scale - player.height) / 2,
@@ -6213,7 +5793,6 @@
                 });
             }
             function drawBackground() {
-                // Road area
                 ctx.fillStyle = "#333";
                 ctx.fillRect(
                     0,
@@ -6221,7 +5800,6 @@
                     canvas.width,
                     (rows / 2 - 1) * scale
                 );
-                // Water area
                 ctx.fillStyle = "#3498db";
                 ctx.fillRect(
                     0,
@@ -6229,17 +5807,13 @@
                     canvas.width,
                     (rows / 2 - 2) * scale
                 );
-                // Start safe zone
                 ctx.fillStyle = "#555";
                 ctx.fillRect(0, (rows - 1) * scale, canvas.width, scale);
-                // Middle safe zone
                 ctx.fillStyle = "#555";
                 ctx.fillRect(0, (rows / 2 - 1) * scale, canvas.width, scale);
-                // Goal area background
                 ctx.fillStyle = "#555";
                 ctx.fillRect(0, 0, canvas.width, scale);
-                // Homes
-                ctx.fillStyle = "#2ecc71"; // Green homes
+                ctx.fillStyle = "#2ecc71"; 
                 const homeWidth = scale * 1.5;
                 const homeSpacing =
                     (canvas.width - homes.length * homeWidth) /
@@ -6247,7 +5821,6 @@
                 for (let i = 0; i < homes.length; i++) {
                     const homeX = homeSpacing + i * (homeWidth + homeSpacing);
                     if (homes[i]) {
-                        // If frog reached home
                         ctx.fillRect(
                             homeX + (homeWidth - player.width) / 2,
                             (scale - player.height) / 2,
@@ -6255,7 +5828,6 @@
                             player.height
                         );
                     } else {
-                        // Empty home
                         ctx.fillStyle = "#444";
                         ctx.fillRect(homeX, 0, homeWidth, scale);
                     }
@@ -6266,7 +5838,6 @@
                 ctx.font = "16px var(--font-main)";
                 ctx.textAlign = "left";
                 ctx.fillText(`Score: ${score}`, 10, canvas.height - 10);
-                // Draw lives?
             }
             function movePlayer(dx, dy) {
                 const nextX = player.x + dx;
@@ -6275,12 +5846,10 @@
                     player.x = nextX;
                     player.y = nextY;
                     self.playSound("jump");
-                    // Score for moving forward
                     if (dy < 0) {
                         score += 10;
                         self.updateScore(score);
                     }
-                    // Check for reaching home
                     if (player.y === 0) {
                         checkHome();
                     }
@@ -6302,37 +5871,32 @@
                         playerCenterX < homeXEnd
                     ) {
                         if (!homes[i]) {
-                            // Landed in empty home
                             homes[i] = true;
-                            score += 100; // Bonus for reaching home
+                            score += 100; 
                             self.updateScore(score);
                             self.playSound("point");
                             landedHome = true;
                             resetPlayer();
-                            // Check if all homes filled
                             if (homes.every((h) => h)) {
-                                gameWon = true; // Or next level
+                                gameWon = true; 
                                 self.playSound("win");
-                                alert("Level Cleared!"); // Placeholder
-                                homes.fill(false); // Reset homes for next level
-                                createObstacles(); // Reset obstacles maybe?
+                                alert("Level Cleared!"); 
+                                homes.fill(false); 
+                                createObstacles(); 
                             }
                         } else {
-                            // Landed in occupied home
-                            resetPlayer(true); // Death
+                            resetPlayer(true); 
                         }
                         break;
                     }
                 }
                 if (!landedHome) {
-                    // Landed in goal area but missed a home
-                    resetPlayer(true); // Death
+                    resetPlayer(true); 
                 }
             }
             function updateObstacles() {
                 obstacles.forEach((obs) => {
                     obs.x += obs.speed;
-                    // Wrap around screen
                     if (obs.speed > 0 && obs.x > canvas.width) {
                         obs.x = -obs.width;
                     } else if (obs.speed < 0 && obs.x < -obs.width) {
@@ -6349,7 +5913,6 @@
                 };
                 let onLog = false;
                 let logSpeed = 0;
-                // Check water rows first (rows 1 to rows/2 - 2)
                 if (player.y > 0 && player.y < rows / 2 - 1) {
                     obstacles.forEach((obs) => {
                         if (obs.type === "log" && obs.rowY === player.y) {
@@ -6365,12 +5928,10 @@
                         }
                     });
                     if (!onLog) {
-                        resetPlayer(true); // Fell in water
-                        return; // No need to check road collisions if dead
+                        resetPlayer(true); 
+                        return; 
                     } else {
-                        // Move player with log
-                        player.x += logSpeed / scale; // Adjust player grid position based on log speed
-                        // Check if carried off screen
+                        player.x += logSpeed / scale; 
                         if (
                             player.x * scale < -player.width ||
                             player.x * scale > canvas.width
@@ -6380,7 +5941,6 @@
                         }
                     }
                 }
-                // Check road rows (rows/2 to rows - 2)
                 if (player.y >= rows / 2 && player.y < rows - 1) {
                     obstacles.forEach((obs) => {
                         if (obs.type === "car" && obs.rowY === player.y) {
@@ -6390,7 +5950,7 @@
                                 playerRect.y < obs.y + obs.height &&
                                 playerRect.y + playerRect.height > obs.y
                             ) {
-                                resetPlayer(true); // Hit by car
+                                resetPlayer(true); 
                             }
                         }
                     });
@@ -6400,18 +5960,15 @@
                 player.x = cols / 2;
                 player.y = rows - 1;
                 if (isDead) {
-                    self.playSound("hit"); // Or gameOver sound
-                    // Decrement lives, check game over (not implemented)
+                    self.playSound("hit"); 
                 }
             }
             function gameLoop() {
                 if (gameOver || gameWon) {
-                    // Draw final screen?
                     return;
                 }
                 updateObstacles();
-                checkCollisions(); // Check collisions *after* moving obstacles and player (if on log)
-                // Draw everything
+                checkCollisions(); 
                 ctx.fillStyle = "#000";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drawBackground();
@@ -6420,10 +5977,8 @@
                 drawUI();
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleKeyDown = (e) => {
                 if (gameOver || gameWon) return;
-                // Prevent default scroll behavior for arrow keys
                 if (
                     [
                         "ArrowUp",
@@ -6456,11 +6011,9 @@
             self.addManagedListener(document, "keydown", handleKeyDown, {
                 gameId: "frogger",
             });
-            // Start Game
             createObstacles();
             resetPlayer();
             animationFrameId = requestAnimationFrame(gameLoop);
-            // Return cleanup
             return {
                 cleanup: () => {
                     cancelAnimationFrame(animationFrameId);
@@ -6468,12 +6021,10 @@
                 },
             };
         }
-        // --- Game 9: Mine Sweeper Pro ---
         initMinesweeperGame(container) {
-            // DOM-based Minesweeper
             if (!container) return null;
             const self = this;
-            container.innerHTML = ""; // Clear container
+            container.innerHTML = ""; 
             container.style.display = "flex";
             container.style.flexDirection = "column";
             container.style.alignItems = "center";
@@ -6481,7 +6032,7 @@
             const gridWidth = 16;
             const gridHeight = 16;
             const numMines = 40;
-            let board = []; // { mine: bool, revealed: bool, flagged: bool, adjacentMines: int }
+            let board = []; 
             let minesLeft = numMines;
             let tilesRevealed = 0;
             let firstClick = true;
@@ -6496,7 +6047,7 @@
             header.style.color = "#fff";
             const minesDisplay = document.createElement("span");
             minesDisplay.textContent = `Mines: ${minesLeft}`;
-            const statusDisplay = document.createElement("span"); // For win/lose message
+            const statusDisplay = document.createElement("span"); 
             statusDisplay.textContent = "🙂";
             header.appendChild(minesDisplay);
             header.appendChild(statusDisplay);
@@ -6545,7 +6096,6 @@
                 while (minesPlaced < numMines) {
                     const r = Math.floor(Math.random() * gridHeight);
                     const c = Math.floor(Math.random() * gridWidth);
-                    // Don't place mine on first click or adjacent to it
                     if (
                         !board[r][c].mine &&
                         !(
@@ -6620,7 +6170,6 @@
                     tileElement.textContent = board[r][c].adjacentMines;
                     tileElement.style.color = colors[board[r][c].adjacentMines];
                 } else {
-                    // Reveal adjacent empty tiles recursively
                     for (let dr = -1; dr <= 1; dr++) {
                         for (let dc = -1; dc <= 1; dc++) {
                             if (dr === 0 && dc === 0) continue;
@@ -6666,14 +6215,14 @@
                     firstClick = false;
                 }
                 if (board[r][c].mine) {
-                    revealTile(r, c); // Will trigger game over
+                    revealTile(r, c); 
                 } else {
                     revealTile(r, c);
                     self.playSound("click");
                 }
             }
             function handleTileRightClick(event) {
-                event.preventDefault(); // Prevent context menu
+                event.preventDefault(); 
                 if (gameOver || gameWon) return;
                 const tile = event.target.closest("div[data-row]");
                 if (!tile) return;
@@ -6686,7 +6235,6 @@
                 gameWon = won;
                 statusDisplay.textContent = won ? "😎 Win!" : "😭 Boom!";
                 self.playSound(won ? "win" : "gameOver");
-                // Reveal all mines
                 for (let r = 0; r < gridHeight; r++) {
                     for (let c = 0; c < gridWidth; c++) {
                         const tileElement =
@@ -6694,26 +6242,20 @@
                         tileElement.style.cursor = "default";
                         if (board[r][c].mine && !board[r][c].revealed) {
                             if (!board[r][c].flagged) {
-                                // Only show unflagged mines
                                 tileElement.innerHTML =
                                     '<i class="fas fa-bomb" style="color: #555;"></i>';
                                 tileElement.style.backgroundColor = "#ddd";
                             }
                         } else if (!board[r][c].mine && board[r][c].flagged) {
-                            // Incorrect flag
                             tileElement.innerHTML =
                                 '<i class="fas fa-times" style="color: red;"></i>';
                         }
                     }
                 }
             }
-            // Setup
             createBoard();
-            // No interval or animation frame needed for Minesweeper
-            // Cleanup mainly involves removing listeners if the game is restarted/closed
             return {
                 cleanup: () => {
-                    // Remove listeners added inside this function
                     Array.from(gridElement.children).forEach((tile) => {
                         tile.removeEventListener("click", handleTileClick);
                         tile.removeEventListener(
@@ -6721,11 +6263,10 @@
                             handleTileRightClick
                         );
                     });
-                    container.innerHTML = ""; // Clear the container fully
+                    container.innerHTML = ""; 
                 },
             };
         }
-        // --- Game 10: Connect Four ---
         initConnect4Game(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
@@ -6737,17 +6278,17 @@
             const cellHeight = canvas.height / rows;
             let board = Array(rows)
                 .fill(null)
-                .map(() => Array(cols).fill(0)); // 0: empty, 1: player, 2: AI
-            let currentPlayer = 1; // 1 for player, 2 for AI
+                .map(() => Array(cols).fill(0)); 
+            let currentPlayer = 1; 
             let gameOver = false;
             let winner = 0;
-            let dropColumn = -1; // Column where piece is dropping
-            let dropY = 0; // Y position of dropping piece
+            let dropColumn = -1; 
+            let dropY = 0; 
             let dropTargetY = 0;
             let dropPlayer = 0;
             let isDropping = false;
             function drawBoard() {
-                ctx.fillStyle = "#0033cc"; // Blue board
+                ctx.fillStyle = "#0033cc"; 
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 for (let r = 0; r < rows; r++) {
                     for (let c = 0; c < cols; c++) {
@@ -6760,11 +6301,11 @@
                             Math.PI * 2
                         );
                         if (board[r][c] === 1) {
-                            ctx.fillStyle = "#ff4757"; // Red player
+                            ctx.fillStyle = "#ff4757"; 
                         } else if (board[r][c] === 2) {
-                            ctx.fillStyle = "#f1c40f"; // Yellow AI
+                            ctx.fillStyle = "#f1c40f"; 
                         } else {
-                            ctx.fillStyle = "#1a1a2e"; // Empty slot background
+                            ctx.fillStyle = "#1a1a2e"; 
                         }
                         ctx.fill();
                     }
@@ -6812,7 +6353,6 @@
                         );
                     }
                 } else {
-                    // Indicate whose turn (optional)
                     ctx.fillStyle = currentPlayer === 1 ? "#ff4757" : "#f1c40f";
                     ctx.font = "16px var(--font-main)";
                     ctx.textAlign = "center";
@@ -6829,7 +6369,7 @@
                         return r;
                     }
                 }
-                return -1; // Column is full
+                return -1; 
             }
             function dropPiece(col, player) {
                 const row = findEmptyRow(col);
@@ -6837,20 +6377,17 @@
                     isDropping = true;
                     dropColumn = col;
                     dropPlayer = player;
-                    dropY = -pieceRadius; // Start above board
+                    dropY = -pieceRadius; 
                     dropTargetY = row * cellHeight + cellHeight / 2;
                     self.playSound("click");
-                    // The actual placement on the board happens after animation
-                    return true; // Drop initiated
+                    return true; 
                 }
-                return false; // Column full or already dropping
+                return false; 
             }
             function checkWin(player) {
-                // Check horizontal, vertical, and diagonals
                 for (let r = 0; r < rows; r++) {
                     for (let c = 0; c < cols; c++) {
                         if (board[r][c] === player) {
-                            // Horizontal
                             if (
                                 c <= cols - 4 &&
                                 board[r][c + 1] === player &&
@@ -6858,7 +6395,6 @@
                                 board[r][c + 3] === player
                             )
                                 return true;
-                            // Vertical
                             if (
                                 r <= rows - 4 &&
                                 board[r + 1][c] === player &&
@@ -6866,7 +6402,6 @@
                                 board[r + 3][c] === player
                             )
                                 return true;
-                            // Diagonal Down-Right
                             if (
                                 r <= rows - 4 &&
                                 c <= cols - 4 &&
@@ -6875,7 +6410,6 @@
                                 board[r + 3][c + 3] === player
                             )
                                 return true;
-                            // Diagonal Up-Right
                             if (
                                 r >= 3 &&
                                 c <= cols - 4 &&
@@ -6890,14 +6424,12 @@
                 return false;
             }
             function checkDraw() {
-                // Check if top row is full
                 for (let c = 0; c < cols; c++) {
                     if (board[0][c] === 0) return false;
                 }
-                return true; // Board is full
+                return true; 
             }
             function aiMove() {
-                // Very simple AI: Choose a random valid column
                 let validCols = [];
                 for (let c = 0; c < cols; c++) {
                     if (findEmptyRow(c) !== -1) {
@@ -6905,7 +6437,6 @@
                     }
                 }
                 if (validCols.length > 0) {
-                    // TODO: Add better AI (check for winning moves, blocking moves)
                     const randomCol =
                         validCols[Math.floor(Math.random() * validCols.length)];
                     dropPiece(randomCol, 2);
@@ -6913,50 +6444,44 @@
             }
             function updateDropAnimation() {
                 if (!isDropping) return;
-                const dropSpeed = 15; // Pixels per frame, adjust for desired speed
+                const dropSpeed = 15; 
                 dropY += dropSpeed;
                 if (dropY >= dropTargetY) {
-                    dropY = dropTargetY; // Snap to final position
-                    const row = findEmptyRow(dropColumn); // Find row again just to be sure
+                    dropY = dropTargetY; 
+                    const row = findEmptyRow(dropColumn); 
                     if (row !== -1) {
-                        board[row][dropColumn] = dropPlayer; // Place piece on logical board
+                        board[row][dropColumn] = dropPlayer; 
                     }
-                    isDropping = false; // Animation finished
-                    // Check for win/draw after piece lands
+                    isDropping = false; 
                     if (checkWin(dropPlayer)) {
                         gameOver = true;
                         winner = dropPlayer;
                         self.playSound(winner === 1 ? "win" : "gameOver");
                     } else if (checkDraw()) {
                         gameOver = true;
-                        winner = 0; // Draw
+                        winner = 0; 
                         self.playSound("gameOver");
                     } else {
-                        // Switch player if game not over
                         currentPlayer = dropPlayer === 1 ? 2 : 1;
                         if (currentPlayer === 2) {
-                            // AI's turn - add a slight delay for realism
                             setTimeout(aiMove, 500);
                         }
                     }
                 }
             }
             function gameLoop() {
-                // Clear canvas
-                ctx.fillStyle = "#1a1a2e"; // Background for empty slots
+                ctx.fillStyle = "#1a1a2e"; 
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drawBoard();
-                updateDropAnimation(); // Update animation state
-                drawDroppingPiece(); // Draw the falling piece
-                drawUI(); // Draw score/status
+                updateDropAnimation(); 
+                drawDroppingPiece(); 
+                drawUI(); 
                 if (!gameOver) {
-                    // Only continue loop if game isn't over
                     requestAnimationFrame(gameLoop);
                 }
             }
-            // Event Listener for Player Click
             const handleCanvasClick = (event) => {
-                if (gameOver || currentPlayer !== 1 || isDropping) return; // Only player 1, only when not dropping/game over
+                if (gameOver || currentPlayer !== 1 || isDropping) return; 
                 const rect = canvas.getBoundingClientRect();
                 const scaleX = canvas.width / rect.width;
                 const clickX = (event.clientX - rect.left) * scaleX;
@@ -6968,20 +6493,12 @@
             self.addManagedListener(canvas, "click", handleCanvasClick, {
                 gameId: "connect4",
             });
-            // Start Game
             requestAnimationFrame(gameLoop);
-            // Return cleanup
             return {
                 cleanup: () => {
-                    // Listeners removed automatically by showcase cleanup
-                    // No interval or animation frame to clear here as it stops on game over
                 },
             };
         }
-        // ========================================================================
-        // ======================= TIER 2 GAMES (Simpler) =========================
-        // ========================================================================
-        // --- Game 11: Flappy Pipe ---
         initFlappyBirdGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
@@ -6998,26 +6515,26 @@
             const pipes = [];
             const pipeWidth = 60;
             const pipeGap = 120;
-            const pipeFrequency = 90; // Frames between pipes
+            const pipeFrequency = 90; 
             let frameCount = 0;
             let score = 0;
             let gameOver = false;
             function drawBird() {
-                ctx.fillStyle = "#f1c40f"; // Yellow bird
+                ctx.fillStyle = "#f1c40f"; 
                 ctx.beginPath();
                 ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
                 ctx.fill();
             }
             function drawPipes() {
-                ctx.fillStyle = "#2ecc71"; // Green pipes
+                ctx.fillStyle = "#2ecc71"; 
                 pipes.forEach((pipe) => {
-                    ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight); // Top pipe
+                    ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight); 
                     ctx.fillRect(
                         pipe.x,
                         canvas.height - pipe.bottomHeight,
                         pipeWidth,
                         pipe.bottomHeight
-                    ); // Bottom pipe
+                    ); 
                 });
             }
             function drawScore() {
@@ -7052,9 +6569,8 @@
             }
             function updateBird() {
                 bird.velocity += bird.gravity;
-                bird.velocity *= 0.95; // Air resistance/damping
+                bird.velocity *= 0.95; 
                 bird.y += bird.velocity;
-                // Collision with top/bottom
                 if (
                     bird.y + bird.radius > canvas.height ||
                     bird.y - bird.radius < 0
@@ -7063,7 +6579,6 @@
                 }
             }
             function updatePipes() {
-                // Add new pipes
                 if (frameCount % pipeFrequency === 0) {
                     const minHeight = 40;
                     const maxHeight = canvas.height - pipeGap - minHeight;
@@ -7077,10 +6592,8 @@
                         scored: false,
                     });
                 }
-                // Move pipes left
                 for (let i = pipes.length - 1; i >= 0; i--) {
-                    pipes[i].x -= 3; // Pipe speed
-                    // Check collision with bird
+                    pipes[i].x -= 3; 
                     if (
                         bird.x + bird.radius > pipes[i].x &&
                         bird.x - bird.radius < pipes[i].x + pipeWidth
@@ -7093,14 +6606,12 @@
                             endGame();
                         }
                     }
-                    // Score point
                     if (!pipes[i].scored && pipes[i].x + pipeWidth < bird.x) {
                         score++;
                         pipes[i].scored = true;
                         self.updateScore(score);
                         self.playSound("point");
                     }
-                    // Remove pipes that are off-screen
                     if (pipes[i].x + pipeWidth < 0) {
                         pipes.splice(i, 1);
                     }
@@ -7111,17 +6622,16 @@
                 self.playSound("jump");
             }
             function endGame() {
-                if (gameOver) return; // Prevent multiple calls
+                if (gameOver) return; 
                 gameOver = true;
                 self.playSound("gameOver");
                 cancelAnimationFrame(animationFrameId);
-                animationFrameId = null; // Important to stop the loop
-                drawGameOver(); // Draw the game over screen immediately
+                animationFrameId = null; 
+                drawGameOver(); 
             }
             function gameLoop() {
                 if (gameOver) return;
-                // Clear canvas
-                ctx.fillStyle = "#87CEEB"; // Sky blue background
+                ctx.fillStyle = "#87CEEB"; 
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 updateBird();
                 updatePipes();
@@ -7131,12 +6641,10 @@
                 frameCount++;
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleInput = (e) => {
                 if (gameOver) return;
-                // Allow spacebar or click/tap
                 if (e.type === "keydown" && e.key !== " ") return;
-                if (e.type === "keydown") e.preventDefault(); // Prevent space scrolling
+                if (e.type === "keydown") e.preventDefault(); 
                 flap();
             };
             self.addManagedListener(document, "keydown", handleInput, {
@@ -7149,9 +6657,7 @@
                 gameId: "flappybird",
                 passive: true,
             });
-            // Start Game
             animationFrameId = requestAnimationFrame(gameLoop);
-            // Return cleanup
             return {
                 cleanup: () => {
                     if (animationFrameId) {
@@ -7161,7 +6667,6 @@
                 },
             };
         }
-        // --- Game 12: Doodle Jumper ---
         initDoodleJumpGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
@@ -7183,33 +6688,30 @@
             const platformHeight = 15;
             const numPlatforms = 8;
             let score = 0;
-            let highestY = player.y; // Track highest point reached for score/scrolling
-            let cameraY = 0; // To make the view follow the player upwards
+            let highestY = player.y; 
+            let cameraY = 0; 
             function createPlatforms() {
                 platforms.length = 0;
-                // Initial platform
                 platforms.push({
                     x: canvas.width / 2 - platformWidth / 2,
                     y: canvas.height - 30,
                     width: platformWidth,
                     height: platformHeight,
                 });
-                // Generate other platforms randomly upwards
                 for (let i = 1; i < numPlatforms * 3; i++) {
-                    // Generate more initially
                     platforms.push({
                         x: Math.random() * (canvas.width - platformWidth),
                         y:
                             canvas.height -
                             i * (canvas.height / numPlatforms) -
-                            Math.random() * 30, // Random vertical spacing
+                            Math.random() * 30, 
                         width: platformWidth,
                         height: platformHeight,
                     });
                 }
             }
             function drawPlayer() {
-                ctx.fillStyle = "#2ecc71"; // Green player
+                ctx.fillStyle = "#2ecc71"; 
                 ctx.fillRect(
                     player.x - player.width / 2,
                     player.y - player.height / 2 - cameraY,
@@ -7218,7 +6720,7 @@
                 );
             }
             function drawPlatforms() {
-                ctx.fillStyle = "#8c5a30"; // Brown platforms
+                ctx.fillStyle = "#8c5a30"; 
                 platforms.forEach((p) => {
                     ctx.fillRect(p.x, p.y - cameraY, p.width, p.height);
                 });
@@ -7230,62 +6732,48 @@
                 ctx.fillText(`Score: ${score}`, 10, 30);
             }
             function updatePlayer() {
-                // Apply horizontal movement
                 player.x += player.dx;
-                // Screen wrap horizontally
                 if (player.x > canvas.width + player.width / 2)
                     player.x = -player.width / 2;
                 else if (player.x < -player.width / 2)
                     player.x = canvas.width + player.width / 2;
-                // Apply gravity
                 player.dy += player.gravity;
                 player.y += player.dy;
-                // Update highest point and score
                 if (player.y < highestY) {
                     score += Math.floor(highestY - player.y);
                     highestY = player.y;
                     self.updateScore(score);
                 }
-                // Update camera to follow player upwards
                 if (player.y - cameraY < canvas.height * 0.3) {
-                    // If player goes above 30% from top
                     cameraY = player.y - canvas.height * 0.3;
                 }
-                // Check for game over (falling off bottom)
                 if (player.y - cameraY > canvas.height) {
                     gameOver();
                 }
             }
             function checkPlatformCollisions() {
-                // Only check for collisions when moving downwards
                 if (player.dy > 0) {
                     platforms.forEach((p) => {
-                        // Check if player's bottom edge is within platform's y-range and player is falling onto it
                         if (
                             player.y + player.height / 2 > p.y &&
                             player.y + player.height / 2 <
-                                p.y + platformHeight + 10 && // Y check (with tolerance)
+                                p.y + platformHeight + 10 && 
                             player.x + player.width / 2 > p.x &&
                             player.x - player.width / 2 < p.x + p.width
                         ) {
-                            // X check
-                            // Landed on platform
-                            player.dy = player.lift; // Bounce
+                            player.dy = player.lift; 
                             self.playSound("jump");
                         }
                     });
                 }
             }
             function managePlatforms() {
-                // Remove platforms that are way below the camera view
                 for (let i = platforms.length - 1; i >= 0; i--) {
                     if (platforms[i].y - cameraY > canvas.height + 50) {
                         platforms.splice(i, 1);
                     }
                 }
-                // Add new platforms above the current view if needed
                 if (platforms.length < numPlatforms * 2) {
-                    // Maintain a buffer of platforms
                     let highestPlatformY = canvas.height;
                     platforms.forEach((p) => {
                         highestPlatformY = Math.min(highestPlatformY, p.y);
@@ -7295,7 +6783,7 @@
                         y:
                             highestPlatformY -
                             (canvas.height / numPlatforms) *
-                                (0.8 + Math.random() * 0.4), // Add above highest
+                                (0.8 + Math.random() * 0.4), 
                         width: platformWidth,
                         height: platformHeight,
                     });
@@ -7332,17 +6820,15 @@
                 updatePlayer();
                 checkPlatformCollisions();
                 managePlatforms();
-                // Draw everything relative to camera
-                ctx.fillStyle = "#87CEEB"; // Sky background
+                ctx.fillStyle = "#87CEEB"; 
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drawPlatforms();
                 drawPlayer();
-                drawScore(); // Score drawn in fixed position
+                drawScore(); 
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleKeyDown = (e) => {
-                if (animationFrameId === null) return; // Game over
+                if (animationFrameId === null) return; 
                 if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a")
                     player.dx = -player.speed;
                 if (e.key === "ArrowRight" || e.key.toLowerCase() === "d")
@@ -7367,10 +6853,8 @@
             self.addManagedListener(document, "keyup", handleKeyUp, {
                 gameId: "doodlejump",
             });
-            // Start Game
             createPlatforms();
             animationFrameId = requestAnimationFrame(gameLoop);
-            // Return cleanup
             return {
                 cleanup: () => {
                     if (animationFrameId) {
@@ -7380,15 +6864,14 @@
                 },
             };
         }
-        // --- Game 13: Memory Match ---
         initMemoryGame(container) {
             if (!container) return null;
             const self = this;
-            container.innerHTML = ""; // Clear container
-            container.style.display = "flex"; // Use flex for centering grid
+            container.innerHTML = ""; 
+            container.style.display = "flex"; 
             container.style.justifyContent = "center";
             container.style.alignItems = "center";
-            container.style.flexWrap = "wrap"; // Allow wrapping if needed
+            container.style.flexWrap = "wrap"; 
             container.style.padding = "20px";
             const symbols = [
                 "🍎",
@@ -7401,15 +6884,14 @@
                 "🍉",
                 "🍊",
                 "🍋",
-            ]; // 10 symbols
-            const gridSize = 4; // 4x4 grid = 16 cards = 8 pairs
+            ]; 
+            const gridSize = 4; 
             const numPairs = (gridSize * gridSize) / 2;
-            let cards = []; // { id, symbol, flipped, matched }
+            let cards = []; 
             let flippedCards = [];
             let canFlip = true;
             let matchesFound = 0;
             let moves = 0;
-            // Status display
             const statusDiv = document.createElement("div");
             statusDiv.style.width = "100%";
             statusDiv.style.textAlign = "center";
@@ -7428,8 +6910,8 @@
                 cards = [];
                 const gameSymbols = symbols
                     .slice(0, numPairs)
-                    .concat(symbols.slice(0, numPairs)); // Create pairs
-                gameSymbols.sort(() => 0.5 - Math.random()); // Shuffle
+                    .concat(symbols.slice(0, numPairs)); 
+                gameSymbols.sort(() => 0.5 - Math.random()); 
                 for (let i = 0; i < gameSymbols.length; i++) {
                     cards.push({
                         id: i,
@@ -7439,7 +6921,7 @@
                     });
                     const cardElement = document.createElement("div");
                     cardElement.dataset.id = i;
-                    cardElement.style.backgroundColor = "#3498db"; // Card back color
+                    cardElement.style.backgroundColor = "#3498db"; 
                     cardElement.style.borderRadius = "5px";
                     cardElement.style.display = "flex";
                     cardElement.style.alignItems = "center";
@@ -7448,7 +6930,7 @@
                     cardElement.style.cursor = "pointer";
                     cardElement.style.transition =
                         "transform 0.5s, background-color 0.3s";
-                    cardElement.style.transformStyle = "preserve-3d"; // For flip effect
+                    cardElement.style.transformStyle = "preserve-3d"; 
                     cardElement.addEventListener("click", handleCardClick);
                     gridElement.appendChild(cardElement);
                 }
@@ -7463,13 +6945,11 @@
                 flipCard(card, cardElement, true);
                 flippedCards.push({ card, element: cardElement });
                 if (flippedCards.length === 1) {
-                    // First card flipped
                     self.playSound("click");
                 } else if (flippedCards.length === 2) {
-                    // Second card flipped, check for match
                     moves++;
-                    canFlip = false; // Prevent flipping more cards until check is done
-                    setTimeout(checkForMatch, 800); // Delay before checking/flipping back
+                    canFlip = false; 
+                    setTimeout(checkForMatch, 800); 
                 }
                 updateStatus();
             }
@@ -7478,24 +6958,22 @@
                 element.style.transform = `rotateY(${
                     isFlippingUp ? 180 : 0
                 }deg)`;
-                // Change content after half the flip duration for better effect
                 setTimeout(() => {
                     if (isFlippingUp) {
                         element.textContent = card.symbol;
-                        element.style.backgroundColor = "#f1c40f"; // Flipped color
+                        element.style.backgroundColor = "#f1c40f"; 
                     } else {
                         element.textContent = "";
-                        element.style.backgroundColor = "#3498db"; // Back color
+                        element.style.backgroundColor = "#3498db"; 
                     }
-                }, 250); // Half of 0.5s transition
+                }, 250); 
             }
             function checkForMatch() {
                 const [card1Info, card2Info] = flippedCards;
                 if (card1Info.card.symbol === card2Info.card.symbol) {
-                    // Match found
                     card1Info.card.matched = true;
                     card2Info.card.matched = true;
-                    card1Info.element.style.backgroundColor = "#2ecc71"; // Matched color
+                    card1Info.element.style.backgroundColor = "#2ecc71"; 
                     card2Info.element.style.backgroundColor = "#2ecc71";
                     card1Info.element.style.cursor = "default";
                     card2Info.element.style.cursor = "default";
@@ -7506,13 +6984,12 @@
                         statusDiv.textContent = `You Won in ${moves} moves!`;
                     }
                 } else {
-                    // No match, flip back
                     flipCard(card1Info.card, card1Info.element, false);
                     flipCard(card2Info.card, card2Info.element, false);
                     self.playSound("hit");
                 }
-                flippedCards = []; // Clear flipped cards array
-                canFlip = true; // Allow flipping again
+                flippedCards = []; 
+                canFlip = true; 
                 updateStatus();
             }
             function updateStatus() {
@@ -7520,12 +6997,9 @@
                     statusDiv.textContent = `Moves: ${moves} | Matches: ${matchesFound} / ${numPairs}`;
                 }
             }
-            // Setup
             createCards();
-            // No interval needed
             return {
                 cleanup: () => {
-                    // Remove listeners if needed, though container clear might suffice
                     Array.from(gridElement.children).forEach((card) => {
                         card.removeEventListener("click", handleCardClick);
                     });
@@ -7533,11 +7007,10 @@
                 },
             };
         }
-        // --- Game 14: Idle Clicker ---
         initClickerGame(container) {
             if (!container) return null;
             const self = this;
-            container.innerHTML = ""; // Clear container
+            container.innerHTML = ""; 
             container.style.display = "flex";
             container.style.flexDirection = "column";
             container.style.alignItems = "center";
@@ -7546,15 +7019,13 @@
             container.style.color = "#fff";
             let score = 0;
             let scorePerClick = 1;
-            let autoClickRate = 0; // Score per second
+            let autoClickRate = 0; 
             let autoClickInterval;
-            // Score Display
             const scoreDisplay = document.createElement("h2");
             scoreDisplay.textContent = `Score: ${score}`;
             scoreDisplay.style.fontSize = "2em";
             scoreDisplay.style.fontFamily = "var(--font-heading)";
             container.appendChild(scoreDisplay);
-            // Click Button
             const clickButton = document.createElement("button");
             clickButton.innerHTML =
                 '<i class="fas fa-hand-pointer"></i> Click Me!';
@@ -7581,34 +7052,30 @@
                 showClickFeedback(clickButton);
             });
             container.appendChild(clickButton);
-            // Stats Display
             const statsDisplay = document.createElement("div");
             statsDisplay.style.fontSize = "1em";
             statsDisplay.innerHTML = `Per Click: ${scorePerClick} | Auto/sec: ${autoClickRate}`;
             container.appendChild(statsDisplay);
-            // Upgrades Area
             const upgradesContainer = document.createElement("div");
             upgradesContainer.style.display = "flex";
             upgradesContainer.style.gap = "10px";
             container.appendChild(upgradesContainer);
-            // Upgrade: More Clicks
             const upgradeClickButton = createUpgradeButton(
                 "Upgrade Click (Cost: 10)",
                 10,
                 () => {
                     scorePerClick++;
-                    return Math.floor(10 * Math.pow(1.15, scorePerClick)); // Increase cost exponentially
+                    return Math.floor(10 * Math.pow(1.15, scorePerClick)); 
                 },
                 (cost) => `Upgrade Click (Cost: ${cost})`
             );
             upgradesContainer.appendChild(upgradeClickButton);
-            // Upgrade: Auto Clicker
             const upgradeAutoButton = createUpgradeButton(
                 "Buy Auto Clicker (Cost: 50)",
                 50,
                 () => {
                     autoClickRate++;
-                    startAutoClicker(); // Ensure interval is running/updated
+                    startAutoClicker(); 
                     return Math.floor(50 * Math.pow(1.2, autoClickRate));
                 },
                 (cost) => `Buy Auto Clicker (Cost: ${cost})`
@@ -7630,28 +7097,26 @@
                 button.style.border = "none";
                 button.style.borderRadius = "5px";
                 button.style.cursor = "pointer";
-                button.disabled = true; // Start disabled
+                button.disabled = true; 
                 button.addEventListener("click", () => {
                     if (score >= currentCost) {
                         score -= currentCost;
-                        currentCost = action(); // Perform action and get new cost
+                        currentCost = action(); 
                         button.textContent = updateTextFn(currentCost);
                         updateDisplay();
                         self.playSound("point");
                     }
                 });
-                // Store update function on button for easy access
                 button.updateAvailability = () => {
                     button.disabled = score < currentCost;
                     button.style.opacity = button.disabled ? 0.6 : 1;
                 };
-                button.updateAvailability(); // Initial check
+                button.updateAvailability(); 
                 return button;
             }
             function updateDisplay() {
-                scoreDisplay.textContent = `Score: ${Math.floor(score)}`; // Show integer score
+                scoreDisplay.textContent = `Score: ${Math.floor(score)}`; 
                 statsDisplay.innerHTML = `Per Click: ${scorePerClick} | Auto/sec: ${autoClickRate}`;
-                // Update upgrade button availability
                 upgradeClickButton.updateAvailability();
                 upgradeAutoButton.updateAvailability();
             }
@@ -7659,16 +7124,15 @@
                 if (autoClickInterval) clearInterval(autoClickInterval);
                 if (autoClickRate > 0) {
                     autoClickInterval = setInterval(() => {
-                        score += autoClickRate / 10; // Add score fractionally 10 times per second
+                        score += autoClickRate / 10; 
                         updateDisplay();
-                    }, 100); // Update 10 times per second
+                    }, 100); 
                 }
             }
             function showClickFeedback(button) {
                 const feedback = document.createElement("div");
                 feedback.textContent = `+${scorePerClick}`;
                 feedback.style.position = "absolute";
-                // Position near the button, slightly randomized
                 const rect = button.getBoundingClientRect();
                 const containerRect = container.getBoundingClientRect();
                 feedback.style.left = `${
@@ -7692,19 +7156,17 @@
                 setTimeout(() => {
                     feedback.style.opacity = "0";
                     feedback.style.transform = "translateY(-30px)";
-                    setTimeout(() => container.removeChild(feedback), 500); // Remove after fade out
+                    setTimeout(() => container.removeChild(feedback), 500); 
                 }, 100);
             }
-            // Initial display update
             updateDisplay();
             return {
                 cleanup: () => {
                     if (autoClickInterval) clearInterval(autoClickInterval);
-                    container.innerHTML = ""; // Clear DOM elements
+                    container.innerHTML = ""; 
                 },
             };
         }
-        // --- Game 15: Labyrinth Run ---
         initMazeGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
@@ -7712,12 +7174,12 @@
             let animationFrameId;
             const cols = 20;
             const rows = 20;
-            const cellSize = canvas.width / cols; // Assuming square canvas
-            let grid = []; // Stores maze structure
-            let player = { x: 0, y: 0 }; // Start position (grid coords)
-            const goal = { x: cols - 1, y: rows - 1 }; // End position
-            let visited = []; // For maze generation
-            let stack = []; // For maze generation
+            const cellSize = canvas.width / cols; 
+            let grid = []; 
+            let player = { x: 0, y: 0 }; 
+            const goal = { x: cols - 1, y: rows - 1 }; 
+            let visited = []; 
+            let stack = []; 
             function createGrid() {
                 grid = Array(rows)
                     .fill(null)
@@ -7733,7 +7195,6 @@
                             }))
                     );
             }
-            // Recursive Backtracker Maze Generation Algorithm
             function generateMaze(cx, cy) {
                 grid[cy][cx].visited = true;
                 stack.push({ x: cx, y: cy });
@@ -7741,7 +7202,6 @@
                     const current = stack[stack.length - 1];
                     let { x, y } = current;
                     let neighbors = [];
-                    // Check neighbors (Up, Right, Down, Left)
                     if (y > 0 && !grid[y - 1][x].visited)
                         neighbors.push({
                             x: x,
@@ -7775,20 +7235,17 @@
                             neighbors[
                                 Math.floor(Math.random() * neighbors.length)
                             ];
-                        // Remove walls between current and next cell
                         grid[y][x][next.dir] = false;
                         grid[next.y][next.x][next.opposite] = false;
-                        // Mark next as visited and push to stack
                         grid[next.y][next.x].visited = true;
                         stack.push({ x: next.x, y: next.y });
                     } else {
-                        // Backtrack
                         stack.pop();
                     }
                 }
             }
             function drawMaze() {
-                ctx.strokeStyle = "#ccc"; // Wall color
+                ctx.strokeStyle = "#ccc"; 
                 ctx.lineWidth = 2;
                 for (let r = 0; r < rows; r++) {
                     for (let c = 0; c < cols; c++) {
@@ -7822,7 +7279,7 @@
                 }
             }
             function drawPlayer() {
-                ctx.fillStyle = "#3498db"; // Blue player
+                ctx.fillStyle = "#3498db"; 
                 ctx.fillRect(
                     player.x * cellSize + cellSize * 0.15,
                     player.y * cellSize + cellSize * 0.15,
@@ -7831,7 +7288,7 @@
                 );
             }
             function drawGoal() {
-                ctx.fillStyle = "#2ecc71"; // Green goal
+                ctx.fillStyle = "#2ecc71"; 
                 ctx.fillRect(
                     goal.x * cellSize + cellSize * 0.1,
                     goal.y * cellSize + cellSize * 0.1,
@@ -7843,17 +7300,13 @@
                 const currentCell = grid[player.y][player.x];
                 let canMove = false;
                 if (dx === 1 && !currentCell.right) canMove = true;
-                // Moving Right
                 else if (dx === -1 && !currentCell.left) canMove = true;
-                // Moving Left
                 else if (dy === 1 && !currentCell.bottom) canMove = true;
-                // Moving Down
-                else if (dy === -1 && !currentCell.top) canMove = true; // Moving Up
+                else if (dy === -1 && !currentCell.top) canMove = true; 
                 if (canMove) {
                     player.x += dx;
                     player.y += dy;
                     self.playSound("click");
-                    // Check win condition
                     if (player.x === goal.x && player.y === goal.y) {
                         winGame();
                     }
@@ -7873,10 +7326,8 @@
                     canvas.width / 2,
                     canvas.height / 2
                 );
-                // Option to restart or generate new maze?
             }
             function gameLoop() {
-                // Clear canvas
                 ctx.fillStyle = "#1a1a2e";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drawMaze();
@@ -7884,9 +7335,8 @@
                 drawPlayer();
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleKeyDown = (e) => {
-                if (animationFrameId === null) return; // Game finished
+                if (animationFrameId === null) return; 
                 switch (e.key) {
                     case "ArrowUp":
                     case "w":
@@ -7909,11 +7359,9 @@
             self.addManagedListener(document, "keydown", handleKeyDown, {
                 gameId: "maze",
             });
-            // Start Game
             createGrid();
-            generateMaze(0, 0); // Start generation from top-left
+            generateMaze(0, 0); 
             animationFrameId = requestAnimationFrame(gameLoop);
-            // Return cleanup
             return {
                 cleanup: () => {
                     if (animationFrameId) {
@@ -7923,11 +7371,10 @@
                 },
             };
         }
-        // --- Game 16: Typing Speed Test ---
         initTypingGame(container) {
             if (!container) return null;
             const self = this;
-            container.innerHTML = ""; // Clear container
+            container.innerHTML = ""; 
             container.style.display = "flex";
             container.style.flexDirection = "column";
             container.style.alignItems = "center";
@@ -7977,7 +7424,7 @@
                 "experience",
                 "innovation",
             ];
-            const gameTime = 60; // seconds
+            const gameTime = 60; 
             let currentWords = [];
             let wordIndex = 0;
             let startTime;
@@ -7986,7 +7433,6 @@
             let correctChars = 0;
             let totalChars = 0;
             let gameActive = false;
-            // Word Display Area
             const wordDisplay = document.createElement("div");
             wordDisplay.style.fontSize = "1.8em";
             wordDisplay.style.marginBottom = "10px";
@@ -7997,9 +7443,8 @@
             wordDisplay.style.minHeight = "100px";
             wordDisplay.style.width = "80%";
             wordDisplay.style.maxWidth = "600px";
-            wordDisplay.style.textAlign = "left"; // Align words left
+            wordDisplay.style.textAlign = "left"; 
             container.appendChild(wordDisplay);
-            // Input Area
             const inputArea = document.createElement("input");
             inputArea.type = "text";
             inputArea.placeholder = "Start typing here...";
@@ -8009,16 +7454,14 @@
             inputArea.style.maxWidth = "600px";
             inputArea.style.borderRadius = "5px";
             inputArea.style.border = "2px solid #aaa";
-            inputArea.disabled = true; // Disabled until game starts
+            inputArea.disabled = true; 
             inputArea.addEventListener("input", handleInput);
             container.appendChild(inputArea);
-            // Timer and WPM Display
             const statsDisplay = document.createElement("div");
             statsDisplay.style.fontSize = "1.2em";
             statsDisplay.style.marginTop = "10px";
             statsDisplay.textContent = `Time: ${timeLeft}s | WPM: 0 | Accuracy: 100%`;
             container.appendChild(statsDisplay);
-            // Start/Restart Button
             const startButton = document.createElement("button");
             startButton.textContent = "Start Test";
             startButton.style.padding = "10px 20px";
@@ -8033,7 +7476,6 @@
             function setupWords() {
                 currentWords = [];
                 for (let i = 0; i < 50; i++) {
-                    // Generate a list of 50 random words
                     currentWords.push(
                         words[Math.floor(Math.random() * words.length)]
                     );
@@ -8045,18 +7487,17 @@
                 wordDisplay.innerHTML = "";
                 currentWords.forEach((word, index) => {
                     const wordSpan = document.createElement("span");
-                    wordSpan.textContent = word + " "; // Add space after each word
+                    wordSpan.textContent = word + " "; 
                     wordSpan.dataset.index = index;
                     if (index === wordIndex) {
                         wordSpan.style.backgroundColor =
-                            "rgba(255, 255, 255, 0.2)"; // Highlight current word
+                            "rgba(255, 255, 255, 0.2)"; 
                         wordSpan.style.borderRadius = "3px";
                     } else if (index < wordIndex) {
-                        wordSpan.style.opacity = "0.6"; // Fade out typed words
+                        wordSpan.style.opacity = "0.6"; 
                     }
                     wordDisplay.appendChild(wordSpan);
                 });
-                // Scroll into view if needed (basic)
                 const activeWord = wordDisplay.querySelector(
                     `span[data-index="${wordIndex}"]`
                 );
@@ -8096,27 +7537,25 @@
                 const currentWordSpan = wordDisplay.querySelector(
                     `span[data-index="${wordIndex}"]`
                 );
-                // Check if space is pressed (word completion)
                 if (typedValue.endsWith(" ")) {
                     const typedWord = typedValue.trim();
-                    totalChars += currentWord.length + 1; // +1 for space
+                    totalChars += currentWord.length + 1; 
                     if (typedWord === currentWord) {
                         correctChars += currentWord.length + 1;
-                        currentWordSpan.style.color = "lime"; // Correct word color
+                        currentWordSpan.style.color = "lime"; 
                         self.playSound("click");
                     } else {
-                        currentWordSpan.style.color = "red"; // Incorrect word color
+                        currentWordSpan.style.color = "red"; 
                         self.playSound("hit");
                     }
                     wordIndex++;
-                    inputArea.value = ""; // Clear input for next word
+                    inputArea.value = ""; 
                     if (wordIndex >= currentWords.length) {
-                        setupWords(); // Get new words if list runs out
+                        setupWords(); 
                     } else {
-                        displayWords(); // Highlight next word
+                        displayWords(); 
                     }
                 } else {
-                    // Live feedback while typing word
                     let correct = true;
                     let displayHtml = "";
                     for (let i = 0; i < currentWord.length; i++) {
@@ -8128,12 +7567,12 @@
                                 correct = false;
                             }
                         } else {
-                            displayHtml += `<span>${currentWord[i]}</span>`; // Untyped part
+                            displayHtml += `<span>${currentWord[i]}</span>`; 
                         }
                     }
-                    currentWordSpan.innerHTML = displayHtml + " "; // Update word display with feedback
+                    currentWordSpan.innerHTML = displayHtml + " "; 
                     currentWordSpan.style.backgroundColor =
-                        "rgba(255, 255, 255, 0.2)"; // Keep highlight
+                        "rgba(255, 255, 255, 0.2)"; 
                 }
                 updateStats();
             }
@@ -8155,11 +7594,9 @@
                 inputArea.disabled = true;
                 startButton.textContent = "Start Again";
                 self.playSound("gameOver");
-                updateStats(); // Final stats update
-                // Optionally show a more prominent result display
+                updateStats(); 
             }
-            // Initial setup
-            setupWords(); // Show initial words
+            setupWords(); 
             return {
                 cleanup: () => {
                     if (timerInterval) clearInterval(timerInterval);
@@ -8167,12 +7604,10 @@
                 },
             };
         }
-        // --- Game 17: Word Search ---
         initWordSearchGame(container) {
-            // DOM-based Word Search
             if (!container) return null;
             const self = this;
-            container.innerHTML = ""; // Clear container
+            container.innerHTML = ""; 
             container.style.display = "flex";
             container.style.gap = "20px";
             container.style.padding = "15px";
@@ -8190,15 +7625,14 @@
                 "SVELTE",
                 "JAVA",
                 "SCRIPT",
-            ]; // Example words
-            let grid = []; // 2D array for letters
-            let placedWords = []; // { word, positions: [{r, c}, ...] }
+            ]; 
+            let grid = []; 
+            let placedWords = []; 
             let foundWords = new Set();
             let isSelecting = false;
-            let selectionStart = null; // { r, c, element }
-            let selectionCurrent = null; // { r, c, element }
-            let selectedCells = []; // Array of {r, c, element}
-            // --- Grid Area ---
+            let selectionStart = null; 
+            let selectionCurrent = null; 
+            let selectedCells = []; 
             const gridContainer = document.createElement("div");
             gridContainer.style.flexGrow = "1";
             const gridElement = document.createElement("div");
@@ -8208,9 +7642,8 @@
             gridElement.style.gap = "1px";
             gridElement.style.backgroundColor = "#555";
             gridElement.style.border = "2px solid #888";
-            gridElement.style.userSelect = "none"; // Prevent text selection
+            gridElement.style.userSelect = "none"; 
             gridContainer.appendChild(gridElement);
-            // --- Word List Area ---
             const wordListContainer = document.createElement("div");
             wordListContainer.style.width = "150px";
             wordListContainer.style.flexShrink = "0";
@@ -8228,11 +7661,11 @@
             container.appendChild(gridContainer);
             container.appendChild(wordListContainer);
             function createGridCells() {
-                gridElement.innerHTML = ""; // Clear previous grid
+                gridElement.innerHTML = ""; 
                 for (let r = 0; r < gridSize; r++) {
                     grid[r] = [];
                     for (let c = 0; c < gridSize; c++) {
-                        grid[r][c] = ""; // Placeholder for letter
+                        grid[r][c] = ""; 
                         const cell = document.createElement("div");
                         cell.dataset.row = r;
                         cell.dataset.col = c;
@@ -8246,27 +7679,25 @@
                         cell.style.cursor = "pointer";
                         cell.addEventListener("mousedown", handleMouseDown);
                         cell.addEventListener("mouseover", handleMouseOver);
-                        // mouseup listener on the gridElement to catch release anywhere
                         gridElement.appendChild(cell);
                     }
                 }
-                // Add mouseup listener to the whole grid container
                 gridElement.addEventListener("mouseup", handleMouseUp);
-                gridElement.addEventListener("mouseleave", handleMouseLeave); // Handle leaving grid while selecting
+                gridElement.addEventListener("mouseleave", handleMouseLeave); 
             }
             function placeWords() {
                 placedWords = [];
                 const directions = [
                     { dr: 0, dc: 1 },
                     { dr: 1, dc: 0 },
-                    { dr: 1, dc: 1 }, // H, V, Diag Down-Right
+                    { dr: 1, dc: 1 }, 
                     { dr: 0, dc: -1 },
                     { dr: -1, dc: 0 },
-                    { dr: -1, dc: -1 }, // H(R), V(R), Diag Up-Left
+                    { dr: -1, dc: -1 }, 
                     { dr: 1, dc: -1 },
-                    { dr: -1, dc: 1 }, // Diag Down-Left, Diag Up-Right
+                    { dr: -1, dc: 1 }, 
                 ];
-                wordsToFind.sort((a, b) => b.length - a.length); // Place longer words first
+                wordsToFind.sort((a, b) => b.length - a.length); 
                 wordsToFind.forEach((word) => {
                     let placed = false;
                     let attempts = 0;
@@ -8316,7 +7747,6 @@
                                     Math.floor(Math.random() * alphabet.length)
                                 ];
                         }
-                        // Update cell display
                         gridElement.children[r * gridSize + c].textContent =
                             grid[r][c];
                     }
@@ -8354,7 +7784,6 @@
                 if (!cell) return;
                 const r = parseInt(cell.dataset.row);
                 const c = parseInt(cell.dataset.col);
-                // Only update if the cell is different
                 if (r === selectionCurrent.r && c === selectionCurrent.c)
                     return;
                 selectionCurrent = { r, c, element: cell };
@@ -8371,7 +7800,6 @@
                 selectedCells = [];
             }
             function handleMouseLeave() {
-                // If mouse leaves grid while selecting, treat it as mouse up
                 if (isSelecting) {
                     handleMouseUp();
                 }
@@ -8385,7 +7813,6 @@
                     c2 = selectionCurrent.c;
                 const dr = Math.sign(r2 - r1);
                 const dc = Math.sign(c2 - c1);
-                // Check for valid line (horizontal, vertical, or perfect diagonal)
                 if (
                     r1 === r2 ||
                     c1 === c2 ||
@@ -8401,17 +7828,14 @@
                         c += dc;
                     }
                 } else {
-                    // Invalid selection line, just select start and end? Or just start?
-                    selectedCells = [selectionStart]; // Revert to just the start cell if line invalid
+                    selectedCells = [selectionStart]; 
                 }
             }
             function highlightSelection() {
-                // Clear previous highlight first
-                clearHighlight(false); // Don't clear permanent found highlights
+                clearHighlight(false); 
                 selectedCells.forEach(({ element }) => {
                     if (!element.classList.contains("found")) {
-                        // Don't re-highlight found words temporarily
-                        element.style.backgroundColor = "#f1c40f"; // Highlight color
+                        element.style.backgroundColor = "#f1c40f"; 
                         element.classList.add("selected");
                     }
                 });
@@ -8420,13 +7844,13 @@
                 const cellsToClear = gridElement.querySelectorAll(".selected");
                 cellsToClear.forEach((cell) => {
                     if (!cell.classList.contains("found") || clearFound) {
-                        cell.style.backgroundColor = "#bbb"; // Reset color
+                        cell.style.backgroundColor = "#bbb"; 
                         cell.classList.remove("selected");
                     }
                 });
             }
             function checkSelectedWord() {
-                if (selectedCells.length < 2) return; // Need at least 2 letters
+                if (selectedCells.length < 2) return; 
                 let selectedWord = selectedCells
                     .map(({ r, c }) => grid[r][c])
                     .join("");
@@ -8446,34 +7870,30 @@
                     !foundWords.has(selectedWordReversed)
                 ) {
                     wordFound = selectedWordReversed;
-                    // If found reversed, mark the cells in the correct order for highlighting
                     selectedCells.reverse();
                 }
                 if (wordFound) {
                     foundWords.add(wordFound);
                     selectedCells.forEach(({ element }) => {
-                        element.style.backgroundColor = "#2ecc71"; // Found color
-                        element.classList.add("found"); // Mark as permanently found
-                        element.classList.remove("selected"); // Remove temporary selection class
+                        element.style.backgroundColor = "#2ecc71"; 
+                        element.classList.add("found"); 
+                        element.classList.remove("selected"); 
                     });
                     updateWordList();
                     self.playSound("point");
                     if (foundWords.size === wordsToFind.length) {
                         self.playSound("win");
-                        // Add win message?
                     }
                 } else {
-                    self.playSound("hit"); // Sound for incorrect selection
+                    self.playSound("hit"); 
                 }
             }
-            // Setup
             createGridCells();
             placeWords();
             fillEmptyCells();
             updateWordList();
             return {
                 cleanup: () => {
-                    // Remove listeners
                     gridElement.removeEventListener("mouseup", handleMouseUp);
                     gridElement.removeEventListener(
                         "mouseleave",
@@ -8487,11 +7907,10 @@
                 },
             };
         }
-        // --- Game 18: Hangman Classic ---
         initHangmanGame(container) {
             if (!container) return null;
             const self = this;
-            container.innerHTML = ""; // Clear container
+            container.innerHTML = ""; 
             container.style.display = "flex";
             container.style.flexDirection = "column";
             container.style.alignItems = "center";
@@ -8514,27 +7933,23 @@
             let wordToGuess = "";
             let guessedLetters = new Set();
             let wrongGuesses = 0;
-            const maxWrongGuesses = 6; // Standard hangman
+            const maxWrongGuesses = 6; 
             let gameOver = false;
-            // Hangman Drawing Area (Canvas)
             const hangmanCanvas = document.createElement("canvas");
             hangmanCanvas.width = 200;
             hangmanCanvas.height = 250;
             const hctx = hangmanCanvas.getContext("2d");
             container.appendChild(hangmanCanvas);
-            // Word Display Area
             const wordDisplay = document.createElement("div");
             wordDisplay.style.fontSize = "2em";
             wordDisplay.style.letterSpacing = "0.2em";
             wordDisplay.style.margin = "10px 0";
             container.appendChild(wordDisplay);
-            // Guessed Letters Display
             const guessedDisplay = document.createElement("div");
             guessedDisplay.style.fontSize = "1em";
             guessedDisplay.style.color = "#aaa";
             guessedDisplay.textContent = "Guessed: ";
             container.appendChild(guessedDisplay);
-            // Keyboard Area
             const keyboard = document.createElement("div");
             keyboard.style.display = "flex";
             keyboard.style.flexWrap = "wrap";
@@ -8542,7 +7957,6 @@
             keyboard.style.gap = "5px";
             keyboard.style.maxWidth = "400px";
             container.appendChild(keyboard);
-            // Status Message
             const statusMessage = document.createElement("div");
             statusMessage.style.fontSize = "1.2em";
             statusMessage.style.fontWeight = "bold";
@@ -8552,54 +7966,47 @@
                 hctx.clearRect(0, 0, hangmanCanvas.width, hangmanCanvas.height);
                 hctx.strokeStyle = "#fff";
                 hctx.lineWidth = 3;
-                // Base
                 hctx.beginPath();
                 hctx.moveTo(10, 240);
                 hctx.lineTo(190, 240);
-                hctx.stroke(); // Base line
+                hctx.stroke(); 
                 hctx.moveTo(50, 240);
                 hctx.lineTo(50, 10);
-                hctx.stroke(); // Vertical pole
+                hctx.stroke(); 
                 hctx.lineTo(150, 10);
-                hctx.stroke(); // Top beam
+                hctx.stroke(); 
                 hctx.lineTo(150, 40);
-                hctx.stroke(); // Rope
+                hctx.stroke(); 
                 if (wrongGuesses > 0) {
-                    // Head
                     hctx.beginPath();
                     hctx.arc(150, 60, 20, 0, Math.PI * 2);
                     hctx.stroke();
                 }
                 if (wrongGuesses > 1) {
-                    // Body
                     hctx.beginPath();
                     hctx.moveTo(150, 80);
                     hctx.lineTo(150, 150);
                     hctx.stroke();
                 }
                 if (wrongGuesses > 2) {
-                    // Left Arm
                     hctx.beginPath();
                     hctx.moveTo(150, 100);
                     hctx.lineTo(110, 130);
                     hctx.stroke();
                 }
                 if (wrongGuesses > 3) {
-                    // Right Arm
                     hctx.beginPath();
                     hctx.moveTo(150, 100);
                     hctx.lineTo(190, 130);
                     hctx.stroke();
                 }
                 if (wrongGuesses > 4) {
-                    // Left Leg
                     hctx.beginPath();
                     hctx.moveTo(150, 150);
                     hctx.lineTo(120, 200);
                     hctx.stroke();
                 }
                 if (wrongGuesses > 5) {
-                    // Right Leg
                     hctx.beginPath();
                     hctx.moveTo(150, 150);
                     hctx.lineTo(180, 200);
@@ -8616,7 +8023,7 @@
                         display += "_";
                         allGuessed = false;
                     }
-                    display += " "; // Add space between letters/underscores
+                    display += " "; 
                 }
                 wordDisplay.textContent = display.trim();
                 return allGuessed;
@@ -8627,7 +8034,7 @@
                     .join(", ")}`;
             }
             function createKeyboard() {
-                keyboard.innerHTML = ""; // Clear previous
+                keyboard.innerHTML = ""; 
                 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 for (const letter of alphabet) {
                     const button = document.createElement("button");
@@ -8649,7 +8056,7 @@
                 const guessedLetter = event.target.dataset.letter;
                 if (!guessedLetter || guessedLetters.has(guessedLetter)) return;
                 guessedLetters.add(guessedLetter);
-                event.target.disabled = true; // Disable guessed letter button
+                event.target.disabled = true; 
                 event.target.style.opacity = "0.5";
                 event.target.style.cursor = "default";
                 if (wordToGuess.includes(guessedLetter)) {
@@ -8670,7 +8077,6 @@
             }
             function endGame(won) {
                 gameOver = true;
-                // Disable all keyboard buttons
                 keyboard.querySelectorAll("button").forEach((btn) => {
                     btn.disabled = true;
                     btn.style.cursor = "default";
@@ -8683,7 +8089,6 @@
                     statusMessage.textContent = `Game Over! Word was: ${wordToGuess}`;
                     statusMessage.style.color = "red";
                     self.playSound("gameOver");
-                    // Reveal the word fully
                     wordDisplay.textContent = wordToGuess.split("").join(" ");
                 }
             }
@@ -8696,13 +8101,11 @@
                 drawHangman();
                 updateWordDisplay();
                 updateGuessedDisplay();
-                createKeyboard(); // Recreate keyboard to enable buttons
+                createKeyboard(); 
             }
-            // Setup
             startGame();
             return {
                 cleanup: () => {
-                    // Remove listeners if needed
                     keyboard.querySelectorAll("button").forEach((btn) => {
                         btn.removeEventListener("click", handleGuess);
                     });
@@ -8710,11 +8113,10 @@
                 },
             };
         }
-        // --- Game 19: Simon Says ---
         initSimonSaysGame(container) {
             if (!container) return null;
             const self = this;
-            container.innerHTML = ""; // Clear container
+            container.innerHTML = ""; 
             container.style.display = "flex";
             container.style.flexDirection = "column";
             container.style.alignItems = "center";
@@ -8722,26 +8124,23 @@
             container.style.padding = "20px";
             container.style.fontFamily = "var(--font-main)";
             container.style.color = "#fff";
-            const colors = ["#2ecc71", "#e74c3c", "#f1c40f", "#3498db"]; // Green, Red, Yellow, Blue
-            const sounds = [261.63, 329.63, 392.0, 523.25]; // Frequencies C4, E4, G4, C5
+            const colors = ["#2ecc71", "#e74c3c", "#f1c40f", "#3498db"]; 
+            const sounds = [261.63, 329.63, 392.0, 523.25]; 
             let sequence = [];
             let playerSequence = [];
             let level = 0;
             let canPlayerGuess = false;
             let flashTimeout;
-            // Simon Buttons Container
             const simonContainer = document.createElement("div");
             simonContainer.style.display = "grid";
             simonContainer.style.gridTemplateColumns = "100px 100px";
             simonContainer.style.gridTemplateRows = "100px 100px";
             simonContainer.style.gap = "10px";
             container.appendChild(simonContainer);
-            // Status Display
             const statusDisplay = document.createElement("div");
             statusDisplay.style.fontSize = "1.2em";
             statusDisplay.textContent = "Level: 0";
             container.appendChild(statusDisplay);
-            // Create Buttons
             colors.forEach((color, index) => {
                 const button = document.createElement("div");
                 button.dataset.index = index;
@@ -8766,53 +8165,47 @@
                     }
                     flashButton(sequence[i]);
                     i++;
-                }, 800); // Time between flashes
+                }, 800); 
             }
             function flashButton(index) {
                 const button = simonContainer.children[index];
                 if (!button) return;
-                button.style.opacity = "0.5"; // Flash effect
-                playSoundNote(sounds[index], 0.3); // Play corresponding sound
-                if (flashTimeout) clearTimeout(flashTimeout); // Clear previous timeout if sequence is fast
+                button.style.opacity = "0.5"; 
+                playSoundNote(sounds[index], 0.3); 
+                if (flashTimeout) clearTimeout(flashTimeout); 
                 flashTimeout = setTimeout(() => {
                     button.style.opacity = "1";
-                }, 400); // Duration of flash
+                }, 400); 
             }
             function handleButtonClick(event) {
                 if (!canPlayerGuess) return;
                 const index = parseInt(event.target.dataset.index);
-                flashButton(index); // Flash clicked button
+                flashButton(index); 
                 playerSequence.push(index);
-                // Check if the player's input matches the sequence so far
                 if (
                     playerSequence[playerSequence.length - 1] !==
                     sequence[playerSequence.length - 1]
                 ) {
-                    // Incorrect guess
                     gameOver();
                     return;
                 }
-                // Check if player completed the current sequence
                 if (playerSequence.length === sequence.length) {
-                    // Correct sequence, move to next level
-                    canPlayerGuess = false; // Prevent clicks during sequence playback
+                    canPlayerGuess = false; 
                     level++;
-                    self.updateScore(level); // Use level as score
+                    self.updateScore(level); 
                     self.playSound("point");
-                    setTimeout(nextLevel, 1000); // Delay before next sequence starts
+                    setTimeout(nextLevel, 1000); 
                 }
             }
             function nextLevel() {
-                sequence.push(Math.floor(Math.random() * 4)); // Add random color index
+                sequence.push(Math.floor(Math.random() * 4)); 
                 playSequence();
             }
             function gameOver() {
                 canPlayerGuess = false;
                 statusDisplay.textContent = `Game Over! Reached Level ${level}`;
                 self.playSound("gameOver");
-                // Add a restart button or prompt? For now, user needs to use showcase restart.
             }
-            // Custom sound function for specific notes
             function playSoundNote(frequency, duration) {
                 if (!self.soundEnabled) return;
                 const audioCtx = self.getAudioContext();
@@ -8838,12 +8231,10 @@
                     console.error("Error playing Simon sound:", error);
                 }
             }
-            // Start Game
-            setTimeout(nextLevel, 500); // Start first level after short delay
+            setTimeout(nextLevel, 500); 
             return {
                 cleanup: () => {
                     if (flashTimeout) clearTimeout(flashTimeout);
-                    // Remove listeners
                     Array.from(simonContainer.children).forEach((btn) => {
                         btn.removeEventListener("click", handleButtonClick);
                     });
@@ -8851,11 +8242,10 @@
                 },
             };
         }
-        // --- Game 20: Tic Tac Toe AI ---
         initTicTacToeGame(container) {
             if (!container) return null;
             const self = this;
-            container.innerHTML = ""; // Clear container
+            container.innerHTML = ""; 
             container.style.display = "flex";
             container.style.flexDirection = "column";
             container.style.alignItems = "center";
@@ -8863,18 +8253,16 @@
             container.style.padding = "20px";
             container.style.fontFamily = "var(--font-main)";
             container.style.color = "#fff";
-            // Game state variables
-            const board = [0, 0, 0, 0, 0, 0, 0, 0, 0]; // 0: empty, 1: player (X), 2: AI (O)
+            const board = [0, 0, 0, 0, 0, 0, 0, 0, 0]; 
             const playerMark = "X";
             const aiMark = "O";
-            let currentPlayer = 1; // 1 for player, 2 for AI
+            let currentPlayer = 1; 
             let gameOver = false;
             let winningLine = null;
             let winAnimation = 0;
             let scores = { player: 0, ai: 0, draw: 0 };
-            let difficulty = "medium"; // 'easy', 'medium', 'hard'
+            let difficulty = "medium"; 
             let lastWinner = null;
-            // Create header with game title
             const gameHeader = document.createElement("div");
             gameHeader.style.fontSize = "1.5em";
             gameHeader.style.fontWeight = "bold";
@@ -8883,7 +8271,6 @@
             gameHeader.style.color = "#ff9f43";
             gameHeader.textContent = "Tic Tac Toe AI Challenge";
             container.appendChild(gameHeader);
-            // Create difficulty controls
             const difficultyContainer = document.createElement("div");
             difficultyContainer.style.display = "flex";
             difficultyContainer.style.marginBottom = "15px";
@@ -8910,7 +8297,6 @@
                 });
                 btn.addEventListener("click", () => {
                     if (difficulty !== level && !gameOver) {
-                        // Only allow changing difficulty between games
                         return;
                     }
                     difficulty = level;
@@ -8930,7 +8316,6 @@
                 });
                 difficultyContainer.appendChild(btn);
             });
-            // Score display
             const scoreDisplay = document.createElement("div");
             scoreDisplay.style.display = "flex";
             scoreDisplay.style.justifyContent = "space-around";
@@ -8949,27 +8334,23 @@
             const aiScoreEl = document.createElement("div");
             aiScoreEl.innerHTML = `<span style="color:#f1c40f">AI:</span> <span style="font-weight:bold">${scores.ai}</span>`;
             scoreDisplay.appendChild(aiScoreEl);
-            // Status Display
             const statusDisplay = document.createElement("div");
             statusDisplay.style.fontSize = "1.2em";
             statusDisplay.style.marginBottom = "15px";
             statusDisplay.style.textAlign = "center";
             statusDisplay.style.minHeight = "25px";
             container.appendChild(statusDisplay);
-            // Canvas for drawing winning lines and animations
             const gameCanvas = document.createElement("canvas");
-            gameCanvas.width = 255; // 3x80 cells + 2x5 gaps + 5px border on each side
+            gameCanvas.width = 255; 
             gameCanvas.height = 255;
             gameCanvas.style.position = "absolute";
-            gameCanvas.style.pointerEvents = "none"; // Don't intercept clicks
+            gameCanvas.style.pointerEvents = "none"; 
             gameCanvas.style.zIndex = "5";
             const canvasCtx = gameCanvas.getContext("2d");
-            // Game container (holds grid and canvas)
             const gameContainer = document.createElement("div");
             gameContainer.style.position = "relative";
             gameContainer.style.marginBottom = "15px";
             container.appendChild(gameContainer);
-            // Grid Element
             const gridElement = document.createElement("div");
             gridElement.style.display = "grid";
             gridElement.style.gridTemplateColumns = "repeat(3, 80px)";
@@ -8981,7 +8362,6 @@
             gridElement.style.boxShadow = "0 4px 8px rgba(0,0,0,0.3)";
             gameContainer.appendChild(gridElement);
             gameContainer.appendChild(gameCanvas);
-            // Create Cells
             for (let i = 0; i < 9; i++) {
                 const cell = document.createElement("div");
                 cell.dataset.index = i;
@@ -8996,7 +8376,6 @@
                 cell.style.borderRadius = "4px";
                 cell.style.transition =
                     "background-color 0.2s ease, transform 0.1s ease";
-                // Add hover effect
                 cell.addEventListener("mouseenter", () => {
                     if (board[i] === 0 && !gameOver && currentPlayer === 1) {
                         cell.style.backgroundColor = "#f5f5f5";
@@ -9012,7 +8391,6 @@
                 cell.addEventListener("click", handleCellClick);
                 gridElement.appendChild(cell);
             }
-            // Add restart button
             const restartButton = document.createElement("button");
             restartButton.textContent = "New Game";
             restartButton.style.padding = "8px 20px";
@@ -9046,7 +8424,6 @@
                 aiScoreEl.innerHTML = `<span style="color:#f1c40f">AI:</span> <span style="font-weight:bold">${scores.ai}</span>`;
             }
             function resetGame() {
-                // Reset the board
                 for (let i = 0; i < 9; i++) {
                     board[i] = 0;
                     const cell = gridElement.children[i];
@@ -9056,13 +8433,10 @@
                     cell.style.cursor = "pointer";
                     cell.style.transform = "scale(1)";
                 }
-                // Clear canvas
                 canvasCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-                // Reset game state
                 gameOver = false;
                 winningLine = null;
                 winAnimation = 0;
-                // Set starting player (winner goes second)
                 if (lastWinner === 1) {
                     currentPlayer = 2;
                     updateStatus("AI's Turn...");
@@ -9076,19 +8450,18 @@
                 if (gameOver || currentPlayer !== 1) return;
                 const index = parseInt(event.target.dataset.index);
                 if (board[index] === 0) {
-                    makeMove(index, 1); // Player makes move
+                    makeMove(index, 1); 
                     if (!gameOver) {
                         currentPlayer = 2;
                         updateStatus("AI's Turn...");
-                        setTimeout(aiMove, 800); // AI moves after a delay
+                        setTimeout(aiMove, 800); 
                     }
                 }
             }
             function makeMove(index, player) {
-                if (board[index] !== 0 || gameOver) return false; // Invalid move
+                if (board[index] !== 0 || gameOver) return false; 
                 board[index] = player;
                 const cellElement = gridElement.children[index];
-                // Animated appearance
                 cellElement.style.transform = "scale(0.1)";
                 setTimeout(() => {
                     cellElement.textContent =
@@ -9102,13 +8475,12 @@
                 }, 50);
                 cellElement.style.cursor = "default";
                 self.playSound("click");
-                // Check for win with the winning pattern
                 const result = checkWinWithPattern(player);
                 if (result.win) {
                     winningLine = result.pattern;
                     endGame(player);
                 } else if (board.every((cell) => cell !== 0)) {
-                    endGame(0); // Draw
+                    endGame(0); 
                 }
                 return true;
             }
@@ -9116,12 +8488,12 @@
                 const winPatterns = [
                     [0, 1, 2],
                     [3, 4, 5],
-                    [6, 7, 8], // Rows
+                    [6, 7, 8], 
                     [0, 3, 6],
                     [1, 4, 7],
-                    [2, 5, 8], // Columns
+                    [2, 5, 8], 
                     [0, 4, 8],
-                    [2, 4, 6], // Diagonals
+                    [2, 4, 6], 
                 ];
                 for (const pattern of winPatterns) {
                     if (pattern.every((index) => board[index] === player)) {
@@ -9136,10 +8508,7 @@
                 let bestMove = -1;
                 switch (difficulty) {
                     case "easy":
-                        // For easy difficulty, make some obvious mistakes
-                        // 50% chance to make a random move instead of optimal
                         if (Math.random() < 0.5) {
-                            // Random move
                             const emptyIndices = board
                                 .map((val, idx) => (val === 0 ? idx : -1))
                                 .filter((idx) => idx !== -1);
@@ -9153,40 +8522,34 @@
                             }
                             break;
                         }
-                    // Otherwise, fall through to medium logic
                     case "medium":
-                        // Basic strategy: Win if possible, block if needed, prioritize center, then corners
-                        // 1. Check if AI can win
                         for (let i = 0; i < 9; i++) {
                             if (board[i] === 0) {
-                                board[i] = 2; // Try move
+                                board[i] = 2; 
                                 if (checkWinWithPattern(2).win) {
                                     bestMove = i;
-                                    board[i] = 0; // Undo try
+                                    board[i] = 0; 
                                     break;
                                 }
-                                board[i] = 0; // Undo try
+                                board[i] = 0; 
                             }
                         }
-                        // 2. Check if Player can win and block
                         if (bestMove === -1) {
                             for (let i = 0; i < 9; i++) {
                                 if (board[i] === 0) {
-                                    board[i] = 1; // Try player move
+                                    board[i] = 1; 
                                     if (checkWinWithPattern(1).win) {
-                                        bestMove = i; // Block player
-                                        board[i] = 0; // Undo try
+                                        bestMove = i; 
+                                        board[i] = 0; 
                                         break;
                                     }
-                                    board[i] = 0; // Undo try
+                                    board[i] = 0; 
                                 }
                             }
                         }
-                        // 3. Take center if available
                         if (bestMove === -1 && board[4] === 0) {
                             bestMove = 4;
                         }
-                        // 4. Prefer corners
                         if (bestMove === -1) {
                             const corners = [0, 2, 6, 8];
                             const availableCorners = corners.filter(
@@ -9202,7 +8565,6 @@
                                     ];
                             }
                         }
-                        // 5. Take what's available
                         if (bestMove === -1) {
                             const emptyIndices = board
                                 .map((val, idx) => (val === 0 ? idx : -1))
@@ -9218,7 +8580,6 @@
                         }
                         break;
                     case "hard":
-                        // Use minimax algorithm for hard difficulty
                         bestMove = findBestMove();
                         break;
                 }
@@ -9238,7 +8599,6 @@
                     );
                 }
             }
-            // Minimax algorithm for hard difficulty
             function minimax(
                 board,
                 depth,
@@ -9246,15 +8606,14 @@
                 alpha = -Infinity,
                 beta = Infinity
             ) {
-                // Check for terminal states
-                if (checkWinWithPattern(2).win) return 10 - depth; // AI win
-                if (checkWinWithPattern(1).win) return depth - 10; // Player win
-                if (board.every((cell) => cell !== 0)) return 0; // Draw
+                if (checkWinWithPattern(2).win) return 10 - depth; 
+                if (checkWinWithPattern(1).win) return depth - 10; 
+                if (board.every((cell) => cell !== 0)) return 0; 
                 if (isMaximizing) {
                     let maxEval = -Infinity;
                     for (let i = 0; i < 9; i++) {
                         if (board[i] === 0) {
-                            board[i] = 2; // AI move
+                            board[i] = 2; 
                             const evalScore = minimax(
                                 board,
                                 depth + 1,
@@ -9262,10 +8621,10 @@
                                 alpha,
                                 beta
                             );
-                            board[i] = 0; // Undo
+                            board[i] = 0; 
                             maxEval = Math.max(maxEval, evalScore);
                             alpha = Math.max(alpha, evalScore);
-                            if (beta <= alpha) break; // Alpha-beta pruning
+                            if (beta <= alpha) break; 
                         }
                     }
                     return maxEval;
@@ -9273,7 +8632,7 @@
                     let minEval = Infinity;
                     for (let i = 0; i < 9; i++) {
                         if (board[i] === 0) {
-                            board[i] = 1; // Player move
+                            board[i] = 1; 
                             const evalScore = minimax(
                                 board,
                                 depth + 1,
@@ -9281,10 +8640,10 @@
                                 alpha,
                                 beta
                             );
-                            board[i] = 0; // Undo
+                            board[i] = 0; 
                             minEval = Math.min(minEval, evalScore);
                             beta = Math.min(beta, evalScore);
-                            if (beta <= alpha) break; // Alpha-beta pruning
+                            if (beta <= alpha) break; 
                         }
                     }
                     return minEval;
@@ -9295,9 +8654,9 @@
                 let bestMove = -1;
                 for (let i = 0; i < 9; i++) {
                     if (board[i] === 0) {
-                        board[i] = 2; // AI move
+                        board[i] = 2; 
                         const score = minimax(board, 0, false);
-                        board[i] = 0; // Undo
+                        board[i] = 0; 
                         if (score > bestScore) {
                             bestScore = score;
                             bestMove = i;
@@ -9310,8 +8669,7 @@
                 if (!winningLine) return;
                 const cellSize = 80;
                 const cellGap = 5;
-                const cellOffset = 5; // border padding
-                // Calculate start and end positions
+                const cellOffset = 5; 
                 function getCellCenter(index) {
                     const row = Math.floor(index / 3);
                     const col = index % 3;
@@ -9324,10 +8682,8 @@
                 const start = getCellCenter(winningLine[0]);
                 const end = getCellCenter(winningLine[2]);
                 canvasCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-                // Determine line color based on winner
                 const lineColor =
                     board[winningLine[0]] === 1 ? "#ff4757" : "#f1c40f";
-                // Animate line drawing
                 const progress = Math.min(1, winAnimation / 40);
                 const currentX = start.x + (end.x - start.x) * progress;
                 const currentY = start.y + (end.y - start.y) * progress;
@@ -9340,19 +8696,15 @@
                 canvasCtx.shadowColor = lineColor;
                 canvasCtx.shadowBlur = 15;
                 canvasCtx.stroke();
-                // Pulsing effect on completed line
                 if (progress === 1) {
-                    // Add pulsing effect
                     const pulse = 0.7 + 0.3 * Math.sin(Date.now() / 200);
                     canvasCtx.lineWidth = 8 * pulse;
                     canvasCtx.globalAlpha = 0.7 + 0.3 * pulse;
                     canvasCtx.stroke();
                     canvasCtx.globalAlpha = 1;
                 }
-                // Highlight winning cells
                 winningLine.forEach((index) => {
                     const cell = gridElement.children[index];
-                    // Make the winning cells slightly pulse
                     const pulse = 0.95 + 0.05 * Math.sin(Date.now() / 150);
                     cell.style.transform = `scale(${pulse})`;
                     cell.style.boxShadow = `0 0 10px ${lineColor}`;
@@ -9372,7 +8724,6 @@
                     scores.player++;
                     lastWinner = 1;
                     self.playSound("win");
-                    // Confetti effect
                     Array.from({ length: 30 }).forEach(() => {
                         createConfetti();
                     });
@@ -9388,7 +8739,6 @@
                     self.playSound("hit");
                 }
                 updateScoreDisplay();
-                // Start drawing the winning line
                 if (winningLine) {
                     requestAnimationFrame(drawWinningLine);
                 }
@@ -9437,11 +8787,9 @@
                 }
                 requestAnimationFrame(animateConfetti);
             }
-            // Initial Status
             updateStatus("Your Turn (X)");
             return {
                 cleanup: () => {
-                    // Remove listeners
                     Array.from(gridElement.children).forEach((cell) => {
                         cell.removeEventListener("click", handleCellClick);
                     });
@@ -9449,19 +8797,10 @@
                 },
             };
         }
-        // ========================================================================
-        // ======================= TIER 3 GAMES (Very Simple) =====================
-        // ========================================================================
-        // NOTE: These will be more basic implementations due to complexity constraints.
-        // --- Game 21: Arkanoid Lite ---
         initArkanoidGame(canvas) {
-            // Very similar to Breakout, maybe add one moving brick type?
-            // For simplicity, let's just reuse Breakout logic here.
-            // In a real scenario, you'd add unique Arkanoid features.
             console.warn("Arkanoid Lite using Breakout logic for now.");
-            return this.initBreakoutGame(canvas); // Reuse Breakout
+            return this.initBreakoutGame(canvas); 
         }
-        // --- Game 22: Simple Platformer ---
         initPlatformerGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
@@ -9487,7 +8826,7 @@
                     width: canvas.width,
                     height: 20,
                     color: "#555",
-                }, // Ground
+                }, 
                 {
                     x: 150,
                     y: canvas.height - 80,
@@ -9516,7 +8855,7 @@
                     height: 40,
                     color: "lime",
                     isGoal: true,
-                }, // Goal
+                }, 
             ];
             let keys = {};
             let gameOver = false;
@@ -9532,33 +8871,27 @@
                 });
             }
             function updatePlayer() {
-                // Horizontal Movement
                 if (keys["ArrowLeft"] || keys["a"]) player.dx = -player.speed;
                 else if (keys["ArrowRight"] || keys["d"])
                     player.dx = player.speed;
                 else player.dx = 0;
                 player.x += player.dx;
-                // Apply Gravity
                 if (!player.onGround) {
                     player.dy += gravity;
                 }
                 player.y += player.dy;
-                player.onGround = false; // Assume not on ground until collision check
-                // Platform Collision Check
+                player.onGround = false; 
                 platforms.forEach((p) => {
-                    // Basic AABB collision
                     if (
                         player.x < p.x + p.width &&
                         player.x + player.width > p.x &&
                         player.y < p.y + p.height &&
                         player.y + player.height > p.y
                     ) {
-                        // Check collision side (simplified: only top collision matters most)
                         if (
                             player.dy >= 0 &&
                             player.y + player.height - player.dy <= p.y + 1
                         ) {
-                            // Landed on top (+1 tolerance)
                             player.y = p.y - player.height;
                             player.dy = 0;
                             player.onGround = true;
@@ -9569,33 +8902,28 @@
                             player.dy < 0 &&
                             player.y - player.dy >= p.y + p.height - 1
                         ) {
-                            // Hit bottom of platform
                             player.y = p.y + p.height;
                             player.dy = 0;
                         } else {
-                            // Hit side of platform
                             if (
                                 player.dx > 0 &&
                                 player.x + player.width - player.dx <= p.x + 1
                             ) {
-                                // Hit left side
                                 player.x = p.x - player.width;
                             } else if (
                                 player.dx < 0 &&
                                 player.x - player.dx >= p.x + p.width - 1
                             ) {
-                                // Hit right side
                                 player.x = p.x + p.width;
                             }
-                            player.dx = 0; // Stop horizontal movement if hitting side
+                            player.dx = 0; 
                         }
                     }
                 });
-                // Prevent falling off bottom (simple respawn)
                 if (player.y > canvas.height) {
                     player.x = 50;
                     player.y = canvas.height - 50;
-                    player.dy = 0; // Reset position
+                    player.dy = 0; 
                     self.playSound("hit");
                 }
             }
@@ -9612,7 +8940,6 @@
                 self.playSound("win");
                 cancelAnimationFrame(animationFrameId);
                 animationFrameId = null;
-                // Draw win message
                 ctx.fillStyle = "rgba(0, 200, 0, 0.7)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.font = "30px var(--font-heading)";
@@ -9627,14 +8954,12 @@
             function gameLoop() {
                 if (gameOver || gameWon) return;
                 updatePlayer();
-                // Draw
-                ctx.fillStyle = "#1a1a2e"; // Background
+                ctx.fillStyle = "#1a1a2e"; 
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drawPlatforms();
                 drawPlayer();
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleKeyDown = (e) => {
                 keys[e.key] = true;
                 if (e.key === "ArrowUp" || e.key === "w" || e.key === " ") {
@@ -9650,7 +8975,6 @@
             self.addManagedListener(document, "keyup", handleKeyUp, {
                 gameId: "platformer",
             });
-            // Start
             animationFrameId = requestAnimationFrame(gameLoop);
             return {
                 cleanup: () => {
@@ -9660,7 +8984,6 @@
                 },
             };
         }
-        // --- Game 23: Top-Down Shooter ---
         initShooterGame(canvas) {
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
@@ -9683,7 +9006,6 @@
             let keys = {};
             function createTarget() {
                 if (targets.length < 10) {
-                    // Limit targets
                     targets.push({
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
@@ -9693,16 +9015,14 @@
                 }
             }
             function drawPlayer() {
-                // Rotate context to draw player facing mouse
                 ctx.save();
                 ctx.translate(player.x, player.y);
                 ctx.rotate(player.angle);
-                // Draw triangle shape
                 ctx.fillStyle = player.color;
                 ctx.beginPath();
-                ctx.moveTo(0, -player.radius); // Nose
-                ctx.lineTo(-player.radius * 0.7, player.radius * 0.7); // Bottom left
-                ctx.lineTo(player.radius * 0.7, player.radius * 0.7); // Bottom right
+                ctx.moveTo(0, -player.radius); 
+                ctx.lineTo(-player.radius * 0.7, player.radius * 0.7); 
+                ctx.lineTo(player.radius * 0.7, player.radius * 0.7); 
                 ctx.closePath();
                 ctx.fill();
                 ctx.restore();
@@ -9721,7 +9041,6 @@
                     ctx.beginPath();
                     ctx.arc(t.x, t.y, t.radius, 0, Math.PI * 2);
                     ctx.fill();
-                    // Inner ring for looks
                     ctx.fillStyle = "white";
                     ctx.beginPath();
                     ctx.arc(t.x, t.y, t.radius * 0.5, 0, Math.PI * 2);
@@ -9741,7 +9060,6 @@
                 if (keys["s"] || keys["ArrowDown"]) dy += 1;
                 if (keys["a"] || keys["ArrowLeft"]) dx -= 1;
                 if (keys["d"] || keys["ArrowRight"]) dx += 1;
-                // Normalize diagonal movement
                 const len = Math.sqrt(dx * dx + dy * dy);
                 if (len > 0) {
                     dx = (dx / len) * player.speed;
@@ -9749,7 +9067,6 @@
                 }
                 player.x += dx;
                 player.y += dy;
-                // Clamp position to canvas bounds
                 player.x = Math.max(
                     player.radius,
                     Math.min(canvas.width - player.radius, player.x)
@@ -9758,17 +9075,15 @@
                     player.radius,
                     Math.min(canvas.height - player.radius, player.y)
                 );
-                // Update player angle to face mouse
                 player.angle =
                     Math.atan2(mousePos.y - player.y, mousePos.x - player.x) +
-                    Math.PI / 2; // Adjust angle offset
+                    Math.PI / 2; 
             }
             function updateBullets() {
                 for (let i = bullets.length - 1; i >= 0; i--) {
                     const b = bullets[i];
                     b.x += b.dx;
                     b.y += b.dy;
-                    // Remove bullets off-screen
                     if (
                         b.x < 0 ||
                         b.x > canvas.width ||
@@ -9778,20 +9093,19 @@
                         bullets.splice(i, 1);
                         continue;
                     }
-                    // Check collision with targets
                     for (let j = targets.length - 1; j >= 0; j--) {
                         const t = targets[j];
                         const dist = Math.sqrt(
                             Math.pow(b.x - t.x, 2) + Math.pow(b.y - t.y, 2)
                         );
                         if (dist < t.radius) {
-                            targets.splice(j, 1); // Remove target
-                            bullets.splice(i, 1); // Remove bullet
+                            targets.splice(j, 1); 
+                            bullets.splice(i, 1); 
                             score += 10;
                             self.updateScore(score);
                             self.playSound("explosion");
-                            createTarget(); // Add a new target
-                            break; // Bullet can only hit one target
+                            createTarget(); 
+                            break; 
                         }
                     }
                 }
@@ -9812,7 +9126,6 @@
             function gameLoop() {
                 updatePlayer();
                 updateBullets();
-                // Draw
                 ctx.fillStyle = "#1a1a2e";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drawTargets();
@@ -9821,7 +9134,6 @@
                 drawScore();
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listeners
             const handleKeyDown = (e) => {
                 keys[e.key.toLowerCase()] = true;
             };
@@ -9837,7 +9149,6 @@
             };
             const handleMouseDown = (e) => {
                 if (e.button === 0) {
-                    // Left click
                     shoot();
                 }
             };
@@ -9853,8 +9164,7 @@
             self.addManagedListener(canvas, "mousedown", handleMouseDown, {
                 gameId: "shooter",
             });
-            // Start
-            for (let i = 0; i < 5; i++) createTarget(); // Initial targets
+            for (let i = 0; i < 5; i++) createTarget(); 
             animationFrameId = requestAnimationFrame(gameLoop);
             return {
                 cleanup: () => {
@@ -9864,9 +9174,7 @@
                 },
             };
         }
-        // --- Game 24: Match-3 Gems ---
         initMatch3Game(canvas) {
-            // Basic Match-3 Logic - Complex to implement fully (animations, chain reactions)
             if (!canvas) return null;
             const ctx = canvas.getContext("2d");
             const self = this;
@@ -9880,9 +9188,9 @@
                 "#3498db",
                 "#9b59b6",
                 "#e67e22",
-            ]; // Red, Yellow, Green, Blue, Purple, Orange
-            let board = []; // 2D array of gem types (color index)
-            let selectedGem = null; // { r, c }
+            ]; 
+            let board = []; 
+            let selectedGem = null; 
             let isSwapping = false;
             let score = 0;
             function createBoard() {
@@ -9895,23 +9203,18 @@
                         );
                     }
                 }
-                // Ensure no initial matches (basic check)
-                // TODO: Implement proper initial board generation without matches
-                // checkForMatchesAndRefill(); // Initial check might be needed
             }
             function drawBoard() {
                 for (let r = 0; r < gridSize; r++) {
                     for (let c = 0; c < gridSize; c++) {
                         if (board[r][c] !== -1) {
-                            // -1 indicates empty/falling
                             ctx.fillStyle = gemColors[board[r][c]];
                             ctx.fillRect(
                                 c * gemSize + 2,
                                 r * gemSize + 2,
                                 gemSize - 4,
                                 gemSize - 4
-                            ); // Draw square gems
-                            // Highlight selected gem
+                            ); 
                             if (
                                 selectedGem &&
                                 selectedGem.r === r &&
@@ -9937,7 +9240,7 @@
                 ctx.fillText(`Score: ${score}`, 10, 25);
             }
             function handleBoardClick(event) {
-                if (isSwapping) return; // Don't allow clicks during swap/match check
+                if (isSwapping) return; 
                 const rect = canvas.getBoundingClientRect();
                 const scaleX = canvas.width / rect.width;
                 const scaleY = canvas.height / rect.height;
@@ -9945,20 +9248,16 @@
                 const clickY = (event.clientY - rect.top) * scaleY;
                 const c = Math.floor(clickX / gemSize);
                 const r = Math.floor(clickY / gemSize);
-                if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) return; // Click outside board
+                if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) return; 
                 if (!selectedGem) {
-                    // First gem selected
                     selectedGem = { r, c };
                     self.playSound("click");
                 } else {
-                    // Second gem selected - check for valid swap
                     const dr = Math.abs(r - selectedGem.r);
                     const dc = Math.abs(c - selectedGem.c);
                     if ((dr === 1 && dc === 0) || (dr === 0 && dc === 1)) {
-                        // Adjacent swap
                         swapGems(selectedGem.r, selectedGem.c, r, c);
                     } else {
-                        // Invalid swap (not adjacent) - deselect
                         selectedGem = null;
                         self.playSound("hit");
                     }
@@ -9967,18 +9266,14 @@
             function swapGems(r1, c1, r2, c2) {
                 isSwapping = true;
                 self.playSound("ui");
-                // Swap visually (animation would go here)
                 [board[r1][c1], board[r2][c2]] = [board[r2][c2], board[r1][c1]];
-                selectedGem = null; // Deselect after initiating swap
-                // Check if the swap results in a match
+                selectedGem = null; 
                 setTimeout(() => {
                     const matches1 = findMatchesAt(r1, c1);
                     const matches2 = findMatchesAt(r2, c2);
                     if (matches1.length > 0 || matches2.length > 0) {
-                        // Valid swap - process matches
                         processMatches(matches1.concat(matches2));
                     } else {
-                        // Invalid swap (no match) - swap back
                         [board[r1][c1], board[r2][c2]] = [
                             board[r2][c2],
                             board[r1][c1],
@@ -9986,11 +9281,10 @@
                         self.playSound("hit");
                         isSwapping = false;
                     }
-                }, 200); // Delay for visual swap effect before checking
+                }, 200); 
             }
             function findMatches() {
                 let matches = [];
-                // Horizontal matches
                 for (let r = 0; r < gridSize; r++) {
                     for (let c = 0; c < gridSize - 2; c++) {
                         if (
@@ -10003,7 +9297,6 @@
                                 { r, c: c + 1 },
                                 { r, c: c + 2 }
                             );
-                            // Check for longer matches
                             let k = c + 3;
                             while (
                                 k < gridSize &&
@@ -10015,7 +9308,6 @@
                         }
                     }
                 }
-                // Vertical matches
                 for (let c = 0; c < gridSize; c++) {
                     for (let r = 0; r < gridSize - 2; r++) {
                         if (
@@ -10028,7 +9320,6 @@
                                 { r: r + 1, c },
                                 { r: r + 2, c }
                             );
-                            // Check for longer matches
                             let k = r + 3;
                             while (
                                 k < gridSize &&
@@ -10040,7 +9331,6 @@
                         }
                     }
                 }
-                // Remove duplicates (important for scoring and removal)
                 const uniqueMatches = [];
                 const seen = new Set();
                 matches.forEach((m) => {
@@ -10053,10 +9343,7 @@
                 return uniqueMatches;
             }
             function findMatchesAt(r, c) {
-                // Helper to find matches specifically involving the swapped gems
-                // (Simplified version of findMatches focusing around r, c)
-                // This is complex to get right efficiently, using full findMatches for now
-                return findMatches(); // Re-check whole board after swap
+                return findMatches(); 
             }
             function processMatches(matches) {
                 if (matches.length === 0) {
@@ -10064,33 +9351,27 @@
                     return;
                 }
                 self.playSound("point");
-                score += matches.length * 10; // Simple scoring
+                score += matches.length * 10; 
                 self.updateScore(score);
-                // Remove matched gems (set to -1)
                 matches.forEach(({ r, c }) => {
                     board[r][c] = -1;
                 });
-                // Make gems fall down (basic implementation)
-                setTimeout(dropGems, 200); // Delay for visual removal
+                setTimeout(dropGems, 200); 
             }
             function dropGems() {
                 for (let c = 0; c < gridSize; c++) {
                     let emptyRow = gridSize - 1;
                     for (let r = gridSize - 1; r >= 0; r--) {
                         if (board[r][c] !== -1) {
-                            // If gem exists
                             if (r !== emptyRow) {
-                                // If it's not already at the lowest empty spot
-                                // Move gem down
                                 board[emptyRow][c] = board[r][c];
-                                board[r][c] = -1; // Make original spot empty
+                                board[r][c] = -1; 
                             }
-                            emptyRow--; // Move the target empty spot up
+                            emptyRow--; 
                         }
                     }
                 }
-                // Refill empty spots at the top
-                setTimeout(refillBoard, 200); // Delay for falling animation
+                setTimeout(refillBoard, 200); 
             }
             function refillBoard() {
                 for (let r = 0; r < gridSize; r++) {
@@ -10102,37 +9383,32 @@
                         }
                     }
                 }
-                // Check for new matches created by falling gems
                 setTimeout(() => {
                     const newMatches = findMatches();
                     if (newMatches.length > 0) {
-                        processMatches(newMatches); // Chain reaction
+                        processMatches(newMatches); 
                     } else {
-                        isSwapping = false; // Ready for next player move
+                        isSwapping = false; 
                     }
                 }, 200);
             }
             function gameLoop() {
-                // Clear canvas
                 ctx.fillStyle = "#1a1a2e";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drawBoard();
                 drawScore();
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
-            // Event Listener
             self.addManagedListener(canvas, "click", handleBoardClick, {
                 gameId: "match3",
             });
-            // Start Game
             createBoard();
-            // Initial check for matches and refill if necessary (can happen with random generation)
             setTimeout(() => {
                 const initialMatches = findMatches();
                 if (initialMatches.length > 0) {
                     processMatches(initialMatches);
                 } else {
-                    isSwapping = false; // Ensure ready if no initial matches
+                    isSwapping = false; 
                 }
             }, 100);
             animationFrameId = requestAnimationFrame(gameLoop);
@@ -10144,9 +9420,7 @@
                 },
             };
         }
-        // --- Placeholder/Simple Implementations for Remaining Games ---
         initRhythmGame(canvas) {
-            // Check if canvas is available
             if (!canvas) {
                 console.error(
                     'Error initializing game "rhythm":',
@@ -10154,9 +9428,7 @@
                 );
                 return { cleanup: () => {} };
             }
-            // Initialize canvas and context
             const ctx = canvas.getContext("2d");
-            // Game state variables
             const state = {
                 score: 0,
                 combo: 0,
@@ -10167,21 +9439,21 @@
                 startTime: Date.now(),
                 elapsedTime: 0,
                 lastFrameTime: 0,
-                beatSpeed: 2.5, // Speed of notes (pixels per frame)
-                difficulty: 1, // Initial difficulty
-                difficultyIncreaseInterval: 15000, // Increase difficulty every 15 seconds
+                beatSpeed: 2.5, 
+                difficulty: 1, 
+                difficultyIncreaseInterval: 15000, 
                 lastDifficultyIncrease: 0,
-                perfectHitWindow: 30, // Pixels (distance from target line)
-                goodHitWindow: 60, // Pixels
-                okayHitWindow: 100, // Pixels
-                missDistance: 150, // Pixels after which note is considered missed
-                laneWidth: 100, // Width of each lane
-                trackHeight: 400, // Height of the track
-                targetY: 350, // Y position of the target line
-                notes: [], // Array to store falling notes
-                effects: [], // Array for visual effects
-                particles: [], // Array for particle effects
-                hits: [], // Array for hit text animations
+                perfectHitWindow: 30, 
+                goodHitWindow: 60, 
+                okayHitWindow: 100, 
+                missDistance: 150, 
+                laneWidth: 100, 
+                trackHeight: 400, 
+                targetY: 350, 
+                notes: [], 
+                effects: [], 
+                particles: [], 
+                hits: [], 
                 lanes: [
                     {
                         key: "D",
@@ -10212,7 +9484,7 @@
                         keyCode: 75,
                     },
                 ],
-                activeKeys: new Set(), // Currently pressed keys
+                activeKeys: new Set(), 
                 sounds: {
                     perfect: null,
                     good: null,
@@ -10222,15 +9494,14 @@
                 },
                 backgroundMusic: null,
                 lastSpawnTime: 0,
-                spawnInterval: 1000, // Initial spawn interval in ms
-                minSpawnInterval: 400, // Minimum spawn interval (higher difficulty)
+                spawnInterval: 1000, 
+                minSpawnInterval: 400, 
                 currentSong: {
                     bpm: 120,
                     beatsPerMeasure: 4,
                     highScore: this.getHighScore(),
                 },
             };
-            // Create audio context for sound effects
             let audioCtx;
             try {
                 audioCtx = this.getAudioContext();
@@ -10239,10 +9510,8 @@
                     "Audio context not available, game will run without sound"
                 );
             }
-            // Load sounds
             const loadSounds = () => {
                 if (!audioCtx || !this.soundEnabled) return;
-                // Create simple oscillator-based sounds
                 state.sounds.perfect = () => {
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
@@ -10322,7 +9591,6 @@
                     osc.start();
                     osc.stop(audioCtx.currentTime + 0.2);
                 };
-                // Create a simple background beat
                 state.backgroundMusic = () => {
                     if (!state.backgroundMusicPlaying) {
                         state.backgroundMusicPlaying = true;
@@ -10344,35 +9612,28 @@
                             );
                             osc.start();
                             osc.stop(audioCtx.currentTime + 0.1);
-                            // Schedule next beat
                             setTimeout(playBeat, 60000 / state.currentSong.bpm);
                         };
                         playBeat();
                     }
                 };
             };
-            // Stop background music
             const stopBackgroundMusic = () => {
                 state.backgroundMusicPlaying = false;
             };
-            // Helper functions for creating and measuring text
             const measureText = (text, fontSize, fontFamily = "Arial") => {
                 ctx.font = `${fontSize}px ${fontFamily}`;
                 return ctx.measureText(text).width;
             };
-            // Draw a stylized heading
             const drawHeading = (text, x, y, fontSize = 24, color = "#fff") => {
                 ctx.save();
-                // Draw shadow
                 ctx.font = `bold ${fontSize}px Arial, sans-serif`;
                 ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
                 ctx.fillText(text, x + 2, y + 2);
-                // Draw text
                 ctx.fillStyle = color;
                 ctx.fillText(text, x, y);
                 ctx.restore();
             };
-            // Create a new note
             const createNote = (laneIndex) => {
                 if (laneIndex < 0 || laneIndex >= state.lanes.length) {
                     laneIndex = Math.floor(Math.random() * state.lanes.length);
@@ -10380,7 +9641,7 @@
                 const lane = state.lanes[laneIndex];
                 state.notes.push({
                     x: lane.x,
-                    y: 0, // Start at the top
+                    y: 0, 
                     laneIndex,
                     width: 70,
                     height: 20,
@@ -10390,25 +9651,20 @@
                     alpha: 1,
                 });
             };
-            // Spawn notes at random intervals based on difficulty
             const spawnNote = (currentTime) => {
                 if (state.paused || state.gameOver) return;
-                // Dynamic note spawning based on time elapsed and difficulty
                 if (currentTime - state.lastSpawnTime > state.spawnInterval) {
-                    // Random lane for now - could be replaced with predefined patterns
                     const laneIndex = Math.floor(
                         Math.random() * state.lanes.length
                     );
                     createNote(laneIndex);
                     state.lastSpawnTime = currentTime;
-                    // Adjust spawn interval based on difficulty
                     state.spawnInterval = Math.max(
                         state.minSpawnInterval,
                         1000 - state.difficulty * 50
                     );
                 }
             };
-            // Create hit effect
             const createHitEffect = (x, y, rating) => {
                 let color, text, points;
                 switch (rating) {
@@ -10437,7 +9693,6 @@
                         text = rating;
                         points = 0;
                 }
-                // Add hit text animation
                 state.hits.push({
                     x,
                     y,
@@ -10447,27 +9702,24 @@
                     scale: 1.5,
                     points,
                 });
-                // Create particles for non-miss hits
                 if (rating !== "miss") {
                     for (let i = 0; i < 10; i++) {
                         state.particles.push({
                             x,
                             y,
                             vx: (Math.random() - 0.5) * 5,
-                            vy: (Math.random() - 0.5) * 5 - 2, // Upward bias
+                            vy: (Math.random() - 0.5) * 5 - 2, 
                             size: Math.random() * 5 + 3,
                             color,
                             alpha: 1,
                         });
                     }
                 }
-                // Update score
                 if (points > 0) {
                     state.score +=
-                        points * (1 + Math.floor(state.combo / 10) * 0.1); // Bonus for combo
+                        points * (1 + Math.floor(state.combo / 10) * 0.1); 
                     state.combo++;
                     state.maxCombo = Math.max(state.maxCombo, state.combo);
-                    // Play combo sound every 10 combos
                     if (
                         state.combo > 0 &&
                         state.combo % 10 === 0 &&
@@ -10477,19 +9729,15 @@
                     }
                 } else {
                     state.combo = 0;
-                    state.health -= 5; // Lose health on miss
+                    state.health -= 5; 
                 }
-                // Update high score
                 this.updateScore(Math.floor(state.score));
-                // Play appropriate sound
                 if (state.sounds[rating]) {
                     state.sounds[rating]();
                 }
             };
-            // Check if a note should be hit based on key press
             const checkNoteHit = (laneIndex) => {
                 if (state.paused || state.gameOver) return;
-                // Find the closest note in this lane that hasn't been hit yet
                 const relevantNotes = state.notes.filter(
                     (note) =>
                         note.laneIndex === laneIndex &&
@@ -10497,7 +9745,6 @@
                         !note.missed
                 );
                 if (relevantNotes.length === 0) return;
-                // Sort by proximity to target line (closest first)
                 relevantNotes.sort(
                     (a, b) =>
                         Math.abs(a.y - state.targetY) -
@@ -10505,7 +9752,6 @@
                 );
                 const closestNote = relevantNotes[0];
                 const distance = Math.abs(closestNote.y - state.targetY);
-                // Determine hit quality based on distance
                 if (distance <= state.perfectHitWindow) {
                     closestNote.hit = true;
                     createHitEffect(
@@ -10513,7 +9759,6 @@
                         state.targetY,
                         "perfect"
                     );
-                    // Flashy effect on the lane
                     state.lanes[laneIndex].activeFrame = 10;
                 } else if (distance <= state.goodHitWindow) {
                     closestNote.hit = true;
@@ -10522,7 +9767,6 @@
                         state.targetY,
                         "good"
                     );
-                    // Smaller flash effect
                     state.lanes[laneIndex].activeFrame = 7;
                 } else if (distance <= state.okayHitWindow) {
                     closestNote.hit = true;
@@ -10531,15 +9775,11 @@
                         state.targetY,
                         "okay"
                     );
-                    // Small flash effect
                     state.lanes[laneIndex].activeFrame = 5;
                 }
-                // Otherwise, ignore - note is too far to hit
             };
-            // Handle key events
             const handleKeyDown = (e) => {
                 if (state.paused || state.gameOver) return;
-                // Find the lane corresponding to the key pressed
                 const laneIndex = state.lanes.findIndex(
                     (lane) => lane.keyCode === e.keyCode
                 );
@@ -10551,30 +9791,19 @@
             const handleKeyUp = (e) => {
                 state.activeKeys.delete(e.keyCode);
             };
-            // Draw the game elements
             const drawGame = () => {
-                // Clear canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                // Draw background
                 drawBackground();
-                // Draw lanes
                 drawLanes();
-                // Draw notes
                 drawNotes();
-                // Draw hit effects
                 drawHitEffects();
-                // Draw particles
                 drawParticles();
-                // Draw UI
                 drawUI();
-                // Draw game over screen if game is over
                 if (state.gameOver) {
                     drawGameOver();
                 }
             };
-            // Draw fancy background with gradient and pattern
             const drawBackground = () => {
-                // Create gradient background
                 const gradient = ctx.createLinearGradient(
                     0,
                     0,
@@ -10585,18 +9814,15 @@
                 gradient.addColorStop(1, "#16213e");
                 ctx.fillStyle = gradient;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                // Draw decorative grid pattern
                 ctx.save();
                 ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
                 ctx.lineWidth = 1;
-                // Horizontal lines
                 for (let y = 0; y < canvas.height; y += 20) {
                     ctx.beginPath();
                     ctx.moveTo(0, y);
                     ctx.lineTo(canvas.width, y);
                     ctx.stroke();
                 }
-                // Vertical lines for lanes
                 for (let i = 0; i < state.lanes.length + 1; i++) {
                     const x = i * state.laneWidth;
                     ctx.beginPath();
@@ -10605,21 +9831,17 @@
                     ctx.stroke();
                 }
                 ctx.restore();
-                // Draw pulsing timing indicator
                 drawTimingIndicator();
             };
-            // Draw timing indicator that pulses with the beat
             const drawTimingIndicator = () => {
                 const beatInterval = 60000 / state.currentSong.bpm;
                 const beatProgress =
                     (state.elapsedTime % beatInterval) / beatInterval;
-                // Size oscillates with the beat
                 const baseSize = 5;
                 const pulseSize = Math.sin(beatProgress * Math.PI * 2) * 3;
                 const size = baseSize + Math.max(0, pulseSize);
                 ctx.save();
                 ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-                // Draw a circle at the bottom
                 ctx.beginPath();
                 ctx.arc(
                     canvas.width / 2,
@@ -10631,14 +9853,10 @@
                 ctx.fill();
                 ctx.restore();
             };
-            // Draw the game lanes
             const drawLanes = () => {
-                // Draw lane backgrounds
                 state.lanes.forEach((lane, index) => {
                     const x = lane.x - state.laneWidth / 2;
-                    // Lane background
                     ctx.save();
-                    // Use gradient for lane
                     const gradient = ctx.createLinearGradient(
                         x,
                         0,
@@ -10652,7 +9870,6 @@
                     );
                     ctx.fillStyle = gradient;
                     ctx.fillRect(x, 0, state.laneWidth, canvas.height);
-                    // Draw lane flash effect when key is pressed
                     if (lane.activeFrame > 0) {
                         ctx.globalAlpha = lane.activeFrame / 10;
                         ctx.fillStyle = lane.color;
@@ -10660,10 +9877,8 @@
                         lane.activeFrame--;
                     }
                     ctx.restore();
-                    // Draw key indicator at bottom
                     drawKeyIndicator(lane, index);
                 });
-                // Draw target line
                 ctx.save();
                 ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
                 ctx.lineWidth = 2;
@@ -10671,13 +9886,11 @@
                 ctx.moveTo(0, state.targetY);
                 ctx.lineTo(canvas.width, state.targetY);
                 ctx.stroke();
-                // Add glow effect to target line
                 ctx.shadowColor = "rgba(255, 255, 255, 0.5)";
                 ctx.shadowBlur = 10;
                 ctx.stroke();
                 ctx.restore();
             };
-            // Draw key indicators at the bottom of each lane
             const drawKeyIndicator = (lane, index) => {
                 const x = lane.x;
                 const y = canvas.height - 50;
@@ -10685,7 +9898,6 @@
                 const height = 40;
                 const isActive = state.activeKeys.has(lane.keyCode);
                 ctx.save();
-                // Draw key background
                 ctx.fillStyle = isActive
                     ? lane.color
                     : "rgba(255, 255, 255, 0.1)";
@@ -10695,7 +9907,6 @@
                 ctx.roundRect(x - width / 2, y - height / 2, width, height, 5);
                 ctx.fill();
                 ctx.stroke();
-                // Draw key letter
                 ctx.fillStyle = isActive ? "#fff" : lane.color;
                 ctx.font = "bold 20px Arial";
                 ctx.textAlign = "center";
@@ -10703,26 +9914,21 @@
                 ctx.fillText(lane.key, x, y);
                 ctx.restore();
             };
-            // Draw falling notes
             const drawNotes = () => {
                 state.notes.forEach((note) => {
                     if (note.hit || note.missed) {
-                        // Fade out hit or missed notes
                         note.alpha = Math.max(0, note.alpha - 0.1);
                     }
                     if (note.alpha <= 0) return;
                     ctx.save();
                     ctx.globalAlpha = note.alpha;
-                    // Draw note shape (a rounded rectangle)
                     ctx.fillStyle = note.color;
                     ctx.strokeStyle = "#fff";
                     ctx.lineWidth = 2;
-                    // Glowing effect for non-hit notes
                     if (!note.hit && !note.missed) {
                         ctx.shadowColor = note.color;
                         ctx.shadowBlur = 10;
                     }
-                    // Draw note shape
                     const x = note.x - note.width / 2;
                     const y = note.y - note.height / 2;
                     ctx.beginPath();
@@ -10732,7 +9938,6 @@
                     ctx.restore();
                 });
             };
-            // Draw hit effects (text and animations)
             const drawHitEffects = () => {
                 state.hits.forEach((hit) => {
                     ctx.save();
@@ -10741,11 +9946,9 @@
                     ctx.font = `bold ${20 * hit.scale}px Arial`;
                     ctx.textAlign = "center";
                     ctx.textBaseline = "middle";
-                    // Draw text with glow
                     ctx.shadowColor = hit.color;
                     ctx.shadowBlur = 10;
                     ctx.fillText(hit.text, hit.x, hit.y);
-                    // Draw points if available
                     if (hit.points > 0) {
                         ctx.font = `${12 * hit.scale}px Arial`;
                         ctx.fillText(
@@ -10755,21 +9958,17 @@
                         );
                     }
                     ctx.restore();
-                    // Update animation properties
-                    hit.y -= 1; // Float upwards
-                    hit.alpha -= 0.02; // Fade out
-                    hit.scale -= 0.02; // Shrink
+                    hit.y -= 1; 
+                    hit.alpha -= 0.02; 
+                    hit.scale -= 0.02; 
                 });
-                // Remove faded hit effects
                 state.hits = state.hits.filter((hit) => hit.alpha > 0);
             };
-            // Draw particle effects
             const drawParticles = () => {
                 state.particles.forEach((particle) => {
                     ctx.save();
                     ctx.globalAlpha = particle.alpha;
                     ctx.fillStyle = particle.color;
-                    // Draw particle (simple circle)
                     ctx.beginPath();
                     ctx.arc(
                         particle.x,
@@ -10780,20 +9979,16 @@
                     );
                     ctx.fill();
                     ctx.restore();
-                    // Update particle physics
                     particle.x += particle.vx;
                     particle.y += particle.vy;
-                    particle.vy += 0.1; // Gravity
-                    particle.alpha -= 0.02; // Fade out
+                    particle.vy += 0.1; 
+                    particle.alpha -= 0.02; 
                 });
-                // Remove faded particles
                 state.particles = state.particles.filter(
                     (particle) => particle.alpha > 0
                 );
             };
-            // Draw UI elements
             const drawUI = () => {
-                // Draw score
                 drawHeading(
                     `Score: ${Math.floor(state.score)}`,
                     20,
@@ -10801,12 +9996,9 @@
                     24,
                     "#fff"
                 );
-                // Draw combo
                 const comboColor = state.combo >= 10 ? "#ffeb3b" : "#fff";
                 drawHeading(`Combo: ${state.combo}`, 20, 60, 18, comboColor);
-                // Draw max combo
                 drawHeading(`Max Combo: ${state.maxCombo}`, 20, 85, 16, "#bbb");
-                // Draw difficulty
                 drawHeading(
                     `Level: ${state.difficulty}`,
                     canvas.width - 100,
@@ -10814,9 +10006,7 @@
                     18,
                     "#64b5f6"
                 );
-                // Draw health bar
                 drawHealthBar();
-                // Draw elapsed time
                 const minutes = Math.floor(state.elapsedTime / 60000);
                 const seconds = Math.floor((state.elapsedTime % 60000) / 1000);
                 drawHeading(
@@ -10827,14 +10017,12 @@
                     "#bbb"
                 );
             };
-            // Draw health bar with gradient
             const drawHealthBar = () => {
                 const barWidth = 150;
                 const barHeight = 15;
                 const x = canvas.width - barWidth - 20;
                 const y = 80;
                 ctx.save();
-                // Draw background
                 ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
                 ctx.strokeStyle = "#fff";
                 ctx.lineWidth = 2;
@@ -10842,12 +10030,10 @@
                 ctx.roundRect(x, y, barWidth, barHeight, 5);
                 ctx.fill();
                 ctx.stroke();
-                // Determine color based on health
                 let healthColor;
                 if (state.health > 60) healthColor = "#4caf50";
                 else if (state.health > 30) healthColor = "#ff9800";
                 else healthColor = "#f44336";
-                // Create gradient
                 const gradient = ctx.createLinearGradient(
                     x,
                     y,
@@ -10856,7 +10042,6 @@
                 );
                 gradient.addColorStop(0, healthColor);
                 gradient.addColorStop(1, adjustBrightness(healthColor, 1.3));
-                // Draw health fill
                 ctx.fillStyle = gradient;
                 ctx.beginPath();
                 ctx.roundRect(
@@ -10867,7 +10052,6 @@
                     5
                 );
                 ctx.fill();
-                // Draw health text
                 ctx.fillStyle = "#fff";
                 ctx.font = "bold 10px Arial";
                 ctx.textAlign = "center";
@@ -10879,13 +10063,10 @@
                 );
                 ctx.restore();
             };
-            // Draw game over screen
             const drawGameOver = () => {
                 ctx.save();
-                // Background overlay
                 ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                // Game over text
                 ctx.fillStyle = "#f44336";
                 ctx.font = "bold 36px Arial";
                 ctx.textAlign = "center";
@@ -10895,7 +10076,6 @@
                     canvas.width / 2,
                     canvas.height / 2 - 60
                 );
-                // Final score
                 ctx.fillStyle = "#fff";
                 ctx.font = "24px Arial";
                 ctx.fillText(
@@ -10903,7 +10083,6 @@
                     canvas.width / 2,
                     canvas.height / 2 - 10
                 );
-                // Max combo
                 ctx.fillStyle = "#ffeb3b";
                 ctx.font = "20px Arial";
                 ctx.fillText(
@@ -10911,7 +10090,6 @@
                     canvas.width / 2,
                     canvas.height / 2 + 30
                 );
-                // High score
                 const highScore = state.currentSong.highScore;
                 ctx.fillStyle = "#4caf50";
                 ctx.font = "18px Arial";
@@ -10920,7 +10098,6 @@
                     canvas.width / 2,
                     canvas.height / 2 + 60
                 );
-                // Show if it's a new high score
                 if (state.score > highScore) {
                     ctx.fillStyle = "#ffeb3b";
                     ctx.font = "bold 22px Arial";
@@ -10930,7 +10107,6 @@
                         canvas.height / 2 + 90
                     );
                 }
-                // Restart instructions
                 ctx.fillStyle = "#bbb";
                 ctx.font = "16px Arial";
                 ctx.fillText(
@@ -10940,46 +10116,37 @@
                 );
                 ctx.restore();
             };
-            // Handle game logic updates
             const updateGame = (timestamp) => {
                 if (!state.lastFrameTime) {
                     state.lastFrameTime = timestamp;
                 }
-                // Calculate delta time for smooth animations
                 const deltaTime = timestamp - state.lastFrameTime;
                 state.lastFrameTime = timestamp;
                 if (!state.paused && !state.gameOver) {
                     state.elapsedTime = Date.now() - state.startTime;
-                    // Check if health is depleted (game over)
                     if (state.health <= 0) {
                         state.health = 0;
                         state.gameOver = true;
                         stopBackgroundMusic();
                     }
-                    // Spawn new notes
                     spawnNote(state.elapsedTime);
-                    // Move notes down
                     state.notes.forEach((note) => {
                         if (!note.hit && !note.missed) {
                             note.y += state.beatSpeed;
-                            // Check if note is missed
                             if (note.y > state.targetY + state.missDistance) {
                                 note.missed = true;
                                 createHitEffect(note.x, state.targetY, "miss");
                             }
                         }
                     });
-                    // Remove notes that have faded out
                     state.notes = state.notes.filter((note) => note.alpha > 0);
-                    // Check for difficulty increase
                     if (
                         state.elapsedTime - state.lastDifficultyIncrease >
                         state.difficultyIncreaseInterval
                     ) {
                         state.difficulty++;
-                        state.beatSpeed += 0.3; // Increase note speed
+                        state.beatSpeed += 0.3; 
                         state.lastDifficultyIncrease = state.elapsedTime;
-                        // Show level up effect
                         const levelUpText = `Level ${state.difficulty}!`;
                         state.hits.push({
                             x: canvas.width / 2,
@@ -10992,41 +10159,29 @@
                         });
                     }
                 }
-                // Draw everything
                 drawGame();
-                // Request next frame
                 if (!state.destroyed) {
                     requestAnimFrame(updateGame);
                 }
             };
-            // Initialize the game
             const init = () => {
-                // Set canvas dimensions
                 canvas.width = 500;
                 canvas.height = 500;
-                // Start the game loop
                 requestAnimFrame(updateGame);
-                // Load sounds
                 loadSounds();
-                // Start background music if sound is enabled
                 if (this.soundEnabled && state.backgroundMusic) {
                     state.backgroundMusic();
                 }
-                // Event listeners for keyboard controls
                 document.addEventListener("keydown", handleKeyDown);
                 document.addEventListener("keyup", handleKeyUp);
-                // Additional event for game over restart
                 document.addEventListener("keydown", handleGameRestart);
-                // Add touch controls for mobile
                 addTouchControls();
             };
-            // Handle game restart
             const handleGameRestart = (e) => {
                 if (state.gameOver && (e.key === "r" || e.key === "R")) {
                     resetGame();
                 }
             };
-            // Reset the game state
             const resetGame = () => {
                 state.score = 0;
                 state.combo = 0;
@@ -11045,16 +10200,12 @@
                 state.hits = [];
                 state.lastSpawnTime = 0;
                 state.spawnInterval = 1000;
-                // Update display
                 this.updateScore(0);
-                // Restart background music
                 if (this.soundEnabled && state.backgroundMusic) {
                     state.backgroundMusic();
                 }
             };
-            // Add touch controls for mobile devices
             const addTouchControls = () => {
-                // Create touch areas
                 const touchAreas = state.lanes.map((lane, index) => {
                     const area = document.createElement("div");
                     area.style.position = "absolute";
@@ -11073,7 +10224,6 @@
                         e.preventDefault();
                         state.activeKeys.delete(lane.keyCode);
                     });
-                    // Also add mouse events for testing
                     area.addEventListener("mousedown", () => {
                         checkNoteHit(index);
                         state.activeKeys.add(lane.keyCode);
@@ -11084,7 +10234,6 @@
                     canvas.parentNode.appendChild(area);
                     return area;
                 });
-                // Function to remove touch areas on cleanup
                 return () => {
                     touchAreas.forEach((area) => {
                         if (area.parentNode) {
@@ -11093,7 +10242,6 @@
                     });
                 };
             };
-            // Helper function to adjust color brightness
             const adjustBrightness = (hex, factor) => {
                 const rgb = hexToRgb(hex);
                 const adjusted = [
@@ -11112,7 +10260,6 @@
                 ];
                 return `rgb(${adjusted.join(",")})`;
             };
-            // Helper function to convert hex to rgb
             const hexToRgb = (hex) => {
                 const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
                     hex
@@ -11124,7 +10271,6 @@
                       )},${parseInt(result[3], 16)}`
                     : "255,255,255";
             };
-            // Pause and resume functionality
             const pauseGame = () => {
                 if (!state.gameOver) {
                     state.paused = true;
@@ -11134,34 +10280,27 @@
             const resumeGame = () => {
                 if (!state.gameOver) {
                     state.paused = false;
-                    state.startTime = Date.now() - state.elapsedTime; // Adjust start time
-                    // Restart background music
+                    state.startTime = Date.now() - state.elapsedTime; 
                     if (this.soundEnabled && state.backgroundMusic) {
                         state.backgroundMusic();
                     }
                 }
             };
-            // Initialize the game
             init();
-            // Return interface for external control
             return {
                 pause: pauseGame,
                 resume: resumeGame,
                 restart: resetGame,
                 cleanup: () => {
-                    // Mark as destroyed to stop animation loop
                     state.destroyed = true;
-                    // Remove event listeners
                     document.removeEventListener("keydown", handleKeyDown);
                     document.removeEventListener("keyup", handleKeyUp);
                     document.removeEventListener("keydown", handleGameRestart);
-                    // Stop any sounds
                     stopBackgroundMusic();
                 },
             };
         }
         initDrawingGame(canvas) {
-            // Basic drawing pad
             if (!canvas) return { cleanup: () => {} };
             const ctx = canvas.getContext("2d");
             let isDrawing = false;
@@ -11208,7 +10347,6 @@
             this.addManagedListener(canvas, "mousemove", draw, {
                 gameId: "drawing",
             });
-            // Basic touch support
             this.addManagedListener(
                 canvas,
                 "touchstart",
@@ -11236,10 +10374,9 @@
                 },
                 { gameId: "drawing", passive: false }
             );
-            return { cleanup: () => {} }; // Listeners removed by showcase
+            return { cleanup: () => {} }; 
         }
         initPhysicsGame(canvas) {
-            // Check if canvas is available
             if (!canvas) {
                 console.error(
                     'Error initializing game "physics":',
@@ -11247,9 +10384,7 @@
                 );
                 return { cleanup: () => {} };
             }
-            // Initialize canvas and context
             const ctx = canvas.getContext("2d");
-            // Game state and constants
             const state = {
                 balls: [],
                 obstacles: [],
@@ -11270,7 +10405,7 @@
                 dragOffsetX: 0,
                 dragOffsetY: 0,
                 specialEffectCountdown: 0,
-                specialEffects: [], // Visual effects
+                specialEffects: [], 
                 paused: false,
                 gameOver: false,
                 ballCount: 0,
@@ -11279,17 +10414,17 @@
                 ballsToNextLevel: 10,
                 highScore: this.getHighScore(),
                 showHelp: true,
-                helpCountdown: 5000, // ms to show help on start
+                helpCountdown: 5000, 
                 lastFrameTime: 0,
-                fpsInterval: 1000 / 60, // 60 fps target
+                fpsInterval: 1000 / 60, 
                 showFPS: false,
                 frameCount: 0,
                 lastFpsUpdate: 0,
                 currentFps: 0,
-                powerUps: [], // New: Power-ups that float around
-                powerUpChance: 0.05, // 5% chance to spawn a power-up when a ball is created
+                powerUps: [], 
+                powerUpChance: 0.05, 
                 activePowerUps: {
-                    antiGravity: 0, // Counts down from a value to 0
+                    antiGravity: 0, 
                     slowMotion: 0,
                     multiball: 0,
                     bigBalls: 0,
@@ -11300,7 +10435,7 @@
                     pop: null,
                     bounce: null,
                     levelUp: null,
-                    powerUp: null, // New: Power-up collection sound
+                    powerUp: null, 
                 },
                 colorPalettes: [
                     [
@@ -11338,7 +10473,6 @@
                 ],
                 colorPalette: 0,
             };
-            // Create audio context for sound effects
             let audioCtx;
             try {
                 audioCtx = this.getAudioContext();
@@ -11347,21 +10481,19 @@
                     "Audio context not available, game will run without sound"
                 );
             }
-            // Load sounds
             const loadSounds = () => {
                 if (!audioCtx || !this.soundEnabled) return;
-                // Pop sound (for ball creation)
                 state.sounds.pop = () => {
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     osc.type = "sine";
-                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
                     osc.frequency.exponentialRampToValueAtTime(
                         783.99,
                         audioCtx.currentTime + 0.1
-                    ); // G5
+                    ); 
                     gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(
                         0.01,
@@ -11370,14 +10502,13 @@
                     osc.start();
                     osc.stop(audioCtx.currentTime + 0.2);
                 };
-                // Bounce sound (for ball collision)
                 state.sounds.bounce = (volume = 0.05) => {
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     osc.type = "sine";
-                    osc.frequency.setValueAtTime(261.63, audioCtx.currentTime); // C4
+                    osc.frequency.setValueAtTime(261.63, audioCtx.currentTime); 
                     gain.gain.setValueAtTime(volume, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(
                         0.01,
@@ -11386,22 +10517,21 @@
                     osc.start();
                     osc.stop(audioCtx.currentTime + 0.1);
                 };
-                // Level up sound
                 state.sounds.levelUp = () => {
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     osc.type = "square";
-                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
                     osc.frequency.exponentialRampToValueAtTime(
                         783.99,
                         audioCtx.currentTime + 0.1
-                    ); // G5
+                    ); 
                     osc.frequency.exponentialRampToValueAtTime(
                         1046.5,
                         audioCtx.currentTime + 0.2
-                    ); // C6
+                    ); 
                     gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(
                         0.01,
@@ -11410,27 +10540,25 @@
                     osc.start();
                     osc.stop(audioCtx.currentTime + 0.3);
                 };
-                // Power-up collection sound
                 state.sounds.powerUp = () => {
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     osc.type = "sine";
-                    // Play an arpeggio
-                    osc.frequency.setValueAtTime(392.0, audioCtx.currentTime); // G4
+                    osc.frequency.setValueAtTime(392.0, audioCtx.currentTime); 
                     osc.frequency.setValueAtTime(
                         493.88,
                         audioCtx.currentTime + 0.08
-                    ); // B4
+                    ); 
                     osc.frequency.setValueAtTime(
                         587.33,
                         audioCtx.currentTime + 0.16
-                    ); // D5
+                    ); 
                     osc.frequency.setValueAtTime(
                         783.99,
                         audioCtx.currentTime + 0.24
-                    ); // G5
+                    ); 
                     gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(
                         0.01,
@@ -11440,7 +10568,6 @@
                     osc.stop(audioCtx.currentTime + 0.4);
                 };
             };
-            // Ball class
             class Ball {
                 constructor(x, y, radius, vx = 0, vy = 0) {
                     this.x = x;
@@ -11449,7 +10576,7 @@
                         radius || Math.random() * 20 + this.getMinRadius();
                     this.vx = vx;
                     this.vy = vy;
-                    this.mass = Math.PI * this.radius * this.radius; // Area as mass
+                    this.mass = Math.PI * this.radius * this.radius; 
                     this.colorIndex =
                         state.nextBallColor++ %
                         state.colorPalettes[state.colorPalette].length;
@@ -11457,36 +10584,31 @@
                         state.colorPalettes[state.colorPalette][
                             this.colorIndex
                         ];
-                    this.elasticity = 0.8 + Math.random() * 0.2; // Random bounciness
-                    this.lifespan = 0; // Frames alive
-                    this.glowing = 0; // Glow effect counter
-                    this.trail = []; // Trail positions
+                    this.elasticity = 0.8 + Math.random() * 0.2; 
+                    this.lifespan = 0; 
+                    this.glowing = 0; 
+                    this.trail = []; 
                     this.trailOpacity = 0.5;
-                    this.trailLength = Math.floor(this.radius * 1.5); // Larger balls have longer trails
+                    this.trailLength = Math.floor(this.radius * 1.5); 
                     this.isGrabbed = false;
                     this.isHovered = false;
                 }
                 getMinRadius() {
-                    // Smaller balls at higher difficulty
                     return Math.max(5, 25 - state.level);
                 }
                 update() {
                     if (this.isGrabbed) return;
-                    // Store position for trail
                     if (this.lifespan % 2 === 0) {
-                        // Only store every other frame
                         this.trail.push({ x: this.x, y: this.y });
                         if (this.trail.length > this.trailLength) {
                             this.trail.shift();
                         }
                     }
-                    // Physics update
                     this.vy += state.gravity;
                     this.vx *= state.friction;
                     this.vy *= state.friction;
                     this.x += this.vx;
                     this.y += this.vy;
-                    // Boundary collisions
                     if (this.x - this.radius < 0) {
                         this.x = this.radius;
                         this.vx = -this.vx * this.elasticity;
@@ -11505,14 +10627,12 @@
                         this.vy = -this.vy * this.elasticity;
                         if (Math.abs(this.vy) > 0.5) playBounceSound(this.vy);
                     }
-                    // Gradually reduce glow effect
                     if (this.glowing > 0) {
                         this.glowing -= 0.05;
                     }
                     this.lifespan++;
                 }
                 draw() {
-                    // Draw trail
                     if (this.trail.length > 1) {
                         ctx.save();
                         for (let i = 0; i < this.trail.length - 1; i++) {
@@ -11531,9 +10651,7 @@
                         }
                         ctx.restore();
                     }
-                    // Draw ball with gradient and glow
                     ctx.save();
-                    // Glow effect
                     if (this.glowing > 0 || this.isHovered) {
                         const glowSize =
                             this.radius * (this.glowing > 0 ? 1.5 : 1.2);
@@ -11553,7 +10671,6 @@
                         ctx.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
                         ctx.fill();
                     }
-                    // Ball with gradient
                     const gradient = ctx.createRadialGradient(
                         this.x - this.radius * 0.3,
                         this.y - this.radius * 0.3,
@@ -11570,7 +10687,6 @@
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     ctx.fill();
-                    // Highlight for 3D effect
                     const highlightGradient = ctx.createRadialGradient(
                         this.x - this.radius * 0.5,
                         this.y - this.radius * 0.5,
@@ -11601,7 +10717,6 @@
                     return distance <= this.radius;
                 }
                 applyForce(fx, fy) {
-                    // F = ma, so a = F/m
                     this.vx += fx / this.mass;
                     this.vy += fy / this.mass;
                 }
@@ -11609,36 +10724,27 @@
                     const dx = other.x - this.x;
                     const dy = other.y - this.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    // Check if balls are actually colliding
                     if (distance < this.radius + other.radius) {
-                        // Calculate collision normal
                         const nx = dx / distance;
                         const ny = dy / distance;
-                        // Calculate relative velocity
                         const relVelocityX = other.vx - this.vx;
                         const relVelocityY = other.vy - this.vy;
-                        // Calculate velocity along the normal
                         const speedAlongNormal =
                             relVelocityX * nx + relVelocityY * ny;
-                        // If balls are moving away from each other, no resolution needed
                         if (speedAlongNormal > 0) return false;
-                        // Calculate restitution (bounciness)
                         const restitution = Math.min(
                             this.elasticity,
                             other.elasticity
                         );
-                        // Calculate impulse scalar
                         const impulseScalar =
                             (-(1 + restitution) * speedAlongNormal) /
                             (1 / this.mass + 1 / other.mass);
-                        // Apply impulse
                         const impulseX = impulseScalar * nx;
                         const impulseY = impulseScalar * ny;
                         this.vx -= impulseX / this.mass;
                         this.vy -= impulseY / this.mass;
                         other.vx += impulseX / other.mass;
                         other.vy += impulseY / other.mass;
-                        // Move balls apart to prevent sticking
                         const overlap =
                             (this.radius + other.radius - distance) / 2;
                         const correctionX = overlap * nx;
@@ -11647,16 +10753,13 @@
                         this.y -= correctionY;
                         other.x += correctionX;
                         other.y += correctionY;
-                        // Apply glow effect on collision
                         this.glowing = 1;
                         other.glowing = 1;
-                        // Play bounce sound
                         playBounceSound(speedAlongNormal);
                         return true;
                     }
                     return false;
                 }
-                // Apply repulsion force to avoid overlapping
                 repelFrom(other) {
                     const dx = this.x - other.x;
                     const dy = this.y - other.y;
@@ -11668,33 +10771,28 @@
                     }
                 }
             }
-            // Obstacle class for user-placeable elements
             class Obstacle {
                 constructor(x, y, width, height, type = "rectangle") {
                     this.x = x;
                     this.y = y;
                     this.width = width;
                     this.height = height;
-                    this.type = type; // rectangle, circle, etc.
+                    this.type = type; 
                     this.color = "#455a64";
                     this.elasticity = 0.5;
-                    this.angle = 0; // For rotation
+                    this.angle = 0; 
                     this.isDraggable = true;
                     this.isHovered = false;
                 }
                 draw() {
                     ctx.save();
-                    // Apply transformation for rotation
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.angle);
-                    // Draw based on type
                     if (this.type === "rectangle") {
-                        // Shadow for 3D effect
                         ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
                         ctx.shadowBlur = 10;
                         ctx.shadowOffsetX = 5;
                         ctx.shadowOffsetY = 5;
-                        // Gradient fill
                         const gradient = ctx.createLinearGradient(
                             -this.width / 2,
                             -this.height / 2,
@@ -11710,7 +10808,6 @@
                             this.width,
                             this.height
                         );
-                        // Highlight for 3D effect
                         ctx.strokeStyle = adjustColor(this.color, 50);
                         ctx.lineWidth = 2;
                         ctx.strokeRect(
@@ -11719,7 +10816,6 @@
                             this.width,
                             this.height
                         );
-                        // Hover effect
                         if (this.isHovered) {
                             ctx.strokeStyle = "#ffffff";
                             ctx.lineWidth = 2;
@@ -11732,12 +10828,10 @@
                             );
                         }
                     } else if (this.type === "circle") {
-                        // Shadow for 3D effect
                         ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
                         ctx.shadowBlur = 10;
                         ctx.shadowOffsetX = 5;
                         ctx.shadowOffsetY = 5;
-                        // Gradient fill
                         const gradient = ctx.createRadialGradient(
                             0,
                             0,
@@ -11752,7 +10846,6 @@
                         ctx.beginPath();
                         ctx.arc(0, 0, this.width / 2, 0, Math.PI * 2);
                         ctx.fill();
-                        // Hover effect
                         if (this.isHovered) {
                             ctx.strokeStyle = "#ffffff";
                             ctx.lineWidth = 2;
@@ -11765,10 +10858,8 @@
                     ctx.restore();
                 }
                 contains(x, y) {
-                    // Transform point to object space for rotated objects
                     const dx = x - this.x;
                     const dy = y - this.y;
-                    // Rotate point opposite direction of obstacle
                     const rotatedX =
                         dx * Math.cos(-this.angle) - dy * Math.sin(-this.angle);
                     const rotatedY =
@@ -11788,20 +10879,16 @@
                     }
                     return false;
                 }
-                // Check if a ball is colliding with this obstacle
                 collideWithBall(ball) {
                     if (this.type === "rectangle") {
-                        // Transform ball position to obstacle's coordinate system
                         const dx = ball.x - this.x;
                         const dy = ball.y - this.y;
-                        // Rotate point opposite direction of obstacle
                         const rotatedX =
                             dx * Math.cos(-this.angle) -
                             dy * Math.sin(-this.angle);
                         const rotatedY =
                             dx * Math.sin(-this.angle) +
                             dy * Math.cos(-this.angle);
-                        // Find the closest point on the rectangle to the ball
                         const closestX = Math.max(
                             -this.width / 2,
                             Math.min(this.width / 2, rotatedX)
@@ -11810,90 +10897,66 @@
                             -this.height / 2,
                             Math.min(this.height / 2, rotatedY)
                         );
-                        // Calculate distance from closest point to ball center
                         const distanceX = rotatedX - closestX;
                         const distanceY = rotatedY - closestY;
                         const distanceSquared =
                             distanceX * distanceX + distanceY * distanceY;
-                        // Check if the distance is less than ball radius
                         if (distanceSquared < ball.radius * ball.radius) {
-                            // Calculate collision normal in rotated space
                             const distance = Math.sqrt(distanceSquared);
                             let normalX = distanceX / (distance || 1);
                             let normalY = distanceY / (distance || 1);
-                            // Rotate normal back to world space
                             const worldNormalX =
                                 normalX * Math.cos(this.angle) -
                                 normalY * Math.sin(this.angle);
                             const worldNormalY =
                                 normalX * Math.sin(this.angle) +
                                 normalY * Math.cos(this.angle);
-                            // Calculate relative velocity
                             const relVelocityX = ball.vx;
                             const relVelocityY = ball.vy;
-                            // Calculate velocity along the normal
                             const speedAlongNormal =
                                 relVelocityX * worldNormalX +
                                 relVelocityY * worldNormalY;
-                            // If ball is moving away from obstacle, no collision response
                             if (speedAlongNormal > 0) return false;
-                            // Calculate reflection
                             const restitution = Math.min(
                                 ball.elasticity,
                                 this.elasticity
                             );
-                            // Apply impulse
                             const impulse =
                                 -(1 + restitution) * speedAlongNormal;
                             ball.vx += impulse * worldNormalX;
                             ball.vy += impulse * worldNormalY;
-                            // Resolve penetration
                             const penetration = ball.radius - distance;
                             ball.x += penetration * worldNormalX;
                             ball.y += penetration * worldNormalY;
-                            // Apply glow effect
                             ball.glowing = 1;
-                            // Play bounce sound
                             playBounceSound(speedAlongNormal);
                             return true;
                         }
                     } else if (this.type === "circle") {
-                        // Calculate distance between centers
                         const dx = ball.x - this.x;
                         const dy = ball.y - this.y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
-                        // Check if balls are actually colliding
                         if (distance < ball.radius + this.width / 2) {
-                            // Calculate collision normal
                             const nx = dx / distance;
                             const ny = dy / distance;
-                            // Calculate relative velocity
                             const relVelocityX = ball.vx;
                             const relVelocityY = ball.vy;
-                            // Calculate velocity along the normal
                             const speedAlongNormal =
                                 relVelocityX * nx + relVelocityY * ny;
-                            // If balls are moving away from each other, no resolution needed
                             if (speedAlongNormal > 0) return false;
-                            // Calculate restitution (bounciness)
                             const restitution = Math.min(
                                 ball.elasticity,
                                 this.elasticity
                             );
-                            // Calculate impulse scalar
                             const impulseScalar =
                                 -(1 + restitution) * speedAlongNormal;
-                            // Apply impulse
                             ball.vx += impulseScalar * nx;
                             ball.vy += impulseScalar * ny;
-                            // Move ball apart to prevent sticking
                             const overlap =
                                 ball.radius + this.width / 2 - distance;
                             ball.x += overlap * nx;
                             ball.y += overlap * ny;
-                            // Apply glow effect on collision
                             ball.glowing = 1;
-                            // Play bounce sound
                             playBounceSound(speedAlongNormal);
                             return true;
                         }
@@ -11901,22 +10964,19 @@
                     return false;
                 }
             }
-            // Special effect for visual flair
-            // PowerUp class for special abilities
             class PowerUp {
                 constructor(x, y) {
                     this.x = x;
                     this.y = y;
                     this.radius = 15;
-                    this.vy = -1; // Float up slowly
-                    this.vx = (Math.random() - 0.5) * 0.5; // Slight horizontal drift
+                    this.vy = -1; 
+                    this.vx = (Math.random() - 0.5) * 0.5; 
                     this.rotation = 0;
                     this.rotationSpeed = (Math.random() - 0.5) * 0.1;
                     this.pulseSize = 0;
                     this.pulseDirection = 1;
                     this.age = 0;
-                    this.maxAge = 500; // Frames before disappearing
-                    // Randomly choose power-up type
+                    this.maxAge = 500; 
                     const types = [
                         "antiGravity",
                         "slowMotion",
@@ -11926,51 +10986,45 @@
                         "colorful",
                     ];
                     this.type = types[Math.floor(Math.random() * types.length)];
-                    // Set color and icon based on type
                     switch (this.type) {
                         case "antiGravity":
-                            this.color = "#9c27b0"; // Purple
+                            this.color = "#9c27b0"; 
                             this.icon = "↑";
-                            this.duration = 300; // In frames
+                            this.duration = 300; 
                             break;
                         case "slowMotion":
-                            this.color = "#2196f3"; // Blue
+                            this.color = "#2196f3"; 
                             this.icon = "⏱";
                             this.duration = 240;
                             break;
                         case "multiball":
-                            this.color = "#f44336"; // Red
+                            this.color = "#f44336"; 
                             this.icon = "⊕";
-                            this.duration = 1; // Just once
+                            this.duration = 1; 
                             break;
                         case "bigBalls":
-                            this.color = "#ff9800"; // Orange
+                            this.color = "#ff9800"; 
                             this.icon = "⊙";
                             this.duration = 180;
                             break;
                         case "extraBounce":
-                            this.color = "#4caf50"; // Green
+                            this.color = "#4caf50"; 
                             this.icon = "⇅";
                             this.duration = 200;
                             break;
                         case "colorful":
-                            this.color = "#e91e63"; // Pink
+                            this.color = "#e91e63"; 
                             this.icon = "⚡";
                             this.duration = 150;
                             break;
                     }
                 }
                 update() {
-                    // Move
                     this.x += this.vx;
                     this.y += this.vy;
-                    // Add slight wobble
                     this.vx += (Math.random() - 0.5) * 0.2;
-                    // Dampen horizontal movement
                     this.vx *= 0.98;
-                    // Rotation
                     this.rotation += this.rotationSpeed;
-                    // Pulse effect
                     this.pulseSize += 0.03 * this.pulseDirection;
                     if (this.pulseSize > 1) {
                         this.pulseSize = 1;
@@ -11979,7 +11033,6 @@
                         this.pulseSize = 0;
                         this.pulseDirection = 1;
                     }
-                    // Bounce off walls
                     if (this.x - this.radius < 0) {
                         this.x = this.radius;
                         this.vx = Math.abs(this.vx);
@@ -11987,14 +11040,11 @@
                         this.x = canvas.width - this.radius;
                         this.vx = -Math.abs(this.vx);
                     }
-                    // Age
                     this.age++;
-                    // Return true if still active
                     return this.age < this.maxAge;
                 }
                 draw() {
                     ctx.save();
-                    // Glow effect
                     const glowRadius =
                         this.radius * (1.5 + this.pulseSize * 0.5);
                     const gradient = ctx.createRadialGradient(
@@ -12012,7 +11062,6 @@
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, glowRadius, 0, Math.PI * 2);
                     ctx.fill();
-                    // Main circle
                     ctx.globalAlpha = 1;
                     const circleGradient = ctx.createRadialGradient(
                         this.x - this.radius * 0.3,
@@ -12032,7 +11081,6 @@
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     ctx.fill();
-                    // Icon/symbol
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.rotation);
                     ctx.fillStyle = "#ffffff";
@@ -12049,20 +11097,15 @@
                     return distance <= this.radius;
                 }
                 activate() {
-                    // Activate the power-up effect
                     state.activePowerUps[this.type] = this.duration;
-                    // Create visual effect
                     state.specialEffects.push(
                         new SpecialEffect(this.x, this.y, "powerup")
                     );
-                    // Play sound
                     if (state.sounds.powerUp) {
                         state.sounds.powerUp();
                     }
-                    // Apply immediate effects
                     switch (this.type) {
                         case "multiball":
-                            // Add 3 new balls
                             for (let i = 0; i < 3; i++) {
                                 const angle = Math.random() * Math.PI * 2;
                                 const speed = 2 + Math.random() * 3;
@@ -12076,14 +11119,12 @@
                             }
                             break;
                         case "antiGravity":
-                            // Apply upward force to all balls
                             state.balls.forEach((ball) => {
                                 ball.vy -= 3;
                                 ball.glowing = 1;
                             });
                             break;
                     }
-                    // Add points
                     state.score += 50;
                     updateScore();
                 }
@@ -12098,7 +11139,6 @@
                     this.alpha = 1;
                     this.color = "#ffeb3b";
                     this.particles = [];
-                    // Create particles for explosion effect
                     if (type === "explosion") {
                         const particleCount = 30;
                         for (let i = 0; i < particleCount; i++) {
@@ -12121,7 +11161,6 @@
                         this.radius += 2;
                         this.alpha -= 0.02;
                     } else if (this.type === "explosion") {
-                        // Update particles
                         for (let i = 0; i < this.particles.length; i++) {
                             const p = this.particles[i];
                             p.x += p.vx;
@@ -12129,11 +11168,9 @@
                             p.alpha -= 0.02;
                             p.radius *= 0.98;
                         }
-                        // Remove faded particles
                         this.particles = this.particles.filter(
                             (p) => p.alpha > 0
                         );
-                        // Effect is done when all particles are gone
                         if (this.particles.length === 0) {
                             this.alpha = 0;
                         }
@@ -12149,7 +11186,6 @@
                         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                         ctx.stroke();
                     } else if (this.type === "explosion") {
-                        // Draw particles
                         for (let i = 0; i < this.particles.length; i++) {
                             const p = this.particles[i];
                             ctx.globalAlpha = p.alpha;
@@ -12165,9 +11201,7 @@
                     return this.alpha <= 0;
                 }
             }
-            // Helper function to adjust color brightness
             function adjustColor(color, amount) {
-                // Handle hex color format
                 if (color.startsWith("#")) {
                     let hex = color.slice(1);
                     let r = parseInt(hex.slice(0, 2), 16);
@@ -12182,42 +11216,31 @@
                 }
                 return color;
             }
-            // Sound helpers
             function playBounceSound(velocity) {
                 if (state.sounds.bounce && Math.abs(velocity) > 1) {
                     const volume = Math.min(0.2, Math.abs(velocity) / 20);
                     state.sounds.bounce(volume);
                 }
             }
-            // Create a ball at the specified position
             function createBall(x, y, radius, vx = 0, vy = 0) {
-                // Check if max balls reached
                 if (state.balls.length >= state.maxBalls) {
-                    // Remove the oldest ball
                     state.balls.shift();
                 }
                 const ball = new Ball(x, y, radius, vx, vy);
                 state.balls.push(ball);
                 state.ballCount++;
-                // Check for level up
                 if (state.ballCount >= state.ballsToNextLevel) {
                     levelUp();
                 }
-                // Update score
                 state.score += 10 + state.level * 5;
                 updateScore();
-                // Create pop sound
                 if (state.sounds.pop) {
                     state.sounds.pop();
                 }
-                // Create ripple effect
                 state.specialEffects.push(new SpecialEffect(x, y, "ripple"));
                 return ball;
             }
-            // Create initial obstacles
             function createInitialObstacles() {
-                // Add a few obstacles to make the environment interesting
-                // Platform in the middle
                 state.obstacles.push(
                     new Obstacle(
                         canvas.width / 2,
@@ -12227,7 +11250,6 @@
                         "rectangle"
                     )
                 );
-                // Circle on the left
                 state.obstacles.push(
                     new Obstacle(
                         canvas.width / 4,
@@ -12237,7 +11259,6 @@
                         "circle"
                     )
                 );
-                // Angled platform on the right
                 const rightPlatform = new Obstacle(
                     (canvas.width * 3) / 4,
                     canvas.height / 3,
@@ -12245,15 +11266,13 @@
                     20,
                     "rectangle"
                 );
-                rightPlatform.angle = Math.PI / 6; // 30 degrees
+                rightPlatform.angle = Math.PI / 6; 
                 state.obstacles.push(rightPlatform);
             }
-            // Level up function
             function levelUp() {
                 state.level++;
-                state.ballsToNextLevel += 5; // Increase balls needed for next level
-                state.gravity += 0.05; // Increase gravity slightly
-                // Create a special effect
+                state.ballsToNextLevel += 5; 
+                state.gravity += 0.05; 
                 const effect = new SpecialEffect(
                     canvas.width / 2,
                     canvas.height / 2,
@@ -12267,28 +11286,21 @@
                         )
                     ];
                 state.specialEffects.push(effect);
-                // Play level up sound
                 if (state.sounds.levelUp) {
                     state.sounds.levelUp();
                 }
-                // Change color palette every few levels
                 if (state.level % 3 === 0) {
                     state.colorPalette =
                         (state.colorPalette + 1) % state.colorPalettes.length;
                 }
             }
-            // Update score display
             function updateScore() {
-                // Update in showcase UI
                 this.updateScore(state.score);
-                // Check for high score
                 if (state.score > state.highScore) {
                     state.highScore = state.score;
                 }
             }
-            // Draw background with gradient
             function drawBackground() {
-                // Create a gradient background
                 const gradient = ctx.createLinearGradient(
                     0,
                     0,
@@ -12299,18 +11311,15 @@
                 gradient.addColorStop(1, "#1a1a2a");
                 ctx.fillStyle = gradient;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                // Draw grid pattern
                 ctx.save();
                 ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
                 ctx.lineWidth = 1;
-                // Vertical lines
                 for (let x = 0; x < canvas.width; x += 50) {
                     ctx.beginPath();
                     ctx.moveTo(x, 0);
                     ctx.lineTo(x, canvas.height);
                     ctx.stroke();
                 }
-                // Horizontal lines
                 for (let y = 0; y < canvas.height; y += 50) {
                     ctx.beginPath();
                     ctx.moveTo(0, y);
@@ -12319,23 +11328,18 @@
                 }
                 ctx.restore();
             }
-            // Draw UI elements
             function drawUI() {
                 ctx.save();
-                // Draw score
                 ctx.font = "bold 20px Arial";
                 ctx.fillStyle = "#fff";
                 ctx.textAlign = "left";
                 ctx.fillText(`Score: ${state.score}`, 15, 30);
-                // Draw high score
                 ctx.font = "16px Arial";
                 ctx.fillStyle = "#aaa";
                 ctx.fillText(`High Score: ${state.highScore}`, 15, 55);
-                // Draw level
                 ctx.fillStyle = "#64b5f6";
                 ctx.font = "bold 18px Arial";
                 ctx.fillText(`Level: ${state.level}`, 15, 80);
-                // Draw ball count
                 ctx.fillStyle = "#4caf50";
                 ctx.font = "16px Arial";
                 ctx.fillText(
@@ -12343,14 +11347,12 @@
                     15,
                     105
                 );
-                // Draw next level progress
                 ctx.fillStyle = "#aaa";
                 ctx.fillText(
                     `Next Level: ${state.ballCount}/${state.ballsToNextLevel}`,
                     15,
                     130
                 );
-                // Draw active power-ups
                 let powerUpY = 155;
                 for (const type in state.activePowerUps) {
                     if (state.activePowerUps[type] > 0) {
@@ -12387,18 +11389,14 @@
                                 icon = "⚡";
                                 break;
                         }
-                        // Draw power-up icon and name
                         ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
                         ctx.fillRect(15, powerUpY - 15, 170, 22);
-                        // Icon
                         ctx.font = "bold 16px Arial";
                         ctx.fillStyle = color;
                         ctx.fillText(icon, 25, powerUpY);
-                        // Name
                         ctx.font = "14px Arial";
                         ctx.fillStyle = color;
                         ctx.fillText(name, 45, powerUpY);
-                        // Duration bar
                         const maxDuration =
                             type === "multiball"
                                 ? 1
@@ -12413,16 +11411,13 @@
                                 : 150;
                         const barWidth =
                             60 * (state.activePowerUps[type] / maxDuration);
-                        // Background bar
                         ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
                         ctx.fillRect(120, powerUpY - 10, 60, 8);
-                        // Progress bar
                         ctx.fillStyle = color;
                         ctx.fillRect(120, powerUpY - 10, barWidth, 8);
                         powerUpY += 25;
                     }
                 }
-                // Draw FPS if enabled
                 if (state.showFPS) {
                     ctx.fillStyle = "#ffeb3b";
                     ctx.fillText(
@@ -12431,7 +11426,6 @@
                         30
                     );
                 }
-                // Draw help text if needed
                 if (state.showHelp) {
                     ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
                     ctx.fillRect(0, canvas.height - 140, canvas.width, 140);
@@ -12465,7 +11459,6 @@
                         canvas.height - 15
                     );
                 }
-                // Draw throw power indicator when mouse is down
                 if (state.isMouseDown && !state.isDragging) {
                     const powerPercent = Math.min(
                         1,
@@ -12473,7 +11466,6 @@
                     );
                     const barWidth = 100;
                     const barHeight = 10;
-                    // Draw a power bar
                     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
                     ctx.fillRect(
                         state.mouseX - barWidth / 2,
@@ -12481,7 +11473,6 @@
                         barWidth,
                         barHeight
                     );
-                    // Color gradient based on power
                     let powerColor;
                     if (powerPercent < 0.3) powerColor = "#4caf50";
                     else if (powerPercent < 0.7) powerColor = "#ff9800";
@@ -12493,7 +11484,6 @@
                         barWidth * powerPercent,
                         barHeight
                     );
-                    // Power text
                     ctx.fillStyle = "#fff";
                     ctx.font = "12px Arial";
                     ctx.textAlign = "center";
@@ -12502,7 +11492,6 @@
                         state.mouseX,
                         state.mouseY - 40
                     );
-                    // Draw aim line
                     if (powerPercent > 0) {
                         const dx = state.mouseX - state.lastX;
                         const dy = state.mouseY - state.lastY;
@@ -12527,21 +11516,16 @@
                 }
                 ctx.restore();
             }
-            // Update all game elements
             function update(timestamp) {
-                // Update time tracking for FPS calculation
                 if (!state.lastFrameTime) {
                     state.lastFrameTime = timestamp;
                     state.frameCount = 0;
                     state.lastFpsUpdate = timestamp;
                 }
-                // Calculate time elapsed since last frame
                 const elapsed = timestamp - state.lastFrameTime;
-                // Only update if enough time has passed (for consistent framerate)
                 if (elapsed > state.fpsInterval) {
                     state.lastFrameTime =
                         timestamp - (elapsed % state.fpsInterval);
-                    // Update FPS counter
                     state.frameCount++;
                     if (timestamp - state.lastFpsUpdate >= 1000) {
                         state.currentFps = Math.round(
@@ -12552,62 +11536,51 @@
                         state.lastFpsUpdate = timestamp;
                     }
                     if (!state.paused) {
-                        // Update throw power when mouse is down
                         if (state.isMouseDown && !state.isDragging) {
                             state.throwPower = Math.min(
                                 state.maxThrowPower,
                                 state.throwPower + 0.2
                             );
                         }
-                        // Update help countdown
                         if (state.showHelp && state.helpCountdown > 0) {
                             state.helpCountdown -= state.fpsInterval;
                             if (state.helpCountdown <= 0) {
                                 state.showHelp = false;
                             }
                         }
-                        // Update balls
                         for (let i = 0; i < state.balls.length; i++) {
                             state.balls[i].update();
-                            // Check for ball-ball collisions
                             for (let j = i + 1; j < state.balls.length; j++) {
                                 const collision = state.balls[i].collideWith(
                                     state.balls[j]
                                 );
                                 if (collision) {
-                                    // Update score for collisions
                                     state.score += 1;
                                     updateScore();
                                 }
                             }
-                            // Check for ball-obstacle collisions
                             for (let j = 0; j < state.obstacles.length; j++) {
                                 state.obstacles[j].collideWithBall(
                                     state.balls[i]
                                 );
                             }
                         }
-                        // Update power-up durations
                         for (const type in state.activePowerUps) {
                             if (state.activePowerUps[type] > 0) {
                                 state.activePowerUps[type]--;
-                                // Apply continuous power-up effects
                                 switch (type) {
                                     case "antiGravity":
-                                        // Reverse gravity
                                         state.balls.forEach((ball) => {
                                             ball.vy -= state.gravity * 1.5;
                                         });
                                         break;
                                     case "slowMotion":
-                                        // Slow down all balls
                                         state.balls.forEach((ball) => {
                                             ball.vx *= 0.98;
                                             ball.vy *= 0.98;
                                         });
                                         break;
                                     case "extraBounce":
-                                        // Increase bounciness
                                         state.balls.forEach((ball) => {
                                             if (ball.elasticity < 1.5) {
                                                 ball.elasticity = 1.2;
@@ -12615,7 +11588,6 @@
                                         });
                                         break;
                                     case "bigBalls":
-                                        // Keep balls bigger
                                         state.balls.forEach((ball) => {
                                             if (
                                                 ball.radius <
@@ -12631,7 +11603,6 @@
                                         });
                                         break;
                                     case "colorful":
-                                        // Randomly change colors
                                         if (Math.random() < 0.05) {
                                             state.balls.forEach((ball) => {
                                                 ball.colorIndex =
@@ -12650,18 +11621,14 @@
                                 }
                             }
                         }
-                        // Update special effects
                         for (let i = 0; i < state.specialEffects.length; i++) {
                             state.specialEffects[i].update();
                         }
-                        // Remove finished effects
                         state.specialEffects = state.specialEffects.filter(
                             (effect) => !effect.isFinished()
                         );
-                        // Update power-ups
                         state.powerUps = state.powerUps.filter((powerUp) => {
                             const active = powerUp.update();
-                            // Check for collision with balls
                             for (let i = 0; i < state.balls.length; i++) {
                                 const ball = state.balls[i];
                                 const dx = powerUp.x - ball.x;
@@ -12669,12 +11636,11 @@
                                 const distance = Math.sqrt(dx * dx + dy * dy);
                                 if (distance < ball.radius + powerUp.radius) {
                                     powerUp.activate();
-                                    return false; // Remove power-up
+                                    return false; 
                                 }
                             }
                             return active;
                         });
-                        // Randomly spawn new power-ups
                         if (
                             Math.random() < 0.002 &&
                             state.powerUps.length < 3
@@ -12683,13 +11649,11 @@
                             const y = Math.random() * (canvas.height - 60) + 30;
                             state.powerUps.push(new PowerUp(x, y));
                         }
-                        // Update hover states for obstacles
                         for (let i = 0; i < state.obstacles.length; i++) {
                             state.obstacles[i].isHovered = state.obstacles[
                                 i
                             ].contains(state.mouseX, state.mouseY);
                         }
-                        // Update hover states for balls
                         for (let i = 0; i < state.balls.length; i++) {
                             state.balls[i].isHovered = state.balls[i].contains(
                                 state.mouseX,
@@ -12698,43 +11662,31 @@
                         }
                     }
                 }
-                // Draw everything
                 render();
-                // Continue game loop
                 if (!state.destroyed) {
                     requestAnimFrame(update);
                 }
             }
-            // Draw all game elements
             function render() {
-                // Clear canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                // Draw background
                 drawBackground();
-                // Draw obstacles
                 for (let i = 0; i < state.obstacles.length; i++) {
                     state.obstacles[i].draw();
                 }
-                // Draw balls
                 for (let i = 0; i < state.balls.length; i++) {
                     state.balls[i].draw();
                 }
-                // Draw special effects
                 for (let i = 0; i < state.specialEffects.length; i++) {
                     state.specialEffects[i].draw();
                 }
-                // Draw power-ups
                 for (let i = 0; i < state.powerUps.length; i++) {
                     state.powerUps[i].draw();
                 }
-                // Draw UI elements
                 drawUI();
             }
-            // Handle mouse down event
             function handleMouseDown(e) {
                 e.preventDefault();
                 if (state.paused) return;
-                // Get mouse position relative to canvas
                 const rect = canvas.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
@@ -12744,7 +11696,6 @@
                 state.lastY = y;
                 state.isMouseDown = true;
                 state.throwPower = 0;
-                // Check if we're clicking on an obstacle
                 for (let i = 0; i < state.obstacles.length; i++) {
                     if (
                         state.obstacles[i].contains(x, y) &&
@@ -12757,23 +11708,18 @@
                         return;
                     }
                 }
-                // Hide help when user interacts
                 state.showHelp = false;
             }
-            // Handle mouse move event
             function handleMouseMove(e) {
                 e.preventDefault();
-                // Get mouse position relative to canvas
                 const rect = canvas.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 state.mouseX = x;
                 state.mouseY = y;
                 if (state.isDragging && state.activeObstacle) {
-                    // Move the obstacle
                     state.activeObstacle.x = x - state.dragOffsetX;
                     state.activeObstacle.y = y - state.dragOffsetY;
-                    // Keep obstacle within canvas bounds
                     state.activeObstacle.x = Math.max(
                         state.activeObstacle.width / 2,
                         Math.min(
@@ -12790,14 +11736,12 @@
                     );
                 }
             }
-            // Handle mouse up event
             function handleMouseUp(e) {
                 e.preventDefault();
                 if (state.isDragging) {
                     state.isDragging = false;
                     state.activeObstacle = null;
                 } else if (state.isMouseDown) {
-                    // Create a ball at mouse position with velocity based on throw power
                     const dx = state.mouseX - state.lastX;
                     const dy = state.mouseY - state.lastY;
                     const distance = Math.sqrt(dx * dx + dy * dy);
@@ -12808,19 +11752,17 @@
                         createBall(
                             state.mouseX,
                             state.mouseY,
-                            null, // Use default random radius
+                            null, 
                             nx * power,
                             ny * power
                         );
                     } else {
-                        // Just create a ball with no velocity if mouse didn't move
                         createBall(state.mouseX, state.mouseY);
                     }
                 }
                 state.isMouseDown = false;
                 state.throwPower = 0;
             }
-            // Handle touch events for mobile
             function handleTouchStart(e) {
                 e.preventDefault();
                 const touch = e.touches[0];
@@ -12844,30 +11786,21 @@
                 const mouseEvent = new MouseEvent("mouseup", {});
                 handleMouseUp(mouseEvent);
             }
-            // Initialize the game
             function init() {
-                // Set canvas dimensions
                 canvas.width = 500;
                 canvas.height = 400;
-                // Load sounds
                 loadSounds();
-                // Create initial obstacles
                 createInitialObstacles();
-                // Add event listeners
                 canvas.addEventListener("mousedown", handleMouseDown);
                 canvas.addEventListener("mousemove", handleMouseMove);
                 canvas.addEventListener("mouseup", handleMouseUp);
                 canvas.addEventListener("mouseleave", handleMouseUp);
-                // Touch events for mobile
                 canvas.addEventListener("touchstart", handleTouchStart);
                 canvas.addEventListener("touchmove", handleTouchMove);
                 canvas.addEventListener("touchend", handleTouchEnd);
-                // Load high score
                 state.highScore = this.getHighScore();
-                // Start game loop
                 requestAnimFrame(update);
             }
-            // Reset the game state
             function resetGame() {
                 state.balls = [];
                 state.score = 0;
@@ -12877,17 +11810,13 @@
                 state.gravity = 0.25;
                 state.specialEffects = [];
                 state.powerUps = [];
-                // Reset active power-ups
                 for (const type in state.activePowerUps) {
                     state.activePowerUps[type] = 0;
                 }
-                // Reset obstacles to initial configuration
                 state.obstacles = [];
                 createInitialObstacles();
-                // Update score display
                 updateScore();
             }
-            // Add some initial balls for visual interest
             function addInitialBalls() {
                 for (let i = 0; i < 5; i++) {
                     const x = Math.random() * (canvas.width - 40) + 20;
@@ -12897,27 +11826,21 @@
                     createBall(x, y, null, vx, vy);
                 }
             }
-            // Pause and resume functions
             function pauseGame() {
                 state.paused = true;
             }
             function resumeGame() {
                 state.paused = false;
-                state.lastFrameTime = 0; // Reset frame timing
+                state.lastFrameTime = 0; 
             }
-            // Initialize the game
             init();
-            // Add some initial balls
             addInitialBalls();
-            // Return interface for controlling the game
             return {
                 pause: pauseGame,
                 resume: resumeGame,
                 restart: resetGame,
                 cleanup: () => {
-                    // Mark game as destroyed to stop animation
                     state.destroyed = true;
-                    // Remove event listeners
                     canvas.removeEventListener("mousedown", handleMouseDown);
                     canvas.removeEventListener("mousemove", handleMouseMove);
                     canvas.removeEventListener("mouseup", handleMouseUp);
@@ -12932,7 +11855,6 @@
             if (!container) return { cleanup: () => {} };
             const self = this;
             container.innerHTML = "";
-            // Create styled container
             const gameContainer = document.createElement("div");
             gameContainer.className = "card-game-container";
             gameContainer.style.display = "flex";
@@ -12949,14 +11871,12 @@
                 "radial-gradient(circle at center, #0a3f2a, #0c2432)";
             gameContainer.style.borderRadius = "8px";
             gameContainer.style.position = "relative";
-            // Create title
             const title = document.createElement("h2");
             title.textContent = "Card Predictor";
             title.style.margin = "0 0 20px 0";
             title.style.color = "var(--primary-color)";
             title.style.textShadow = "0 0 10px rgba(255,255,255,0.2)";
             gameContainer.appendChild(title);
-            // Create game area
             const gameArea = document.createElement("div");
             gameArea.className = "card-game-area";
             gameArea.style.display = "flex";
@@ -12966,7 +11886,6 @@
             gameArea.style.maxWidth = "450px";
             gameArea.style.flex = "1";
             gameContainer.appendChild(gameArea);
-            // Create card display area
             const cardArea = document.createElement("div");
             cardArea.className = "card-area";
             cardArea.style.display = "flex";
@@ -12977,7 +11896,6 @@
             cardArea.style.width = "100%";
             cardArea.style.margin = "10px 0 30px";
             gameArea.appendChild(cardArea);
-            // Create current card
             const currentCardContainer = document.createElement("div");
             currentCardContainer.className = "card-container current";
             currentCardContainer.style.position = "relative";
@@ -12987,17 +11905,15 @@
             styleCard(currentCard);
             currentCardContainer.appendChild(currentCard);
             cardArea.appendChild(currentCardContainer);
-            // Create next card (initially showing back)
             const nextCardContainer = document.createElement("div");
             nextCardContainer.className = "card-container next";
             nextCardContainer.style.position = "relative";
             nextCardContainer.style.perspective = "1000px";
             const nextCard = document.createElement("div");
             nextCard.className = "card next-card";
-            styleCard(nextCard, true); // Start with card back
+            styleCard(nextCard, true); 
             nextCardContainer.appendChild(nextCard);
             cardArea.appendChild(nextCardContainer);
-            // Create prediction controls
             const controlsArea = document.createElement("div");
             controlsArea.className = "controls-area";
             controlsArea.style.display = "flex";
@@ -13006,7 +11922,6 @@
             controlsArea.style.gap = "15px";
             controlsArea.style.width = "100%";
             gameArea.appendChild(controlsArea);
-            // Result display
             const resultDisplay = document.createElement("div");
             resultDisplay.className = "result-display";
             resultDisplay.textContent =
@@ -13019,7 +11934,6 @@
             resultDisplay.style.fontWeight = "bold";
             resultDisplay.style.textShadow = "0 0 5px rgba(0,0,0,0.5)";
             controlsArea.appendChild(resultDisplay);
-            // Prediction buttons
             const buttonRow = document.createElement("div");
             buttonRow.className = "button-row";
             buttonRow.style.display = "flex";
@@ -13036,14 +11950,12 @@
             buttonRow.appendChild(higherBtn);
             buttonRow.appendChild(lowerBtn);
             controlsArea.appendChild(buttonRow);
-            // New game button
             const newGameBtn = document.createElement("button");
             newGameBtn.textContent = "NEW GAME";
             newGameBtn.className = "new-game-btn";
             styleActionButton(newGameBtn, "#3498db", true);
-            newGameBtn.style.display = "none"; // Hidden initially
+            newGameBtn.style.display = "none"; 
             controlsArea.appendChild(newGameBtn);
-            // Stats display
             const statsDisplay = document.createElement("div");
             statsDisplay.className = "stats-display";
             statsDisplay.style.display = "flex";
@@ -13066,11 +11978,8 @@
             statsDisplay.appendChild(scoreDisplay);
             statsDisplay.appendChild(cardsLeftDisplay);
             controlsArea.appendChild(statsDisplay);
-            // Add some floating card decoration elements
             addFloatingCards(gameContainer);
-            // Add container to the game
             container.appendChild(gameContainer);
-            // Game state
             let deck = [];
             let currentCardValue = null;
             let nextCardValue = null;
@@ -13079,10 +11988,8 @@
             let cardsLeft = 52;
             let gameOver = false;
             let predictionInProgress = false;
-            // Initialize deck and start the game
             initializeDeck();
             dealInitialCard();
-            // Event listeners
             higherBtn.addEventListener("click", () => makeGuess("higher"));
             lowerBtn.addEventListener("click", () => makeGuess("lower"));
             newGameBtn.addEventListener("click", startNewGame);
@@ -13104,13 +12011,12 @@
                     "K",
                     "A",
                 ];
-                // Create a full deck of cards
                 for (let suit of suits) {
                     for (let i = 0; i < values.length; i++) {
                         deck.push({
                             suit: suit,
                             value: values[i],
-                            numericValue: i + 2, // 2-14 (Ace is high)
+                            numericValue: i + 2, 
                             color:
                                 suit === "hearts" || suit === "diamonds"
                                     ? "red"
@@ -13118,7 +12024,6 @@
                         });
                     }
                 }
-                // Shuffle the deck
                 shuffleDeck();
                 cardsLeft = deck.length;
                 updateStats();
@@ -13134,14 +12039,10 @@
                     endGame();
                     return;
                 }
-                // Deal the first card
                 currentCardValue = deck.pop();
                 cardsLeft = deck.length;
-                // Show the card
                 displayCard(currentCard, currentCardValue, false);
-                // Update stats
                 updateStats();
-                // Reset result display
                 resultDisplay.textContent =
                     "Will the next card be higher or lower?";
                 resultDisplay.style.color = "#fff";
@@ -13152,7 +12053,6 @@
                     cardElement.style.background = "#2c3e50";
                     cardElement.style.backgroundImage =
                         "repeating-linear-gradient(45deg, #34495e, #34495e 10px, #2c3e50 10px, #2c3e50 20px)";
-                    // Add card back design
                     const innerCircle = document.createElement("div");
                     innerCircle.style.position = "absolute";
                     innerCircle.style.top = "50%";
@@ -13174,12 +12074,9 @@
                     cardElement.appendChild(innerCircle);
                     return;
                 }
-                // Clear the card
                 cardElement.innerHTML = "";
-                // Set card background
                 cardElement.style.background = "#fff";
                 cardElement.style.color = cardData.color;
-                // Add card value at the top-left
                 const valueTop = document.createElement("div");
                 valueTop.className = "card-value top";
                 valueTop.textContent = cardData.value;
@@ -13188,7 +12085,6 @@
                 valueTop.style.left = "8px";
                 valueTop.style.fontSize = "28px";
                 valueTop.style.fontWeight = "bold";
-                // Add card value at the bottom-right (upside down)
                 const valueBottom = document.createElement("div");
                 valueBottom.className = "card-value bottom";
                 valueBottom.textContent = cardData.value;
@@ -13198,7 +12094,6 @@
                 valueBottom.style.fontSize = "28px";
                 valueBottom.style.fontWeight = "bold";
                 valueBottom.style.transform = "rotate(180deg)";
-                // Add card suit
                 const suitTop = document.createElement("div");
                 suitTop.className = "card-suit top";
                 suitTop.style.position = "absolute";
@@ -13212,7 +12107,6 @@
                 suitBottom.style.right = "8px";
                 suitBottom.style.fontSize = "20px";
                 suitBottom.style.transform = "rotate(180deg)";
-                // Set suit icon
                 let suitIcon;
                 switch (cardData.suit) {
                     case "hearts":
@@ -13230,7 +12124,6 @@
                 }
                 suitTop.textContent = suitIcon;
                 suitBottom.textContent = suitIcon;
-                // Add center design
                 const centerDesign = document.createElement("div");
                 centerDesign.className = "card-center";
                 centerDesign.style.position = "absolute";
@@ -13241,7 +12134,6 @@
                 centerDesign.style.fontWeight = "bold";
                 centerDesign.style.opacity = "0.8";
                 centerDesign.textContent = suitIcon;
-                // Add elements to card
                 cardElement.appendChild(valueTop);
                 cardElement.appendChild(valueBottom);
                 cardElement.appendChild(suitTop);
@@ -13251,21 +12143,16 @@
             function makeGuess(prediction) {
                 if (gameOver || predictionInProgress) return;
                 predictionInProgress = true;
-                // Disable buttons during animation
                 higherBtn.disabled = true;
                 lowerBtn.disabled = true;
-                // Deal next card
                 if (deck.length === 0) {
                     endGame();
                     return;
                 }
                 nextCardValue = deck.pop();
                 cardsLeft = deck.length;
-                // First, show card flip animation
                 flipCard(nextCard, () => {
-                    // Show the next card
                     displayCard(nextCard, nextCardValue, false);
-                    // Check if the prediction was correct
                     const isHigher =
                         nextCardValue.numericValue >
                         currentCardValue.numericValue;
@@ -13282,37 +12169,28 @@
                         correct = true;
                     }
                     if (isSame) {
-                        // Tie - neutral outcome
                         resultDisplay.textContent =
                             "Same value! No points awarded.";
                         resultDisplay.style.color = "#f1c40f";
                         streak = 0;
                     } else if (correct) {
-                        // Correct prediction
                         streak++;
-                        score += 10 * streak; // More points for longer streaks
+                        score += 10 * streak; 
                         self.updateScore(score);
                         resultDisplay.textContent = `Correct! +${
                             10 * streak
                         } points`;
                         resultDisplay.style.color = "#2ecc71";
-                        // Play sound effect
                         self.playSound("point");
-                        // Add visual feedback
                         addFloatingPoints(controlsArea, 10 * streak);
                     } else {
-                        // Wrong prediction
                         streak = 0;
                         resultDisplay.textContent = "Wrong! Try again.";
                         resultDisplay.style.color = "#e74c3c";
-                        // Play sound effect
                         self.playSound("hit");
                     }
-                    // Update stats
                     updateStats();
-                    // After a short delay, shift cards and deal a new next card
                     setTimeout(() => {
-                        // Shift cards with animation
                         currentCard.style.transition =
                             "transform 0.5s ease, opacity 0.5s ease";
                         nextCard.style.transition =
@@ -13322,23 +12200,18 @@
                         currentCard.style.opacity = "0";
                         nextCard.style.transform = "translateX(-100%)";
                         setTimeout(() => {
-                            // Set current card to the value of next card
                             currentCardValue = nextCardValue;
                             displayCard(currentCard, currentCardValue, false);
-                            // Reset card positions and opacity
                             currentCard.style.transition = "none";
                             nextCard.style.transition = "none";
                             currentCard.style.transform =
                                 "translateX(0) scale(1)";
                             currentCard.style.opacity = "1";
-                            // Show card back for next card
                             displayCard(nextCard, null, true);
                             nextCard.style.transform = "translateX(0)";
-                            // Re-enable buttons
                             higherBtn.disabled = false;
                             lowerBtn.disabled = false;
                             predictionInProgress = false;
-                            // Check if the game is over
                             if (deck.length === 0) {
                                 resultDisplay.textContent =
                                     "No more cards! Game over.";
@@ -13349,14 +12222,11 @@
                 });
             }
             function flipCard(cardElement, callback) {
-                // First half of flip
                 cardElement.style.transition = "transform 0.3s ease";
                 cardElement.style.transform = "rotateY(90deg)";
                 self.playSound("ui");
-                // After half flip, update the card and complete flip
                 setTimeout(() => {
                     if (callback) callback();
-                    // Second half of flip
                     setTimeout(() => {
                         cardElement.style.transform = "rotateY(0deg)";
                     }, 50);
@@ -13366,7 +12236,6 @@
                 streakDisplay.textContent = `Streak: ${streak}`;
                 scoreDisplay.textContent = `Score: ${score}`;
                 cardsLeftDisplay.textContent = `Cards: ${cardsLeft}`;
-                // Add some effects based on streak
                 if (streak >= 3) {
                     streakDisplay.style.color = "#f39c12";
                     streakDisplay.style.fontWeight = "bold";
@@ -13382,22 +12251,18 @@
                 }
             }
             function startNewGame() {
-                // Reset game state
                 score = 0;
                 streak = 0;
                 gameOver = false;
-                // Reset UI
                 resultDisplay.textContent =
                     "Will the next card be higher or lower?";
                 resultDisplay.style.color = "#fff";
                 newGameBtn.style.display = "none";
                 higherBtn.style.display = "block";
                 lowerBtn.style.display = "block";
-                // Re-initialize deck and deal cards
                 initializeDeck();
                 dealInitialCard();
                 displayCard(nextCard, null, true);
-                // Re-enable buttons
                 higherBtn.disabled = false;
                 lowerBtn.disabled = false;
                 self.playSound("restart");
@@ -13407,15 +12272,11 @@
                 displayGameOver();
             }
             function displayGameOver() {
-                // Show game over state
                 resultDisplay.textContent = `Game Over! Final Score: ${score}`;
-                // Hide prediction buttons, show new game button
                 higherBtn.style.display = "none";
                 lowerBtn.style.display = "none";
                 newGameBtn.style.display = "block";
-                // Play game over sound
                 self.playSound("gameOver");
-                // Submit final score
                 self.updateScore(score);
             }
             function addFloatingPoints(container, points) {
@@ -13434,7 +12295,6 @@
                 pointsElement.style.animation =
                     "floatPoints 1.5s ease-out forwards";
                 container.appendChild(pointsElement);
-                // Add animation style
                 const style = document.createElement("style");
                 style.textContent = `
                     @keyframes floatPoints {
@@ -13444,7 +12304,6 @@
                     }
                 `;
                 document.head.appendChild(style);
-                // Remove after animation
                 setTimeout(() => {
                     pointsElement.remove();
                     style.remove();
@@ -13453,7 +12312,6 @@
             function addFloatingCards(container) {
                 const numCards = 5;
                 const cards = [];
-                // Add animation style
                 const style = document.createElement("style");
                 style.textContent = `
                     @keyframes floatingCard {
@@ -13466,35 +12324,32 @@
                 for (let i = 0; i < numCards; i++) {
                     const card = document.createElement("div");
                     card.className = "floating-card";
-                    styleCard(card, true, 40, 60); // Mini cards, showing backs
-                    // Position randomly around the container
+                    styleCard(card, true, 40, 60); 
                     card.style.position = "absolute";
                     card.style.zIndex = "1";
                     card.style.opacity = "0.2";
                     const corner = i % 4;
                     switch (corner) {
-                        case 0: // Top left
+                        case 0: 
                             card.style.top = "5%";
                             card.style.left = "5%";
                             break;
-                        case 1: // Top right
+                        case 1: 
                             card.style.top = "10%";
                             card.style.right = "5%";
                             break;
-                        case 2: // Bottom right
+                        case 2: 
                             card.style.bottom = "10%";
                             card.style.right = "5%";
                             break;
-                        case 3: // Bottom left
+                        case 3: 
                             card.style.bottom = "5%";
                             card.style.left = "10%";
                             break;
                     }
-                    // Random rotation
                     card.style.transform = `rotate(${
                         Math.random() * 40 - 20
                     }deg)`;
-                    // Add floating animation
                     card.style.animation = `floatingCard ${
                         3 + Math.random() * 2
                     }s ease-in-out infinite`;
@@ -13507,7 +12362,6 @@
                     style.remove();
                 };
             }
-            // Utility function to style cards
             function styleCard(
                 card,
                 isCardBack = false,
@@ -13529,10 +12383,8 @@
                 } else {
                     card.style.background = "#fff";
                 }
-                // Add card border
                 card.style.border = "1px solid rgba(0,0,0,0.3)";
             }
-            // Utility function to style buttons
             function styleActionButton(button, color, isLarge = false) {
                 button.style.background = color;
                 button.style.color = "#fff";
@@ -13544,7 +12396,6 @@
                 button.style.cursor = "pointer";
                 button.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
                 button.style.transition = "all 0.2s ease";
-                // Hover effect
                 button.addEventListener("mouseenter", () => {
                     button.style.transform = "translateY(-2px)";
                     button.style.boxShadow = "0 6px 12px rgba(0,0,0,0.15)";
@@ -13553,7 +12404,6 @@
                     button.style.transform = "translateY(0)";
                     button.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
                 });
-                // Active effect
                 button.addEventListener("mousedown", () => {
                     button.style.transform = "translateY(1px)";
                     button.style.boxShadow = "0 2px 3px rgba(0,0,0,0.1)";
@@ -13564,10 +12414,8 @@
                 });
                 return button;
             }
-            // Event cleanup function
             return {
                 cleanup: () => {
-                    // Remove event listeners
                     higherBtn.removeEventListener("click", () =>
                         makeGuess("higher")
                     );
@@ -13590,7 +12438,6 @@
             if (!container) return { cleanup: () => {} };
             const self = this;
             container.innerHTML = "";
-            // Create a styled container for the entire game
             const gameContainer = document.createElement("div");
             gameContainer.className = "sudoku-container";
             gameContainer.style.display = "flex";
@@ -13602,13 +12449,11 @@
             gameContainer.style.boxSizing = "border-box";
             gameContainer.style.fontFamily = "var(--font-main)";
             gameContainer.style.position = "relative";
-            // Create title
             const title = document.createElement("h2");
             title.textContent = "Sudoku Mini";
             title.style.margin = "0 0 10px 0";
             title.style.color = "var(--primary-color)";
             gameContainer.appendChild(title);
-            // Create controls
             const controls = document.createElement("div");
             controls.className = "sudoku-controls";
             controls.style.display = "flex";
@@ -13641,7 +12486,6 @@
             controls.appendChild(solveBtn);
             controls.appendChild(hintBtn);
             gameContainer.appendChild(controls);
-            // Create status display
             const statusDisplay = document.createElement("div");
             statusDisplay.className = "game-status";
             statusDisplay.style.marginBottom = "10px";
@@ -13649,7 +12493,6 @@
             statusDisplay.style.fontWeight = "bold";
             statusDisplay.style.minHeight = "20px";
             gameContainer.appendChild(statusDisplay);
-            // Create main grid
             const gridContainer = document.createElement("div");
             gridContainer.className = "sudoku-grid";
             gridContainer.style.display = "grid";
@@ -13665,7 +12508,6 @@
             gridContainer.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
             gridContainer.style.borderRadius = "4px";
             gameContainer.appendChild(gridContainer);
-            // Create number pad for mobile
             const numberPad = document.createElement("div");
             numberPad.className = "number-pad";
             numberPad.style.display = "grid";
@@ -13689,9 +12531,7 @@
             eraseBtn.style.background = "#e74c3c";
             numberPad.appendChild(eraseBtn);
             gameContainer.appendChild(numberPad);
-            // Append the main container to the game container
             container.appendChild(gameContainer);
-            // Game state variables
             let selectedCell = null;
             let board = [];
             let solution = [];
@@ -13699,14 +12539,12 @@
             let difficulty = "medium";
             let mistakes = 0;
             let gameActive = true;
-            // Create the grid cells
             for (let i = 0; i < 9; i++) {
                 for (let j = 0; j < 9; j++) {
                     const cell = document.createElement("div");
                     cell.className = "sudoku-cell";
                     cell.dataset.row = i;
                     cell.dataset.col = j;
-                    // Style the cell
                     cell.style.background = "#222";
                     cell.style.color = "#fff";
                     cell.style.display = "flex";
@@ -13717,7 +12555,6 @@
                     cell.style.cursor = "pointer";
                     cell.style.transition = "all 0.2s ease";
                     cell.style.userSelect = "none";
-                    // Add thicker borders for 3x3 boxes
                     if (i % 3 === 0) cell.style.borderTop = "2px solid #777";
                     if (j % 3 === 0) cell.style.borderLeft = "2px solid #777";
                     if (i === 8) cell.style.borderBottom = "2px solid #777";
@@ -13729,7 +12566,6 @@
                     gridContainer.appendChild(cell);
                 }
             }
-            // Event listeners
             newGameBtn.addEventListener("click", () => {
                 if (gameActive) {
                     self.playSound("click");
@@ -13752,7 +12588,6 @@
                 self.playSound("ui");
                 difficulty = difficultySelect.value;
             });
-            // Number pad functionality
             numberPad.addEventListener("click", (e) => {
                 if (!gameActive || !selectedCell) return;
                 const numBtn = e.target.closest(".num-button");
@@ -13761,7 +12596,6 @@
                 const num = parseInt(numBtn.dataset.number);
                 fillSelectedCell(num);
             });
-            // Keyboard controls
             const keyDownHandler = (e) => {
                 if (!gameActive || !selectedCell) return;
                 if (e.key >= "1" && e.key <= "9") {
@@ -13773,7 +12607,7 @@
                     e.key === "0"
                 ) {
                     self.playSound("click");
-                    fillSelectedCell(0); // Clear cell
+                    fillSelectedCell(0); 
                 } else if (
                     e.key === "ArrowUp" ||
                     e.key === "ArrowDown" ||
@@ -13781,11 +12615,10 @@
                     e.key === "ArrowRight"
                 ) {
                     moveSelection(e.key);
-                    e.preventDefault(); // Prevent page scrolling
+                    e.preventDefault(); 
                 }
             };
             document.addEventListener("keydown", keyDownHandler);
-            // Function to move selection with arrow keys
             function moveSelection(key) {
                 if (!selectedCell) return;
                 const currentRow = parseInt(selectedCell.dataset.row);
@@ -13816,33 +12649,26 @@
                     }
                 }
             }
-            // Function to select a cell
             function selectCell(cell) {
-                // Clear previous selection
                 const cells = gridContainer.querySelectorAll(".sudoku-cell");
                 cells.forEach((c) => {
                     c.style.background = "#222";
-                    // Highlight same digit cells
                     if (
                         cell.textContent &&
                         c.textContent === cell.textContent
                     ) {
                         c.style.background = "#2c3e50";
                     }
-                    // Add box highlighting
                     c.style.opacity = "1";
                 });
-                // Highlight current cell
                 cell.style.background = "var(--primary-color)";
                 cell.style.color = "#fff";
-                // Highlight same row and column
                 const row = cell.dataset.row;
                 const col = cell.dataset.col;
                 cells.forEach((c) => {
                     if (c.dataset.row === row || c.dataset.col === col) {
                         if (c !== cell) c.style.background = "#333";
                     }
-                    // Highlight 3x3 box
                     const boxRow = Math.floor(row / 3);
                     const boxCol = Math.floor(col / 3);
                     if (
@@ -13860,12 +12686,10 @@
                 selectedCell = cell;
                 self.playSound("ui");
             }
-            // Function to fill the selected cell
             function fillSelectedCell(num) {
                 if (!selectedCell || !gameActive) return;
                 const row = parseInt(selectedCell.dataset.row);
                 const col = parseInt(selectedCell.dataset.col);
-                // Check if this is an initial cell (can't modify)
                 if (initialBoard[row][col] !== 0) {
                     self.playSound("hit");
                     selectedCell.style.animation = "shake 0.5s";
@@ -13874,17 +12698,13 @@
                     }, 500);
                     return;
                 }
-                // Update the board
                 if (num === 0) {
-                    // Clear the cell
                     board[row][col] = 0;
                     selectedCell.textContent = "";
                     selectedCell.style.color = "#fff";
                 } else {
-                    // Fill with number
                     board[row][col] = num;
                     selectedCell.textContent = num;
-                    // Check if correct
                     if (num === solution[row][col]) {
                         selectedCell.style.color = "#2ecc71";
                     } else {
@@ -13894,17 +12714,14 @@
                         self.playSound("hit");
                     }
                 }
-                // Check if board is complete
                 if (isBoardComplete()) {
                     gameActive = false;
                     self.playSound("win");
                     self.updateScore(1000 - mistakes * 50);
                     updateStatus("Puzzle solved! Well done!", "success");
-                    // Add confetti or celebration effect
                     addCelebration();
                 }
             }
-            // Function to update status display
             function updateStatus(message, type = "info") {
                 statusDisplay.textContent = message;
                 statusDisplay.style.color =
@@ -13914,15 +12731,11 @@
                         ? "#e74c3c"
                         : "#fff";
             }
-            // Function to generate a new game
             function generateNewGame(difficulty) {
                 mistakes = 0;
                 gameActive = true;
-                // Update UI
                 updateStatus("New game started!");
-                // Generate a solved board
                 solution = generateSolvedBoard();
-                // Create a puzzle with blanks based on difficulty
                 let removals;
                 switch (difficulty) {
                     case "easy":
@@ -13932,9 +12745,8 @@
                         removals = 55;
                         break;
                     default:
-                        removals = 40; // medium
+                        removals = 40; 
                 }
-                // Copy the solution and remove some numbers
                 board = JSON.parse(JSON.stringify(solution));
                 initialBoard = JSON.parse(JSON.stringify(solution));
                 let removed = 0;
@@ -13947,10 +12759,8 @@
                         removed++;
                     }
                 }
-                // Update UI
                 updateBoardUI();
             }
-            // Function to update the board UI
             function updateBoardUI() {
                 const cells = gridContainer.querySelectorAll(".sudoku-cell");
                 cells.forEach((cell) => {
@@ -13959,69 +12769,53 @@
                     if (initialBoard[row][col] !== 0) {
                         cell.textContent = initialBoard[row][col];
                         cell.style.fontWeight = "bold";
-                        cell.style.color = "#888"; // Initial numbers are gray
+                        cell.style.color = "#888"; 
                     } else {
                         cell.textContent =
                             board[row][col] === 0 ? "" : board[row][col];
                         cell.style.fontWeight = "normal";
                         cell.style.color = "#fff";
                     }
-                    // Reset background
                     cell.style.background = "#222";
                 });
                 selectedCell = null;
             }
-            // Function to generate a solved Sudoku board
             function generateSolvedBoard() {
-                // Start with an empty 9x9 grid
                 const grid = Array(9)
                     .fill()
                     .map(() => Array(9).fill(0));
-                // Solve the puzzle (this will create a valid Sudoku board)
                 solveSudoku(grid);
                 return grid;
             }
-            // Sudoku solver using backtracking
             function solveSudoku(grid) {
                 for (let row = 0; row < 9; row++) {
                     for (let col = 0; col < 9; col++) {
-                        // Find an empty cell
                         if (grid[row][col] === 0) {
-                            // Try different numbers
                             const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-                            // Shuffle numbers for randomness
                             shuffleArray(nums);
                             for (let i = 0; i < nums.length; i++) {
                                 const num = nums[i];
-                                // Check if it's safe to place the number
                                 if (isSafe(grid, row, col, num)) {
-                                    // Place the number
                                     grid[row][col] = num;
-                                    // Recursively try to solve the rest
                                     if (solveSudoku(grid)) {
                                         return true;
                                     }
-                                    // If placing the number doesn't lead to a solution, backtrack
                                     grid[row][col] = 0;
                                 }
                             }
-                            return false; // No solution found
+                            return false; 
                         }
                     }
                 }
-                return true; // All cells filled
+                return true; 
             }
-            // Check if it's safe to place a number
             function isSafe(grid, row, col, num) {
-                // Check row
                 for (let x = 0; x < 9; x++) {
                     if (grid[row][x] === num) return false;
                 }
-                // Check column
                 for (let x = 0; x < 9; x++) {
                     if (grid[x][col] === num) return false;
                 }
-                // Check 3x3 box
                 const boxRow = Math.floor(row / 3) * 3;
                 const boxCol = Math.floor(col / 3) * 3;
                 for (let i = 0; i < 3; i++) {
@@ -14029,9 +12823,8 @@
                         if (grid[boxRow + i][boxCol + j] === num) return false;
                     }
                 }
-                return true; // Safe to place the number
+                return true; 
             }
-            // Function to shuffle an array (Fisher-Yates algorithm)
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -14039,15 +12832,12 @@
                 }
                 return array;
             }
-            // Function to solve the puzzle (for the Solve button)
             function solvePuzzle() {
-                // Set the board to the solution
                 board = JSON.parse(JSON.stringify(solution));
                 updateBoardUI();
                 gameActive = false;
                 self.playSound("ui");
                 updateStatus("Puzzle solved automatically");
-                // Create simple animation effect when solving
                 const cells = gridContainer.querySelectorAll(".sudoku-cell");
                 cells.forEach((cell, index) => {
                     setTimeout(() => {
@@ -14064,7 +12854,6 @@
                     }, index * 10);
                 });
             }
-            // Function to give a hint
             function giveHint() {
                 if (!selectedCell) {
                     self.playSound("hit");
@@ -14073,7 +12862,6 @@
                 }
                 const row = parseInt(selectedCell.dataset.row);
                 const col = parseInt(selectedCell.dataset.col);
-                // Check if this is an initial cell or already filled correctly
                 if (
                     initialBoard[row][col] !== 0 ||
                     board[row][col] === solution[row][col]
@@ -14082,22 +12870,19 @@
                     updateStatus("Try another cell!", "error");
                     return;
                 }
-                // Give hint
                 board[row][col] = solution[row][col];
                 selectedCell.textContent = solution[row][col];
-                selectedCell.style.color = "#f39c12"; // Hint color
+                selectedCell.style.color = "#f39c12"; 
                 self.playSound("point");
                 updateStatus("Hint used");
-                // Check if board is complete after hint
                 if (isBoardComplete()) {
                     gameActive = false;
                     self.playSound("win");
-                    self.updateScore(500); // Less points when using hints
+                    self.updateScore(500); 
                     updateStatus("Puzzle solved with hints!", "success");
                     addCelebration();
                 }
             }
-            // Function to check if the board is complete and correct
             function isBoardComplete() {
                 for (let i = 0; i < 9; i++) {
                     for (let j = 0; j < 9; j++) {
@@ -14108,9 +12893,7 @@
                 }
                 return true;
             }
-            // Add a celebration effect when puzzle is solved
             function addCelebration() {
-                // Create confetti container
                 const confettiContainer = document.createElement("div");
                 confettiContainer.style.position = "absolute";
                 confettiContainer.style.top = "0";
@@ -14120,16 +12903,13 @@
                 confettiContainer.style.pointerEvents = "none";
                 confettiContainer.style.overflow = "hidden";
                 gameContainer.appendChild(confettiContainer);
-                // Add confetti pieces
                 for (let i = 0; i < 100; i++) {
                     createConfetti(confettiContainer);
                 }
-                // Remove after animation
                 setTimeout(() => {
                     confettiContainer.remove();
                 }, 5000);
             }
-            // Create a single confetti piece
             function createConfetti(container) {
                 const colors = [
                     "#f39c12",
@@ -14153,7 +12933,6 @@
                     Math.random() * 3 + 2
                 }s linear forwards`;
                 container.appendChild(confetti);
-                // Add fall animation
                 const style = document.createElement("style");
                 style.textContent = `
                     @keyframes fall {
@@ -14172,12 +12951,10 @@
                     }
                 `;
                 document.head.appendChild(style);
-                // Remove confetti after animation
                 setTimeout(() => {
                     confetti.remove();
                 }, 5000);
             }
-            // Helper function to style buttons
             function styleButton(button, width = "auto", height = "32px") {
                 button.style.background = "var(--primary-color)";
                 button.style.color = "#fff";
@@ -14198,7 +12975,6 @@
                     button.style.filter = "brightness(1)";
                 });
             }
-            // Helper function to style select elements
             function styleSelect(select) {
                 select.style.background = "#333";
                 select.style.color = "#fff";
@@ -14209,17 +12985,14 @@
                 select.style.fontSize = "14px";
                 select.style.height = "32px";
             }
-            // Initialize the game with a new board
             generateNewGame(difficulty);
-            // Cleanup function
             return {
                 cleanup: () => {
                     document.removeEventListener("keydown", keyDownHandler);
                 },
             };
         }
-    } // End of ProjectShowcase Class
-    // --- Achievement System Class ---
+    } 
     class AchievementSystem {
         constructor(showcase) {
             this.showcase = showcase;
@@ -14309,12 +13082,10 @@
             this.totalPlayTime = 0;
             this.sessionStartTime = Date.now();
             this.lastSaveTime = this.loadLastVisit() || 0;
-            // Apply achievements already unlocked
             this.achievementsUnlocked.forEach((id) => {
                 const achievement = this.achievements.find((a) => a.id === id);
                 if (achievement) achievement.unlocked = true;
             });
-            // Check for time-based achievements on load
             this.checkTimeBasedAchievements();
         }
         loadAchievements() {
@@ -14358,7 +13129,6 @@
                         this.unlockAchievement("first_play");
                         newUnlocks.push(this.getAchievement("first_play"));
                     }
-                    // Check if all categories have been played
                     if (!this.isUnlocked("play_all_categories")) {
                         const playedCategories = new Set();
                         this.showcase.projects.forEach((p) => {
@@ -14366,7 +13136,6 @@
                                 playedCategories.add(p.category);
                             }
                         });
-                        // Get all categories
                         const allCategories = new Set(
                             this.showcase.projects.map((p) => p.category)
                         );
@@ -14377,7 +13146,6 @@
                             );
                         }
                     }
-                    // Check for 10 games played
                     if (!this.isUnlocked("play_10_games")) {
                         const gamesPlayed = Object.keys(
                             this.showcase.lastPlayedTime
@@ -14389,7 +13157,6 @@
                             );
                         }
                     }
-                    // Check for all games played
                     if (!this.isUnlocked("completionist")) {
                         const allGamesPlayed = this.showcase.projects.every(
                             (p) => this.showcase.lastPlayedTime[p.id]
@@ -14428,7 +13195,6 @@
                     }
                     break;
             }
-            // Display new achievements
             if (newUnlocks.length > 0) {
                 this.displayAchievements(newUnlocks);
             }
@@ -14436,7 +13202,6 @@
         }
         checkTimeBasedAchievements() {
             let newUnlocks = [];
-            // Night Owl - Playing after midnight
             if (!this.isUnlocked("night_owl")) {
                 const hours = new Date().getHours();
                 if (hours >= 0 && hours <= 4) {
@@ -14444,7 +13209,6 @@
                     newUnlocks.push(this.getAchievement("night_owl"));
                 }
             }
-            // Comeback Kid - Return after 3+ days
             if (!this.isUnlocked("comeback_kid") && this.lastSaveTime > 0) {
                 const daysDifference =
                     (Date.now() - this.lastSaveTime) / (1000 * 60 * 60 * 24);
@@ -14453,7 +13217,6 @@
                     newUnlocks.push(this.getAchievement("comeback_kid"));
                 }
             }
-            // Display new achievements
             if (newUnlocks.length > 0) {
                 this.displayAchievements(newUnlocks);
             }
@@ -14500,14 +13263,12 @@
                         </div>
                     `;
                     container.appendChild(notification);
-                    // Add animation class after a small delay to trigger animation
                     setTimeout(() => notification.classList.add("show"), 50);
-                    // Remove after display
                     setTimeout(() => {
                         notification.classList.remove("show");
                         setTimeout(() => notification.remove(), 500);
                     }, 5000);
-                }, index * 2000); // Stagger display
+                }, index * 2000); 
             });
         }
         getProgress() {
@@ -14580,16 +13341,13 @@
                 </div>
             `;
             document.body.appendChild(achievementList);
-            // Add show class to trigger animation
             setTimeout(() => achievementList.classList.add("show"), 50);
-            // Close button event
             achievementList
                 .querySelector(".achievement-close-btn")
                 .addEventListener("click", () => {
                     achievementList.classList.remove("show");
                     setTimeout(() => achievementList.remove(), 300);
                 });
-            // Close on click outside
             achievementList.addEventListener("click", (e) => {
                 if (e.target === achievementList) {
                     achievementList.classList.remove("show");
@@ -14598,9 +13356,7 @@
             });
         }
     }
-    // --- Initialization ---
     document.addEventListener("DOMContentLoaded", () => {
-        // Preload Font Awesome if possible (helps prevent icon flashing)
         const faPreload = document.createElement("link");
         faPreload.rel = "preload";
         faPreload.href =
@@ -14609,6 +13365,6 @@
         document.head.appendChild(faPreload);
         const showcase = new ProjectShowcase();
         showcase.init();
-        window.projectShowcase = showcase; // Optional: make accessiblee globally for debugging
+        window.projectShowcase = showcase; 
     });
 })();
