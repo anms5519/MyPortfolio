@@ -40,7 +40,7 @@ function initNavigationDots() {
         { id: "activities", name: "Activities", icon: "fa-users" },
         { id: "gallery", name: "Gallery", icon: "fa-images" },
         { id: "interests", name: "Interests", icon: "fa-heart" },
-        { id: "languages", name: "Languages", icon: "fa-language" },
+        { id: "legendary-languages", name: "Languages", icon: "fa-language" },
         { id: "resume", name: "Resume", icon: "fa-file-alt" },
         { id: "contact", name: "Contact", icon: "fa-envelope" },
         { id: "footer", name: "Footer", icon: "fa-chevron-up" },
@@ -203,14 +203,11 @@ document.addEventListener("DOMContentLoaded", function () {
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
     const scrollTopButton = document.getElementById("footer-scroll-top");
-
-    // Listen for a click event on the button
     scrollTopButton.addEventListener("click", () => {
-      // Smoothly scroll the window to the top
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
     });
     const canvas = document.getElementById("bg-canvas");
     if (canvas) {

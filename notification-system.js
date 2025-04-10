@@ -41,15 +41,12 @@
             bell.className = "notification-bell";
             bell.innerHTML = '<i class="fas fa-bell"></i>';
             bell.setAttribute("aria-label", "Notifications");
-            
             const header = document.getElementById("header");
             if (header) {
-                // Add to the header tools container
                 const headerTools = document.querySelector(".header-tools");
                 if (headerTools) {
                     headerTools.appendChild(bell);
                 } else {
-                    // Create header tools if it doesn't exist
                     const toolsContainer = document.createElement("div");
                     toolsContainer.className = "header-tools";
                     header.appendChild(toolsContainer);

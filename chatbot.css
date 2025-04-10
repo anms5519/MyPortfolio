@@ -221,18 +221,14 @@ body[data-chatbot-theme="blue"] {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     z-index: 1;
-    /* Enhanced 3D parallax effect for messages */
     perspective: 1000px;
     transform-style: preserve-3d;
 }
-
-/* Typing indicator animation */
 .typing-indicator {
     display: flex;
     align-items: center;
     opacity: 0.8;
 }
-
 .typing-dots {
     display: flex;
     justify-content: flex-start;
@@ -244,7 +240,6 @@ body[data-chatbot-theme="blue"] {
     backdrop-filter: blur(3px);
     box-shadow: 0 0.2vh 0.5vh rgba(0, 0, 0, 0.1);
 }
-
 .typing-dots .dot {
     height: 0.8vh;
     width: 0.8vh;
@@ -252,15 +247,12 @@ body[data-chatbot-theme="blue"] {
     background-color: rgba(255, 255, 255, 0.8);
     animation: typing-dot-pulse 1.5s infinite;
 }
-
 .typing-dots .dot:nth-child(2) {
     animation-delay: 0.2s;
 }
-
 .typing-dots .dot:nth-child(3) {
     animation-delay: 0.4s;
 }
-
 @keyframes typing-dot-pulse {
     0% {
         transform: scale(0.8);
@@ -449,14 +441,12 @@ body[data-chatbot-theme="blue"] {
     word-break: break-word;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-
 .message-text {
     width: 100%;
     animation: message-fade-in-text 0.5s ease-out;
     position: relative;
     overflow: hidden;
 }
-
 @keyframes message-fade-in-text {
     0% {
         opacity: 0;

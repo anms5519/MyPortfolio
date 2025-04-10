@@ -29,56 +29,56 @@
         const chatbotKnowledge = {
             skills: {
                 technical: [
-                    "Python", 
-                    "C++", 
-                    "Java", 
-                    "JavaScript", 
-                    "C#", 
+                    "Python",
+                    "C++",
+                    "Java",
+                    "JavaScript",
+                    "C#",
                     "SQL",
-                    "HTML5", 
-                    "CSS3", 
-                    "PHP", 
-                    "Swift", 
-                    "Kotlin", 
-                    "Dart", 
+                    "HTML5",
+                    "CSS3",
+                    "PHP",
+                    "Swift",
+                    "Kotlin",
+                    "Dart",
                     "Go",
-                    "Machine Learning", 
-                    "Deep Learning (PyTorch)", 
-                    "Generative AI (Amazon Bedrock)", 
-                    "Computer Vision", 
-                    "Image Processing", 
+                    "Machine Learning",
+                    "Deep Learning (PyTorch)",
+                    "Generative AI (Amazon Bedrock)",
+                    "Computer Vision",
+                    "Image Processing",
                     "Data Visualization",
-                    "Full-Stack Development", 
-                    "Node.js", 
-                    "React", 
-                    "Angular", 
-                    "Vue.js", 
-                    "Laravel", 
-                    "WordPress", 
-                    "REST APIs", 
-                    "UI/UX Design", 
-                    "SEO", 
-                    "WebGL", 
+                    "Full-Stack Development",
+                    "Node.js",
+                    "React",
+                    "Angular",
+                    "Vue.js",
+                    "Laravel",
+                    "WordPress",
+                    "REST APIs",
+                    "UI/UX Design",
+                    "SEO",
+                    "WebGL",
                     "Firebase",
-                    "Unreal Engine", 
-                    "Unity", 
-                    "Game Design Principles", 
-                    "3D Modeling (Basic)", 
+                    "Unreal Engine",
+                    "Unity",
+                    "Game Design Principles",
+                    "3D Modeling (Basic)",
                     "Python Scripting for Games",
-                    "Git", 
-                    "Docker", 
-                    "Google Cloud Platform (GCP)", 
-                    "AWS (Bedrock)", 
-                    "PostgreSQL", 
-                    "MySQL", 
-                    "MariaDB", 
+                    "Git",
+                    "Docker",
+                    "Google Cloud Platform (GCP)",
+                    "AWS (Bedrock)",
+                    "PostgreSQL",
+                    "MySQL",
+                    "MariaDB",
                     "MongoDB",
-                    "Agile Methodologies", 
-                    "Data Structures", 
-                    "Algorithms", 
-                    "Object-Oriented Programming", 
-                    "Cybersecurity Fundamentals", 
-                    "Blockchain Principles"
+                    "Agile Methodologies",
+                    "Data Structures",
+                    "Algorithms",
+                    "Object-Oriented Programming",
+                    "Cybersecurity Fundamentals",
+                    "Blockchain Principles",
                 ],
                 design: [
                     "UI/UX Design",
@@ -306,16 +306,16 @@
                         "Developed 5 responsive WordPress websites, reducing page load time by 40% through custom theme optimization, achieving a 95% client satisfaction rate",
                         "Implemented modern UI/UX principles to enhance user engagement and usability",
                         "Customized themes and developed plugins to extend WordPress functionality",
-                        "Performed website performance optimization and basic SEO implementation"
+                        "Performed website performance optimization and basic SEO implementation",
                     ],
                     technologies: [
-                        "WordPress", 
-                        "PHP", 
-                        "HTML", 
-                        "CSS", 
-                        "JavaScript", 
-                        "Web Design Tools"
-                    ]
+                        "WordPress",
+                        "PHP",
+                        "HTML",
+                        "CSS",
+                        "JavaScript",
+                        "Web Design Tools",
+                    ],
                 },
                 {
                     role: "Freelance Commercial Designer",
@@ -325,7 +325,7 @@
                         "Delivered 200+ branding projects for clients across 15 countries, achieving a 4.9/5.0 average rating and maintaining an 80% client retention rate",
                         "Created 150+ unique brand assets (logos, brochures, social media kits) using Adobe Creative Suite, contributing to an average 25% increase in client conversion rates",
                         "Developed compelling UI/UX mockups for web and mobile applications, reducing client revision requests by 40%",
-                        "Consistently received 5-star feedback for communication, creativity, and timely delivery"
+                        "Consistently received 5-star feedback for communication, creativity, and timely delivery",
                     ],
                     technologies: [
                         "Adobe Creative Suite",
@@ -333,8 +333,8 @@
                         "Illustrator",
                         "UI/UX Design",
                         "Brand Design",
-                        "Logo Design"
-                    ]
+                        "Logo Design",
+                    ],
                 },
                 {
                     role: "Data Visualization Specialist (Job Simulation)",
@@ -343,15 +343,15 @@
                     responsibilities: [
                         "Developed 3 interactive Power BI dashboards analyzing 50,000+ customer records, reducing report generation time by 75% and improving data accessibility across 5 departments",
                         "Employed Python (Pandas) and Excel for data cleaning, transformation, and preparation",
-                        "Applied statistical analysis and data storytelling techniques to present actionable insights"
+                        "Applied statistical analysis and data storytelling techniques to present actionable insights",
                     ],
                     technologies: [
                         "Power BI",
                         "Python",
                         "Excel",
                         "Data Visualization",
-                        "Data Analysis"
-                    ]
+                        "Data Analysis",
+                    ],
                 },
                 {
                     role: "Cybersecurity Analyst (Job Simulation)",
@@ -360,15 +360,15 @@
                     responsibilities: [
                         "Identified 15 critical vulnerabilities using simulated penetration testing tools and techniques",
                         "Proposed and documented remediation strategies, including firewall rule adjustments and access control enhancements, contributing to a simulated 40% reduction in security incidents",
-                        "Conducted risk assessments to improve the simulated network security posture"
+                        "Conducted risk assessments to improve the simulated network security posture",
                     ],
                     technologies: [
-                        "Penetration Testing", 
-                        "Risk Assessment", 
+                        "Penetration Testing",
+                        "Risk Assessment",
                         "Network Security",
-                        "Cybersecurity Tools"
-                    ]
-                }
+                        "Cybersecurity Tools",
+                    ],
+                },
             ],
             trainingsWorkshops: [
                 "Undergraduates Projects for CSE Students: A Comprehensive Guideline",
@@ -447,14 +447,16 @@
             personalInfo: {
                 name: "Kholipha",
                 fullName: "Kholipha Ahmmad Al-Amin",
-                dateOfBirth: "2002-07-26", // YYYY-MM-DD format for easy calculation
+                dateOfBirth: "2002-07-26", 
                 gender: "Male",
                 religion: "Islam",
                 maritalStatus: "Single",
                 profession: "Student",
                 location: "Dhaka, Bangladesh",
-                permanentAddress: "1676 Boro Keshabpur, Kadirpur, Shibchar, Munshi Kadirpur - 7930, Madaripur, Bangladesh",
-                presentAddress: "176 West Arjatpara, Tejgaon, Tejgaon - 1215, Dhaka, Bangladesh",
+                permanentAddress:
+                    "1676 Boro Keshabpur, Kadirpur, Shibchar, Munshi Kadirpur - 7930, Madaripur, Bangladesh",
+                presentAddress:
+                    "176 West Arjatpara, Tejgaon, Tejgaon - 1215, Dhaka, Bangladesh",
                 phone: "+8801320389539",
                 alternatePhone: "+8801749103303",
                 email: "kholifaahmadalamin@gmail.com",
@@ -470,7 +472,7 @@
                     issuingAuthority: "DIP/DHAKA",
                     passportOffice: "AGARGAON",
                     deliveryType: "REGULAR",
-                    onlineRegID: "OID1023918907"
+                    onlineRegID: "OID1023918907",
                 },
                 parentalInfo: {
                     fatherName: "MD Akman Hossain",
@@ -480,17 +482,19 @@
                     motherName: "Rohana Akter Rani",
                     motherNationalID: "8228625219",
                     motherProfession: "Pharmacist",
-                    motherNationality: "Bangladeshi"
+                    motherNationality: "Bangladeshi",
                 },
                 emergencyContact: {
                     name: "Rohana Akter Rani",
                     relationship: "Mother",
-                    address: "176 West Arjatpara, Tejgaon, Tejgaon - 1215, Dhaka, Bangladesh",
-                    telephone: "+8801749103303"
+                    address:
+                        "176 West Arjatpara, Tejgaon, Tejgaon - 1215, Dhaka, Bangladesh",
+                    telephone: "+8801749103303",
                 },
                 socialLinks: {
                     github: "https://github.com/anms5519",
-                    linkedin: "https://www.linkedin.com/in/kholipha-ahmmad-al-amin-3856b1305",
+                    linkedin:
+                        "https://www.linkedin.com/in/kholipha-ahmmad-al-amin-3856b1305",
                     facebook: "https://facebook.com/kholipha.ahmmad",
                     instagram: "https://instagram.com/kholipha.ahmmad",
                     twitter: "https://twitter.com/kholipha_ahmmad",
@@ -502,7 +506,8 @@
                     dribbble: "https://dribbble.com/kholiphaahmmad",
                     medium: "https://medium.com/@kholifaahmadalamin",
                     dev: "https://dev.to/kholiphaahmmad",
-                    stackoverflow: "https://stackoverflow.com/users/kholiphaahmmad",
+                    stackoverflow:
+                        "https://stackoverflow.com/users/kholiphaahmmad",
                     quora: "https://quora.com/profile/Kholipha-Ahmmad",
                     reddit: "https://reddit.com/user/kholiphaahmmad",
                     telegram: "https://t.me/kholiphaahmmad",
@@ -818,27 +823,34 @@
                 .replace(/`(.*?)`/g, "<code>$1</code>")
                 .replace(/\n/g, "<br>");
         };
-        // Enhanced response generator with advanced pattern recognition
         const generateResponse = (input) => {
             const normalizedInput = input.toLowerCase();
             let detectedKeywords = [];
-            
-            // Detect time of day for personalized greetings
             const currentHour = new Date().getHours();
-            const timeOfDay = 
-                currentHour >= 4 && currentHour < 6 ? "pre-dawn" :
-                currentHour >= 6 && currentHour < 8 ? "early morning" :
-                currentHour >= 8 && currentHour < 10 ? "mid-morning" :
-                currentHour >= 10 && currentHour < 12 ? "late morning" :
-                currentHour >= 12 && currentHour < 14 ? "early afternoon" :
-                currentHour >= 14 && currentHour < 16 ? "mid-afternoon" :
-                currentHour >= 16 && currentHour < 18 ? "late afternoon" :
-                currentHour >= 18 && currentHour < 19.5 ? "early evening" :
-                currentHour >= 19.5 && currentHour < 21 ? "evening" :
-                currentHour >= 21 && currentHour < 23 ? "late evening" :
-                currentHour >= 23 || currentHour < 4 ? "night" : "day";
-            
-            // Advanced greeting detection with contextual awareness
+            const timeOfDay =
+                currentHour >= 4 && currentHour < 6
+                    ? "pre-dawn"
+                    : currentHour >= 6 && currentHour < 8
+                    ? "early morning"
+                    : currentHour >= 8 && currentHour < 10
+                    ? "mid-morning"
+                    : currentHour >= 10 && currentHour < 12
+                    ? "late morning"
+                    : currentHour >= 12 && currentHour < 14
+                    ? "early afternoon"
+                    : currentHour >= 14 && currentHour < 16
+                    ? "mid-afternoon"
+                    : currentHour >= 16 && currentHour < 18
+                    ? "late afternoon"
+                    : currentHour >= 18 && currentHour < 19.5
+                    ? "early evening"
+                    : currentHour >= 19.5 && currentHour < 21
+                    ? "evening"
+                    : currentHour >= 21 && currentHour < 23
+                    ? "late evening"
+                    : currentHour >= 23 || currentHour < 4
+                    ? "night"
+                    : "day";
             if (
                 normalizedInput.includes("hello") ||
                 normalizedInput.includes("hi") ||
@@ -853,51 +865,70 @@
                 normalizedInput.match(/^(yes|no|sure|okay|ok|yep|nope)$/)
             ) {
                 detectedKeywords = [
-                    "hello", "hi", "hey", "greetings", "hola", "namaste",
-                    "good morning", "good afternoon", "good evening", "good night",
-                    "yes", "no", "sure", "okay", "ok", "yep", "nope"
-                ].filter(word => normalizedInput.includes(word));
-                
-                // Time-aware greeting
-                if (normalizedInput.includes("morning") || normalizedInput.includes("afternoon") || 
-                    normalizedInput.includes("evening") || normalizedInput.includes("night")) {
+                    "hello",
+                    "hi",
+                    "hey",
+                    "greetings",
+                    "hola",
+                    "namaste",
+                    "good morning",
+                    "good afternoon",
+                    "good evening",
+                    "good night",
+                    "yes",
+                    "no",
+                    "sure",
+                    "okay",
+                    "ok",
+                    "yep",
+                    "nope",
+                ].filter((word) => normalizedInput.includes(word));
+                if (
+                    normalizedInput.includes("morning") ||
+                    normalizedInput.includes("afternoon") ||
+                    normalizedInput.includes("evening") ||
+                    normalizedInput.includes("night")
+                ) {
                     return {
-                        response: getTimeAwareGreeting(normalizedInput, timeOfDay),
+                        response: getTimeAwareGreeting(
+                            normalizedInput,
+                            timeOfDay
+                        ),
                         keywords: detectedKeywords,
                     };
                 }
-                
                 return {
                     response: getPersonalizedGreeting(timeOfDay),
                     keywords: detectedKeywords,
                 };
             }
-            
-            // Enhanced thank you detection with variations
             if (
                 normalizedInput.includes("thank") ||
                 normalizedInput.includes("thanks") ||
                 normalizedInput.includes("appreciate") ||
                 normalizedInput.includes("grateful")
             ) {
-                detectedKeywords = ["thank", "thanks", "appreciate", "grateful"].filter(word => 
-                    normalizedInput.includes(word));
-                
+                detectedKeywords = [
+                    "thank",
+                    "thanks",
+                    "appreciate",
+                    "grateful",
+                ].filter((word) => normalizedInput.includes(word));
                 const thankResponses = [
                     "You're very welcome! I'm here anytime you need assistance or just want to chat.",
                     "My pleasure! Is there anything else I can help with?",
                     "Happy to be of service! Let me know if you need anything else.",
                     "Glad I could help! Feel free to ask me anything else you're curious about.",
-                    "No problem at all! I'm always here to chat about anything you'd like to know."
+                    "No problem at all! I'm always here to chat about anything you'd like to know.",
                 ];
-                
                 return {
-                    response: thankResponses[Math.floor(Math.random() * thankResponses.length)],
+                    response:
+                        thankResponses[
+                            Math.floor(Math.random() * thankResponses.length)
+                        ],
                     keywords: detectedKeywords,
                 };
             }
-            
-            // Enhanced farewell detection
             if (
                 normalizedInput.includes("bye") ||
                 normalizedInput.includes("tata") ||
@@ -908,10 +939,16 @@
                 normalizedInput.includes("gotta go") ||
                 normalizedInput.includes("farewell")
             ) {
-                detectedKeywords = ["bye", "tata", "goodbye", "see you", "talk later", "got to go", "gotta go", "farewell"].filter(word =>
-                    normalizedInput.includes(word)
-                );
-                
+                detectedKeywords = [
+                    "bye",
+                    "tata",
+                    "goodbye",
+                    "see you",
+                    "talk later",
+                    "got to go",
+                    "gotta go",
+                    "farewell",
+                ].filter((word) => normalizedInput.includes(word));
                 const farewellResponses = [
                     `Thanks for chatting! Wishing you a wonderful ${timeOfDay}. Feel free to come back anytime!`,
                     "It was great talking with you! I'll be here whenever you want to chat again.",
@@ -919,9 +956,11 @@
                     "Farewell for now! Looking forward to our next conversation.",
                     "Goodbye! I'll be here whenever you want to continue our chat.",
                 ];
-                
                 return {
-                    response: farewellResponses[Math.floor(Math.random() * farewellResponses.length)],
+                    response:
+                        farewellResponses[
+                            Math.floor(Math.random() * farewellResponses.length)
+                        ],
                     keywords: detectedKeywords,
                 };
             }
@@ -1026,9 +1065,8 @@
                     "ssc",
                     "hsc",
                     "graduate",
-                    "academic"
+                    "academic",
                 ].filter((word) => normalizedInput.includes(word));
-                // Pass the input to the education response function for more specific answers
                 const educationResponse = getEducationResponse(input);
                 if (educationResponse)
                     return {
@@ -1066,9 +1104,8 @@
                     "professional",
                     "president",
                     "volunteering",
-                    "akbor"
+                    "akbor",
                 ].filter((word) => normalizedInput.includes(word));
-                // Pass the input to the experience response function for more specific answers
                 const experienceResponse = getExperienceResponse(input);
                 if (experienceResponse)
                     return {
@@ -1127,7 +1164,6 @@
                 keywords: [],
             };
         };
-        // Enhanced personalized greeting with time awareness
         const getPersonalizedGreeting = (timeOfDay = null) => {
             const defaultGreetings = [
                 "👋 Hey there! I'm Kholipha Ahmmad. How can I help you today?",
@@ -1136,171 +1172,162 @@
                 "Hello! I'm Kholipha Ahmmad. Feel free to ask me anything about my work or experience.",
                 "Great to see you here! I'm Kholipha Al-Amin. What can I tell you about my education or projects?",
             ];
-            
             if (!timeOfDay) {
                 return getRandomItem(defaultGreetings);
             }
-            
-            // Time of day specific greetings
             const timeBasedGreetings = {
                 "pre-dawn": [
                     "You're up early! I'm Kholipha Ahmmad. The pre-dawn hours are perfect for focused conversation.",
                     "Welcome to the mystical pre-dawn hour! I'm Kholipha Al-Amin. How can I assist you today?",
-                    "Good pre-dawn! This quiet time between 4-5AM is special. I'm Kholipha, ready to help with anything."
+                    "Good pre-dawn! This quiet time between 4-5AM is special. I'm Kholipha, ready to help with anything.",
                 ],
                 "early morning": [
                     "Good morning! I'm Kholipha Ahmmad. The day is just beginning. What can I help you with?",
                     "A fresh early morning welcome to you! I'm Kholipha Al-Amin. What would you like to explore today?",
-                    "Morning greetings! As the sun begins to warm the earth, I'm here to assist you with anything you need."
+                    "Morning greetings! As the sun begins to warm the earth, I'm here to assist you with anything you need.",
                 ],
                 "mid-morning": [
                     "Good mid-morning! I'm Kholipha Ahmmad. The day is in full bloom - just like our conversation can be!",
                     "Mid-morning greetings! I'm Kholipha Al-Amin. The world is bustling with energy, and I'm ready to help.",
-                    "Hello there! Mid-morning is a time of great productivity. I'm Kholipha - what would you like to know?"
+                    "Hello there! Mid-morning is a time of great productivity. I'm Kholipha - what would you like to know?",
                 ],
                 "late morning": [
                     "Late morning greetings! I'm Kholipha Ahmmad. As we approach midday, how can I assist you?",
                     "Welcome! It's that vibrant late morning time. I'm Kholipha Al-Amin, ready to chat about anything.",
-                    "Hello! As the morning transitions toward noon, I'm here to help with any questions you might have."
+                    "Hello! As the morning transitions toward noon, I'm here to help with any questions you might have.",
                 ],
                 "early afternoon": [
                     "Good afternoon! I'm Kholipha Ahmmad. Perfect time to digest both lunch and information. How can I help?",
                     "Afternoon greetings! I'm Kholipha Al-Amin. What would you like to know during this productive time?",
-                    "Hello there! Early afternoon is great for thoughtful conversations. What's on your mind today?"
+                    "Hello there! Early afternoon is great for thoughtful conversations. What's on your mind today?",
                 ],
                 "mid-afternoon": [
                     "Mid-afternoon greetings! I'm Kholipha Ahmmad. The day is flowing with purpose - just like our chat can.",
                     "Hello! I'm Kholipha Al-Amin. Mid-afternoon is perfect for creative thinking. What shall we discuss?",
-                    "Good afternoon! This steady, purposeful time of day is ideal for exploration. What would you like to know?"
+                    "Good afternoon! This steady, purposeful time of day is ideal for exploration. What would you like to know?",
                 ],
                 "late afternoon": [
                     "Late afternoon hello! I'm Kholipha Ahmmad. As the day softens, what can I help you discover?",
                     "Greetings! I'm Kholipha Al-Amin. The light is getting golden - a perfect time for thoughtful conversation.",
-                    "Welcome! As afternoon winds down, it's a great moment for reflection. What would you like to explore?"
+                    "Welcome! As afternoon winds down, it's a great moment for reflection. What would you like to explore?",
                 ],
                 "early evening": [
                     "Good evening! I'm Kholipha Ahmmad. As work transforms into relaxation, what can I help with?",
                     "Early evening greetings! I'm Kholipha Al-Amin. A perfect time for meaningful conversation.",
-                    "Hello there! As the day transitions to evening, I'm here to assist with anything you need."
+                    "Hello there! As the day transitions to evening, I'm here to assist with anything you need.",
                 ],
-                "evening": [
+                evening: [
                     "Evening greetings! I'm Kholipha Ahmmad. This time of connection and contemplation is perfect for our chat.",
                     "Good evening! I'm Kholipha Al-Amin. As the world slows down, what would you like to know?",
-                    "Welcome to the evening! When the day softens into dusk, it's ideal for deeper conversations. How can I help?"
+                    "Welcome to the evening! When the day softens into dusk, it's ideal for deeper conversations. How can I help?",
                 ],
                 "late evening": [
                     "Late evening hello! I'm Kholipha Ahmmad. As night settles in, what can I help you with?",
                     "Greetings at this quiet hour! I'm Kholipha Al-Amin. Late evening is perfect for thoughtful exchanges.",
-                    "Welcome! As we bridge to the quiet of night, I'm here to assist with anything you'd like to know."
+                    "Welcome! As we bridge to the quiet of night, I'm here to assist with anything you'd like to know.",
                 ],
-                "night": [
+                night: [
                     "Good night-time! I'm Kholipha Ahmmad. Even at this late hour, I'm here to help with anything you need.",
                     "Night greetings! I'm Kholipha Al-Amin. The stillness of night can bring clarity to our conversations.",
-                    "Welcome to the night hours! When the world sleeps and dreams whisper, I'm here to assist you."
-                ]
+                    "Welcome to the night hours! When the world sleeps and dreams whisper, I'm here to assist you.",
+                ],
             };
-            
-            const greetingsForTimeOfDay = timeBasedGreetings[timeOfDay] || defaultGreetings;
+            const greetingsForTimeOfDay =
+                timeBasedGreetings[timeOfDay] || defaultGreetings;
             return getRandomItem(greetingsForTimeOfDay);
         };
-        
-        // Function to respond to specific time-based greetings
         const getTimeAwareGreeting = (input, actualTimeOfDay) => {
             const normalizedInput = input.toLowerCase();
-            
-            // Extract the time mentioned in the greeting
             let mentionedTime = null;
             if (normalizedInput.includes("morning")) mentionedTime = "morning";
-            else if (normalizedInput.includes("afternoon")) mentionedTime = "afternoon";
-            else if (normalizedInput.includes("evening")) mentionedTime = "evening";
+            else if (normalizedInput.includes("afternoon"))
+                mentionedTime = "afternoon";
+            else if (normalizedInput.includes("evening"))
+                mentionedTime = "evening";
             else if (normalizedInput.includes("night")) mentionedTime = "night";
-            
-            // Map actual time of day to broader categories for comparison
-            const broadTimeCategory = 
-                actualTimeOfDay.includes("morning") || actualTimeOfDay === "pre-dawn" ? "morning" :
-                actualTimeOfDay.includes("afternoon") ? "afternoon" :
-                actualTimeOfDay.includes("evening") ? "evening" :
-                "night";
-            
-            // If the mentioned time matches the actual time
+            const broadTimeCategory =
+                actualTimeOfDay.includes("morning") ||
+                actualTimeOfDay === "pre-dawn"
+                    ? "morning"
+                    : actualTimeOfDay.includes("afternoon")
+                    ? "afternoon"
+                    : actualTimeOfDay.includes("evening")
+                    ? "evening"
+                    : "night";
             if (mentionedTime === broadTimeCategory) {
                 return getRandomItem([
                     `Yes, it is a lovely ${mentionedTime}! I'm Kholipha Ahmmad. How can I help you today?`,
                     `Good ${mentionedTime} to you too! I'm Kholipha Al-Amin. What would you like to know about me or my work?`,
-                    `A wonderful ${mentionedTime} it is! I'm Kholipha. How can I assist you?`
+                    `A wonderful ${mentionedTime} it is! I'm Kholipha. How can I assist you?`,
                 ]);
-            } 
-            // If the mentioned time doesn't match the actual time
+            }
             else {
                 return getRandomItem([
                     `Actually, it's ${broadTimeCategory} here, but good ${mentionedTime} to you! I'm Kholipha Ahmmad. How can I help?`,
                     `It's ${broadTimeCategory} in my timezone, but I appreciate your ${mentionedTime} greeting! I'm Kholipha Al-Amin. What can I do for you?`,
-                    `While it's ${broadTimeCategory} here, I wish you a good ${mentionedTime}! I'm Kholipha. What would you like to know?`
+                    `While it's ${broadTimeCategory} here, I wish you a good ${mentionedTime}! I'm Kholipha. What would you like to know?`,
                 ]);
             }
         };
         const getTimeBasedGreeting = () => {
             const hour = new Date().getHours();
-            
-            // Use the timeBasedGreetings from getPersonalizedGreeting
             const timeBasedGreetings = {
                 "pre-dawn": [
                     "You're up early! I'm Kholipha Ahmmad. The pre-dawn hours are perfect for focused conversation.",
                     "Welcome to the mystical pre-dawn hour! I'm Kholipha Al-Amin. How can I assist you today?",
-                    "Good pre-dawn! This quiet time between 4-5AM is special. I'm Kholipha, ready to help with anything."
+                    "Good pre-dawn! This quiet time between 4-5AM is special. I'm Kholipha, ready to help with anything.",
                 ],
                 "early morning": [
                     "Good morning! I'm Kholipha Ahmmad. The day is just beginning. What can I help you with?",
                     "A fresh early morning welcome to you! I'm Kholipha Al-Amin. What would you like to explore today?",
-                    "Morning greetings! As the sun begins to warm the earth, I'm here to assist you with anything you need."
+                    "Morning greetings! As the sun begins to warm the earth, I'm here to assist you with anything you need.",
                 ],
                 "mid-morning": [
                     "Good mid-morning! I'm Kholipha Ahmmad. The day is in full bloom - just like our conversation can be!",
                     "Mid-morning greetings! I'm Kholipha Al-Amin. The world is bustling with energy, and I'm ready to help.",
-                    "Hello there! Mid-morning is a time of great productivity. I'm Kholipha - what would you like to know?"
+                    "Hello there! Mid-morning is a time of great productivity. I'm Kholipha - what would you like to know?",
                 ],
                 "late morning": [
                     "Late morning greetings! I'm Kholipha Ahmmad. As we approach midday, how can I assist you?",
                     "Welcome! It's that vibrant late morning time. I'm Kholipha Al-Amin, ready to chat about anything.",
-                    "Hello! As the morning transitions toward noon, I'm here to help with any questions you might have."
+                    "Hello! As the morning transitions toward noon, I'm here to help with any questions you might have.",
                 ],
                 "early afternoon": [
                     "Good afternoon! I'm Kholipha Ahmmad. Perfect time to digest both lunch and information. How can I help?",
                     "Afternoon greetings! I'm Kholipha Al-Amin. What would you like to know during this productive time?",
-                    "Hello there! Early afternoon is great for thoughtful conversations. What's on your mind today?"
+                    "Hello there! Early afternoon is great for thoughtful conversations. What's on your mind today?",
                 ],
                 "mid-afternoon": [
                     "Mid-afternoon greetings! I'm Kholipha Ahmmad. The day is flowing with purpose - just like our chat can.",
                     "Hello! I'm Kholipha Al-Amin. Mid-afternoon is perfect for creative thinking. What shall we discuss?",
-                    "Good afternoon! This steady, purposeful time of day is ideal for exploration. What would you like to know?"
+                    "Good afternoon! This steady, purposeful time of day is ideal for exploration. What would you like to know?",
                 ],
                 "late afternoon": [
                     "Late afternoon hello! I'm Kholipha Ahmmad. As the day softens, what can I help you discover?",
                     "Greetings! I'm Kholipha Al-Amin. The light is getting golden - a perfect time for thoughtful conversation.",
-                    "Welcome! As afternoon winds down, it's a great moment for reflection. What would you like to explore?"
+                    "Welcome! As afternoon winds down, it's a great moment for reflection. What would you like to explore?",
                 ],
                 "early evening": [
                     "Good early evening! I'm Kholipha Ahmmad. As the day transitions to evening, what can I help with?",
                     "Early evening greetings! I'm Kholipha Al-Amin. This peaceful transition time is perfect for new ideas.",
-                    "Hello! The early evening light brings a special quality. I'm Kholipha - what would you like to discuss?"
+                    "Hello! The early evening light brings a special quality. I'm Kholipha - what would you like to discuss?",
                 ],
-                "evening": [
+                evening: [
                     "Good evening! I'm Kholipha Ahmmad. The perfect time to reflect on the day. How can I assist you?",
                     "Evening greetings! I'm Kholipha Al-Amin. What would you like to explore in this contemplative hour?",
-                    "Hello there! Evening is ideal for thoughtful conversation. What's on your mind tonight?"
+                    "Hello there! Evening is ideal for thoughtful conversation. What's on your mind tonight?",
                 ],
-                "night": [
+                night: [
                     "Good night! I'm Kholipha Ahmmad, ready to assist even at this late hour. What can I help with?",
                     "Night greetings! I'm Kholipha Al-Amin. The quiet of night is perfect for focused conversation.",
-                    "Hello! Even as the world rests, I'm here to help. What would you like to know?"
+                    "Hello! Even as the world rests, I'm here to help. What would you like to know?",
                 ],
                 "late night": [
                     "You're up late! I'm Kholipha Ahmmad. The stillness of late night provides clarity of thought.",
                     "Late night greetings! I'm Kholipha Al-Amin. What keeps you up at this hour?",
-                    "Hello! The quiet of late night can spark great insights. What's on your mind?"
-                ]
+                    "Hello! The quiet of late night can spark great insights. What's on your mind?",
+                ],
             };
-            
             let timeCategory;
             if (hour >= 4 && hour < 6) timeCategory = "pre-dawn";
             else if (hour >= 6 && hour < 9) timeCategory = "early morning";
@@ -1313,7 +1340,6 @@
             else if (hour >= 21 && hour < 23) timeCategory = "evening";
             else if (hour >= 23 || hour < 1) timeCategory = "night";
             else timeCategory = "late night";
-            
             return getRandomItem(timeBasedGreetings[timeCategory]);
         };
         const getWordReflectionResponse = (input) => {
@@ -1458,77 +1484,66 @@
             }
             return null;
         };
-        // Function to calculate detailed age from date of birth (years, months, days, hours, minutes, seconds)
         const calculateAge = (dateOfBirth, detailed = false) => {
-            // Parse the date of birth - accept both YYYY-MM-DD and DD/MM/YYYY formats
             let dob;
             if (dateOfBirth.includes("/")) {
-                // Format: DD/MM/YYYY
                 const parts = dateOfBirth.split("/");
-                dob = new Date(parts[2], parts[1] - 1, parts[0], 4, 0, 0); // 4 AM UTC+6 as specified
+                dob = new Date(parts[2], parts[1] - 1, parts[0], 4, 0, 0); 
             } else {
-                // Format: YYYY-MM-DD
                 dob = new Date(dateOfBirth);
             }
-            
             const now = new Date();
-            
-            // Simple age in years
             if (!detailed) {
                 let years = now.getFullYear() - dob.getFullYear();
-                if (now.getMonth() < dob.getMonth() || 
-                    (now.getMonth() === dob.getMonth() && now.getDate() < dob.getDate())) {
+                if (
+                    now.getMonth() < dob.getMonth() ||
+                    (now.getMonth() === dob.getMonth() &&
+                        now.getDate() < dob.getDate())
+                ) {
                     years--;
                 }
                 return years;
             }
-            
-            // Calculate detailed age
             let years = now.getFullYear() - dob.getFullYear();
             let months = now.getMonth() - dob.getMonth();
             let days = now.getDate() - dob.getDate();
             let hours = now.getHours() - dob.getHours();
             let minutes = now.getMinutes() - dob.getMinutes();
             let seconds = now.getSeconds() - dob.getSeconds();
-            
-            // Adjust for negative values
             if (seconds < 0) {
                 seconds += 60;
                 minutes--;
             }
-            
             if (minutes < 0) {
                 minutes += 60;
                 hours--;
             }
-            
             if (hours < 0) {
                 hours += 24;
                 days--;
             }
-            
             if (days < 0) {
-                // Get the number of days in the previous month
-                const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                const lastMonth = new Date(
+                    now.getFullYear(),
+                    now.getMonth(),
+                    0
+                );
                 days += lastMonth.getDate();
                 months--;
             }
-            
             if (months < 0) {
                 months += 12;
                 years--;
             }
-            
             return {
                 years,
                 months,
                 days,
                 hours,
                 minutes,
-                seconds
+                seconds,
             };
         };
-        
         const getPersonalInfoResponse = (input) => {
             const normalizedInput = input.toLowerCase();
             if (
@@ -1538,21 +1553,26 @@
                 normalizedInput.includes("born") ||
                 normalizedInput.includes("date of birth")
             ) {
-                // Always provide detailed real-time age based on the exact DOB: 26/07/2002 4 AM (UTC+6)
-                const birthDate = "26/07/2002"; // DD/MM/YYYY format as specified
+                const birthDate = "26/07/2002"; 
                 const detailedAge = calculateAge(birthDate, true);
-                
-                // Format exactly as requested
                 const ageDisplay = `Age (as respect to 26/07/2002 4 am (UTC + 06.00) ): ${detailedAge.years} year ${detailedAge.months} month ${detailedAge.days} day ${detailedAge.hours} hour ${detailedAge.minutes} minute ${detailedAge.seconds} second`;
-                
-                // Alternative format with proper pluralization
-                const ageDisplayWithPlurals = `${detailedAge.years} year${detailedAge.years !== 1 ? 's' : ''}, ${detailedAge.months} month${detailedAge.months !== 1 ? 's' : ''}, ${detailedAge.days} day${detailedAge.days !== 1 ? 's' : ''}, ${detailedAge.hours} hour${detailedAge.hours !== 1 ? 's' : ''}, ${detailedAge.minutes} minute${detailedAge.minutes !== 1 ? 's' : ''}, and ${detailedAge.seconds} second${detailedAge.seconds !== 1 ? 's' : ''}`;
-                
-                // Return either the exact format requested or with proper pluralization based on need
+                const ageDisplayWithPlurals = `${detailedAge.years} year${
+                    detailedAge.years !== 1 ? "s" : ""
+                }, ${detailedAge.months} month${
+                    detailedAge.months !== 1 ? "s" : ""
+                }, ${detailedAge.days} day${
+                    detailedAge.days !== 1 ? "s" : ""
+                }, ${detailedAge.hours} hour${
+                    detailedAge.hours !== 1 ? "s" : ""
+                }, ${detailedAge.minutes} minute${
+                    detailedAge.minutes !== 1 ? "s" : ""
+                }, and ${detailedAge.seconds} second${
+                    detailedAge.seconds !== 1 ? "s" : ""
+                }`;
                 if (
-                    normalizedInput.includes("exact") || 
-                    normalizedInput.includes("precise") || 
-                    normalizedInput.includes("detail") || 
+                    normalizedInput.includes("exact") ||
+                    normalizedInput.includes("precise") ||
+                    normalizedInput.includes("detail") ||
                     normalizedInput.includes("specific") ||
                     normalizedInput.includes("real time") ||
                     normalizedInput.includes("realtime")
@@ -1662,27 +1682,38 @@
             ) {
                 return `I have a ${chatbotKnowledge.personalInfo.pets.breed} cat named ${chatbotKnowledge.personalInfo.pets.name} who is ${chatbotKnowledge.personalInfo.pets.age} years old. ${chatbotKnowledge.personalInfo.pets.personality}`;
             }
-            
-            // Contact information handling - specific queries
-            if (normalizedInput.includes("email") && !normalizedInput.includes("contact")) {
+            if (
+                normalizedInput.includes("email") &&
+                !normalizedInput.includes("contact")
+            ) {
                 return `My email address is ${chatbotKnowledge.personalInfo.email}. Feel free to reach out anytime!`;
             }
-            
-            if (normalizedInput.includes("phone") || normalizedInput.includes("mobile") || normalizedInput.includes("number") && !normalizedInput.includes("contact")) {
+            if (
+                normalizedInput.includes("phone") ||
+                normalizedInput.includes("mobile") ||
+                (normalizedInput.includes("number") &&
+                    !normalizedInput.includes("contact"))
+            ) {
                 return `My primary phone number is ${chatbotKnowledge.personalInfo.phone}. You can also reach me at my alternate number: ${chatbotKnowledge.personalInfo.alternatePhone}.`;
             }
-            
-            if (normalizedInput.includes("address") || normalizedInput.includes("live")) {
-                if (normalizedInput.includes("permanent") || normalizedInput.includes("home")) {
+            if (
+                normalizedInput.includes("address") ||
+                normalizedInput.includes("live")
+            ) {
+                if (
+                    normalizedInput.includes("permanent") ||
+                    normalizedInput.includes("home")
+                ) {
                     return `My permanent address is: ${chatbotKnowledge.personalInfo.permanentAddress}`;
-                } else if (normalizedInput.includes("present") || normalizedInput.includes("current")) {
+                } else if (
+                    normalizedInput.includes("present") ||
+                    normalizedInput.includes("current")
+                ) {
                     return `My present address is: ${chatbotKnowledge.personalInfo.presentAddress}`;
                 } else {
                     return `I currently live at ${chatbotKnowledge.personalInfo.presentAddress}. My permanent address is ${chatbotKnowledge.personalInfo.permanentAddress}.`;
                 }
             }
-            
-            // General contact information
             if (
                 normalizedInput.includes("contact") ||
                 normalizedInput.includes("reach") ||
@@ -1694,22 +1725,30 @@
 - Phone: ${chatbotKnowledge.personalInfo.phone}
 - Alternative Phone: ${chatbotKnowledge.personalInfo.alternatePhone}
 - Present Address: ${chatbotKnowledge.personalInfo.presentAddress}
-
 I'm also active on various social media platforms including LinkedIn, GitHub, Facebook, and many more.`;
             }
-            
-            // Passport details handling
             if (
                 normalizedInput.includes("passport") ||
                 normalizedInput.includes("travel document") ||
                 normalizedInput.includes("identification")
             ) {
                 const passport = chatbotKnowledge.personalInfo.passportDetails;
-                if (normalizedInput.includes("number") || normalizedInput.includes("no")) {
+                if (
+                    normalizedInput.includes("number") ||
+                    normalizedInput.includes("no")
+                ) {
                     return `My passport number is ${passport.number}. It's a ${passport.type} passport with country code ${passport.countryCode}.`;
-                } else if (normalizedInput.includes("expiry") || normalizedInput.includes("expire") || normalizedInput.includes("valid")) {
+                } else if (
+                    normalizedInput.includes("expiry") ||
+                    normalizedInput.includes("expire") ||
+                    normalizedInput.includes("valid")
+                ) {
                     return `My passport was issued on ${passport.issueDate} and expires on ${passport.expiryDate}. It's valid for ${passport.duration}.`;
-                } else if (normalizedInput.includes("authority") || normalizedInput.includes("office") || normalizedInput.includes("issued")) {
+                } else if (
+                    normalizedInput.includes("authority") ||
+                    normalizedInput.includes("office") ||
+                    normalizedInput.includes("issued")
+                ) {
                     return `My passport was issued by ${passport.issuingAuthority} from the ${passport.passportOffice} office.`;
                 } else {
                     return `My passport details:
@@ -1722,8 +1761,6 @@ I'm also active on various social media platforms including LinkedIn, GitHub, Fa
 - Passport Office: ${passport.passportOffice}`;
                 }
             }
-            
-            // Parent information handling
             if (
                 normalizedInput.includes("father") ||
                 normalizedInput.includes("mother") ||
@@ -1731,118 +1768,143 @@ I'm also active on various social media platforms including LinkedIn, GitHub, Fa
                 normalizedInput.includes("family")
             ) {
                 const parentInfo = chatbotKnowledge.personalInfo.parentalInfo;
-                if (normalizedInput.includes("father") && !normalizedInput.includes("mother")) {
+                if (
+                    normalizedInput.includes("father") &&
+                    !normalizedInput.includes("mother")
+                ) {
                     return `My father's name is ${parentInfo.fatherName}. He is a ${parentInfo.fatherProfession} and his National ID is ${parentInfo.fatherNationalID}.`;
-                } else if (normalizedInput.includes("mother") && !normalizedInput.includes("father")) {
+                } else if (
+                    normalizedInput.includes("mother") &&
+                    !normalizedInput.includes("father")
+                ) {
                     return `My mother's name is ${parentInfo.motherName}. She is a ${parentInfo.motherProfession} and her National ID is ${parentInfo.motherNationalID}.`;
                 } else {
                     return `My father is ${parentInfo.fatherName}, a ${parentInfo.fatherProfession} by profession. My mother is ${parentInfo.motherName}, also a ${parentInfo.motherProfession}. They are both ${parentInfo.fatherNationality} nationals.`;
                 }
             }
-            
-            // Emergency contact information
-            if (normalizedInput.includes("emergency") || (normalizedInput.includes("contact") && normalizedInput.includes("urgent"))) {
-                const emergency = chatbotKnowledge.personalInfo.emergencyContact;
+            if (
+                normalizedInput.includes("emergency") ||
+                (normalizedInput.includes("contact") &&
+                    normalizedInput.includes("urgent"))
+            ) {
+                const emergency =
+                    chatbotKnowledge.personalInfo.emergencyContact;
                 return `For emergency contact:
 - Name: ${emergency.name}
 - Relationship: ${emergency.relationship}
 - Address: ${emergency.address}
 - Phone: ${emergency.telephone}`;
             }
-            
-            // Personal information queries
             if (
-                normalizedInput.includes("nationality") || 
+                normalizedInput.includes("nationality") ||
                 normalizedInput.includes("citizen")
             ) {
                 return `I am a ${chatbotKnowledge.personalInfo.nationality} citizen by birth.`;
             }
-            
             if (normalizedInput.includes("religion")) {
                 return `My religion is ${chatbotKnowledge.personalInfo.religion}.`;
             }
-            
-            if (normalizedInput.includes("marital") || normalizedInput.includes("married") || normalizedInput.includes("single")) {
+            if (
+                normalizedInput.includes("marital") ||
+                normalizedInput.includes("married") ||
+                normalizedInput.includes("single")
+            ) {
                 return `My marital status is ${chatbotKnowledge.personalInfo.maritalStatus}.`;
             }
-            
-            if (normalizedInput.includes("gender") || normalizedInput.includes("sex") || normalizedInput.includes("male") || normalizedInput.includes("female")) {
+            if (
+                normalizedInput.includes("gender") ||
+                normalizedInput.includes("sex") ||
+                normalizedInput.includes("male") ||
+                normalizedInput.includes("female")
+            ) {
                 return `My gender is ${chatbotKnowledge.personalInfo.gender}.`;
             }
-            
-            if (normalizedInput.includes("profession") || normalizedInput.includes("occupation")) {
+            if (
+                normalizedInput.includes("profession") ||
+                normalizedInput.includes("occupation")
+            ) {
                 return `My current profession is ${chatbotKnowledge.personalInfo.profession}.`;
             }
-            
-            if (normalizedInput.includes("birth") && normalizedInput.includes("place")) {
+            if (
+                normalizedInput.includes("birth") &&
+                normalizedInput.includes("place")
+            ) {
                 return `I was born in ${chatbotKnowledge.personalInfo.placeOfBirth}.`;
             }
-            
-            if (normalizedInput.includes("full") && normalizedInput.includes("name")) {
+            if (
+                normalizedInput.includes("full") &&
+                normalizedInput.includes("name")
+            ) {
                 return `My full name is ${chatbotKnowledge.personalInfo.fullName}.`;
             }
-            
-            // Social media handling
             const socialPlatforms = {
-                "facebook": "Facebook",
-                "instagram": "Instagram",
-                "twitter": "Twitter", 
-                "linkedin": "LinkedIn",
-                "github": "GitHub",
-                "youtube": "YouTube",
-                "tiktok": "TikTok",
-                "snapchat": "Snapchat",
-                "pinterest": "Pinterest",
-                "behance": "Behance",
-                "dribbble": "Dribbble",
-                "medium": "Medium",
+                facebook: "Facebook",
+                instagram: "Instagram",
+                twitter: "Twitter",
+                linkedin: "LinkedIn",
+                github: "GitHub",
+                youtube: "YouTube",
+                tiktok: "TikTok",
+                snapchat: "Snapchat",
+                pinterest: "Pinterest",
+                behance: "Behance",
+                dribbble: "Dribbble",
+                medium: "Medium",
                 "dev.to": "Dev.to",
                 "stack overflow": "Stack Overflow",
-                "stackoverflow": "Stack Overflow",
-                "quora": "Quora",
-                "reddit": "Reddit",
-                "telegram": "Telegram",
-                "whatsapp": "WhatsApp",
-                "discord": "Discord",
-                "skype": "Skype",
-                "spotify": "Spotify",
-                "soundcloud": "SoundCloud",
-                "fiverr": "Fiverr",
-                "upwork": "Upwork",
-                "freelancer": "Freelancer",
-                "kaggle": "Kaggle",
-                "hackerrank": "HackerRank",
-                "leetcode": "LeetCode",
-                "codepen": "CodePen",
-                "tumblr": "Tumblr",
-                "vimeo": "Vimeo"
+                stackoverflow: "Stack Overflow",
+                quora: "Quora",
+                reddit: "Reddit",
+                telegram: "Telegram",
+                whatsapp: "WhatsApp",
+                discord: "Discord",
+                skype: "Skype",
+                spotify: "Spotify",
+                soundcloud: "SoundCloud",
+                fiverr: "Fiverr",
+                upwork: "Upwork",
+                freelancer: "Freelancer",
+                kaggle: "Kaggle",
+                hackerrank: "HackerRank",
+                leetcode: "LeetCode",
+                codepen: "CodePen",
+                tumblr: "Tumblr",
+                vimeo: "Vimeo",
             };
-            
-            // Check if any social media platform is mentioned
-            for (const [platform, displayName] of Object.entries(socialPlatforms)) {
+            for (const [platform, displayName] of Object.entries(
+                socialPlatforms
+            )) {
                 if (normalizedInput.includes(platform)) {
-                    const platformKey = platform === "stack overflow" ? "stackoverflow" : 
-                                        platform === "dev.to" ? "dev" : platform;
-                    
-                    if (chatbotKnowledge.personalInfo.socialLinks[platformKey]) {
+                    const platformKey =
+                        platform === "stack overflow"
+                            ? "stackoverflow"
+                            : platform === "dev.to"
+                            ? "dev"
+                            : platform;
+                    if (
+                        chatbotKnowledge.personalInfo.socialLinks[platformKey]
+                    ) {
                         return `Yes, you can find me on ${displayName} at ${chatbotKnowledge.personalInfo.socialLinks[platformKey]}. Feel free to connect with me there!`;
                     }
                 }
             }
-            
-            // General social media question
             if (
-                normalizedInput.includes("social") || 
+                normalizedInput.includes("social") ||
                 normalizedInput.includes("media") ||
                 normalizedInput.includes("platforms") ||
                 normalizedInput.includes("profiles") ||
                 normalizedInput.includes("accounts")
             ) {
-                const platforms = Object.values(socialPlatforms).slice(0, 6).join(", ") + ", and many more";
+                const platforms =
+                    Object.values(socialPlatforms).slice(0, 6).join(", ") +
+                    ", and many more";
                 return `I'm active on various social media platforms including ${platforms}. You can find links to all my profiles in the contact section of this website.`;
             }
-            
-            return `Hi, I'm ${chatbotKnowledge.personalInfo.fullName}, a ${calculateAge(chatbotKnowledge.personalInfo.dateOfBirth)}-year-old developer from ${
+            return `Hi, I'm ${
+                chatbotKnowledge.personalInfo.fullName
+            }, a ${calculateAge(
+                chatbotKnowledge.personalInfo.dateOfBirth
+            )}-year-old developer from ${
                 chatbotKnowledge.personalInfo.location
             }. In my free time, I enjoy ${getRandomItems(
                 chatbotKnowledge.personalInfo.hobbies,
@@ -1851,20 +1913,28 @@ I'm also active on various social media platforms including LinkedIn, GitHub, Fa
         };
         const getSkillsResponse = (input) => {
             const normalizedInput = input.toLowerCase();
-            
-            // Specific programming languages
             const programmingLanguages = [
-                "python", "javascript", "java", "c++", "c#", "sql", "html", "css", 
-                "php", "swift", "kotlin", "dart", "go"
+                "python",
+                "javascript",
+                "java",
+                "c++",
+                "c#",
+                "sql",
+                "html",
+                "css",
+                "php",
+                "swift",
+                "kotlin",
+                "dart",
+                "go",
             ];
-            
             for (const language of programmingLanguages) {
                 if (normalizedInput.includes(language)) {
-                    return `Yes, I'm proficient in ${language.toUpperCase()}. I've used it in several projects including ${getRandomItem(chatbotKnowledge.projects).name}.`;
+                    return `Yes, I'm proficient in ${language.toUpperCase()}. I've used it in several projects including ${
+                        getRandomItem(chatbotKnowledge.projects).name
+                    }.`;
                 }
             }
-            
-            // AI and Machine Learning skills
             if (
                 normalizedInput.includes("ai") ||
                 normalizedInput.includes("artificial intelligence") ||
@@ -1877,8 +1947,6 @@ I'm also active on various social media platforms including LinkedIn, GitHub, Fa
             ) {
                 return `For AI and Machine Learning, my skills include Machine Learning, Deep Learning with PyTorch, Generative AI using Amazon Bedrock, Computer Vision, Image Processing, and Data Visualization. My project THETAEnhancer+ demonstrates these skills where I developed an AI model for image restoration and enhancement.`;
             }
-            
-            // Web Development skills
             if (
                 normalizedInput.includes("web") ||
                 normalizedInput.includes("frontend") ||
@@ -1896,8 +1964,6 @@ I'm also active on various social media platforms including LinkedIn, GitHub, Fa
             ) {
                 return `My web development skills include Full-Stack Development using Node.js, React, Angular, Vue.js, Laravel, and WordPress. I'm proficient in building RESTful APIs, UI/UX Design, and implementing SEO best practices. My current internship at Akbor Skills Development Limited involves WordPress development.`;
             }
-            
-            // Game Development skills
             if (
                 normalizedInput.includes("game") ||
                 normalizedInput.includes("unreal") ||
@@ -1907,8 +1973,6 @@ I'm also active on various social media platforms including LinkedIn, GitHub, Fa
             ) {
                 return `For game development, I work with Unreal Engine and Unity. I have experience with game design principles, basic 3D modeling, and Python scripting for games. My Interactive 3D FPS Game project was created using Unreal Engine 5.`;
             }
-            
-            // Database skills
             if (
                 normalizedInput.includes("database") ||
                 normalizedInput.includes("sql") ||
@@ -1920,20 +1984,27 @@ I'm also active on various social media platforms including LinkedIn, GitHub, Fa
             ) {
                 return `I have experience with several database systems including PostgreSQL, MySQL, MariaDB, and MongoDB. I've used these in various projects for data storage, retrieval, and management.`;
             }
-            
-            // More general skill categories
             if (
                 normalizedInput.includes("technical") ||
                 normalizedInput.includes("programming") ||
                 normalizedInput.includes("coding")
             ) {
                 const skills = [
-                    "Python", "C++", "Java", "JavaScript", "C#", "SQL", 
-                    "HTML5", "CSS3", "PHP", "Swift", "React", "Node.js"
+                    "Python",
+                    "C++",
+                    "Java",
+                    "JavaScript",
+                    "C#",
+                    "SQL",
+                    "HTML5",
+                    "CSS3",
+                    "PHP",
+                    "Swift",
+                    "React",
+                    "Node.js",
                 ].join(", ");
                 return `For technical skills, I'm proficient in ${skills}, and more. I particularly enjoy working with Python for AI/ML projects and JavaScript for web development. Any specific technology you're interested in?`;
             }
-            
             if (
                 normalizedInput.includes("design") ||
                 normalizedInput.includes("ui") ||
@@ -1941,7 +2012,6 @@ I'm also active on various social media platforms including LinkedIn, GitHub, Fa
             ) {
                 return `In terms of design skills, I work with Adobe Creative Suite (Photoshop, Illustrator), Figma, UI/UX Design principles, and have experience in creating responsive web designs. My freelance work on Fiverr involves creating brand assets and UI/UX mockups for clients worldwide.`;
             }
-            
             if (
                 normalizedInput.includes("soft") ||
                 normalizedInput.includes("people") ||
@@ -1950,17 +2020,13 @@ I'm also active on various social media platforms including LinkedIn, GitHub, Fa
                 const skills = chatbotKnowledge.skills.soft.join(", ");
                 return `My soft skills include ${skills}. These are crucial for effective collaboration, project management, and leadership. My role as President of the Adamjee Eco Amica Club helped me develop many of these skills.`;
             }
-            
-            // Default response for general skills query
             return `My skills span several areas:
-
 1. Programming Languages: Python, JavaScript, Java, C++, C#, SQL, HTML/CSS, PHP
 2. AI & Machine Learning: PyTorch, Computer Vision, Data Visualization
 3. Web Development: React, Node.js, WordPress, UI/UX Design
 4. Game Development: Unreal Engine, Unity
 5. Tools & Platforms: Git, Docker, AWS, Adobe Creative Suite
 6. Soft Skills: Communication, Team Leadership, Project Management
-
 Would you like more specific information about any of these areas?`;
         };
         const getProjectResponse = (input) => {
@@ -2002,34 +2068,32 @@ Would you like more specific information about any of these areas?`;
         };
         const getEducationResponse = (input = "") => {
             const normalizedInput = input.toLowerCase();
-            
-            // Secondary School Certificate (SSC) specific response
             if (
                 normalizedInput.includes("ssc") ||
                 normalizedInput.includes("secondary") ||
                 normalizedInput.includes("high school") ||
                 normalizedInput.includes("adamjee")
             ) {
-                const sscEducation = chatbotKnowledge.education.find(ed => ed.type === 'SSC' || ed.school.includes('Adamjee'));
+                const sscEducation = chatbotKnowledge.education.find(
+                    (ed) => ed.type === "SSC" || ed.school.includes("Adamjee")
+                );
                 if (sscEducation) {
                     return `For my Secondary School Certificate (SSC), I studied at ${sscEducation.school} from ${sscEducation.period}. I achieved a GPA of ${sscEducation.gpa} with ${sscEducation.group} as my focus. During this time, I was also ${sscEducation.activities}.`;
                 }
             }
-            
-            // Higher Secondary Certificate (HSC) specific response
             if (
                 normalizedInput.includes("hsc") ||
                 normalizedInput.includes("higher secondary") ||
                 normalizedInput.includes("college") ||
                 normalizedInput.includes("intermediate")
             ) {
-                const hscEducation = chatbotKnowledge.education.find(ed => ed.type === 'HSC' || ed.level === 'college');
+                const hscEducation = chatbotKnowledge.education.find(
+                    (ed) => ed.type === "HSC" || ed.level === "college"
+                );
                 if (hscEducation) {
                     return `I completed my Higher Secondary Certificate (HSC) at ${hscEducation.school} from ${hscEducation.period}. My focus was ${hscEducation.group} and I achieved a GPA of ${hscEducation.gpa}. I was actively involved in ${hscEducation.activities}.`;
                 }
             }
-            
-            // University/Undergraduate specific response
             if (
                 normalizedInput.includes("university") ||
                 normalizedInput.includes("college") ||
@@ -2038,13 +2102,21 @@ Would you like more specific information about any of these areas?`;
                 normalizedInput.includes("bsc") ||
                 normalizedInput.includes("degree")
             ) {
-                const uniEducation = chatbotKnowledge.education.find(ed => ed.level === 'university' || ed.type === 'BSc');
+                const uniEducation = chatbotKnowledge.education.find(
+                    (ed) => ed.level === "university" || ed.type === "BSc"
+                );
                 if (uniEducation) {
-                    return `I'm pursuing my ${uniEducation.degree} in ${uniEducation.focus} at ${uniEducation.school} (${uniEducation.period}). My current CGPA is ${uniEducation.gpa}. I'm particularly interested in ${uniEducation.interests.join(", ")}.`;
+                    return `I'm pursuing my ${uniEducation.degree} in ${
+                        uniEducation.focus
+                    } at ${uniEducation.school} (${
+                        uniEducation.period
+                    }). My current CGPA is ${
+                        uniEducation.gpa
+                    }. I'm particularly interested in ${uniEducation.interests.join(
+                        ", "
+                    )}.`;
                 }
             }
-            
-            // Certification specific response
             if (
                 normalizedInput.includes("certification") ||
                 normalizedInput.includes("certificate") ||
@@ -2055,53 +2127,60 @@ Would you like more specific information about any of these areas?`;
                 normalizedInput.includes("professional")
             ) {
                 const certifications = chatbotKnowledge.education
-                    .filter(ed => ed.certification)
-                    .map(cert => `**${cert.certification}** (${cert.provider}, ${cert.year})`);
-                
+                    .filter((ed) => ed.certification)
+                    .map(
+                        (cert) =>
+                            `**${cert.certification}** (${cert.provider}, ${cert.year})`
+                    );
                 if (certifications.length > 0) {
-                    return `I've completed several professional certifications, including: ${certifications.join(", ")}. These certifications have helped me develop specialized skills that complement my formal education.`;
+                    return `I've completed several professional certifications, including: ${certifications.join(
+                        ", "
+                    )}. These certifications have helped me develop specialized skills that complement my formal education.`;
                 }
             }
-            
-            // Default comprehensive education response
             let response = "My educational background includes:";
-            
-            // Find degree info, handling possible missing data safely
             const education = chatbotKnowledge.education || [];
-            const latestDegree = education.find(ed => ed.level === 'university' || ed.type === 'BSc');
+            const latestDegree = education.find(
+                (ed) => ed.level === "university" || ed.type === "BSc"
+            );
             if (latestDegree) {
-                response += `\n\n1. ${latestDegree.degree || "Bachelor's degree"} in ${latestDegree.focus || "Computer Science"} from ${latestDegree.school || "University"} (${latestDegree.period || "2019-Present"})`;
+                response += `\n\n1. ${
+                    latestDegree.degree || "Bachelor's degree"
+                } in ${latestDegree.focus || "Computer Science"} from ${
+                    latestDegree.school || "University"
+                } (${latestDegree.period || "2019-Present"})`;
             }
-            
-            const secondaryEd = education.find(ed => ed.type === 'HSC' || ed.level === 'college');
+            const secondaryEd = education.find(
+                (ed) => ed.type === "HSC" || ed.level === "college"
+            );
             if (secondaryEd) {
-                response += `\n2. Higher Secondary Certificate from ${secondaryEd.school || "College"} (${secondaryEd.year || secondaryEd.period || "2018-2020"})`;
+                response += `\n2. Higher Secondary Certificate from ${
+                    secondaryEd.school || "College"
+                } (${secondaryEd.year || secondaryEd.period || "2018-2020"})`;
             }
-            
-            const primaryEd = education.find(ed => ed.type === 'SSC' || ed.school?.includes('Adamjee'));
+            const primaryEd = education.find(
+                (ed) => ed.type === "SSC" || ed.school?.includes("Adamjee")
+            );
             if (primaryEd) {
-                response += `\n3. Secondary School Certificate from ${primaryEd.school || "High School"} (${primaryEd.year || primaryEd.period || "2016-2018"})`;
+                response += `\n3. Secondary School Certificate from ${
+                    primaryEd.school || "High School"
+                } (${primaryEd.year || primaryEd.period || "2016-2018"})`;
             }
-            
             const certs = education
                 .filter((ed) => ed.certification)
                 .slice(0, 3);
-            
             if (certs && certs.length > 0) {
                 response += `\n\nI also hold professional certifications including:`;
-                certs.forEach(cert => {
+                certs.forEach((cert) => {
                     if (cert && cert.certification) {
                         response += `\n- ${cert.certification}`;
                     }
                 });
             }
-            
             return response;
         };
         const getExperienceResponse = (input = "") => {
             const normalizedInput = input.toLowerCase();
-            
-            // Current job information
             if (
                 normalizedInput.includes("current") ||
                 normalizedInput.includes("now") ||
@@ -2111,15 +2190,11 @@ Would you like more specific information about any of these areas?`;
             ) {
                 const currentJob = chatbotKnowledge.experience[0];
                 return `Currently, I'm working as a **${currentJob.role}** at ${currentJob.company} (${currentJob.period}). My key responsibilities include:
-                
 1. ${currentJob.responsibilities[0]}
 2. ${currentJob.responsibilities[1]}
 3. ${currentJob.responsibilities[2]}
-
 The internship has provided me with excellent mentorship and real-world development experience with WordPress sites.`;
             }
-            
-            // Freelance work information
             if (
                 normalizedInput.includes("freelance") ||
                 normalizedInput.includes("fiverr") ||
@@ -2127,13 +2202,21 @@ The internship has provided me with excellent mentorship and real-world developm
                 normalizedInput.includes("self-employed") ||
                 normalizedInput.includes("designer")
             ) {
-                const freelanceJob = chatbotKnowledge.experience.find(job => job.role.includes("Designer") || job.company.includes("Fiverr"));
+                const freelanceJob = chatbotKnowledge.experience.find(
+                    (job) =>
+                        job.role.includes("Designer") ||
+                        job.company.includes("Fiverr")
+                );
                 if (freelanceJob) {
-                    return `I've worked as a ${freelanceJob.role} through ${freelanceJob.company} since ${freelanceJob.period}. This has involved ${freelanceJob.responsibilities.join(", ")}. My freelance work has given me exposure to a diverse range of clients and projects from around the world.`;
+                    return `I've worked as a ${freelanceJob.role} through ${
+                        freelanceJob.company
+                    } since ${
+                        freelanceJob.period
+                    }. This has involved ${freelanceJob.responsibilities.join(
+                        ", "
+                    )}. My freelance work has given me exposure to a diverse range of clients and projects from around the world.`;
                 }
             }
-            
-            // Leadership experience
             if (
                 normalizedInput.includes("leadership") ||
                 normalizedInput.includes("leader") ||
@@ -2141,13 +2224,21 @@ The internship has provided me with excellent mentorship and real-world developm
                 normalizedInput.includes("club") ||
                 normalizedInput.includes("volunteer")
             ) {
-                const leadershipRole = chatbotKnowledge.experience.find(job => job.role.includes("President") || job.type === "leadership");
+                const leadershipRole = chatbotKnowledge.experience.find(
+                    (job) =>
+                        job.role.includes("President") ||
+                        job.type === "leadership"
+                );
                 if (leadershipRole) {
-                    return `I served as ${leadershipRole.role} at ${leadershipRole.company} during ${leadershipRole.period}. This leadership position involved ${leadershipRole.responsibilities.join(", ")}. This experience helped me develop strong organizational, team management, and public speaking skills.`;
+                    return `I served as ${leadershipRole.role} at ${
+                        leadershipRole.company
+                    } during ${
+                        leadershipRole.period
+                    }. This leadership position involved ${leadershipRole.responsibilities.join(
+                        ", "
+                    )}. This experience helped me develop strong organizational, team management, and public speaking skills.`;
                 }
             }
-            
-            // Technical skills gained
             if (
                 normalizedInput.includes("skill") ||
                 normalizedInput.includes("technical") ||
@@ -2155,34 +2246,25 @@ The internship has provided me with excellent mentorship and real-world developm
                 normalizedInput.includes("gain")
             ) {
                 return `Through my work experiences, I've gained and applied several key technical skills:
-
 1. Web Development: WordPress theme customization, plugin development, PHP
 2. Design: UI/UX principles, responsive design, Adobe XD, Figma, Photoshop
 3. Project Management: Client communication, requirement analysis, timely delivery
 4. Team Collaboration: Working with developers, designers, and content creators
-
 Each role has contributed to expanding my professional toolkit in unique ways.`;
             }
-            
-            // Comprehensive experience summary (default)
             const workExp = chatbotKnowledge.experience;
             let response = `My professional experience includes:
-
 1. **${workExp[0].role}** at ${workExp[0].company} (${workExp[0].period})
    - ${workExp[0].responsibilities[0]}
    - ${workExp[0].responsibilities[1]}
-
 2. **${workExp[1].role}** at ${workExp[1].company} (${workExp[1].period})
    - ${workExp[1].responsibilities[0]}
    - ${workExp[1].responsibilities[1]}`;
-            
             if (workExp.length > 2) {
                 response += `
-
 3. **${workExp[2].role}** at ${workExp[2].company} (${workExp[2].period})
    - ${workExp[2].responsibilities[0]}`;
             }
-            
             return response;
         };
         const getRandomPhrase = (category) => {
@@ -2431,218 +2513,170 @@ Each role has contributed to expanding my professional toolkit in unique ways.`;
                 type();
             });
         };
-        // Enhanced message processing with typing indicators, analysis, and advanced AI-like behavior
         const processInput = () => {
             const userInput = chatbotInput.value.trim();
             if (userInput === "") return;
-            
-            // Store when the user sent their message (for realistic timing)
             const messageTimestamp = new Date();
-            
-            // Add user message to chat
             addMessage(userInput, true);
             chatHistory.push({
                 role: "user",
                 content: userInput,
-                timestamp: messageTimestamp
+                timestamp: messageTimestamp,
             });
-            
-            // Clear input and show typing indicator
             chatbotInput.value = "";
             chatbotInput.disabled = true;
             chatbotSend.disabled = true;
-            
-            // Show "typing" indicator
             showTypingIndicator();
-            
-            // Analyze message complexity to determine response time (longer for complex queries)
             const messageComplexity = analyzeMessageComplexity(userInput);
-            const baseResponseTime = 1000; // Base response time in milliseconds
-            
-            // Calculate a more human-like variable response time
-            // Factors: message length, complexity, and a touch of randomness
-            const variableResponseTime = calculateResponseTime(userInput, messageComplexity);
-            
-            // Process the response with a more realistic delay
+            const baseResponseTime = 1000; 
+            const variableResponseTime = calculateResponseTime(
+                userInput,
+                messageComplexity
+            );
             setTimeout(() => {
-                // Generate the chatbot's response
                 const { response, keywords } = generateResponse(userInput);
-                
-                // Calculate typing time based on response length
-                const typingSpeed = 30 + Math.floor(Math.random() * 10); // Characters per second
-                const typingTime = Math.min(2000, response.length * 1000 / typingSpeed);
-                
-                // Hide the typing indicator after the "thinking" period
+                const typingSpeed = 30 + Math.floor(Math.random() * 10); 
+                const typingTime = Math.min(
+                    2000,
+                    (response.length * 1000) / typingSpeed
+                );
                 hideTypingIndicator();
-                
-                // Simulate typing and gradual display of the message
                 typeResponse(response, keywords, typingTime);
-                
-                // Update chat history
                 chatHistory.push({
                     role: "assistant",
                     content: response,
-                    timestamp: new Date()
+                    timestamp: new Date(),
                 });
-                
-                // Re-enable input after response is complete
                 setTimeout(() => {
                     chatbotInput.disabled = false;
                     chatbotSend.disabled = false;
                     chatbotInput.focus();
-                    
-                    // Update suggestion chips with a slight delay for better UX flow
                     setTimeout(updateSuggestionChips, 1000);
                 }, typingTime + 200);
-                
             }, variableResponseTime);
         };
-        
-        // Analyze message complexity for more realistic response timing
         const analyzeMessageComplexity = (message) => {
-            // Count words as a basic complexity measure
-            const wordCount = message.split(/\s+/).filter(w => w.length > 0).length;
-            
-            // Check for question marks and complex sentence structures
+            const wordCount = message.split(/\s+/).filter((w) => w.length > 0)
+                .length;
             const questionCount = (message.match(/\?/g) || []).length;
-            const complexSentenceMarkers = (message.match(/because|therefore|however|although|despite|while|if|when|how|why|what|where/gi) || []).length;
-            
-            // Check for specific topics that would require "more thinking"
+            const complexSentenceMarkers = (
+                message.match(
+                    /because|therefore|however|although|despite|while|if|when|how|why|what|where/gi
+                ) || []
+            ).length;
             const complexTopics = [
-                "compare", "explain", "difference", "opinion", "best", "recommend", 
-                "versus", "vs", "think", "feel", "believe", "complex", "difficult",
-                "challenge", "problem", "architecture", "design", "implementation"
+                "compare",
+                "explain",
+                "difference",
+                "opinion",
+                "best",
+                "recommend",
+                "versus",
+                "vs",
+                "think",
+                "feel",
+                "believe",
+                "complex",
+                "difficult",
+                "challenge",
+                "problem",
+                "architecture",
+                "design",
+                "implementation",
             ];
-            
-            const complexTopicMatches = complexTopics.filter(topic => 
-                message.toLowerCase().includes(topic)).length;
-                
-            // Calculate overall complexity (0-10 scale)
-            let complexity = Math.min(10, 
-                (wordCount / 5) +         // Length factor
-                (questionCount * 2) +     // Question complexity
-                (complexSentenceMarkers) + // Sentence structure complexity
-                (complexTopicMatches * 1.5) // Topic complexity
+            const complexTopicMatches = complexTopics.filter((topic) =>
+                message.toLowerCase().includes(topic)
+            ).length;
+            let complexity = Math.min(
+                10,
+                wordCount / 5 + 
+                    questionCount * 2 + 
+                    complexSentenceMarkers + 
+                    complexTopicMatches * 1.5 
             );
-            
             return Math.max(1, Math.min(10, Math.floor(complexity)));
         };
-        
-        // Calculate a human-like response time based on message characteristics
         const calculateResponseTime = (message, complexity) => {
-            // Base thinking time (milliseconds)
             const baseThinkingTime = 800;
-            
-            // Add thinking time based on complexity (more complex = more "thinking" time)
             const complexityFactor = complexity * 300;
-            
-            // Add a natural variability
             const randomVariation = Math.floor(Math.random() * 500);
-            
-            // Calculate total response time
-            const totalResponseTime = baseThinkingTime + complexityFactor + randomVariation;
-            
-            // Cap response time to seem realistic but not frustrating
+            const totalResponseTime =
+                baseThinkingTime + complexityFactor + randomVariation;
             return Math.min(5000, totalResponseTime);
         };
-        
-        // Show typing indicator
         const showTypingIndicator = () => {
-            // Create typing indicator if it doesn't exist
-            if (!document.getElementById('chatbot-typing-indicator')) {
-                // Create main container
-                const typingIndicator = document.createElement('div');
-                typingIndicator.id = 'chatbot-typing-indicator';
-                typingIndicator.className = 'bot-message typing-indicator';
-                
-                // Create avatar container
-                const avatarContainer = document.createElement('div');
-                avatarContainer.className = 'message-avatar';
-                
-                // Create avatar image
-                const avatarImg = document.createElement('img');
+            if (!document.getElementById("chatbot-typing-indicator")) {
+                const typingIndicator = document.createElement("div");
+                typingIndicator.id = "chatbot-typing-indicator";
+                typingIndicator.className = "bot-message typing-indicator";
+                const avatarContainer = document.createElement("div");
+                avatarContainer.className = "message-avatar";
+                const avatarImg = document.createElement("img");
                 avatarImg.src = logoPath;
                 avatarImg.alt = "Kholipha";
                 avatarImg.loading = "lazy";
                 avatarContainer.appendChild(avatarImg);
-                
-                // Create content container
-                const contentContainer = document.createElement('div');
-                contentContainer.className = 'message-content';
-                
-                // Create typing dots container
-                const dotsContainer = document.createElement('div');
-                dotsContainer.className = 'typing-dots';
-                
-                // Add the three dots
+                const contentContainer = document.createElement("div");
+                contentContainer.className = "message-content";
+                const dotsContainer = document.createElement("div");
+                dotsContainer.className = "typing-dots";
                 for (let i = 0; i < 3; i++) {
-                    const dot = document.createElement('span');
-                    dot.className = 'dot';
+                    const dot = document.createElement("span");
+                    dot.className = "dot";
                     dotsContainer.appendChild(dot);
                 }
-                
-                // Assemble the elements
                 contentContainer.appendChild(dotsContainer);
                 typingIndicator.appendChild(avatarContainer);
                 typingIndicator.appendChild(contentContainer);
-                
-                // Add to chat
                 chatbotMessages.appendChild(typingIndicator);
                 chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
             }
         };
-        
-        // Hide typing indicator
         const hideTypingIndicator = () => {
-            const typingIndicator = document.getElementById('chatbot-typing-indicator');
+            const typingIndicator = document.getElementById(
+                "chatbot-typing-indicator"
+            );
             if (typingIndicator) {
                 typingIndicator.remove();
             }
         };
-        
-        // Simulate gradual typing of the response
         const typeResponse = (response, keywords, typingTime) => {
-            // Create a message without the typing effect first
-            const { messageContainer, contentContainer } = addMessage(response, false, keywords);
-            
-            // We'll use the existing message-content element instead of looking for message-text
+            const { messageContainer, contentContainer } = addMessage(
+                response,
+                false,
+                keywords
+            );
             if (!contentContainer) {
                 console.error("Content container not found for typing effect");
                 return;
             }
-            
-            // Store the full message text, making sure it's formatted properly
             const fullText = formatMarkdown(response);
-            
-            // Start with empty text and gradually reveal it
-            contentContainer.innerHTML = '';
+            contentContainer.innerHTML = "";
             const totalChars = fullText.length;
-            
-            // Calculate typing speed (characters per frame)
             const fps = 60;
             const duration = typingTime;
-            const totalFrames = duration / 1000 * fps;
+            const totalFrames = (duration / 1000) * fps;
             const charsPerFrame = totalChars / totalFrames;
-            
             let charIndex = 0;
             let frameCount = 0;
-            
             const typeChar = () => {
                 frameCount++;
-                const nextCharIndex = Math.min(totalChars, Math.floor(frameCount * charsPerFrame));
-                
+                const nextCharIndex = Math.min(
+                    totalChars,
+                    Math.floor(frameCount * charsPerFrame)
+                );
                 if (nextCharIndex > charIndex) {
-                    contentContainer.innerHTML = fullText.substring(0, nextCharIndex);
+                    contentContainer.innerHTML = fullText.substring(
+                        0,
+                        nextCharIndex
+                    );
                     charIndex = nextCharIndex;
                     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
                 }
-                
                 if (charIndex < totalChars) {
                     requestAnimationFrame(typeChar);
                 }
             };
-            
-            // Start the typing animation
             requestAnimationFrame(typeChar);
         };
         const toggleSettings = () => {

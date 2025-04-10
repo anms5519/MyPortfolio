@@ -91,74 +91,74 @@ function createTrainingModal(title, description, date, iconClass) {
   const modal = document.createElement("div");
   modal.className = "training-modal";
   modal.innerHTML = `
-  <div class="training-modal-content">
-    <button class="modal-close-btn">&times;</button>
-    <div class="training-modal-header">
-      <h3>${title}</h3>
-      <div class="training-modal-provider">
-        <div class="modal-provider-logo">
-          <i class="${iconClass}"></i>
-        </div>
-        <div class="modal-provider-info">
-          <div class="modal-provider-name">Professional Training</div>
-          <div class="modal-training-date">${date}</div>
-        </div>
+<div class="training-modal-content">
+  <button class="modal-close-btn">&times;</button>
+  <div class="training-modal-header">
+    <h3>${title}</h3>
+    <div class="training-modal-provider">
+      <div class="modal-provider-logo">
+        <i class="${iconClass}"></i>
       </div>
-      <div class="training-modal-details">
-        <div class="modal-training-detail">
-          <i class="fas fa-calendar-alt"></i>
-          <span>${date}</span>
-        </div>
-        <div class="modal-training-detail">
-          <i class="fas fa-clock"></i>
-          <span>40 Hours</span>
-        </div>
-        <div class="modal-training-detail">
-          <i class="fas fa-signal"></i>
-          <span>Intermediate Level</span>
-        </div>
+      <div class="modal-provider-info">
+        <div class="modal-provider-name">Professional Training</div>
+        <div class="modal-training-date">${date}</div>
       </div>
     </div>
-    <div class="training-modal-body">
-      <h4>About This Training</h4>
-      <p>${description}</p>
-      <p>This comprehensive training program combines theoretical knowledge with practical application, providing participants with the skills needed to excel in real-world scenarios.</p>
-    </div>
-    <div class="training-topics">
-      <h4 class="topics-title">Topics Covered</h4>
-      <div class="topics-list">
-        ${topics
-            .map(
-                (topic) => `
-          <div class="topic-card">
-            <h5>${topic}</h5>
-            <p>In-depth exploration with practical examples and guided exercises.</p>
-          </div>
-        `
-            )
-            .join("")}
+    <div class="training-modal-details">
+      <div class="modal-training-detail">
+        <i class="fas fa-calendar-alt"></i>
+        <span>${date}</span>
       </div>
-    </div>
-    <div class="training-modal-skills">
-      <h4 class="skills-title">Skills Gained</h4>
-      <div class="modal-skills-list">
-        ${skills
-            .map((skill) => `<span class="modal-skill">${skill}</span>`)
-            .join("")}
+      <div class="modal-training-detail">
+        <i class="fas fa-clock"></i>
+        <span>40 Hours</span>
       </div>
-    </div>
-    <div class="training-modal-footer">
-      <button class="training-action-btn">
-        <i class="fas fa-certificate"></i>
-        <span>View Certificate</span>
-      </button>
-      <div class="training-share">
-        <span class="training-share-btn" aria-label="Share on LinkedIn"><i class="fab fa-linkedin"></i></span>
-        <span class="training-share-btn" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></span>
-        <span class="training-share-btn" aria-label="Share via Email"><i class="far fa-envelope"></i></span>
+      <div class="modal-training-detail">
+        <i class="fas fa-signal"></i>
+        <span>Intermediate Level</span>
       </div>
     </div>
   </div>
+  <div class="training-modal-body">
+    <h4>About This Training</h4>
+    <p>${description}</p>
+    <p>This comprehensive training program combines theoretical knowledge with practical application, providing participants with the skills needed to excel in real-world scenarios.</p>
+  </div>
+  <div class="training-topics">
+    <h4 class="topics-title">Topics Covered</h4>
+    <div class="topics-list">
+      ${topics
+          .map(
+              (topic) => `
+        <div class="topic-card">
+          <h5>${topic}</h5>
+          <p>In-depth exploration with practical examples and guided exercises.</p>
+        </div>
+      `
+          )
+          .join("")}
+    </div>
+  </div>
+  <div class="training-modal-skills">
+    <h4 class="skills-title">Skills Gained</h4>
+    <div class="modal-skills-list">
+      ${skills
+          .map((skill) => `<span class="modal-skill">${skill}</span>`)
+          .join("")}
+    </div>
+  </div>
+  <div class="training-modal-footer">
+    <button class="training-action-btn">
+      <i class="fas fa-certificate"></i>
+      <span>View Certificate</span>
+    </button>
+    <div class="training-share">
+      <span class="training-share-btn" aria-label="Share on LinkedIn"><i class="fab fa-linkedin"></i></span>
+      <span class="training-share-btn" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></span>
+      <span class="training-share-btn" aria-label="Share via Email"><i class="far fa-envelope"></i></span>
+    </div>
+  </div>
+</div>
 `;
   document.body.appendChild(modal);
   setTimeout(() => {
@@ -210,14 +210,14 @@ function applyCardEffects() {
               this.appendChild(shine);
           }
           shine.style.backgroundImage = `
-      radial-gradient(
-        circle at ${(x / cardRect.width) * 100}% ${
+    radial-gradient(
+      circle at ${(x / cardRect.width) * 100}% ${
               (y / cardRect.height) * 100
           }%, 
-        rgba(255, 255, 255, 0.4), 
-        transparent
-      )
-    `;
+      rgba(255, 255, 255, 0.4), 
+      transparent
+    )
+  `;
       });
       card.addEventListener("mouseleave", function () {
           this.style.transform =

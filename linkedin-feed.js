@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                     <div class="feed-content">
                         <div class="linkedin-posts">
-                            <!-- Placeholder for LinkedIn posts -->
                             <div class="linkedin-post">
                                 <div class="post-header">
                                     <img src="logo.png" alt="Kholipha Ahmmad Al-Amin" class="post-author-img">

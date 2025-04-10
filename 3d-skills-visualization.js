@@ -1,16 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     initSkillsVisualization();
 });
-
-/**
- * Initialize the ultra-premium 3D skills visualization
- * Creates an immersive, interactive galaxy of skills with advanced visual effects
- */
 function initSkillsVisualization() {
     const skillsSection = document.getElementById("skills");
     if (!skillsSection) return;
-    
-    // Add custom styles to head for animations
     const styleSheet = document.createElement("style");
     styleSheet.textContent = `
         @keyframes pulse-glow {
@@ -18,18 +11,15 @@ function initSkillsVisualization() {
             50% { box-shadow: 0 0 15px rgba(142, 68, 255, 0.9); }
             100% { box-shadow: 0 0 5px rgba(142, 68, 255, 0.6); }
         }
-        
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
-        
         @keyframes shimmer {
             0% { background-position: -100% 0; }
             100% { background-position: 200% 0; }
         }
-        
         .ultra-shimmer {
             background: linear-gradient(90deg, 
                 rgba(255,255,255,0) 0%, 
@@ -39,11 +29,9 @@ function initSkillsVisualization() {
             background-size: 200% 100%;
             animation: shimmer 3s infinite;
         }
-        
         .floating-element {
             animation: float 6s ease-in-out infinite;
         }
-        
         .premium-button {
             position: relative;
             overflow: hidden;
@@ -51,13 +39,11 @@ function initSkillsVisualization() {
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
         .premium-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 7px 14px rgba(50, 50, 93, 0.25), 
                         0 3px 6px rgba(0, 0, 0, 0.2);
         }
-        
         .premium-button::after {
             content: '';
             position: absolute;
@@ -74,26 +60,21 @@ function initSkillsVisualization() {
             transform: rotate(30deg);
             transition: transform 0.6s;
         }
-        
         .premium-button:hover::after {
             transform: rotate(30deg) translate(30%, 30%);
         }
-        
         .premium-button.active {
             animation: pulse-glow 2s infinite;
         }
-        
         .premium-canvas {
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(5px);
             transition: all 0.5s ease;
         }
-        
         .premium-canvas:hover {
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
-        
         .visualization-mode-badge {
             position: absolute;
             top: 15px;
@@ -109,7 +90,6 @@ function initSkillsVisualization() {
             align-items: center;
             gap: 5px;
         }
-        
         .premium-skill-card {
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
@@ -117,13 +97,11 @@ function initSkillsVisualization() {
             border-radius: 10px;
             overflow: hidden;
         }
-        
         .skill-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 15px;
         }
-        
         .stat-item {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
@@ -135,12 +113,10 @@ function initSkillsVisualization() {
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
         }
-        
         .stat-item:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
         }
-        
         .stat-icon {
             background: linear-gradient(135deg, #6e8efb, #a777e3);
             width: 32px;
@@ -152,7 +128,6 @@ function initSkillsVisualization() {
             color: white;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
         }
-        
         .masterpiece-title {
             background: linear-gradient(90deg, #FF8A00, #e52e71, #a36bdd, #4a9feb);
             background-size: 300% 300%;
@@ -162,25 +137,20 @@ function initSkillsVisualization() {
             font-weight: 800;
             letter-spacing: 1px;
         }
-        
         @keyframes gradient-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
         .legendary-level {
             background: linear-gradient(90deg, #FF8A00, #e52e71);
         }
-        
         .expert-level {
             background: linear-gradient(90deg, #4776E6, #8E54E9);
         }
-        
         .advanced-level {
             background: linear-gradient(90deg, #00c6ff, #0072ff);
         }
-        
         .progress-glow {
             position: absolute;
             top: 0;
@@ -192,7 +162,6 @@ function initSkillsVisualization() {
         }
     `;
     document.head.appendChild(styleSheet);
-    
     const visualContainer = document.createElement("div");
     visualContainer.className = "skills-3d-container";
     visualContainer.innerHTML = `
@@ -225,7 +194,6 @@ function initSkillsVisualization() {
                 </button>
             </div>
         </div>
-        
         <div class="visualization-container" style="position: relative;">
             <div class="visualization-mode-badge">
                 <i class="fas fa-eye"></i>
@@ -239,7 +207,6 @@ function initSkillsVisualization() {
             </div>
             <div id="node-tooltip" style="position: absolute; display: none; background: rgba(10,10,30,0.8); color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; pointer-events: none; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); z-index: 100; max-width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);"></div>
         </div>
-        
         <div class="visualization-info premium-info" style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px;">
             <div class="control-panel" style="background: rgba(20, 20, 40, 0.7); backdrop-filter: blur(10px); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border: 1px solid rgba(255, 255, 255, 0.05);">
                 <div class="skill-search premium-search" style="flex: 1; min-width: 250px; position: relative;">
@@ -251,7 +218,6 @@ function initSkillsVisualization() {
                         <i class="fas fa-bolt"></i>
                     </button>
                 </div>
-                
                 <div class="view-controls" style="display: flex; gap: 15px; align-items: center;">
                     <div class="toggle-control" style="display: flex; align-items: center; gap: 8px;">
                         <label class="toggle-label" style="font-size: 14px; color: white;">Show Labels</label>
@@ -262,7 +228,6 @@ function initSkillsVisualization() {
                             </label>
                         </div>
                     </div>
-                    
                     <div class="toggle-control" style="display: flex; align-items: center; gap: 8px;">
                         <label class="toggle-label" style="font-size: 14px; color: white;">Auto-Rotate</label>
                         <div class="toggle-switch">
@@ -272,14 +237,12 @@ function initSkillsVisualization() {
                             </label>
                         </div>
                     </div>
-                    
                     <button id="debug-stats-toggle" class="premium-button" style="padding: 5px 12px; border-radius: 20px; background: rgba(255,255,255,0.1); color: white; border: none; font-size: 12px; display: flex; align-items: center; gap: 5px;">
                         <i class="fas fa-chart-line"></i>
                         <span>Stats</span>
                     </button>
                 </div>
             </div>
-            
             <div class="current-skill-info premium-skill-card" style="background: rgba(20, 20, 40, 0.7); backdrop-filter: blur(10px); padding: 0; overflow: hidden;">
                 <div class="skill-card-header" style="background: linear-gradient(135deg, #4776E6, #8E54E9); padding: 15px 20px; display: flex; align-items: center; gap: 10px;">
                     <i class="fas fa-certificate" style="color: white; font-size: 18px;"></i>
@@ -304,15 +267,10 @@ function initSkillsVisualization() {
         skillsSection.appendChild(visualContainer);
     }
     initThreeJsVisualization();
-    // Setup premium visualization controls with enhanced interactions
     const visControls = document.querySelectorAll(".vis-control");
-    
-    // Create a global camera access for visualization transitions
     window.skillVisualizationCamera = null;
-    
     visControls.forEach((control) => {
         control.addEventListener("click", function () {
-            // Visual feedback on button click
             const ripple = document.createElement("span");
             ripple.classList.add("button-ripple");
             ripple.style.cssText = `
@@ -328,99 +286,66 @@ function initSkillsVisualization() {
                 pointer-events: none;
             `;
             this.appendChild(ripple);
-            
-            // Animate ripple
             setTimeout(() => {
-                ripple.style.width = '200%';
-                ripple.style.height = '200%';
-                ripple.style.opacity = '0';
+                ripple.style.width = "200%";
+                ripple.style.height = "200%";
+                ripple.style.opacity = "0";
             }, 10);
-            
-            // Clean up ripple
             setTimeout(() => {
                 ripple.remove();
             }, 500);
-            
-            // Update active button state
             visControls.forEach((c) => c.classList.remove("active"));
             this.classList.add("active");
-            
-            // Change visualization with subtle transition effect
             const view = this.getAttribute("data-view");
-            
-            // Simple change view if camera or TWEEN not available
             changeVisualizationView(view);
         });
     });
-    
-    // Set initial active button
     if (visControls.length > 0) {
         visControls[0].classList.add("active");
     }
-    
-    // Enhance search functionality with premium effects
     const searchInput = document.getElementById("skill-search-input");
     const searchButton = document.getElementById("skill-search-btn");
-    
     if (searchInput && searchButton) {
-        // Add focus effects
-        searchInput.addEventListener("focus", function() {
-            this.parentElement.style.boxShadow = "0 0 0 2px rgba(142, 84, 233, 0.4)";
+        searchInput.addEventListener("focus", function () {
+            this.parentElement.style.boxShadow =
+                "0 0 0 2px rgba(142, 84, 233, 0.4)";
         });
-        
-        searchInput.addEventListener("blur", function() {
+        searchInput.addEventListener("blur", function () {
             this.parentElement.style.boxShadow = "none";
         });
-        
-        // Add search button hover effect
-        searchButton.addEventListener("mouseenter", function() {
+        searchButton.addEventListener("mouseenter", function () {
             this.style.transform = "translateY(-2px)";
         });
-        
-        searchButton.addEventListener("mouseleave", function() {
+        searchButton.addEventListener("mouseleave", function () {
             this.style.transform = "translateY(0)";
         });
-        
-        // Add search functionality
-        searchButton.addEventListener("click", function() {
-            // Button press animation
+        searchButton.addEventListener("click", function () {
             this.style.transform = "scale(0.95)";
             setTimeout(() => {
                 this.style.transform = "scale(1)";
             }, 100);
-            
-            // Perform search with visual feedback
             const query = searchInput.value;
             if (query.trim()) {
-                // Show loading state
-                searchButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                
-                // Delayed search for better UX
+                searchButton.innerHTML =
+                    '<i class="fas fa-spinner fa-spin"></i>';
                 setTimeout(() => {
                     searchSkill(query);
-                    // Reset button
                     searchButton.innerHTML = '<i class="fas fa-bolt"></i>';
                 }, 300);
             } else {
-                // Shake animation for empty query
-                searchInput.style.animation = "shake 0.5s cubic-bezier(.36,.07,.19,.97) both";
+                searchInput.style.animation =
+                    "shake 0.5s cubic-bezier(.36,.07,.19,.97) both";
                 setTimeout(() => {
                     searchInput.style.animation = "";
                 }, 500);
             }
         });
-        
-        // Add keyboard shortcut
-        searchInput.addEventListener("keyup", function(e) {
+        searchInput.addEventListener("keyup", function (e) {
             if (e.key === "Enter") {
                 searchButton.click();
             }
-            
-            // Live search suggestions could be added here
         });
-        
-        // Add shake animation definition
-        const styleElement = document.createElement('style');
+        const styleElement = document.createElement("style");
         styleElement.textContent = `
             @keyframes shake {
                 10%, 90% { transform: translate3d(-1px, 0, 0); }
@@ -431,38 +356,29 @@ function initSkillsVisualization() {
         `;
         document.head.appendChild(styleElement);
     }
-    
-    // Create a global tooltip handler that will be initialized after renderer is created
-    window.initSkillTooltip = function(renderer, camera, nodes, clusterColors) {
+    window.initSkillTooltip = function (
+        renderer,
+        camera,
+        nodes,
+        clusterColors
+    ) {
         const tooltip = document.getElementById("node-tooltip");
         if (!tooltip || !renderer || !camera || !nodes) return;
-        
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
-        
         let lastHoveredNode = null;
-        renderer.domElement.addEventListener("mousemove", function(event) {
-            // Update mouse position for raycasting
+        renderer.domElement.addEventListener("mousemove", function (event) {
             const rect = renderer.domElement.getBoundingClientRect();
             mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
             mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-            
-            // Cast ray from camera to find intersected objects
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(nodes);
-            
             if (intersects.length > 0) {
                 const hoveredNode = intersects[0].object;
-                
-                // Only update tooltip if we're hovering a different node
                 if (hoveredNode !== lastHoveredNode) {
                     const nodeData = hoveredNode.userData;
-                    
-                    // Get node color for styling tooltip with fallback
                     const color = clusterColors[nodeData.cluster] || 0xffffff;
-                    const colorHex = '#' + color.toString(16).padStart(6, '0');
-                    
-                    // Set tooltip content
+                    const colorHex = "#" + color.toString(16).padStart(6, "0");
                     tooltip.innerHTML = `
                         <div style="display: flex; align-items: center; margin-bottom: 5px;">
                             <div style="width: 8px; height: 8px; border-radius: 50%; background: ${colorHex}; margin-right: 6px;"></div>
@@ -470,114 +386,90 @@ function initSkillsVisualization() {
                         </div>
                         <div style="font-size: 12px; opacity: 0.8;">Proficiency: ${nodeData.level}%</div>
                     `;
-                    
-                    // Show tooltip at mouse position with small offset
                     tooltip.style.display = "block";
                     tooltip.style.left = `${event.clientX + 10}px`;
                     tooltip.style.top = `${event.clientY + 10}px`;
-                    
-                    // Store reference to currently hovered node
                     lastHoveredNode = hoveredNode;
-                    
-                    // Create spotlight effect on hovered node
                     hoveredNode.material.emissiveIntensity = 0.5;
-                    
-                    // Reset other nodes
-                    nodes.forEach(n => {
-                        if (n !== hoveredNode && n.material.emissiveIntensity < 0.7) {
+                    nodes.forEach((n) => {
+                        if (
+                            n !== hoveredNode &&
+                            n.material.emissiveIntensity < 0.7
+                        ) {
                             n.material.emissiveIntensity = 0.3;
                         }
                     });
                 }
-                
-                // Always update tooltip position even if same node
                 tooltip.style.left = `${event.clientX + 10}px`;
                 tooltip.style.top = `${event.clientY + 10}px`;
             } else {
-                // Hide tooltip when not hovering any node
                 tooltip.style.display = "none";
-                
-                // Reset last hovered node appearance
-                if (lastHoveredNode && lastHoveredNode.material.emissiveIntensity < 0.7) {
+                if (
+                    lastHoveredNode &&
+                    lastHoveredNode.material.emissiveIntensity < 0.7
+                ) {
                     lastHoveredNode.material.emissiveIntensity = 0.3;
                 }
-                
                 lastHoveredNode = null;
             }
         });
-        
-        // Hide tooltip when mouse leaves the visualization
-        renderer.domElement.addEventListener("mouseleave", function() {
+        renderer.domElement.addEventListener("mouseleave", function () {
             tooltip.style.display = "none";
-            
-            // Reset last hovered node appearance
-            if (lastHoveredNode && lastHoveredNode.material.emissiveIntensity < 0.7) {
+            if (
+                lastHoveredNode &&
+                lastHoveredNode.material.emissiveIntensity < 0.7
+            ) {
                 lastHoveredNode.material.emissiveIntensity = 0.3;
             }
-            
             lastHoveredNode = null;
         });
     };
-    
-    // Add functionality for toggle switches
     const toggleSwitches = document.querySelectorAll('input[type="checkbox"]');
-    toggleSwitches.forEach(toggle => {
-        toggle.addEventListener('change', function() {
+    toggleSwitches.forEach((toggle) => {
+        toggle.addEventListener("change", function () {
             const switchLabel = this.nextElementSibling;
             if (switchLabel) {
                 if (this.checked) {
-                    switchLabel.querySelector('span').style.left = '24px';
-                    switchLabel.style.background = 'rgba(142, 84, 233, 0.5)';
+                    switchLabel.querySelector("span").style.left = "24px";
+                    switchLabel.style.background = "rgba(142, 84, 233, 0.5)";
                 } else {
-                    switchLabel.querySelector('span').style.left = '2px';
-                    switchLabel.style.background = 'rgba(255, 255, 255, 0.1)';
+                    switchLabel.querySelector("span").style.left = "2px";
+                    switchLabel.style.background = "rgba(255, 255, 255, 0.1)";
                 }
             }
         });
-        
-        // Initialize the toggle state
         if (toggle.checked) {
             const switchLabel = toggle.nextElementSibling;
             if (switchLabel) {
-                switchLabel.querySelector('span').style.left = '24px';
-                switchLabel.style.background = 'rgba(142, 84, 233, 0.5)';
+                switchLabel.querySelector("span").style.left = "24px";
+                switchLabel.style.background = "rgba(142, 84, 233, 0.5)";
             }
         }
     });
-    
-    // Add functionality for the debug stats toggle
-    const statsToggle = document.getElementById('debug-stats-toggle');
-    const statsPanel = document.getElementById('visualization-stats');
+    const statsToggle = document.getElementById("debug-stats-toggle");
+    const statsPanel = document.getElementById("visualization-stats");
     if (statsToggle && statsPanel) {
-        statsToggle.addEventListener('click', function() {
-            if (statsPanel.style.display === 'block') {
-                statsPanel.style.display = 'none';
-                statsToggle.classList.remove('active');
+        statsToggle.addEventListener("click", function () {
+            if (statsPanel.style.display === "block") {
+                statsPanel.style.display = "none";
+                statsToggle.classList.remove("active");
             } else {
-                statsPanel.style.display = 'block';
-                statsToggle.classList.add('active');
+                statsPanel.style.display = "block";
+                statsToggle.classList.add("active");
             }
         });
     }
 }
-/**
- * Initializes the THREE.js environment and required libraries
- * Loads advanced visual effects and custom shaders for premium visuals
- */
 function initThreeJsVisualization() {
-    // Clean up any existing scripts to avoid conflicts
     const scriptSelectors = [
         'script[src*="three.min.js"]',
         'script[src*="tween.min.js"]',
-        'script[src*="postprocessing.min.js"]'
+        'script[src*="postprocessing.min.js"]',
     ];
-    
-    scriptSelectors.forEach(selector => {
+    scriptSelectors.forEach((selector) => {
         const existingScript = document.querySelector(selector);
         if (existingScript) existingScript.remove();
     });
-    
-    // Create loading indicator for ultra-premium experience
     const container = document.getElementById("skills-3d-canvas");
     if (container) {
         container.innerHTML = `
@@ -595,41 +487,32 @@ function initThreeJsVisualization() {
             </style>
         `;
     }
-    
-    // Load THREE.js with advanced features
     const threeScript = document.createElement("script");
-    threeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js";
+    threeScript.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js";
     document.head.appendChild(threeScript);
-    
-    // Load TWEEN.js for smooth animations
     const tweenScript = document.createElement("script");
-    tweenScript.src = "https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.min.js";
+    tweenScript.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.min.js";
     document.head.appendChild(tweenScript);
-    
-    // Load post-processing for visual effects
     const postProcessingScript = document.createElement("script");
-    postProcessingScript.src = "https://cdn.jsdelivr.net/npm/three@0.132.0/examples/js/postprocessing/EffectComposer.min.js";
+    postProcessingScript.src =
+        "https://cdn.jsdelivr.net/npm/three@0.132.0/examples/js/postprocessing/EffectComposer.min.js";
     document.head.appendChild(postProcessingScript);
-    
-    // Track loading progress of all libraries
     let loadedCount = 0;
     const totalScripts = 3;
-    
     const checkAllLoaded = () => {
         loadedCount++;
         if (loadedCount === totalScripts) {
             console.log("THREE.js loaded successfully");
             setTimeout(() => {
                 setupVisualization();
-            }, 800); // Short delay for smooth transition
+            }, 800); 
         }
     };
-    
     threeScript.onload = checkAllLoaded;
     tweenScript.onload = checkAllLoaded;
     postProcessingScript.onload = checkAllLoaded;
-    
-    // Error handling for premium experience
     const handleScriptError = (script, name) => {
         script.onerror = () => {
             console.error(`Failed to load ${name} library`);
@@ -645,74 +528,110 @@ function initThreeJsVisualization() {
             }
         };
     };
-    
     handleScriptError(threeScript, "THREE.js");
     handleScriptError(tweenScript, "TWEEN");
     handleScriptError(postProcessingScript, "PostProcessing");
 }
-/**
- * Sets up the ultra-premium 3D visualization with advanced effects and interactions
- * Creates a stunning immersive experience with realistic physics and premium visuals
- */
 function setupVisualization() {
     const container = document.getElementById("skills-3d-canvas");
     if (!container) return;
-    
-    // Remove loading screen
-    container.querySelector('.premium-loader')?.remove();
-    
-    // Enhanced skill data with rich metadata for premium visualization
+    container.querySelector(".premium-loader")?.remove();
     const skillClusters = {
         programming: [
             {
                 id: "programming",
                 name: "Programming",
                 level: 95,
-                connections: ["webdev", "python", "cpp", "gamedev", "ml", "database"],
-                description: "Proficient in multiple programming languages and paradigms",
+                connections: [
+                    "webdev",
+                    "python",
+                    "cpp",
+                    "gamedev",
+                    "ml",
+                    "database",
+                ],
+                description:
+                    "Proficient in multiple programming languages and paradigms",
                 experience: "8+ years",
-                keyAchievements: ["Built cross-platform applications", "Developed efficient algorithms"],
-                tools: ["Python", "C++", "Java", "JavaScript", "C#", "SQL", "HTML5", "CSS3", "PHP", "Swift", "Kotlin", "Dart", "Go"]
+                keyAchievements: [
+                    "Built cross-platform applications",
+                    "Developed efficient algorithms",
+                ],
+                tools: [
+                    "Python",
+                    "C++",
+                    "Java",
+                    "JavaScript",
+                    "C#",
+                    "SQL",
+                    "HTML5",
+                    "CSS3",
+                    "PHP",
+                    "Swift",
+                    "Kotlin",
+                    "Dart",
+                    "Go",
+                ],
             },
             {
                 id: "python",
                 name: "Python",
                 level: 90,
                 connections: ["ml", "gamedev", "dataviz"],
-                description: "Advanced Python programming for ML and game development",
+                description:
+                    "Advanced Python programming for ML and game development",
                 experience: "6+ years",
-                keyAchievements: ["Developed ML models", "Created game systems"],
-                tools: ["TensorFlow", "PyTorch", "NumPy", "Pandas", "Django"]
+                keyAchievements: [
+                    "Developed ML models",
+                    "Created game systems",
+                ],
+                tools: ["TensorFlow", "PyTorch", "NumPy", "Pandas", "Django"],
             },
             {
                 id: "cpp",
                 name: "C++",
                 level: 85,
                 connections: ["gamedev", "assembly"],
-                description: "System-level programming with C++ for performance-critical applications",
+                description:
+                    "System-level programming with C++ for performance-critical applications",
                 experience: "5+ years",
-                keyAchievements: ["Optimized algorithms", "Created game engines"],
-                tools: ["STL", "Boost", "OpenGL", "Unreal Engine"]
+                keyAchievements: [
+                    "Optimized algorithms",
+                    "Created game engines",
+                ],
+                tools: ["STL", "Boost", "OpenGL", "Unreal Engine"],
             },
             {
                 id: "assembly",
                 name: "Assembly",
                 level: 75,
                 connections: [],
-                description: "Low-level programming for microprocessors and system optimization",
+                description:
+                    "Low-level programming for microprocessors and system optimization",
                 experience: "2+ years",
-                keyAchievements: ["Studying Microprocessors & Assembly Language - CSE-317/318"],
-                tools: ["x86", "ARM", "MIPS"]
+                keyAchievements: [
+                    "Studying Microprocessors & Assembly Language - CSE-317/318",
+                ],
+                tools: ["x86", "ARM", "MIPS"],
             },
             {
                 id: "algorithms",
                 name: "Algorithms & DS",
                 level: 86,
                 connections: ["oop"],
-                description: "Designing and implementing efficient algorithms and data structures",
+                description:
+                    "Designing and implementing efficient algorithms and data structures",
                 experience: "6+ years",
-                keyAchievements: ["Optimized computational efficiency", "Solved complex problems"],
-                tools: ["Sorting algorithms", "Search algorithms", "Graph algorithms", "Dynamic programming"]
+                keyAchievements: [
+                    "Optimized computational efficiency",
+                    "Solved complex problems",
+                ],
+                tools: [
+                    "Sorting algorithms",
+                    "Search algorithms",
+                    "Graph algorithms",
+                    "Dynamic programming",
+                ],
             },
             {
                 id: "oop",
@@ -721,8 +640,16 @@ function setupVisualization() {
                 connections: [],
                 description: "Applying object-oriented programming principles",
                 experience: "7+ years",
-                keyAchievements: ["Designed modular systems", "Created reusable components"],
-                tools: ["Inheritance", "Polymorphism", "Encapsulation", "Design patterns"]
+                keyAchievements: [
+                    "Designed modular systems",
+                    "Created reusable components",
+                ],
+                tools: [
+                    "Inheritance",
+                    "Polymorphism",
+                    "Encapsulation",
+                    "Design patterns",
+                ],
             },
         ],
         web: [
@@ -731,40 +658,82 @@ function setupVisualization() {
                 name: "Web Development",
                 level: 92,
                 connections: ["frontend", "backend", "htmlcss", "wordpress"],
-                description: "Full-stack web development with modern frameworks and technologies",
+                description:
+                    "Full-stack web development with modern frameworks and technologies",
                 experience: "7+ years",
-                keyAchievements: ["Built responsive websites", "Created interactive web applications"],
-                tools: ["HTML5", "CSS3", "JavaScript", "React", "Angular", "Vue.js", "Node.js", "Laravel", "WordPress"]
+                keyAchievements: [
+                    "Built responsive websites",
+                    "Created interactive web applications",
+                ],
+                tools: [
+                    "HTML5",
+                    "CSS3",
+                    "JavaScript",
+                    "React",
+                    "Angular",
+                    "Vue.js",
+                    "Node.js",
+                    "Laravel",
+                    "WordPress",
+                ],
             },
             {
                 id: "htmlcss",
                 name: "HTML/CSS",
                 level: 95,
                 connections: ["frontend"],
-                description: "Ultra-Advanced Legendary Styles with HTML and CSS",
+                description:
+                    "Ultra-Advanced Legendary Styles with HTML and CSS",
                 experience: "8+ years",
-                keyAchievements: ["Created premium UI components", "Implemented complex animations"],
-                tools: ["HTML5", "CSS3", "SASS", "CSS Grid", "Flexbox", "CSS Animations"]
+                keyAchievements: [
+                    "Created premium UI components",
+                    "Implemented complex animations",
+                ],
+                tools: [
+                    "HTML5",
+                    "CSS3",
+                    "SASS",
+                    "CSS Grid",
+                    "Flexbox",
+                    "CSS Animations",
+                ],
             },
             {
                 id: "wordpress",
                 name: "WordPress",
                 level: 88,
                 connections: [],
-                description: "WordPress design and development for content management systems",
+                description:
+                    "WordPress design and development for content management systems",
                 experience: "6+ years",
                 keyAchievements: ["Built custom themes", "Developed plugins"],
-                tools: ["PHP", "WordPress API", "Custom Themes", "Plugin Development"]
+                tools: [
+                    "PHP",
+                    "WordPress API",
+                    "Custom Themes",
+                    "Plugin Development",
+                ],
             },
             {
                 id: "frontend",
                 name: "Frontend",
                 level: 90,
                 connections: ["javascript", "uiux"],
-                description: "Building interactive and responsive user interfaces",
+                description:
+                    "Building interactive and responsive user interfaces",
                 experience: "7+ years",
-                keyAchievements: ["Created 3D input designs", "Implemented button animations"],
-                tools: ["React", "Vue.js", "Angular", "JavaScript", "CSS3", "WebGL"]
+                keyAchievements: [
+                    "Created 3D input designs",
+                    "Implemented button animations",
+                ],
+                tools: [
+                    "React",
+                    "Vue.js",
+                    "Angular",
+                    "JavaScript",
+                    "CSS3",
+                    "WebGL",
+                ],
             },
             {
                 id: "backend",
@@ -773,8 +742,11 @@ function setupVisualization() {
                 connections: ["database", "restapi"],
                 description: "Server-side development and API creation",
                 experience: "6+ years",
-                keyAchievements: ["Built scalable APIs", "Implemented authentication systems"],
-                tools: ["Node.js", "Express", "Django", "Laravel", "REST APIs"]
+                keyAchievements: [
+                    "Built scalable APIs",
+                    "Implemented authentication systems",
+                ],
+                tools: ["Node.js", "Express", "Django", "Laravel", "REST APIs"],
             },
             {
                 id: "restapi",
@@ -783,58 +755,99 @@ function setupVisualization() {
                 connections: [],
                 description: "Building and consuming RESTful web services",
                 experience: "5+ years",
-                keyAchievements: ["Designed RESTful architectures", "Created API documentation"],
-                tools: ["Node.js", "Express", "Swagger", "Postman"]
+                keyAchievements: [
+                    "Designed RESTful architectures",
+                    "Created API documentation",
+                ],
+                tools: ["Node.js", "Express", "Swagger", "Postman"],
             },
             {
                 id: "javascript",
                 name: "JavaScript",
                 level: 90,
                 connections: ["react", "node"],
-                description: "Advanced knowledge of modern JavaScript patterns, ES6+, and best practices.",
+                description:
+                    "Advanced knowledge of modern JavaScript patterns, ES6+, and best practices.",
                 experience: "8+ years",
-                keyAchievements: ["Led company-wide JavaScript training", "Contributed to open source libraries"],
-                tools: ["ES6+", "TypeScript", "webpack", "Babel"]
+                keyAchievements: [
+                    "Led company-wide JavaScript training",
+                    "Contributed to open source libraries",
+                ],
+                tools: ["ES6+", "TypeScript", "webpack", "Babel"],
             },
-            { 
-                id: "react", 
-                name: "React", 
-                level: 85, 
+            {
+                id: "react",
+                name: "React",
+                level: 85,
                 connections: [],
-                description: "Building complex component-based applications with React ecosystem.",
+                description:
+                    "Building complex component-based applications with React ecosystem.",
                 experience: "5+ years",
-                keyAchievements: ["Created reusable component library", "Implemented state management patterns"],
-                tools: ["Redux", "Context API", "React Query", "Styled Components"]
+                keyAchievements: [
+                    "Created reusable component library",
+                    "Implemented state management patterns",
+                ],
+                tools: [
+                    "Redux",
+                    "Context API",
+                    "React Query",
+                    "Styled Components",
+                ],
             },
-            { 
-                id: "node", 
-                name: "Node.js", 
-                level: 82, 
+            {
+                id: "node",
+                name: "Node.js",
+                level: 82,
                 connections: [],
-                description: "Developing high-performance backend services with Node.js.",
+                description:
+                    "Developing high-performance backend services with Node.js.",
                 experience: "5+ years",
-                keyAchievements: ["Built real-time data processing systems", "Optimized memory usage"],
-                tools: ["Express", "NestJS", "Socket.io", "MongoDB", "PostgreSQL"]
+                keyAchievements: [
+                    "Built real-time data processing systems",
+                    "Optimized memory usage",
+                ],
+                tools: [
+                    "Express",
+                    "NestJS",
+                    "Socket.io",
+                    "MongoDB",
+                    "PostgreSQL",
+                ],
             },
-            { 
-                id: "database", 
-                name: "Databases", 
-                level: 80, 
+            {
+                id: "database",
+                name: "Databases",
+                level: 80,
                 connections: [],
-                description: "Designing efficient database schemas and optimizing queries for performance.",
+                description:
+                    "Designing efficient database schemas and optimizing queries for performance.",
                 experience: "6+ years",
-                keyAchievements: ["Database migration project lead", "Improved query performance by 70%"],
-                tools: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "Firebase"]
+                keyAchievements: [
+                    "Database migration project lead",
+                    "Improved query performance by 70%",
+                ],
+                tools: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "Firebase"],
             },
             {
                 id: "cloud",
                 name: "Cloud Computing",
                 level: 78,
                 connections: [],
-                description: "Deploying and managing applications in cloud environments for scalability.",
+                description:
+                    "Deploying and managing applications in cloud environments for scalability.",
                 experience: "4+ years",
-                keyAchievements: ["Migrated services to cloud architecture", "Reduced operational costs by 30%"],
-                tools: ["AWS", "GCP", "Azure", "Docker", "Kubernetes", "Terraform"]
+                keyAchievements: [
+                    "Migrated services to cloud architecture",
+                    "Reduced operational costs by 30%",
+                ],
+                tools: [
+                    "AWS",
+                    "GCP",
+                    "Azure",
+                    "Docker",
+                    "Kubernetes",
+                    "Terraform",
+                ],
             },
         ],
         creative: [
@@ -843,50 +856,80 @@ function setupVisualization() {
                 name: "UI/UX Design",
                 level: 90,
                 connections: ["graphicdesign"],
-                description: "Creating intuitive user experiences with focus on accessibility and engagement.",
+                description:
+                    "Creating intuitive user experiences with focus on accessibility and engagement.",
                 experience: "7+ years",
-                keyAchievements: ["Improved user satisfaction scores by 45%", "Reduced bounce rates by 30%"],
-                tools: ["Figma", "Adobe XD", "Sketch", "InVision", "Principle"]
+                keyAchievements: [
+                    "Improved user satisfaction scores by 45%",
+                    "Reduced bounce rates by 30%",
+                ],
+                tools: ["Figma", "Adobe XD", "Sketch", "InVision", "Principle"],
             },
             {
                 id: "graphicdesign",
                 name: "Graphic Design",
                 level: 88,
                 connections: ["motion"],
-                description: "Developing visually stunning brand identities and marketing materials.",
+                description:
+                    "Developing visually stunning brand identities and marketing materials.",
                 experience: "6+ years",
-                keyAchievements: ["Award-winning campaign design", "Rebranded corporate identity"],
-                tools: ["Adobe Photoshop", "Illustrator", "InDesign", "Affinity Designer"]
+                keyAchievements: [
+                    "Award-winning campaign design",
+                    "Rebranded corporate identity",
+                ],
+                tools: [
+                    "Adobe Photoshop",
+                    "Illustrator",
+                    "InDesign",
+                    "Affinity Designer",
+                ],
             },
             {
                 id: "motion",
                 name: "Motion Graphics",
                 level: 82,
                 connections: [],
-                description: "Creating engaging animations and visual effects for digital content.",
+                description:
+                    "Creating engaging animations and visual effects for digital content.",
                 experience: "4+ years",
-                keyAchievements: ["Developed brand motion language", "Created viral marketing animations"],
-                tools: ["After Effects", "Premiere Pro", "Cinema 4D", "Blender"]
+                keyAchievements: [
+                    "Developed brand motion language",
+                    "Created viral marketing animations",
+                ],
+                tools: [
+                    "After Effects",
+                    "Premiere Pro",
+                    "Cinema 4D",
+                    "Blender",
+                ],
             },
             {
                 id: "3d",
                 name: "3D Modeling",
                 level: 80,
                 connections: ["animation"],
-                description: "Building detailed 3D models and environments for visualization and simulation.",
+                description:
+                    "Building detailed 3D models and environments for visualization and simulation.",
                 experience: "4+ years",
-                keyAchievements: ["Created architectural visualization library", "Designed product prototypes"],
-                tools: ["Blender", "Maya", "ZBrush", "Substance Painter"]
+                keyAchievements: [
+                    "Created architectural visualization library",
+                    "Designed product prototypes",
+                ],
+                tools: ["Blender", "Maya", "ZBrush", "Substance Painter"],
             },
-            { 
-                id: "animation", 
-                name: "Animation", 
-                level: 75, 
+            {
+                id: "animation",
+                name: "Animation",
+                level: 75,
                 connections: [],
-                description: "Bringing characters and objects to life through fluid, realistic movement.",
+                description:
+                    "Bringing characters and objects to life through fluid, realistic movement.",
                 experience: "3+ years",
-                keyAchievements: ["Character animation for commercial projects", "Developed animation workflow"],
-                tools: ["After Effects", "Blender", "Spine", "Lottie"]
+                keyAchievements: [
+                    "Character animation for commercial projects",
+                    "Developed animation workflow",
+                ],
+                tools: ["After Effects", "Blender", "Spine", "Lottie"],
             },
         ],
         ai: [
@@ -895,60 +938,84 @@ function setupVisualization() {
                 name: "Machine Learning",
                 level: 85,
                 connections: ["deeplearning", "datascience"],
-                description: "Building predictive models and algorithms for complex data analysis.",
+                description:
+                    "Building predictive models and algorithms for complex data analysis.",
                 experience: "5+ years",
-                keyAchievements: ["Developed recommendation engine", "Implemented fraud detection system"],
-                tools: ["Python", "scikit-learn", "TensorFlow", "PyTorch"]
+                keyAchievements: [
+                    "Developed recommendation engine",
+                    "Implemented fraud detection system",
+                ],
+                tools: ["Python", "scikit-learn", "TensorFlow", "PyTorch"],
             },
             {
                 id: "deeplearning",
                 name: "Deep Learning",
                 level: 82,
                 connections: ["computervision", "nlp"],
-                description: "Designing neural networks for solving complex pattern recognition problems.",
+                description:
+                    "Designing neural networks for solving complex pattern recognition problems.",
                 experience: "4+ years",
-                keyAchievements: ["Built image recognition system", "Trained custom language models"],
-                tools: ["TensorFlow", "PyTorch", "Keras", "CUDA"]
+                keyAchievements: [
+                    "Built image recognition system",
+                    "Trained custom language models",
+                ],
+                tools: ["TensorFlow", "PyTorch", "Keras", "CUDA"],
             },
             {
                 id: "computervision",
                 name: "Computer Vision",
                 level: 80,
                 connections: [],
-                description: "Implementing systems that can interpret and analyze visual information.",
+                description:
+                    "Implementing systems that can interpret and analyze visual information.",
                 experience: "3+ years",
-                keyAchievements: ["Developed object detection solution", "Created facial recognition system"],
-                tools: ["OpenCV", "TensorFlow", "PyTorch", "YOLO"]
+                keyAchievements: [
+                    "Developed object detection solution",
+                    "Created facial recognition system",
+                ],
+                tools: ["OpenCV", "TensorFlow", "PyTorch", "YOLO"],
             },
-            { 
-                id: "nlp", 
-                name: "NLP", 
-                level: 78, 
+            {
+                id: "nlp",
+                name: "NLP",
+                level: 78,
                 connections: [],
-                description: "Building systems that understand and generate human language.",
+                description:
+                    "Building systems that understand and generate human language.",
                 experience: "3+ years",
-                keyAchievements: ["Chatbot development", "Sentiment analysis implementation"],
-                tools: ["NLTK", "spaCy", "Transformers", "BERT", "GPT"]
+                keyAchievements: [
+                    "Chatbot development",
+                    "Sentiment analysis implementation",
+                ],
+                tools: ["NLTK", "spaCy", "Transformers", "BERT", "GPT"],
             },
             {
                 id: "datascience",
                 name: "Data Science",
                 level: 85,
                 connections: ["visualization"],
-                description: "Extracting insights from complex datasets to drive business decisions.",
+                description:
+                    "Extracting insights from complex datasets to drive business decisions.",
                 experience: "5+ years",
-                keyAchievements: ["Led predictive analytics projects", "Developed customer segmentation model"],
-                tools: ["Python", "R", "Pandas", "NumPy", "Jupyter"]
+                keyAchievements: [
+                    "Led predictive analytics projects",
+                    "Developed customer segmentation model",
+                ],
+                tools: ["Python", "R", "Pandas", "NumPy", "Jupyter"],
             },
             {
                 id: "visualization",
                 name: "Data Visualization",
                 level: 88,
                 connections: [],
-                description: "Creating compelling visual representations of complex data for insight discovery.",
+                description:
+                    "Creating compelling visual representations of complex data for insight discovery.",
                 experience: "5+ years",
-                keyAchievements: ["Built interactive dashboard solutions", "Developed custom visualization library"],
-                tools: ["D3.js", "Tableau", "Power BI", "Plotly", "Three.js"]
+                keyAchievements: [
+                    "Built interactive dashboard solutions",
+                    "Developed custom visualization library",
+                ],
+                tools: ["D3.js", "Tableau", "Power BI", "Plotly", "Three.js"],
             },
         ],
         gamedev: [
@@ -957,40 +1024,56 @@ function setupVisualization() {
                 name: "Game Design",
                 level: 85,
                 connections: ["unreal", "unity"],
-                description: "Designing engaging game mechanics and player experiences.",
+                description:
+                    "Designing engaging game mechanics and player experiences.",
                 experience: "5+ years",
-                keyAchievements: ["Designed core mechanics for indie games", "Created level design framework"],
-                tools: ["Unity", "Unreal Engine", "Adobe Suite", "Blender"]
+                keyAchievements: [
+                    "Designed core mechanics for indie games",
+                    "Created level design framework",
+                ],
+                tools: ["Unity", "Unreal Engine", "Adobe Suite", "Blender"],
             },
-            { 
-                id: "unreal", 
-                name: "Unreal Engine", 
-                level: 80, 
+            {
+                id: "unreal",
+                name: "Unreal Engine",
+                level: 80,
                 connections: [],
-                description: "Developing immersive 3D experiences using Unreal Engine.",
+                description:
+                    "Developing immersive 3D experiences using Unreal Engine.",
                 experience: "3+ years",
-                keyAchievements: ["Created VR prototype", "Optimized rendering pipeline"],
-                tools: ["Blueprints", "C++", "Material Editor", "Sequencer"]
+                keyAchievements: [
+                    "Created VR prototype",
+                    "Optimized rendering pipeline",
+                ],
+                tools: ["Blueprints", "C++", "Material Editor", "Sequencer"],
             },
-            { 
-                id: "unity", 
-                name: "Unity", 
-                level: 82, 
+            {
+                id: "unity",
+                name: "Unity",
+                level: 82,
                 connections: [],
-                description: "Building cross-platform games and interactive applications.",
+                description:
+                    "Building cross-platform games and interactive applications.",
                 experience: "4+ years",
-                keyAchievements: ["Published mobile games", "Developed AR experiences"],
-                tools: ["C#", "Shader Graph", "HLSL", "Cinemachine"]
+                keyAchievements: [
+                    "Published mobile games",
+                    "Developed AR experiences",
+                ],
+                tools: ["C#", "Shader Graph", "HLSL", "Cinemachine"],
             },
             {
                 id: "gamephysics",
                 name: "Game Physics",
                 level: 78,
                 connections: [],
-                description: "Implementing realistic physics simulations for interactive environments.",
+                description:
+                    "Implementing realistic physics simulations for interactive environments.",
                 experience: "3+ years",
-                keyAchievements: ["Created custom physics solver", "Optimized collision detection"],
-                tools: ["PhysX", "Havok", "Unity Physics", "Custom solvers"]
+                keyAchievements: [
+                    "Created custom physics solver",
+                    "Optimized collision detection",
+                ],
+                tools: ["PhysX", "Havok", "Unity Physics", "Custom solvers"],
             },
         ],
         soft: [
@@ -999,50 +1082,86 @@ function setupVisualization() {
                 name: "Communication",
                 level: 95,
                 connections: ["leadership", "teamwork"],
-                description: "Effectively conveying complex ideas to diverse audiences.",
+                description:
+                    "Effectively conveying complex ideas to diverse audiences.",
                 experience: "10+ years",
-                keyAchievements: ["Led client presentations", "Improved team communication processes"],
-                tools: ["Public speaking", "Technical writing", "Presentation design"]
+                keyAchievements: [
+                    "Led client presentations",
+                    "Improved team communication processes",
+                ],
+                tools: [
+                    "Public speaking",
+                    "Technical writing",
+                    "Presentation design",
+                ],
             },
             {
                 id: "leadership",
                 name: "Leadership",
                 level: 88,
                 connections: [],
-                description: "Guiding teams through complex projects while fostering growth and collaboration.",
+                description:
+                    "Guiding teams through complex projects while fostering growth and collaboration.",
                 experience: "6+ years",
-                keyAchievements: ["Led cross-functional teams of 15+", "Mentored junior professionals"],
-                tools: ["Agile methodologies", "Strategic planning", "Conflict resolution"]
+                keyAchievements: [
+                    "Led cross-functional teams of 15+",
+                    "Mentored junior professionals",
+                ],
+                tools: [
+                    "Agile methodologies",
+                    "Strategic planning",
+                    "Conflict resolution",
+                ],
             },
             {
                 id: "teamwork",
                 name: "Team Collaboration",
                 level: 90,
                 connections: [],
-                description: "Working effectively with diverse teams to achieve collective goals.",
+                description:
+                    "Working effectively with diverse teams to achieve collective goals.",
                 experience: "8+ years",
-                keyAchievements: ["Facilitated integration of remote teams", "Improved collaboration workflows"],
-                tools: ["Agile", "Kanban", "Jira", "Confluence", "Slack"]
+                keyAchievements: [
+                    "Facilitated integration of remote teams",
+                    "Improved collaboration workflows",
+                ],
+                tools: ["Agile", "Kanban", "Jira", "Confluence", "Slack"],
             },
             {
                 id: "problemsolving",
                 name: "Problem Solving",
                 level: 92,
                 connections: [],
-                description: "Analyzing complex situations and developing innovative solutions.",
+                description:
+                    "Analyzing complex situations and developing innovative solutions.",
                 experience: "9+ years",
-                keyAchievements: ["Resolved critical production issues", "Developed troubleshooting frameworks"],
-                tools: ["Root cause analysis", "Design thinking", "Systems analysis"]
+                keyAchievements: [
+                    "Resolved critical production issues",
+                    "Developed troubleshooting frameworks",
+                ],
+                tools: [
+                    "Root cause analysis",
+                    "Design thinking",
+                    "Systems analysis",
+                ],
             },
             {
                 id: "timemanagement",
                 name: "Time Management",
                 level: 85,
                 connections: [],
-                description: "Efficiently prioritizing tasks and meeting deadlines in fast-paced environments.",
+                description:
+                    "Efficiently prioritizing tasks and meeting deadlines in fast-paced environments.",
                 experience: "7+ years",
-                keyAchievements: ["Delivered projects ahead of schedule", "Implemented productivity system"],
-                tools: ["Project management", "Time blocking", "Prioritization frameworks"]
+                keyAchievements: [
+                    "Delivered projects ahead of schedule",
+                    "Implemented productivity system",
+                ],
+                tools: [
+                    "Project management",
+                    "Time blocking",
+                    "Prioritization frameworks",
+                ],
             },
         ],
         ai_ml: [
@@ -1051,20 +1170,28 @@ function setupVisualization() {
                 name: "Machine Learning",
                 level: 85,
                 connections: ["deep_learning", "computer_vision", "knn"],
-                description: "Building models that can learn from data and make predictions",
+                description:
+                    "Building models that can learn from data and make predictions",
                 experience: "4+ years",
-                keyAchievements: ["KNN Classifier for Breast Cancer Dataset", "Predictive modeling"],
-                tools: ["Python", "TensorFlow", "PyTorch", "Scikit-learn"]
+                keyAchievements: [
+                    "KNN Classifier for Breast Cancer Dataset",
+                    "Predictive modeling",
+                ],
+                tools: ["Python", "TensorFlow", "PyTorch", "Scikit-learn"],
             },
             {
                 id: "deep_learning",
                 name: "Deep Learning",
                 level: 83,
                 connections: ["image_enhancement"],
-                description: "Building and training neural networks for complex tasks",
+                description:
+                    "Building and training neural networks for complex tasks",
                 experience: "3+ years",
-                keyAchievements: ["Deep Learning Image Enhancement", "Neural network architecture design"],
-                tools: ["PyTorch", "TensorFlow", "Google Colab"]
+                keyAchievements: [
+                    "Deep Learning Image Enhancement",
+                    "Neural network architecture design",
+                ],
+                tools: ["PyTorch", "TensorFlow", "Google Colab"],
             },
             {
                 id: "image_enhancement",
@@ -1073,38 +1200,53 @@ function setupVisualization() {
                 connections: [],
                 description: "Using AI to improve image quality and resolution",
                 experience: "2+ years",
-                keyAchievements: ["Real-ESRGAN implementation", "GFPGAN, ESRGAN projects"],
-                tools: ["PyTorch", "OpenCV", "Python"]
+                keyAchievements: [
+                    "Real-ESRGAN implementation",
+                    "GFPGAN, ESRGAN projects",
+                ],
+                tools: ["PyTorch", "OpenCV", "Python"],
             },
             {
                 id: "computer_vision",
                 name: "Computer Vision",
                 level: 80,
                 connections: [],
-                description: "Creating systems that can interpret and analyze visual information",
+                description:
+                    "Creating systems that can interpret and analyze visual information",
                 experience: "3+ years",
-                keyAchievements: ["Image processing projects", "Object detection implementations"],
-                tools: ["OpenCV", "TensorFlow", "PyTorch", "Python"]
+                keyAchievements: [
+                    "Image processing projects",
+                    "Object detection implementations",
+                ],
+                tools: ["OpenCV", "TensorFlow", "PyTorch", "Python"],
             },
             {
                 id: "knn",
                 name: "KNN Classifier",
                 level: 85,
                 connections: [],
-                description: "K-Nearest Neighbors implementation for classification tasks",
+                description:
+                    "K-Nearest Neighbors implementation for classification tasks",
                 experience: "2+ years",
-                keyAchievements: ["Breast Cancer Dataset Project", "Pattern recognition systems"],
-                tools: ["Python", "Scikit-learn", "NumPy", "Pandas"]
+                keyAchievements: [
+                    "Breast Cancer Dataset Project",
+                    "Pattern recognition systems",
+                ],
+                tools: ["Python", "Scikit-learn", "NumPy", "Pandas"],
             },
             {
                 id: "generative_ai",
                 name: "Generative AI",
                 level: 78,
                 connections: [],
-                description: "Working with AI models that can generate new content",
+                description:
+                    "Working with AI models that can generate new content",
                 experience: "1+ year",
-                keyAchievements: ["Amazon Bedrock implementation", "Text and image generation"],
-                tools: ["AWS Bedrock", "GANs", "GPT models"]
+                keyAchievements: [
+                    "Amazon Bedrock implementation",
+                    "Text and image generation",
+                ],
+                tools: ["AWS Bedrock", "GANs", "GPT models"],
             },
         ],
         quantum: [
@@ -1113,10 +1255,14 @@ function setupVisualization() {
                 name: "Quantum Computing",
                 level: 75,
                 connections: ["bloch_sphere", "circuit_builder"],
-                description: "Designing conceptual quantum computing applications",
+                description:
+                    "Designing conceptual quantum computing applications",
                 experience: "1+ year",
-                keyAchievements: ["Conceptual design for Quantum Code Simulator", "Quantum algorithm research"],
-                tools: ["Qiskit", "Python", "Linear Algebra"]
+                keyAchievements: [
+                    "Conceptual design for Quantum Code Simulator",
+                    "Quantum algorithm research",
+                ],
+                tools: ["Qiskit", "Python", "Linear Algebra"],
             },
             {
                 id: "bloch_sphere",
@@ -1125,18 +1271,25 @@ function setupVisualization() {
                 connections: [],
                 description: "Visualization and manipulation of quantum states",
                 experience: "1+ year",
-                keyAchievements: ["Created quantum state visualizations", "Quantum state transformation simulations"],
-                tools: ["Qiskit", "Python", "Visualization libraries"]
+                keyAchievements: [
+                    "Created quantum state visualizations",
+                    "Quantum state transformation simulations",
+                ],
+                tools: ["Qiskit", "Python", "Visualization libraries"],
             },
             {
                 id: "circuit_builder",
                 name: "Quantum Circuits",
                 level: 70,
                 connections: [],
-                description: "Designing and simulating quantum circuit implementations",
+                description:
+                    "Designing and simulating quantum circuit implementations",
                 experience: "1 year",
-                keyAchievements: ["Drag-n-drop Circuit Builder", "Quantum algorithm implementations"],
-                tools: ["Qiskit", "Python", "Quantum gates"]
+                keyAchievements: [
+                    "Drag-n-drop Circuit Builder",
+                    "Quantum algorithm implementations",
+                ],
+                tools: ["Qiskit", "Python", "Quantum gates"],
             },
         ],
         tools: [
@@ -1145,40 +1298,58 @@ function setupVisualization() {
                 name: "LaTeX",
                 level: 90,
                 connections: ["academic_formatting"],
-                description: "Professional document preparation for academic and technical papers",
+                description:
+                    "Professional document preparation for academic and technical papers",
                 experience: "5+ years",
-                keyAchievements: ["Premium report writing", "Clean academic formatting"],
-                tools: ["LaTeX", "BibTeX", "TikZ", "Beamer"]
+                keyAchievements: [
+                    "Premium report writing",
+                    "Clean academic formatting",
+                ],
+                tools: ["LaTeX", "BibTeX", "TikZ", "Beamer"],
             },
             {
                 id: "academic_formatting",
                 name: "Academic Tools",
                 level: 88,
                 connections: [],
-                description: "Creating professional academic documents and presentations",
+                description:
+                    "Creating professional academic documents and presentations",
                 experience: "4+ years",
-                keyAchievements: ["Graphical content integration", "Advanced presentations using VBA in Excel"],
-                tools: ["LaTeX", "Microsoft Office", "VBA", "Reference managers"]
+                keyAchievements: [
+                    "Graphical content integration",
+                    "Advanced presentations using VBA in Excel",
+                ],
+                tools: [
+                    "LaTeX",
+                    "Microsoft Office",
+                    "VBA",
+                    "Reference managers",
+                ],
             },
             {
                 id: "vba_excel",
                 name: "Excel & VBA",
                 level: 85,
                 connections: [],
-                description: "Creating advanced spreadsheet solutions with macros and automation",
+                description:
+                    "Creating advanced spreadsheet solutions with macros and automation",
                 experience: "4+ years",
-                keyAchievements: ["Advanced presentations using VBA", "Automated data processing"],
-                tools: ["Excel", "VBA", "Power Query", "Data visualization"]
+                keyAchievements: [
+                    "Advanced presentations using VBA",
+                    "Automated data processing",
+                ],
+                tools: ["Excel", "VBA", "Power Query", "Data visualization"],
             },
             {
                 id: "data_handling",
                 name: "Data Handling",
                 level: 87,
                 connections: ["bigquery"],
-                description: "Processing and managing structured and unstructured data",
+                description:
+                    "Processing and managing structured and unstructured data",
                 experience: "5+ years",
                 keyAchievements: ["CSV handling", "Database management"],
-                tools: ["Python", "SQL", "Excel", "ETL processes"]
+                tools: ["Python", "SQL", "Excel", "ETL processes"],
             },
             {
                 id: "bigquery",
@@ -1187,28 +1358,40 @@ function setupVisualization() {
                 connections: [],
                 description: "Working with Google's big data query service",
                 experience: "2+ years",
-                keyAchievements: ["From GCP NLP lab", "Large dataset processing"],
-                tools: ["SQL", "Google Cloud Platform", "Data warehousing"]
+                keyAchievements: [
+                    "From GCP NLP lab",
+                    "Large dataset processing",
+                ],
+                tools: ["SQL", "Google Cloud Platform", "Data warehousing"],
             },
             {
                 id: "gcp",
                 name: "Google Cloud",
                 level: 82,
                 connections: ["visual_inspection"],
-                description: "Using Google Cloud Platform services for ML and data processing",
+                description:
+                    "Using Google Cloud Platform services for ML and data processing",
                 experience: "3+ years",
                 keyAchievements: ["GCP NLP lab", "Cloud-based ML workflows"],
-                tools: ["GCP", "BigQuery", "Cloud Functions", "ML APIs"]
+                tools: ["GCP", "BigQuery", "Cloud Functions", "ML APIs"],
             },
             {
                 id: "visual_inspection",
                 name: "Visual Inspection AI",
                 level: 78,
                 connections: [],
-                description: "Using Google Cloud for automated visual inspection",
+                description:
+                    "Using Google Cloud for automated visual inspection",
                 experience: "1+ year",
-                keyAchievements: ["Defect Detection Challenge", "Quality control systems"],
-                tools: ["Google Cloud", "Visual Inspection AI", "Computer Vision"]
+                keyAchievements: [
+                    "Defect Detection Challenge",
+                    "Quality control systems",
+                ],
+                tools: [
+                    "Google Cloud",
+                    "Visual Inspection AI",
+                    "Computer Vision",
+                ],
             },
         ],
     };
@@ -1232,14 +1415,14 @@ function setupVisualization() {
     const nodes = [];
     const nodeGeometry = new THREE.SphereGeometry(1, 32, 32);
     const clusterColors = {
-        programming: 0x4facfe,    // Blue
-        web: 0x00d184,            // Green
-        creative: 0xff6b6b,       // Red
-        ai_ml: 0x8a4fff,          // Purple
-        gamedev: 0xff9f1a,        // Orange
-        soft: 0xf9ca24,           // Yellow
-        quantum: 0xe42ef5,        // Pink
-        tools: 0x2ef5e4,          // Cyan
+        programming: 0x4facfe, 
+        web: 0x00d184, 
+        creative: 0xff6b6b, 
+        ai_ml: 0x8a4fff, 
+        gamedev: 0xff9f1a, 
+        soft: 0xf9ca24, 
+        quantum: 0xe42ef5, 
+        tools: 0x2ef5e4, 
     };
     Object.keys(skillClusters).forEach((clusterKey) => {
         const cluster = skillClusters[clusterKey];
@@ -1317,7 +1500,7 @@ function setupVisualization() {
         });
         const sprite = new THREE.Sprite(material);
         sprite.position.copy(position);
-        sprite.position.y += 1.5; 
+        sprite.position.y += 1.5;
         sprite.scale.set(5, 2.5, 1);
         return sprite;
     }
@@ -1363,49 +1546,35 @@ function setupVisualization() {
             });
         }
     });
-    /**
-     * Ultra-premium visualization mode switcher with immersive layouts
-     * @param {string} view - The visualization mode to display
-     */
     window.changeVisualizationView = function (view) {
-        // Update the view mode badge
-        const viewModeBadge = document.getElementById('current-view-mode');
+        const viewModeBadge = document.getElementById("current-view-mode");
         if (viewModeBadge) {
             const modeNames = {
-                'sphere': 'Orbital Sphere',
-                'clusters': 'Domain Networks',
-                'tags': 'Skill Nebula',
-                'helix': 'Helix Matrix',
-                'showcase': 'Showcase Mode'
+                sphere: "Orbital Sphere",
+                clusters: "Domain Networks",
+                tags: "Skill Nebula",
+                helix: "Helix Matrix",
+                showcase: "Showcase Mode",
             };
             viewModeBadge.textContent = modeNames[view] || view;
         }
-        
-        // Handle node transition with TWEEN if available
-        const useTween = typeof TWEEN !== 'undefined';
-        let maxDistance = 0; // For scaling transition times
-        
-        // Calculate new positions based on view
+        const useTween = typeof TWEEN !== "undefined";
+        let maxDistance = 0; 
         nodes.forEach((node) => {
             let targetX, targetY, targetZ;
             const nodeLevel = node.userData.level || 50;
-            const nodeId = node.userData.id || '';
-            const clusterName = node.userData.cluster || 'unknown';
-            
+            const nodeId = node.userData.id || "";
+            const clusterName = node.userData.cluster || "unknown";
             switch (view) {
                 case "sphere":
-                    // Enhanced orbital sphere with skill level determining orbit radius
                     const phi = Math.acos(-1 + 2 * Math.random());
                     const theta = Math.random() * Math.PI * 2;
-                    // Higher skill levels are closer to center
-                    const orbitRadius = 30 - (nodeLevel / 100 * 15);
+                    const orbitRadius = 30 - (nodeLevel / 100) * 15;
                     targetX = orbitRadius * Math.sin(phi) * Math.cos(theta);
                     targetY = orbitRadius * Math.sin(phi) * Math.sin(theta);
                     targetZ = orbitRadius * Math.cos(phi);
                     break;
-                    
                 case "clusters":
-                    // Improved clustering with hierarchical arrangement
                     const clusterPositions = {
                         programming: { x: -20, y: 0, z: 0 },
                         web: { x: 20, y: 0, z: 0 },
@@ -1416,115 +1585,102 @@ function setupVisualization() {
                         quantum: { x: -15, y: 15, z: 15 },
                         tools: { x: 15, y: -15, z: -15 },
                     };
-                    
-                    const basePos = clusterPositions[clusterName] || { x: 0, y: 0, z: 0 };
-                    // Create more structured clusters with skill level determining height
+                    const basePos = clusterPositions[clusterName] || {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                    };
                     targetX = basePos.x + (Math.random() - 0.5) * 10;
-                    targetY = basePos.y + (Math.random() - 0.5) * 10; 
-                    targetZ = basePos.z + (nodeLevel / 100 * 10); // Higher skills rise to top
+                    targetY = basePos.y + (Math.random() - 0.5) * 10;
+                    targetZ = basePos.z + (nodeLevel / 100) * 10; 
                     break;
-                    
                 case "tags":
-                    // Create a flattened tag cloud layout for easier reading
                     const angle = Math.random() * Math.PI * 2;
                     const distance = 5 + Math.random() * 15;
                     targetX = Math.cos(angle) * distance;
                     targetY = (Math.random() - 0.5) * 8;
                     targetZ = Math.sin(angle) * distance;
                     break;
-                    
                 case "helix":
-                    // Create a double helix DNA-like structure
-                    // Position along helix related to skill level
-                    const idHash = nodeId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-                    const helix = idHash % 2; // 0 or 1 for which helix strand
-                    const t = (nodeLevel / 100) * Math.PI * 6; // Parameter along helix
+                    const idHash = nodeId
+                        .split("")
+                        .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                    const helix = idHash % 2; 
+                    const t = (nodeLevel / 100) * Math.PI * 6; 
                     const helixRadius = 15;
-                    
                     if (helix === 0) {
                         targetX = Math.cos(t) * helixRadius;
                         targetZ = Math.sin(t) * helixRadius;
                     } else {
-                        targetX = Math.cos(t + Math.PI) * helixRadius; // Opposite side
+                        targetX = Math.cos(t + Math.PI) * helixRadius; 
                         targetZ = Math.sin(t + Math.PI) * helixRadius;
                     }
-                    
-                    targetY = t * 2 - 20; // Vertical position along helix
+                    targetY = t * 2 - 20; 
                     break;
-                    
                 case "showcase":
-                    // Special showcase mode that highlights top skills
-                    // Creates a cinematic formation with highest skills in the center
                     if (nodeLevel >= 90) {
-                        // Top tier skills in an inner circle
                         const angle = Math.random() * Math.PI * 2;
                         targetX = Math.cos(angle) * 8;
                         targetY = 5 + (Math.random() - 0.5) * 3;
                         targetZ = Math.sin(angle) * 8;
                     } else if (nodeLevel >= 80) {
-                        // Second tier in a middle circle
                         const angle = Math.random() * Math.PI * 2;
                         targetX = Math.cos(angle) * 16;
                         targetY = 0 + (Math.random() - 0.5) * 4;
                         targetZ = Math.sin(angle) * 16;
                     } else {
-                        // Lower skills arranged in outer rings
                         const angle = Math.random() * Math.PI * 2;
-                        const ringRadius = 25 - (nodeLevel / 100 * 5);
+                        const ringRadius = 25 - (nodeLevel / 100) * 5;
                         targetX = Math.cos(angle) * ringRadius;
-                        targetY = -7 + (Math.random() - 0.5) * 5; 
+                        targetY = -7 + (Math.random() - 0.5) * 5;
                         targetZ = Math.sin(angle) * ringRadius;
                     }
                     break;
-                    
                 default:
-                    // Fallback to a random cloud
                     targetX = (Math.random() - 0.5) * 40;
                     targetY = (Math.random() - 0.5) * 40;
                     targetZ = (Math.random() - 0.5) * 40;
             }
-            
-            // Calculate distance for transition timing
-            if (node.position && typeof node.position.distanceTo === 'function') {
+            if (
+                node.position &&
+                typeof node.position.distanceTo === "function"
+            ) {
                 const newPos = new THREE.Vector3(targetX, targetY, targetZ);
                 const distance = node.position.distanceTo(newPos);
                 maxDistance = Math.max(maxDistance, distance);
             }
-            
-            // Store target position for animation
             node.userData.targetPosition = {
                 x: targetX,
                 y: targetY,
                 z: targetZ,
             };
         });
-        
-        // Apply transitions with TWEEN if available
         if (useTween) {
             nodes.forEach((node) => {
                 const targetPos = node.userData.targetPosition;
                 if (!targetPos) return;
-                
-                // Calculate duration based on distance (farther = slower)
                 const startPos = node.position.clone();
-                const endPos = new THREE.Vector3(targetPos.x, targetPos.y, targetPos.z);
+                const endPos = new THREE.Vector3(
+                    targetPos.x,
+                    targetPos.y,
+                    targetPos.z
+                );
                 const distance = startPos.distanceTo(endPos);
-                const duration = 1000 + (distance / maxDistance) * 1500; // 1-2.5 seconds based on distance
-                
-                // Create and start the tween
+                const duration = 1000 + (distance / maxDistance) * 1500; 
                 new TWEEN.Tween(node.position)
-                    .to({ x: targetPos.x, y: targetPos.y, z: targetPos.z }, duration)
+                    .to(
+                        { x: targetPos.x, y: targetPos.y, z: targetPos.z },
+                        duration
+                    )
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .start();
-                    
-                // Also animate material properties for visual interest
                 new TWEEN.Tween(node.material)
                     .to({ opacity: 0.7 }, duration / 2)
                     .easing(TWEEN.Easing.Cubic.In)
                     .chain(
                         new TWEEN.Tween(node.material)
-                        .to({ opacity: 1 }, duration / 2)
-                        .easing(TWEEN.Easing.Cubic.Out)
+                            .to({ opacity: 1 }, duration / 2)
+                            .easing(TWEEN.Easing.Cubic.Out)
                     )
                     .start();
             });
@@ -1545,7 +1701,7 @@ function setupVisualization() {
                 .clone()
                 .add(new THREE.Vector3(0, 0, 10));
             let startTime = null;
-            const duration = 1000; 
+            const duration = 1000;
             function animateCamera(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
@@ -1578,26 +1734,19 @@ function setupVisualization() {
             requestAnimationFrame(animateCamera);
         }
     };
-    /**
-     * Displays detailed premium information about a selected skill
-     * Creates an elegant, information-rich card with interactive elements
-     * @param {Object} skillData - Comprehensive data about the selected skill
-     */
     function showSkillDetails(skillData) {
         try {
-            const detailsContainer = document.getElementById("selected-skill-details");
+            const detailsContainer = document.getElementById(
+                "selected-skill-details"
+            );
             if (!detailsContainer) {
                 console.warn("Details container not found");
                 return;
             }
-            
-            // Show tooltip with loading animation before displaying full details
             const tooltip = document.getElementById("node-tooltip");
             if (tooltip) {
                 tooltip.style.display = "none";
             }
-            
-            // Handle empty skill data with elegant error state
             if (!skillData) {
                 console.warn("No skill data provided");
                 detailsContainer.innerHTML = `
@@ -1614,8 +1763,6 @@ function setupVisualization() {
                 `;
                 return;
             }
-
-            // Enhanced cluster display with rich metadata
             const clusterDisplayNames = {
                 programming: "Programming & Languages",
                 web: "Web Development & Design",
@@ -1624,19 +1771,15 @@ function setupVisualization() {
                 gamedev: "Game Development & Interactive Media",
                 soft: "Leadership & Professional Skills",
                 quantum: "Quantum Computing",
-                tools: "Tools & Technologies"
+                tools: "Tools & Technologies",
             };
-
-            // Get cluster with fallback
             const cluster = skillData.cluster || "general";
-            const clusterName = clusterDisplayNames[cluster] || 
-                (cluster.charAt(0).toUpperCase() + cluster.slice(1));
-
-            // Enhanced skill level categorization
+            const clusterName =
+                clusterDisplayNames[cluster] ||
+                cluster.charAt(0).toUpperCase() + cluster.slice(1);
             const level = skillData.level || 0;
             let skillLevelText = "";
             let skillBadgeClass = "";
-            
             if (level >= 90) {
                 skillLevelText = "Legendary Mastery";
                 skillBadgeClass = "legendary-badge";
@@ -1653,8 +1796,6 @@ function setupVisualization() {
                 skillLevelText = "Foundational Knowledge";
                 skillBadgeClass = "beginner-badge";
             }
-
-            // Dynamic color classes with enhanced UI treatment
             const getColorClass = (level) => {
                 if (level >= 90) return "legendary-level";
                 if (level >= 80) return "expert-level";
@@ -1662,46 +1803,54 @@ function setupVisualization() {
                 if (level >= 50) return "intermediate-level";
                 return "beginner-level";
             };
-            
-            // Get tools array with fallback
             const tools = skillData.tools || [];
-            const toolsHTML = tools.length > 0 ? 
-                `<div class="skill-tools" style="margin-top: 15px;">
+            const toolsHTML =
+                tools.length > 0
+                    ? `<div class="skill-tools" style="margin-top: 15px;">
                     <div style="font-size: 14px; opacity: 0.7; margin-bottom: 8px;">Proficient Tools & Technologies</div>
                     <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        ${tools.map(tool => 
-                            `<span style="background: rgba(255,255,255,0.08); padding: 5px 10px; border-radius: 20px; font-size: 12px; color: white; display: inline-flex; align-items: center;">
+                        ${tools
+                            .map(
+                                (tool) =>
+                                    `<span style="background: rgba(255,255,255,0.08); padding: 5px 10px; border-radius: 20px; font-size: 12px; color: white; display: inline-flex; align-items: center;">
                                 <i class="fas fa-tools" style="margin-right: 5px; font-size: 10px; opacity: 0.7;"></i>
                                 ${tool}
                             </span>`
-                        ).join('')}
+                            )
+                            .join("")}
                     </div>
-                </div>` : '';
-                
-            // Get achievements with fallback
+                </div>`
+                    : "";
             const achievements = skillData.keyAchievements || [];
-            const achievementsHTML = achievements.length > 0 ?
-                `<div class="skill-achievements" style="margin-top: 20px;">
+            const achievementsHTML =
+                achievements.length > 0
+                    ? `<div class="skill-achievements" style="margin-top: 20px;">
                     <div style="font-size: 14px; opacity: 0.7; margin-bottom: 8px;">Key Achievements</div>
                     <div style="display: flex; flex-direction: column; gap: 8px;">
-                        ${achievements.map(achievement => 
-                            `<div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 13px; color: white; display: flex; align-items: flex-start; gap: 8px;">
+                        ${achievements
+                            .map(
+                                (achievement) =>
+                                    `<div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 13px; color: white; display: flex; align-items: flex-start; gap: 8px;">
                                 <i class="fas fa-trophy" style="margin-top: 2px; color: #FFD700; font-size: 12px;"></i>
                                 <span>${achievement}</span>
                             </div>`
-                        ).join('')}
+                            )
+                            .join("")}
                     </div>
-                </div>` : '';
-
-            // Get description with fallback
-            const description = skillData.description || "Expert proficiency in this technical domain with practical application experience.";
-            
-            // Enhanced experience display
-            const experience = skillData.experience || `${Math.max(1, Math.floor(level / 20))}+ years`;
-
-            // Enhanced connected skills with interactive elements
+                </div>`
+                    : "";
+            const description =
+                skillData.description ||
+                "Expert proficiency in this technical domain with practical application experience.";
+            const experience =
+                skillData.experience ||
+                `${Math.max(1, Math.floor(level / 20))}+ years`;
             let relatedSkillsHTML = "";
-            if (skillData.connections && Array.isArray(skillData.connections) && skillData.connections.length > 0) {
+            if (
+                skillData.connections &&
+                Array.isArray(skillData.connections) &&
+                skillData.connections.length > 0
+            ) {
                 relatedSkillsHTML = `
                     <div class="related-skills premium-related" style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
                         <div class="related-skills-header" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
@@ -1712,27 +1861,60 @@ function setupVisualization() {
                             ${skillData.connections
                                 .map((id) => {
                                     try {
-                                        const relatedNode = nodes.find(n => n.userData && n.userData.id === id);
-                                        if (!relatedNode || !relatedNode.userData) return "";
-                                        
+                                        const relatedNode = nodes.find(
+                                            (n) =>
+                                                n.userData &&
+                                                n.userData.id === id
+                                        );
+                                        if (
+                                            !relatedNode ||
+                                            !relatedNode.userData
+                                        )
+                                            return "";
                                         const nodeData = relatedNode.userData;
-                                        const nodeColor = clusterColors[nodeData.cluster] || 0xffffff;
-                                        const colorHex = '#' + nodeColor.toString(16).padStart(6, '0');
-                                        
+                                        const nodeColor =
+                                            clusterColors[nodeData.cluster] ||
+                                            0xffffff;
+                                        const colorHex =
+                                            "#" +
+                                            nodeColor
+                                                .toString(16)
+                                                .padStart(6, "0");
                                         return `
-                                            <div class="related-skill-badge" data-id="${nodeData.id}" 
-                                                style="background: rgba(${(nodeColor >> 16) & 255}, ${(nodeColor >> 8) & 255}, ${nodeColor & 255}, 0.15); 
-                                                border: 1px solid rgba(${(nodeColor >> 16) & 255}, ${(nodeColor >> 8) & 255}, ${nodeColor & 255}, 0.3);
+                                            <div class="related-skill-badge" data-id="${
+                                                nodeData.id
+                                            }" 
+                                                style="background: rgba(${
+                                                    (nodeColor >> 16) & 255
+                                                }, ${(nodeColor >> 8) & 255}, ${
+                                            nodeColor & 255
+                                        }, 0.15); 
+                                                border: 1px solid rgba(${
+                                                    (nodeColor >> 16) & 255
+                                                }, ${(nodeColor >> 8) & 255}, ${
+                                            nodeColor & 255
+                                        }, 0.3);
                                                 padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease;
                                                 display: flex; align-items: center; gap: 8px; color: white;">
                                                 <div style="width: 8px; height: 8px; border-radius: 50%; background: ${colorHex};"></div>
-                                                <span style="font-size: 13px;">${nodeData.name}</span>
-                                                <span style="background: rgba(${(nodeColor >> 16) & 255}, ${(nodeColor >> 8) & 255}, ${nodeColor & 255}, 0.2); 
-                                                    font-size: 10px; padding: 2px 6px; border-radius: 10px;">${nodeData.level}%</span>
+                                                <span style="font-size: 13px;">${
+                                                    nodeData.name
+                                                }</span>
+                                                <span style="background: rgba(${
+                                                    (nodeColor >> 16) & 255
+                                                }, ${(nodeColor >> 8) & 255}, ${
+                                            nodeColor & 255
+                                        }, 0.2); 
+                                                    font-size: 10px; padding: 2px 6px; border-radius: 10px;">${
+                                                        nodeData.level
+                                                    }%</span>
                                             </div>
                                         `;
                                     } catch (err) {
-                                        console.error("Error creating related skill badge:", err);
+                                        console.error(
+                                            "Error creating related skill badge:",
+                                            err
+                                        );
                                         return "";
                                     }
                                 })
@@ -1740,18 +1922,15 @@ function setupVisualization() {
                         </div>
                     </div>`;
             }
-            
-            // Skill profile visual
             const colorClass = getColorClass(level);
-            const gradientStyle = colorClass === 'legendary-level' 
-                ? 'background: linear-gradient(135deg, #FF8A00, #e52e71);' 
-                : colorClass === 'expert-level'
-                ? 'background: linear-gradient(135deg, #4776E6, #8E54E9);'
-                : colorClass === 'advanced-level'
-                ? 'background: linear-gradient(135deg, #00c6ff, #0072ff);'
-                : 'background: linear-gradient(135deg, #56CCF2, #2F80ED);';
-
-            // Create the ultra-premium skill detail card
+            const gradientStyle =
+                colorClass === "legendary-level"
+                    ? "background: linear-gradient(135deg, #FF8A00, #e52e71);"
+                    : colorClass === "expert-level"
+                    ? "background: linear-gradient(135deg, #4776E6, #8E54E9);"
+                    : colorClass === "advanced-level"
+                    ? "background: linear-gradient(135deg, #00c6ff, #0072ff);"
+                    : "background: linear-gradient(135deg, #56CCF2, #2F80ED);";
             try {
                 detailsContainer.innerHTML = `
                     <div class="skill-detail-card" style="overflow: hidden; border-radius: 8px; transform-origin: center top; animation: fadeIn 0.5s ease-out;">
@@ -1769,7 +1948,6 @@ function setupVisualization() {
                                 </p>
                             </div>
                         </div>
-                        
                         <div style="padding: 20px; background: rgba(30,30,50,0.5);">
                             <div class="skill-proficiency" style="margin-bottom: 20px;">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
@@ -1783,7 +1961,6 @@ function setupVisualization() {
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="skill-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-bottom: 20px;">
                                 <div class="stat-item">
                                     <div class="stat-icon" style="margin-right: 8px;"><i class="fas fa-layer-group"></i></div>
@@ -1792,7 +1969,6 @@ function setupVisualization() {
                                         <div class="stat-value" style="font-size: 14px; font-weight: 600; color: white;">${clusterName}</div>
                                     </div>
                                 </div>
-
                                 <div class="stat-item">
                                     <div class="stat-icon" style="margin-right: 8px;"><i class="fas fa-clock"></i></div>
                                     <div class="stat-info">
@@ -1801,65 +1977,78 @@ function setupVisualization() {
                                     </div>
                                 </div>
                             </div>
-                            
                             ${toolsHTML}
                             ${achievementsHTML}
                             ${relatedSkillsHTML}
                         </div>
                     </div>
                 `;
-
-                // Add event listeners to related skill badges
-                const relatedSkillBadges = detailsContainer.querySelectorAll('.related-skill-badge');
-                relatedSkillBadges.forEach(badge => {
-                    badge.addEventListener('click', () => {
+                const relatedSkillBadges = detailsContainer.querySelectorAll(
+                    ".related-skill-badge"
+                );
+                relatedSkillBadges.forEach((badge) => {
+                    badge.addEventListener("click", () => {
                         try {
-                            const skillId = badge.getAttribute('data-id');
-                            const clickedNode = nodes.find(n => n.userData && n.userData.id === skillId);
-                            
+                            const skillId = badge.getAttribute("data-id");
+                            const clickedNode = nodes.find(
+                                (n) => n.userData && n.userData.id === skillId
+                            );
                             if (clickedNode) {
-                                // Add a subtle animation on click
-                                badge.style.transform = 'scale(0.95)';
+                                badge.style.transform = "scale(0.95)";
                                 setTimeout(() => {
-                                    badge.style.transform = 'scale(1)';
+                                    badge.style.transform = "scale(1)";
                                 }, 200);
-                                
-                                // Animation for camera to move to the node
                                 const nodePosition = clickedNode.position.clone();
                                 const cameraPosition = camera.position.clone();
-                                const distance = cameraPosition.distanceTo(nodePosition);
-                                const targetPosition = nodePosition.clone().normalize().multiplyScalar(distance);
-                                
-                                // Use TWEEN if available
+                                const distance = cameraPosition.distanceTo(
+                                    nodePosition
+                                );
+                                const targetPosition = nodePosition
+                                    .clone()
+                                    .normalize()
+                                    .multiplyScalar(distance);
                                 if (window.TWEEN) {
                                     new TWEEN.Tween(camera.position)
-                                        .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, 800)
+                                        .to(
+                                            {
+                                                x: targetPosition.x,
+                                                y: targetPosition.y,
+                                                z: targetPosition.z,
+                                            },
+                                            800
+                                        )
                                         .easing(TWEEN.Easing.Cubic.Out)
                                         .start();
                                 }
-                                
-                                // Handle node selection
                                 showSkillDetails(clickedNode.userData);
-                                
-                                // Highlight the selected node and reset others
                                 nodes.forEach((node) => {
-                                    if (node.userData && node.userData.id === skillId) {
-                                        const origScale = 0.5 + (node.userData.level / 100) * 0.5;
-                                        
-                                        // Use TWEEN for smooth transition if available
+                                    if (
+                                        node.userData &&
+                                        node.userData.id === skillId
+                                    ) {
+                                        const origScale =
+                                            0.5 +
+                                            (node.userData.level / 100) * 0.5;
                                         if (window.TWEEN) {
                                             new TWEEN.Tween(node.material)
-                                                .to({ emissiveIntensity: 0.8 }, 500)
+                                                .to(
+                                                    { emissiveIntensity: 0.8 },
+                                                    500
+                                                )
                                                 .easing(TWEEN.Easing.Cubic.Out)
                                                 .start();
-                                                
                                             new TWEEN.Tween(node.scale)
-                                                .to({ 
-                                                    x: origScale * 1.2, 
-                                                    y: origScale * 1.2, 
-                                                    z: origScale * 1.2 
-                                                }, 500)
-                                                .easing(TWEEN.Easing.Elastic.Out)
+                                                .to(
+                                                    {
+                                                        x: origScale * 1.2,
+                                                        y: origScale * 1.2,
+                                                        z: origScale * 1.2,
+                                                    },
+                                                    500
+                                                )
+                                                .easing(
+                                                    TWEEN.Easing.Elastic.Out
+                                                )
                                                 .start();
                                         } else {
                                             node.material.emissiveIntensity = 0.8;
@@ -1870,46 +2059,59 @@ function setupVisualization() {
                                             );
                                         }
                                     } else {
-                                        const skillLevel = node.userData && node.userData.level ? node.userData.level : 50;
-                                        const origScale = 0.5 + (skillLevel / 100) * 0.5;
-                                        
-                                        // Use TWEEN for smooth transition if available
+                                        const skillLevel =
+                                            node.userData && node.userData.level
+                                                ? node.userData.level
+                                                : 50;
+                                        const origScale =
+                                            0.5 + (skillLevel / 100) * 0.5;
                                         if (window.TWEEN) {
                                             new TWEEN.Tween(node.material)
-                                                .to({ emissiveIntensity: 0.3 }, 500)
+                                                .to(
+                                                    { emissiveIntensity: 0.3 },
+                                                    500
+                                                )
                                                 .easing(TWEEN.Easing.Cubic.Out)
                                                 .start();
-                                                
                                             new TWEEN.Tween(node.scale)
-                                                .to({ x: origScale, y: origScale, z: origScale }, 500)
+                                                .to(
+                                                    {
+                                                        x: origScale,
+                                                        y: origScale,
+                                                        z: origScale,
+                                                    },
+                                                    500
+                                                )
                                                 .easing(TWEEN.Easing.Cubic.Out)
                                                 .start();
                                         } else {
                                             node.material.emissiveIntensity = 0.3;
-                                            node.scale.set(origScale, origScale, origScale);
+                                            node.scale.set(
+                                                origScale,
+                                                origScale,
+                                                origScale
+                                            );
                                         }
                                     }
                                 });
                             }
                         } catch (error) {
-                            console.error("Error handling related skill click:", error);
+                            console.error(
+                                "Error handling related skill click:",
+                                error
+                            );
                         }
                     });
-                    
-                    // Add hover effects for premium experience
-                    badge.addEventListener('mouseenter', () => {
-                        badge.style.transform = 'translateY(-2px)';
-                        badge.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                    badge.addEventListener("mouseenter", () => {
+                        badge.style.transform = "translateY(-2px)";
+                        badge.style.boxShadow = "0 5px 15px rgba(0,0,0,0.2)";
                     });
-                    
-                    badge.addEventListener('mouseleave', () => {
-                        badge.style.transform = 'translateY(0)';
-                        badge.style.boxShadow = 'none';
+                    badge.addEventListener("mouseleave", () => {
+                        badge.style.transform = "translateY(0)";
+                        badge.style.boxShadow = "none";
                     });
                 });
-                
-                // Add custom animation for detail card appearance
-                const styleElement = document.createElement('style');
+                const styleElement = document.createElement("style");
                 styleElement.textContent = `
                     @keyframes fadeIn {
                         from { opacity: 0; transform: translateY(10px); }
@@ -1917,7 +2119,6 @@ function setupVisualization() {
                     }
                 `;
                 document.head.appendChild(styleElement);
-                
             } catch (renderError) {
                 console.error("Error rendering skill details:", renderError);
                 detailsContainer.innerHTML = `
@@ -1935,70 +2136,61 @@ function setupVisualization() {
         }
     }
     changeVisualizationView("sphere");
-    /**
-     * Ultra-premium animation loop with enhanced visual effects
-     * Manages scene updates, particle effects, and smooth transitions
-     */
     function animate() {
         try {
             requestAnimationFrame(animate);
-            
-            // Store camera and renderer reference for any external operations
             window.skillVisualizationCamera = camera;
-            
-            // Update TWEEN animations if available
             if (window.TWEEN) {
                 TWEEN.update();
             }
-            
-            // Get controls state for auto-rotation
-            const autoRotateEnabled = document.getElementById('auto-rotate')?.checked !== false;
-            const showLabelsEnabled = document.getElementById('show-labels')?.checked !== false;
-            
-            // Auto rotate the scene with smooth damping
+            const autoRotateEnabled =
+                document.getElementById("auto-rotate")?.checked !== false;
+            const showLabelsEnabled =
+                document.getElementById("show-labels")?.checked !== false;
             if (autoRotateEnabled) {
                 scene.rotation.y += 0.0015;
             }
-            
-            // Update FPS counter every 10 frames
             const now = performance.now();
             if (!window.lastFpsUpdate || now - window.lastFpsUpdate > 500) {
-                const fps = Math.round(1000 / (now - (window.lastFrameTime || now)));
-                const fpsCounter = document.getElementById('fps-counter');
+                const fps = Math.round(
+                    1000 / (now - (window.lastFrameTime || now))
+                );
+                const fpsCounter = document.getElementById("fps-counter");
                 if (fpsCounter) {
                     fpsCounter.textContent = fps;
                 }
                 window.lastFpsUpdate = now;
             }
             window.lastFrameTime = now;
-            
-            // Enhanced node animation with advanced interpolation
             nodes.forEach((node) => {
-                // Only animate if not being controlled by TWEEN
                 if (node.userData.targetPosition && !node._isTweening) {
-                    // Apply smooth easing with acceleration/deceleration
-                    const ease = 0.05; // Easing factor
-                    node.position.x += (node.userData.targetPosition.x - node.position.x) * ease;
-                    node.position.y += (node.userData.targetPosition.y - node.position.y) * ease;
-                    node.position.z += (node.userData.targetPosition.z - node.position.z) * ease;
-                    
-                    // Subtle oscillation effect for idle nodes
+                    const ease = 0.05; 
+                    node.position.x +=
+                        (node.userData.targetPosition.x - node.position.x) *
+                        ease;
+                    node.position.y +=
+                        (node.userData.targetPosition.y - node.position.y) *
+                        ease;
+                    node.position.z +=
+                        (node.userData.targetPosition.z - node.position.z) *
+                        ease;
                     const time = Date.now() * 0.001;
-                    const nodeId = node.userData.id || '';
-                    const idHash = nodeId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                    const nodeId = node.userData.id || "";
+                    const idHash = nodeId
+                        .split("")
+                        .reduce((acc, char) => acc + char.charCodeAt(0), 0);
                     const oscillationScale = 0.05;
-                    
-                    // Each node gets a unique subtle movement pattern
-                    node.position.y += Math.sin(time * 0.5 + idHash * 0.1) * oscillationScale;
-                    
-                    // Add a small pulse effect to node scale based on skill level
+                    node.position.y +=
+                        Math.sin(time * 0.5 + idHash * 0.1) * oscillationScale;
                     const skillLevel = node.userData.level || 50;
                     const pulseScale = 0.02 * (skillLevel / 100);
                     const baseScale = 0.5 + (skillLevel / 100) * 0.5;
-                    const pulse = Math.sin(time * 0.8 + idHash * 0.2) * pulseScale;
-                    
-                    // Don't scale nodes that are currently selected
-                    if (node.material && node.material.emissiveIntensity < 0.5) {
+                    const pulse =
+                        Math.sin(time * 0.8 + idHash * 0.2) * pulseScale;
+                    if (
+                        node.material &&
+                        node.material.emissiveIntensity < 0.5
+                    ) {
                         node.scale.set(
                             baseScale + pulse,
                             baseScale + pulse,
@@ -2006,73 +2198,85 @@ function setupVisualization() {
                         );
                     }
                 }
-                
-                // Update label visibility and position
                 if (node.userData.label) {
-                    // Update position to follow node
                     node.userData.label.position.copy(node.position);
                     node.userData.label.position.y += 1.8;
-                    
-                    // Toggle visibility based on show labels setting
                     node.userData.label.visible = showLabelsEnabled;
-                    
-                    // Scale labels with distance for better readability
-                    const distToCamera = camera.position.distanceTo(node.position);
+                    const distToCamera = camera.position.distanceTo(
+                        node.position
+                    );
                     const optimalDist = 30;
-                    const scaleFactor = Math.max(0.6, Math.min(1.2, optimalDist / distToCamera));
-                    node.userData.label.scale.set(5 * scaleFactor, 2.5 * scaleFactor, 1);
-                    
-                    // Adjust label opacity based on distance
+                    const scaleFactor = Math.max(
+                        0.6,
+                        Math.min(1.2, optimalDist / distToCamera)
+                    );
+                    node.userData.label.scale.set(
+                        5 * scaleFactor,
+                        2.5 * scaleFactor,
+                        1
+                    );
                     const material = node.userData.label.material;
                     if (material && material.opacity !== undefined) {
                         material.opacity = Math.min(1, 2 - distToCamera / 40);
                     }
                 }
-                
-                // Update connection lines with enhanced visuals
                 if (node.userData.lines) {
                     node.userData.lines.forEach((connection) => {
                         try {
-                            // Update line geometry to follow nodes
-                            if (connection.target && connection.line && connection.line.geometry) {
-                                const points = [node.position, connection.target.position];
+                            if (
+                                connection.target &&
+                                connection.line &&
+                                connection.line.geometry
+                            ) {
+                                const points = [
+                                    node.position,
+                                    connection.target.position,
+                                ];
                                 connection.line.geometry.setFromPoints(points);
                                 connection.line.geometry.attributes.position.needsUpdate = true;
-                                
-                                // Add subtle animation to connections
                                 const material = connection.line.material;
                                 if (material) {
-                                    const dist = node.position.distanceTo(connection.target.position);
-                                    
-                                    // Lines fade with distance
-                                    material.opacity = Math.max(0.1, Math.min(0.5, 8 / dist));
-                                    
-                                    // Pulse effect for lines connecting to highlighted nodes
-                                    if ((node.material && node.material.emissiveIntensity > 0.5) || 
-                                        (connection.target.material && connection.target.material.emissiveIntensity > 0.5)) {
-                                        material.opacity = 0.3 + Math.sin(Date.now() * 0.002) * 0.2;
+                                    const dist = node.position.distanceTo(
+                                        connection.target.position
+                                    );
+                                    material.opacity = Math.max(
+                                        0.1,
+                                        Math.min(0.5, 8 / dist)
+                                    );
+                                    if (
+                                        (node.material &&
+                                            node.material.emissiveIntensity >
+                                                0.5) ||
+                                        (connection.target.material &&
+                                            connection.target.material
+                                                .emissiveIntensity > 0.5)
+                                    ) {
+                                        material.opacity =
+                                            0.3 +
+                                            Math.sin(Date.now() * 0.002) * 0.2;
                                     }
                                 }
                             }
                         } catch (lineErr) {
-                            console.log("Error updating connection line:", lineErr);
+                            console.log(
+                                "Error updating connection line:",
+                                lineErr
+                            );
                         }
                     });
                 }
             });
-            
-            // Update node-counter
-            const nodeCounter = document.getElementById('node-count');
-            const connectionCounter = document.getElementById('connection-count');
+            const nodeCounter = document.getElementById("node-count");
+            const connectionCounter = document.getElementById(
+                "connection-count"
+            );
             if (nodeCounter && !nodeCounter._updated) {
                 nodeCounter.textContent = nodes.length;
                 nodeCounter._updated = true;
             }
-            
-            // Count connections
             if (connectionCounter && !connectionCounter._updated) {
                 let connectionCount = 0;
-                nodes.forEach(node => {
+                nodes.forEach((node) => {
                     if (node.userData.lines) {
                         connectionCount += node.userData.lines.length;
                     }
@@ -2080,25 +2284,24 @@ function setupVisualization() {
                 connectionCounter.textContent = connectionCount;
                 connectionCounter._updated = true;
             }
-            
-            // Initialize tooltip on first animation frame if not already done
             if (!window._tooltipInitialized && window.initSkillTooltip) {
                 try {
-                    window.initSkillTooltip(renderer, camera, nodes, clusterColors);
+                    window.initSkillTooltip(
+                        renderer,
+                        camera,
+                        nodes,
+                        clusterColors
+                    );
                     window._tooltipInitialized = true;
                 } catch (err) {
                     console.error("Error initializing tooltip:", err);
                 }
             }
-            
-            // Render the scene with post-processing if available
             renderer.render(scene, camera);
         } catch (err) {
             console.error("Error in animation loop:", err);
         }
     }
-    
-    // Start the animation loop
     console.log("Starting 3D skills visualization animation");
     animate();
 }

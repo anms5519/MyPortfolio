@@ -184,13 +184,13 @@
                 "#4285F4",
                 "#EA4335",
                 "#FBBC05",
-                "#34A853", 
+                "#34A853",
                 "#0095ff",
                 "#ff6384",
                 "#36a2eb",
                 "#ffce56",
                 "#4bc0c0",
-                "#9966ff", 
+                "#9966ff",
             ];
             return colors[Math.abs(hash) % colors.length];
         }

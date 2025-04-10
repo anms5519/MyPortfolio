@@ -41,27 +41,27 @@
             }
             body:not(.theme-dark) {
                 --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #eef2f7 100%);
-                --primary-color: #3B82F6; 
-                --primary-color-hover: #2563EB; 
-                --primary-color-active: #1D4ED8; 
-                --secondary-color: #6B7280; 
-                --accent-color: #EC4899; 
-                --text-color: #1F2937; 
-                --text-color-muted: #4B5563; 
+                --primary-color: #3B82F6;
+                --primary-color-hover: #2563EB;
+                --primary-color-active: #1D4ED8;
+                --secondary-color: #6B7280;
+                --accent-color: #EC4899;
+                --text-color: #1F2937;
+                --text-color-muted: #4B5563;
                 --bg-color-main: #ffffff;
-                --bg-color-sidebar: #f9fafb; 
-                --bg-color-elements: #f3f4f6; 
-                --bg-color-elements-hover: #e5e7eb; 
-                --border-color: #d1d5db; 
-                --border-color-strong: #9ca3af; 
-                --heading-color: #111827; 
-                --placeholder-color: #9ca3af; 
+                --bg-color-sidebar: #f9fafb;
+                --bg-color-elements: #f3f4f6;
+                --bg-color-elements-hover: #e5e7eb;
+                --border-color: #d1d5db;
+                --border-color-strong: #9ca3af;
+                --heading-color: #111827;
+                --placeholder-color: #9ca3af;
                 --icon-color: var(--primary-color);
                 --btn-text-color: #ffffff;
-                --danger-color: #EF4444; 
-                --success-color: #10B981; 
-                --warning-color: #F59E0B; 
-                --info-color: #0EA5E9; 
+                --danger-color: #EF4444;
+                --success-color: #10B981;
+                --warning-color: #F59E0B;
+                --info-color: #0EA5E9;
                 --modal-bg-color: var(--bg-color-main);
                 --code-bg: #f3f4f6;
                 --code-text: #374151;
@@ -69,33 +69,33 @@
                 --shadow-color-rgb: 0, 0, 0;
             }
             body.theme-dark {
-                --bg-gradient: linear-gradient(135deg, #1f2937 0%, #111827 100%); 
-                --primary-color: #60A5FA; 
-                --primary-color-hover: #3B82F6; 
-                --primary-color-active: #2563EB; 
-                --secondary-color: #9CA3AF; 
-                --accent-color: #F472B6; 
-                --text-color: #D1D5DB; 
-                --text-color-muted: #9CA3AF; 
-                --bg-color-main: #1f2937; 
-                --bg-color-sidebar: #111827; 
-                --bg-color-elements: #374151; 
-                --bg-color-elements-hover: #4B5563; 
-                --border-color: #4B5563; 
-                --border-color-strong: #6B7280; 
-                --heading-color: #F9FAFB; 
-                --placeholder-color: #6B7280; 
+                --bg-gradient: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+                --primary-color: #60A5FA;
+                --primary-color-hover: #3B82F6;
+                --primary-color-active: #2563EB;
+                --secondary-color: #9CA3AF;
+                --accent-color: #F472B6;
+                --text-color: #D1D5DB;
+                --text-color-muted: #9CA3AF;
+                --bg-color-main: #1f2937;
+                --bg-color-sidebar: #111827;
+                --bg-color-elements: #374151;
+                --bg-color-elements-hover: #4B5563;
+                --border-color: #4B5563;
+                --border-color-strong: #6B7280;
+                --heading-color: #F9FAFB;
+                --placeholder-color: #6B7280;
                 --icon-color: var(--primary-color);
                 --btn-text-color: #ffffff;
-                --danger-color: #F87171; 
-                --success-color: #34D399; 
-                --warning-color: #FBBF24; 
-                --info-color: #38BDF8; 
-                --modal-bg-color: #374151; 
+                --danger-color: #F87171;
+                --success-color: #34D399;
+                --warning-color: #FBBF24;
+                --info-color: #38BDF8;
+                --modal-bg-color: #374151;
                 --code-bg: #111827;
                 --code-text: #e5e7eb;
                 --link-color: var(--primary-color);
-                --shadow-color-rgb: 96, 165, 250; 
+                --shadow-color-rgb: 96, 165, 250;
             }
             *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
             html { scroll-behavior: smooth; }
@@ -104,7 +104,7 @@
                 background: var(--bg-gradient);
                 color: var(--text-color);
                 line-height: 1.65;
-                font-size: 16px; 
+                font-size: 16px;
                 overflow-x: hidden;
                 transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
                 min-height: 100vh;
@@ -120,7 +120,7 @@
             .container { max-width: var(--max-width); margin: 2rem auto; padding: 0 1.5rem; transition: max-width var(--transition-speed) ease; }
             header { text-align: center; margin-bottom: 2.5rem; position: relative; }
             h1.main-title {
-                font-size: 2.25rem; 
+                font-size: 2.25rem;
                 font-weight: 800;
                 background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
                 -webkit-background-clip: text;
@@ -148,14 +148,14 @@
             }
             .app-layout {
                 display: grid;
-                grid-template-columns: 380px 1fr; 
+                grid-template-columns: 380px 1fr;
                 gap: 1.75rem;
                 transition: grid-template-columns var(--transition-speed) ease;
             }
             .app-layout.focus-mode { grid-template-columns: 0px 1fr; gap: 0; }
             .app-layout.focus-mode .sidebar {
                 opacity: 0; visibility: hidden; transform: translateX(-100%);
-                padding: 0; border: none; margin-right: -1.75rem; 
+                padding: 0; border: none; margin-right: -1.75rem;
             }
             .sidebar, .main-content {
                 background-color: var(--bg-color-main);
@@ -164,21 +164,21 @@
                 box-shadow: var(--shadow-md);
                 border: 1px solid var(--border-color);
                 transition: all var(--transition-speed) ease;
-                height: fit-content; 
+                height: fit-content;
             }
             .sidebar { background-color: var(--bg-color-sidebar); }
             .form-group { margin-bottom: 1.25rem; position: relative; }
             .form-group label {
                 display: block; margin-bottom: 0.5rem; font-weight: 500;
-                color: var(--heading-color); font-size: 0.8rem; 
+                color: var(--heading-color); font-size: 0.8rem;
                 text-transform: uppercase; letter-spacing: 0.5px;
             }
             .form-control {
                 width: 100%; padding: 0.75rem 1rem;
                 border-radius: var(--border-radius-md);
                 border: 1px solid var(--border-color);
-                background-color: var(--bg-color-main); 
-                color: var(--text-color); font-family: inherit; font-size: 0.9rem; 
+                background-color: var(--bg-color-main);
+                color: var(--text-color); font-family: inherit; font-size: 0.9rem;
                 transition: all var(--transition-speed) ease; box-shadow: var(--shadow-xs);
             }
             .form-control:focus {
@@ -187,7 +187,7 @@
             }
             .form-control::placeholder { color: var(--placeholder-color); opacity: 0.8; }
             .form-group .tooltip-icon {
-                position: absolute; top: calc(0.5rem + 1em + 12px); 
+                position: absolute; top: calc(0.5rem + 1em + 12px);
                 right: 1rem; color: var(--secondary-color); cursor: help;
                 opacity: 0.6; transition: opacity var(--transition-speed); font-size: 0.9rem;
             }
@@ -231,7 +231,7 @@
             .btn.btn-subtle:hover:not(:disabled) { background: var(--bg-color-elements); color: var(--text-color); }
             .section-title {
                 margin-bottom: 1rem; color: var(--heading-color); display: flex;
-                align-items: center; gap: 0.6rem; font-size: 1.1rem; 
+                align-items: center; gap: 0.6rem; font-size: 1.1rem;
                 font-weight: 600; border-bottom: 1px solid var(--border-color);
                 padding-bottom: 0.6rem;
             }
@@ -257,7 +257,7 @@
             .template-card p { font-size: 0.8rem; opacity: 0.8; color: var(--text-color-muted); }
             .sections-list {
                 list-style: none; padding: 0; margin: 0; max-height: 400px;
-                overflow-y: auto; padding-right: 10px; 
+                overflow-y: auto; padding-right: 10px;
             }
             .section-item {
                 display: flex; align-items: center; justify-content: space-between;
@@ -277,7 +277,7 @@
                 box-shadow: inset 3px 0 8px rgba(var(--shadow-color-rgb), 0.08);
             }
             .section-item.dragging { opacity: 0.6; background: var(--secondary-color); transform: scale(1.02); box-shadow: var(--shadow-lg); cursor: grabbing; }
-            .section-item[data-section="cover-page"], .section-item[data-section="references-section"] { cursor: default; } 
+            .section-item[data-section="cover-page"], .section-item[data-section="references-section"] { cursor: default; }
             .section-item[draggable="false"] { cursor: default; }
             .section-item.hidden-section { opacity: 0.6; background-color: color-mix(in srgb, var(--secondary-color) 50%, transparent); border-left-color: var(--text-color-muted); }
             .section-item.hidden-section .section-item-name span.section-text { text-decoration: line-through; }
@@ -334,17 +334,17 @@
             .toolbar-btn.is-active { background-color: var(--primary-color); border-color: var(--primary-color); color: var(--btn-text-color); }
             .toolbar-btn:disabled { opacity: 0.5; cursor: not-allowed; }
             .toolbar-separator { width: 1px; background-color: var(--border-color); margin: 0.2rem 0.5rem; align-self: stretch; }
-            .ProseMirror { 
+            .ProseMirror {
                 padding: 1rem 1.5rem; min-height: 450px; outline: none;
                 font-size: 1rem; color: var(--text-color); line-height: 1.7;
-                max-width: 100%; 
-                overflow-wrap: break-word; 
-                word-wrap: break-word; 
-                word-break: break-word; 
-                hyphens: auto; 
+                max-width: 100%;
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+                word-break: break-word;
+                hyphens: auto;
             }
             .ProseMirror:focus { outline: none; }
-            .ProseMirror p.is-editor-empty:first-child::before { 
+            .ProseMirror p.is-editor-empty:first-child::before {
                 content: attr(data-placeholder);
                 float: left;
                 color: var(--placeholder-color);
@@ -389,7 +389,7 @@
             .markdown-preview-area th, .markdown-preview-area td { border: 1px solid var(--border-color); padding: 0.6rem 0.8rem; text-align: left; }
             .markdown-preview-area th { background-color: var(--bg-color-elements-hover); font-weight: bold; }
             .markdown-preview-area img { max-width: 90%; height: auto; border-radius: var(--border-radius-md); margin: 1em auto; display: block; box-shadow: var(--shadow-sm); }
-            .markdown-preview-area pre { margin: 1.5em 0; } 
+            .markdown-preview-area pre { margin: 1.5em 0; }
             .markdown-preview-area code:not(pre > code) { background: var(--code-bg); color: var(--code-text); padding: 0.2em 0.4em; border-radius: var(--border-radius-sm); font-size: 0.9em; }
             .markdown-preview-area a { color: var(--link-color); text-decoration: underline; }
             .editor-status-bar {
@@ -426,11 +426,11 @@
                 background-color: #ffffff; color: #111;
                 font-family: 'Times New Roman', Times, serif;
                 line-height: 1.5; font-size: 12pt;
-                width: 210mm; 
-                min-height: 297mm; 
-                margin: 0 auto; padding: 20mm 18mm; 
+                width: 210mm;
+                min-height: 297mm;
+                margin: 0 auto; padding: 20mm 18mm;
                 box-shadow: 0 0 30px rgba(0,0,0,0.3); border-radius: 3px;
-                position: relative; overflow: visible; 
+                position: relative; overflow: visible;
             }
             .preview-content-area h1, .preview-content-area h2, .preview-content-area h3, .preview-content-area h4, .preview-content-area h5, .preview-content-area h6 {
                 font-family: 'Times New Roman', Times, serif; font-weight: bold; color: #000;
@@ -453,16 +453,16 @@
             .preview-content-area a { color: #0000EE; text-decoration: underline; }
             .preview-content-area .report-section { margin-bottom: 0.5cm; page-break-before: auto; }
             .preview-content-area .cover-page {
-                text-align: center; min-height: calc(297mm - 40mm); 
-                display: flex; flex-direction: column; justify-content: space-between; 
+                text-align: center; min-height: calc(297mm - 40mm);
+                display: flex; flex-direction: column; justify-content: space-between;
                 align-items: center; position: relative; page-break-after: always;
-                border: none; padding: 0; margin: -20mm -18mm; 
-                width: 210mm; 
+                border: none; padding: 0; margin: -20mm -18mm;
+                width: 210mm;
             }
             .preview-content-area .cover-page-content { padding: 20mm 18mm; width: 100%; display: flex; flex-direction: column; align-items: center; flex-grow: 1; justify-content: space-between; }
             .preview-content-area .cover-page-top { margin-top: 1cm; }
             .preview-content-area .cover-page-middle { margin-top: 3cm; margin-bottom: 3cm; }
-            .preview-content-area .cover-page-bottom { margin-bottom: 1cm; width: 80%; } 
+            .preview-content-area .cover-page-bottom { margin-bottom: 1cm; width: 80%; }
             .preview-content-area .institution-logo { max-width: 120px; max-height: 100px; height: auto; margin-bottom: 1cm; }
             .preview-content-area .report-title { font-size: 24pt; font-weight: bold; margin-bottom: 0.5cm; color: #000; border-bottom: none; }
             .preview-content-area .report-subtitle { font-size: 18pt; margin-bottom: 2cm; color: #333; }
@@ -475,7 +475,7 @@
             .preview-content-area .toc-item a { text-decoration: none; color: #000; }
             .preview-content-area .toc-item a:hover { text-decoration: underline; }
             .preview-content-area .toc-item .page-num { font-style: italic; color: #555; }
-            .preview-content-area .page-number { position: absolute; bottom: 10mm; right: 18mm; font-size: 10pt; color: #555; } 
+            .preview-content-area .page-number { position: absolute; bottom: 10mm; right: 18mm; font-size: 10pt; color: #555; }
             .preview-close-btn {
                 position: fixed; top: 20px; right: 25px;
                 background: rgba(50, 50, 50, 0.8); color: #fff; border: none;
@@ -553,12 +553,12 @@
                     display: none !important;
                 }
                 .container { max-width: 100%; margin: 0; padding: 0; }
-                .app-layout { display: block; } 
+                .app-layout { display: block; }
                 .main-content { padding: 0; border: none; box-shadow: none; background: transparent; }
                 .preview-modal { position: static; display: block; background: none; backdrop-filter: none; padding: 0; overflow: visible; }
                 .preview-content-area {
                     width: 100%; min-height: auto; box-shadow: none; border-radius: 0;
-                    padding: 0; margin: 0; font-size: 11pt; 
+                    padding: 0; margin: 0; font-size: 11pt;
                     font-family: 'Times New Roman', Times, serif;
                 }
                 .preview-content-area h1, .preview-content-area h2, .preview-content-area h3, .preview-content-area h4 { margin-top: 0.8cm; margin-bottom: 0.4cm; }
@@ -567,11 +567,11 @@
                 .preview-content-area table.report-table { font-size: 9pt; margin: 0.7cm auto; }
                 .preview-content-area table.report-table th, .preview-content-area table.report-table td { padding: 0.2cm 0.3cm; }
                 .preview-content-area img { max-width: 85%; margin: 0.7cm auto; }
-                .preview-content-area .cover-page { min-height: 90vh;  margin: 0; padding: 1cm; } 
-                .preview-content-area .page-number { display: block; } 
-                a { color: #000; text-decoration: none; } 
+                .preview-content-area .cover-page { min-height: 90vh;  margin: 0; padding: 1cm; }
+                .preview-content-area .page-number { display: block; }
+                a { color: #000; text-decoration: none; }
                 blockquote { color: #333; }
-                pre, code { background: #f0f0f0 !important; color: #000 !important; border: 1px solid #ccc; white-space: pre-wrap; word-wrap: break-word; } 
+                pre, code { background: #f0f0f0 !important; color: #000 !important; border: 1px solid #ccc; white-space: pre-wrap; word-wrap: break-word; }
             }
         </style>
     </head>
@@ -664,8 +664,7 @@
                             class="sections-list"
                             id="sections-list"
                             aria-live="polite"
-                        >
-                        </div>
+                        ></div>
                     </div>
                     <button
                         class="btn btn-secondary"
@@ -688,8 +687,7 @@
                         <div
                             class="version-history-list"
                             id="version-history-list"
-                        >
-                        </div>
+                        ></div>
                     </div>
                     <div class="export-options">
                         <h3 class="section-title">
@@ -1030,12 +1028,12 @@
                                 role="tabpanel"
                                 aria-labelledby="editor-tab-btn"
                             >
-                            <div class="editor-area" id="tinymce-editor-area"> <!-- Added ID here -->
-                                <!-- Toolbar can be generated by TinyMCE itself, or you can keep your custom one (more complex) -->
-                                <!-- Let's remove the custom toolbar for simplicity first -->
-                                <!-- <div class="editor-toolbar" id="editor-toolbar"></div> -->
-                                <textarea id="editor-tinymce"></textarea>
-                            </div>
+                                <div
+                                    class="editor-area"
+                                    id="tinymce-editor-area"
+                                >
+                                    <textarea id="editor-tinymce"></textarea>
+                                </div>
                                 <div
                                     class="editor-status-bar"
                                     id="editor-status-bar"
@@ -1263,8 +1261,7 @@
                                         Cancel Edit
                                     </button>
                                 </div>
-                                <div id="references-list">
-                                </div>
+                                <div id="references-list"></div>
                             </div>
                         </div>
                     </div>
@@ -1286,8 +1283,7 @@
             >
                 ×
             </button>
-            <div class="preview-content-area" id="preview-content-area">
-            </div>
+            <div class="preview-content-area" id="preview-content-area"></div>
         </div>
         <div
             class="modal-overlay"
@@ -1363,1327 +1359,1173 @@
             <div class="loader"></div>
             <div class="loading-message" id="loading-message">Loading...</div>
         </div>
-
-<!-- PDF Generation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!-- TinyMCE Editor -->
-<script src="https://cdn.tiny.cloud/1/kck5o3812gjl4zconw5cwdx3ok1rzhtap0od4i871yx4ye88/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
-
-<!-- Your Script -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // ... your existing code ...
-    });
-</script>
-<!-- Lowlight (required for code block highlighting) -->
-
-<!-- Prism JS (for Markdown preview highlighting - already linked in your CSS, but need JS too) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<!-- Markdown Conversion -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
-<!-- PDF Generation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM Elements ---
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    const focusToggleBtn = document.getElementById('focus-toggle-btn');
-    const appLayout = document.getElementById('app-layout');
-    const templateCards = document.querySelectorAll('.template-card');
-    const sectionsList = document.getElementById('sections-list');
-    const addSectionBtn = document.getElementById('add-section-btn');
-    const saveVersionBtn = document.getElementById('save-version-btn');
-    const versionHistoryList = document.getElementById('version-history-list');
-    const previewBtn = document.getElementById('preview-btn');
-    const downloadPdfBtn = document.getElementById('download-pdf-btn');
-    const downloadMdBtn = document.getElementById('download-md-btn');
-    const downloadHtmlBtn = document.getElementById('download-html-btn');
-    const clearStorageBtn = document.getElementById('clear-storage-btn');
-    const currentSectionTitle = document.querySelector('.current-section-title span');
-    const currentSectionIcon = document.querySelector('.current-section-title i');
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-    const coverPageForm = document.getElementById('form-tab');
-    const editorTab = document.getElementById('editor-tab');
-    const referencesTab = document.getElementById('references-tab');
-    // const editorContainer = document.getElementById('editor-tiptap'); // No longer used directly for Tiptap
-    // const editorToolbar = document.getElementById('editor-toolbar'); // No longer used for Tiptap toolbar
-    const tinymceEditorArea = document.getElementById('tinymce-editor-area'); // Container for TinyMCE
-    const tinymceEditorTextarea = document.getElementById('editor-tinymce'); // Target textarea for TinyMCE
-    const wordCountEl = document.getElementById('word-count');
-    const saveStatusEl = document.getElementById('save-status');
-    const saveSectionBtn = document.getElementById('save-section-btn');
-    const toggleEditorModeBtn = document.getElementById('toggle-editor-mode-btn');
-    const markdownEditorArea = document.getElementById('markdown-editor-area');
-    const markdownEditor = document.getElementById('editor-markdown');
-    const markdownPreview = document.getElementById('markdown-preview-area');
-    // const tiptapEditorArea = document.querySelector('.editor-area'); // No longer Tiptap specific
-    const refTypeSelect = document.getElementById('ref-type');
-    const refForm = document.getElementById('reference-form');
-    const refFields = refForm.querySelectorAll('.ref-field');
-    const addReferenceBtn = document.getElementById('add-reference-btn');
-    const updateReferenceBtn = document.getElementById('update-reference-btn');
-    const cancelEditReferenceBtn = document.getElementById('cancel-edit-reference-btn');
-    const referencesListContainer = document.getElementById('references-list');
-    const previewModal = document.getElementById('preview-modal');
-    const previewContentArea = document.getElementById('preview-content-area');
-    const previewCloseBtn = document.getElementById('preview-close-btn');
-    const addSectionModal = document.getElementById('add-section-modal');
-    const newSectionNameInput = document.getElementById('new-section-name');
-    const confirmAddSectionBtn = document.getElementById('confirm-add-section-btn');
-    const cancelAddSectionBtn = document.getElementById('cancel-add-section-btn');
-    const restoreVersionModal = document.getElementById('restore-version-modal');
-    const restoreVersionTimestampEl = document.getElementById('restore-version-timestamp');
-    const confirmRestoreVersionBtn = document.getElementById('confirm-restore-version-btn');
-    const cancelRestoreVersionBtn = document.getElementById('cancel-restore-version-btn');
-    const notificationArea = document.getElementById('notification-area');
-    const loadingOverlay = document.getElementById('loading-overlay');
-    const loadingMessage = document.getElementById('loading-message');
-
-    // --- State Variables ---
-    // let editorInstance = null; // REMOVED Tiptap instance
-    let turndownService = null;
-    let reportData = {};
-    let activeSectionId = null;
-    let currentTheme = 'light';
-    let isFocusMode = false;
-    let editorMode = 'tinymce'; // Default to TinyMCE now
-    let saveTimeout = null;
-    let currentEditingRefId = null;
-    let versionToRestore = null;
-    let dragSrcElement = null;
-
-    // --- Default Report Structure ---
-    const defaultSections = {
-        'lab-report': [
-            { id: 'cover-page', name: 'Cover Page', icon: 'fa-address-card', canRemove: false, canHide: false, canMove: false },
-            { id: 'abstract', name: 'Abstract', icon: 'fa-file-alt', canRemove: true, canHide: true, canMove: true },
-            { id: 'introduction', name: 'Introduction', icon: 'fa-lightbulb', canRemove: true, canHide: true, canMove: true },
-            { id: 'methods', name: 'Methods & Materials', icon: 'fa-cogs', canRemove: true, canHide: true, canMove: true },
-            { id: 'results', name: 'Results', icon: 'fa-chart-bar', canRemove: true, canHide: true, canMove: true },
-            { id: 'discussion', name: 'Discussion', icon: 'fa-comments', canRemove: true, canHide: true, canMove: true },
-            { id: 'conclusion', name: 'Conclusion', icon: 'fa-flag-checkered', canRemove: true, canHide: true, canMove: true },
-            { id: 'references-section', name: 'References', icon: 'fa-book', canRemove: false, canHide: false, canMove: false },
-            { id: 'appendix', name: 'Appendix', icon: 'fa-paperclip', canRemove: true, canHide: true, canMove: true },
-        ],
-        'assignment': [
-            { id: 'cover-page', name: 'Cover Page', icon: 'fa-address-card', canRemove: false, canHide: false, canMove: false },
-            { id: 'introduction', name: 'Introduction', icon: 'fa-lightbulb', canRemove: true, canHide: true, canMove: true },
-            { id: 'body', name: 'Main Body', icon: 'fa-file-alt', canRemove: true, canHide: true, canMove: true },
-            { id: 'conclusion', name: 'Conclusion', icon: 'fa-flag-checkered', canRemove: true, canHide: true, canMove: true },
-            { id: 'references-section', name: 'References', icon: 'fa-book', canRemove: false, canHide: false, canMove: false },
-        ],
-        'research-paper': [
-            { id: 'cover-page', name: 'Title Page', icon: 'fa-address-card', canRemove: false, canHide: false, canMove: false },
-            { id: 'abstract', name: 'Abstract', icon: 'fa-file-alt', canRemove: true, canHide: true, canMove: true },
-            { id: 'keywords', name: 'Keywords', icon: 'fa-tags', canRemove: true, canHide: true, canMove: true },
-            { id: 'introduction', name: 'Introduction', icon: 'fa-lightbulb', canRemove: true, canHide: true, canMove: true },
-            { id: 'literature-review', name: 'Literature Review', icon: 'fa-book-reader', canRemove: true, canHide: true, canMove: true },
-            { id: 'methodology', name: 'Methodology', icon: 'fa-cogs', canRemove: true, canHide: true, canMove: true },
-            { id: 'results', name: 'Results', icon: 'fa-chart-bar', canRemove: true, canHide: true, canMove: true },
-            { id: 'discussion', name: 'Discussion', icon: 'fa-comments', canRemove: true, canHide: true, canMove: true },
-            { id: 'conclusion', name: 'Conclusion', icon: 'fa-flag-checkered', canRemove: true, canHide: true, canMove: true },
-            { id: 'acknowledgements', name: 'Acknowledgements', icon: 'fa-hands-helping', canRemove: true, canHide: true, canMove: true },
-            { id: 'references-section', name: 'References', icon: 'fa-book', canRemove: false, canHide: false, canMove: false },
-            { id: 'appendix', name: 'Appendix', icon: 'fa-paperclip', canRemove: true, canHide: true, canMove: true },
-        ],
-        'thesis-chapter': [
-            { id: 'cover-page', name: 'Chapter Cover', icon: 'fa-address-card', canRemove: false, canHide: false, canMove: false },
-            { id: 'introduction', name: 'Introduction', icon: 'fa-lightbulb', canRemove: true, canHide: true, canMove: true },
-            { id: 'background', name: 'Background/Literature', icon: 'fa-book-reader', canRemove: true, canHide: true, canMove: true },
-            { id: 'methodology', name: 'Methodology/Approach', icon: 'fa-cogs', canRemove: true, canHide: true, canMove: true },
-            { id: 'results-findings', name: 'Results/Findings', icon: 'fa-chart-bar', canRemove: true, canHide: true, canMove: true },
-            { id: 'analysis-discussion', name: 'Analysis/Discussion', icon: 'fa-comments', canRemove: true, canHide: true, canMove: true },
-            { id: 'conclusion', name: 'Conclusion/Summary', icon: 'fa-flag-checkered', canRemove: true, canHide: true, canMove: true },
-            { id: 'references-section', name: 'References', icon: 'fa-book', canRemove: false, canHide: false, canMove: false },
-        ]
-    };
-
-    const defaultReportData = {
-        template: 'lab-report',
-        sectionsOrder: defaultSections['lab-report'].map(s => s.id),
-        sectionsConfig: defaultSections['lab-report'].reduce((acc, s) => {
-            acc[s.id] = { name: s.name, icon: s.icon, canRemove: s.canRemove, canHide: s.canHide, canMove: s.canMove };
-            return acc;
-        }, {}),
-        sectionsContent: {
-            'cover-page': {},
-            'abstract': '',
-            'introduction': '',
-            'methods': '',
-            'results': '',
-            'discussion': '',
-            'conclusion': '',
-            'references-section': [],
-            'appendix': '',
-        },
-        sectionsVisibility: defaultSections['lab-report'].reduce((acc, s) => {
-            acc[s.id] = true;
-            return acc;
-        }, {}),
-        versions: [],
-        editorMode: 'tinymce', // Default editor mode is now TinyMCE
-    };
-
-    // --- Utility Functions ---
-    const generateId = () => `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const formatDate = (date) => date ? new Date(date).toLocaleDateString() : 'N/A';
-    const formatDateTime = (timestamp) => new Date(timestamp).toLocaleString();
-
-    const debounce = (func, delay) => {
-        clearTimeout(saveTimeout);
-        saveTimeout = setTimeout(func, delay);
-    };
-
-    // --- Loading Overlay ---
-    const showLoading = (message = 'Processing...') => {
-        loadingMessage.textContent = message;
-        loadingOverlay.classList.add('show');
-    };
-    const hideLoading = () => {
-        loadingOverlay.classList.remove('show');
-    };
-
-    // --- Notifications ---
-    const showNotification = (message, type = 'info', duration = 4000) => {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        let iconClass = 'fa-info-circle';
-        if (type === 'success') iconClass = 'fa-check-circle';
-        if (type === 'error') iconClass = 'fa-times-circle';
-        if (type === 'warning') iconClass = 'fa-exclamation-triangle';
-
-        notification.innerHTML = `
-            <i class="fas ${iconClass}"></i>
-            <span>${message}</span>
-        `;
-        notificationArea.appendChild(notification);
-
-        setTimeout(() => notification.classList.add('show'), 10);
-
-        const timerId = setTimeout(() => {
-            notification.classList.add('dismissing');
-            notification.addEventListener('transitionend', () => notification.remove());
-        }, duration);
-
-        notification.addEventListener('click', () => {
-            clearTimeout(timerId);
-            notification.classList.add('dismissing');
-            notification.addEventListener('transitionend', () => notification.remove());
-        });
-    };
-
-    // --- Modal Handling ---
-    const showModal = (modalElement) => modalElement.classList.add('show');
-    const hideModal = (modalElement) => modalElement.classList.remove('show');
-
-    // --- Storage ---
-    const saveData = (showStatus = true) => {
-        try {
-            if (!Array.isArray(reportData.sectionsContent['references-section'])) {
-                 reportData.sectionsContent['references-section'] = [];
-                 console.warn("Corrected references-section to be an array.");
-            }
-            if (!Array.isArray(reportData.versions)) {
-                 reportData.versions = [];
-                 console.warn("Corrected versions to be an array.");
-            }
-
-            localStorage.setItem('elysianReportData', JSON.stringify(reportData));
-            localStorage.setItem('elysianTheme', currentTheme);
-            localStorage.setItem('elysianFocusMode', isFocusMode);
-            if (showStatus) updateSaveStatus('saved');
-        } catch (error) {
-            console.error('Error saving data to localStorage:', error);
-            showNotification('Error saving data. Storage might be full.', 'error');
-            if (showStatus) updateSaveStatus('error');
-        }
-    };
-
-    const loadData = () => {
-        try {
-            const savedData = localStorage.getItem('elysianReportData');
-            const savedTheme = localStorage.getItem('elysianTheme');
-            const savedFocusMode = localStorage.getItem('elysianFocusMode');
-
-            if (savedData) {
-                reportData = JSON.parse(savedData);
-                if (!reportData.sectionsConfig) reportData.sectionsConfig = {};
-                if (!reportData.sectionsVisibility) reportData.sectionsVisibility = {};
-                if (!reportData.versions) reportData.versions = [];
-                if (!reportData.editorMode) reportData.editorMode = 'tinymce'; // Default to tinymce if missing
-
-                ['cover-page', 'references-section'].forEach(coreId => {
-                    if (!reportData.sectionsConfig[coreId]) {
-                         const defaultConfig = defaultSections[reportData.template]?.find(s => s.id === coreId) || defaultSections['lab-report'].find(s => s.id === coreId);
-                         if (defaultConfig) {
-                            reportData.sectionsConfig[coreId] = { name: defaultConfig.name, icon: defaultConfig.icon, canRemove: false, canHide: false, canMove: false };
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+            integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+            integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdn.tiny.cloud/1/kck5o3812gjl4zconw5cwdx3ok1rzhtap0od4i871yx4ye88/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"
+        ></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+            });
+        </script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+            integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+            integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+            integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                const themeToggleBtn = document.getElementById('theme-toggle-btn');
+                const focusToggleBtn = document.getElementById('focus-toggle-btn');
+                const appLayout = document.getElementById('app-layout');
+                const templateCards = document.querySelectorAll('.template-card');
+                const sectionsList = document.getElementById('sections-list');
+                const addSectionBtn = document.getElementById('add-section-btn');
+                const saveVersionBtn = document.getElementById('save-version-btn');
+                const versionHistoryList = document.getElementById('version-history-list');
+                const previewBtn = document.getElementById('preview-btn');
+                const downloadPdfBtn = document.getElementById('download-pdf-btn');
+                const downloadMdBtn = document.getElementById('download-md-btn');
+                const downloadHtmlBtn = document.getElementById('download-html-btn');
+                const clearStorageBtn = document.getElementById('clear-storage-btn');
+                const currentSectionTitle = document.querySelector('.current-section-title span');
+                const currentSectionIcon = document.querySelector('.current-section-title i');
+                const tabButtons = document.querySelectorAll('.tab-btn');
+                const tabContents = document.querySelectorAll('.tab-content');
+                const coverPageForm = document.getElementById('form-tab');
+                const editorTab = document.getElementById('editor-tab');
+                const referencesTab = document.getElementById('references-tab');
+                const tinymceEditorArea = document.getElementById('tinymce-editor-area'); 
+                const tinymceEditorTextarea = document.getElementById('editor-tinymce'); 
+                const wordCountEl = document.getElementById('word-count');
+                const saveStatusEl = document.getElementById('save-status');
+                const saveSectionBtn = document.getElementById('save-section-btn');
+                const toggleEditorModeBtn = document.getElementById('toggle-editor-mode-btn');
+                const markdownEditorArea = document.getElementById('markdown-editor-area');
+                const markdownEditor = document.getElementById('editor-markdown');
+                const markdownPreview = document.getElementById('markdown-preview-area');
+                const refTypeSelect = document.getElementById('ref-type');
+                const refForm = document.getElementById('reference-form');
+                const refFields = refForm.querySelectorAll('.ref-field');
+                const addReferenceBtn = document.getElementById('add-reference-btn');
+                const updateReferenceBtn = document.getElementById('update-reference-btn');
+                const cancelEditReferenceBtn = document.getElementById('cancel-edit-reference-btn');
+                const referencesListContainer = document.getElementById('references-list');
+                const previewModal = document.getElementById('preview-modal');
+                const previewContentArea = document.getElementById('preview-content-area');
+                const previewCloseBtn = document.getElementById('preview-close-btn');
+                const addSectionModal = document.getElementById('add-section-modal');
+                const newSectionNameInput = document.getElementById('new-section-name');
+                const confirmAddSectionBtn = document.getElementById('confirm-add-section-btn');
+                const cancelAddSectionBtn = document.getElementById('cancel-add-section-btn');
+                const restoreVersionModal = document.getElementById('restore-version-modal');
+                const restoreVersionTimestampEl = document.getElementById('restore-version-timestamp');
+                const confirmRestoreVersionBtn = document.getElementById('confirm-restore-version-btn');
+                const cancelRestoreVersionBtn = document.getElementById('cancel-restore-version-btn');
+                const notificationArea = document.getElementById('notification-area');
+                const loadingOverlay = document.getElementById('loading-overlay');
+                const loadingMessage = document.getElementById('loading-message');
+                let turndownService = null;
+                let reportData = {};
+                let activeSectionId = null;
+                let currentTheme = 'light';
+                let isFocusMode = false;
+                let editorMode = 'tinymce'; 
+                let saveTimeout = null;
+                let currentEditingRefId = null;
+                let versionToRestore = null;
+                let dragSrcElement = null;
+                const defaultSections = {
+                    'lab-report': [
+                        { id: 'cover-page', name: 'Cover Page', icon: 'fa-address-card', canRemove: false, canHide: false, canMove: false },
+                        { id: 'abstract', name: 'Abstract', icon: 'fa-file-alt', canRemove: true, canHide: true, canMove: true },
+                        { id: 'introduction', name: 'Introduction', icon: 'fa-lightbulb', canRemove: true, canHide: true, canMove: true },
+                        { id: 'methods', name: 'Methods & Materials', icon: 'fa-cogs', canRemove: true, canHide: true, canMove: true },
+                        { id: 'results', name: 'Results', icon: 'fa-chart-bar', canRemove: true, canHide: true, canMove: true },
+                        { id: 'discussion', name: 'Discussion', icon: 'fa-comments', canRemove: true, canHide: true, canMove: true },
+                        { id: 'conclusion', name: 'Conclusion', icon: 'fa-flag-checkered', canRemove: true, canHide: true, canMove: true },
+                        { id: 'references-section', name: 'References', icon: 'fa-book', canRemove: false, canHide: false, canMove: false },
+                        { id: 'appendix', name: 'Appendix', icon: 'fa-paperclip', canRemove: true, canHide: true, canMove: true },
+                    ],
+                    'assignment': [
+                        { id: 'cover-page', name: 'Cover Page', icon: 'fa-address-card', canRemove: false, canHide: false, canMove: false },
+                        { id: 'introduction', name: 'Introduction', icon: 'fa-lightbulb', canRemove: true, canHide: true, canMove: true },
+                        { id: 'body', name: 'Main Body', icon: 'fa-file-alt', canRemove: true, canHide: true, canMove: true },
+                        { id: 'conclusion', name: 'Conclusion', icon: 'fa-flag-checkered', canRemove: true, canHide: true, canMove: true },
+                        { id: 'references-section', name: 'References', icon: 'fa-book', canRemove: false, canHide: false, canMove: false },
+                    ],
+                    'research-paper': [
+                        { id: 'cover-page', name: 'Title Page', icon: 'fa-address-card', canRemove: false, canHide: false, canMove: false },
+                        { id: 'abstract', name: 'Abstract', icon: 'fa-file-alt', canRemove: true, canHide: true, canMove: true },
+                        { id: 'keywords', name: 'Keywords', icon: 'fa-tags', canRemove: true, canHide: true, canMove: true },
+                        { id: 'introduction', name: 'Introduction', icon: 'fa-lightbulb', canRemove: true, canHide: true, canMove: true },
+                        { id: 'literature-review', name: 'Literature Review', icon: 'fa-book-reader', canRemove: true, canHide: true, canMove: true },
+                        { id: 'methodology', name: 'Methodology', icon: 'fa-cogs', canRemove: true, canHide: true, canMove: true },
+                        { id: 'results', name: 'Results', icon: 'fa-chart-bar', canRemove: true, canHide: true, canMove: true },
+                        { id: 'discussion', name: 'Discussion', icon: 'fa-comments', canRemove: true, canHide: true, canMove: true },
+                        { id: 'conclusion', name: 'Conclusion', icon: 'fa-flag-checkered', canRemove: true, canHide: true, canMove: true },
+                        { id: 'acknowledgements', name: 'Acknowledgements', icon: 'fa-hands-helping', canRemove: true, canHide: true, canMove: true },
+                        { id: 'references-section', name: 'References', icon: 'fa-book', canRemove: false, canHide: false, canMove: false },
+                        { id: 'appendix', name: 'Appendix', icon: 'fa-paperclip', canRemove: true, canHide: true, canMove: true },
+                    ],
+                    'thesis-chapter': [
+                        { id: 'cover-page', name: 'Chapter Cover', icon: 'fa-address-card', canRemove: false, canHide: false, canMove: false },
+                        { id: 'introduction', name: 'Introduction', icon: 'fa-lightbulb', canRemove: true, canHide: true, canMove: true },
+                        { id: 'background', name: 'Background/Literature', icon: 'fa-book-reader', canRemove: true, canHide: true, canMove: true },
+                        { id: 'methodology', name: 'Methodology/Approach', icon: 'fa-cogs', canRemove: true, canHide: true, canMove: true },
+                        { id: 'results-findings', name: 'Results/Findings', icon: 'fa-chart-bar', canRemove: true, canHide: true, canMove: true },
+                        { id: 'analysis-discussion', name: 'Analysis/Discussion', icon: 'fa-comments', canRemove: true, canHide: true, canMove: true },
+                        { id: 'conclusion', name: 'Conclusion/Summary', icon: 'fa-flag-checkered', canRemove: true, canHide: true, canMove: true },
+                        { id: 'references-section', name: 'References', icon: 'fa-book', canRemove: false, canHide: false, canMove: false },
+                    ]
+                };
+                const defaultReportData = {
+                    template: 'lab-report',
+                    sectionsOrder: defaultSections['lab-report'].map(s => s.id),
+                    sectionsConfig: defaultSections['lab-report'].reduce((acc, s) => {
+                        acc[s.id] = { name: s.name, icon: s.icon, canRemove: s.canRemove, canHide: s.canHide, canMove: s.canMove };
+                        return acc;
+                    }, {}),
+                    sectionsContent: {
+                        'cover-page': {},
+                        'abstract': '',
+                        'introduction': '',
+                        'methods': '',
+                        'results': '',
+                        'discussion': '',
+                        'conclusion': '',
+                        'references-section': [],
+                        'appendix': '',
+                    },
+                    sectionsVisibility: defaultSections['lab-report'].reduce((acc, s) => {
+                        acc[s.id] = true;
+                        return acc;
+                    }, {}),
+                    versions: [],
+                    editorMode: 'tinymce', 
+                };
+                const generateId = () => `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                const formatDate = (date) => date ? new Date(date).toLocaleDateString() : 'N/A';
+                const formatDateTime = (timestamp) => new Date(timestamp).toLocaleString();
+                const debounce = (func, delay) => {
+                    clearTimeout(saveTimeout);
+                    saveTimeout = setTimeout(func, delay);
+                };
+                const showLoading = (message = 'Processing...') => {
+                    loadingMessage.textContent = message;
+                    loadingOverlay.classList.add('show');
+                };
+                const hideLoading = () => {
+                    loadingOverlay.classList.remove('show');
+                };
+                const showNotification = (message, type = 'info', duration = 4000) => {
+                    const notification = document.createElement('div');
+                    notification.className = `notification ${type}`;
+                    let iconClass = 'fa-info-circle';
+                    if (type === 'success') iconClass = 'fa-check-circle';
+                    if (type === 'error') iconClass = 'fa-times-circle';
+                    if (type === 'warning') iconClass = 'fa-exclamation-triangle';
+                    notification.innerHTML = `
+                        <i class="fas ${iconClass}"></i>
+                        <span>${message}</span>
+                    `;
+                    notificationArea.appendChild(notification);
+                    setTimeout(() => notification.classList.add('show'), 10);
+                    const timerId = setTimeout(() => {
+                        notification.classList.add('dismissing');
+                        notification.addEventListener('transitionend', () => notification.remove());
+                    }, duration);
+                    notification.addEventListener('click', () => {
+                        clearTimeout(timerId);
+                        notification.classList.add('dismissing');
+                        notification.addEventListener('transitionend', () => notification.remove());
+                    });
+                };
+                const showModal = (modalElement) => modalElement.classList.add('show');
+                const hideModal = (modalElement) => modalElement.classList.remove('show');
+                const saveData = (showStatus = true) => {
+                    try {
+                        if (!Array.isArray(reportData.sectionsContent['references-section'])) {
+                             reportData.sectionsContent['references-section'] = [];
+                             console.warn("Corrected references-section to be an array.");
+                        }
+                        if (!Array.isArray(reportData.versions)) {
+                             reportData.versions = [];
+                             console.warn("Corrected versions to be an array.");
+                        }
+                        localStorage.setItem('elysianReportData', JSON.stringify(reportData));
+                        localStorage.setItem('elysianTheme', currentTheme);
+                        localStorage.setItem('elysianFocusMode', isFocusMode);
+                        if (showStatus) updateSaveStatus('saved');
+                    } catch (error) {
+                        console.error('Error saving data to localStorage:', error);
+                        showNotification('Error saving data. Storage might be full.', 'error');
+                        if (showStatus) updateSaveStatus('error');
+                    }
+                };
+                const loadData = () => {
+                    try {
+                        const savedData = localStorage.getItem('elysianReportData');
+                        const savedTheme = localStorage.getItem('elysianTheme');
+                        const savedFocusMode = localStorage.getItem('elysianFocusMode');
+                        if (savedData) {
+                            reportData = JSON.parse(savedData);
+                            if (!reportData.sectionsConfig) reportData.sectionsConfig = {};
+                            if (!reportData.sectionsVisibility) reportData.sectionsVisibility = {};
+                            if (!reportData.versions) reportData.versions = [];
+                            if (!reportData.editorMode) reportData.editorMode = 'tinymce'; 
+                            ['cover-page', 'references-section'].forEach(coreId => {
+                                if (!reportData.sectionsConfig[coreId]) {
+                                     const defaultConfig = defaultSections[reportData.template]?.find(s => s.id === coreId) || defaultSections['lab-report'].find(s => s.id === coreId);
+                                     if (defaultConfig) {
+                                        reportData.sectionsConfig[coreId] = { name: defaultConfig.name, icon: defaultConfig.icon, canRemove: false, canHide: false, canMove: false };
+                                     }
+                                }
+                                if (reportData.sectionsVisibility[coreId] === undefined) {
+                                    reportData.sectionsVisibility[coreId] = true;
+                                }
+                            });
+                            reportData.sectionsOrder.forEach(id => {
+                                if (reportData.sectionsContent[id] === undefined) {
+                                    reportData.sectionsContent[id] = (id === 'cover-page' ? {} : (id === 'references-section' ? [] : ''));
+                                }
+                            });
+                        } else {
+                            reportData = JSON.parse(JSON.stringify(defaultReportData));
+                        }
+                        currentTheme = savedTheme || 'light';
+                        isFocusMode = savedFocusMode === 'true';
+                        editorMode = reportData.editorMode || 'tinymce'; 
+                    } catch (error) {
+                        console.error('Error loading data from localStorage:', error);
+                        showNotification('Error loading saved data. Using defaults.', 'error');
+                        reportData = JSON.parse(JSON.stringify(defaultReportData));
+                        currentTheme = 'light';
+                        isFocusMode = false;
+                        editorMode = 'tinymce';
+                    }
+                };
+                const clearData = () => {
+                    if (confirm('Are you sure you want to clear ALL saved data? This cannot be undone.')) {
+                        localStorage.removeItem('elysianReportData');
+                        localStorage.removeItem('elysianTheme');
+                        localStorage.removeItem('elysianFocusMode');
+                        showNotification('All saved data cleared.', 'success');
+                        window.location.reload();
+                    }
+                };
+                const applyTheme = () => {
+                    document.body.classList.toggle('theme-dark', currentTheme === 'dark');
+                    themeToggleBtn.innerHTML = `<i class="fas ${currentTheme === 'dark' ? 'fa-moon' : 'fa-sun'}"></i>`;
+                };
+                const toggleTheme = () => {
+                    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    applyTheme();
+                    saveData(false);
+                };
+                const applyFocusMode = () => {
+                    appLayout.classList.toggle('focus-mode', isFocusMode);
+                    focusToggleBtn.innerHTML = `<i class="fas ${isFocusMode ? 'fa-compress-alt' : 'fa-expand-alt'}"></i>`;
+                };
+                const toggleFocusMode = () => {
+                    isFocusMode = !isFocusMode;
+                    applyFocusMode();
+                    saveData(false);
+                };
+                const applyTemplate = (templateId) => {
+                    if (!defaultSections[templateId]) {
+                        console.error(`Template ${templateId} not found.`);
+                        showNotification(`Template ${templateId} not found.`, 'error');
+                        return;
+                    }
+                    reportData.template = templateId;
+                    const templateSections = defaultSections[templateId];
+                    reportData.sectionsOrder = templateSections.map(s => s.id);
+                    reportData.sectionsConfig = templateSections.reduce((acc, s) => {
+                        acc[s.id] = { name: s.name, icon: s.icon, canRemove: s.canRemove, canHide: s.canHide, canMove: s.canMove };
+                        return acc;
+                    }, {});
+                    reportData.sectionsVisibility = templateSections.reduce((acc, s) => {
+                        acc[s.id] = true;
+                        return acc;
+                    }, {});
+                    const newContent = {
+                        'cover-page': reportData.sectionsContent['cover-page'] || {},
+                        'references-section': reportData.sectionsContent['references-section'] || []
+                    };
+                    reportData.sectionsOrder.forEach(id => {
+                        if (id !== 'cover-page' && id !== 'references-section') {
+                            newContent[id] = reportData.sectionsContent[id] !== undefined ? reportData.sectionsContent[id] : '';
+                        }
+                    });
+                    reportData.sectionsContent = newContent;
+                    document.querySelectorAll('.template-card.active').forEach(card => card.classList.remove('active'));
+                    document.querySelector(`.template-card[data-template="${templateId}"]`)?.classList.add('active');
+                    renderSections();
+                    setActiveSection('cover-page');
+                    saveData();
+                    showNotification(`Switched to ${templateId} template.`, 'success');
+                };
+                const renderSections = () => {
+                    sectionsList.innerHTML = '';
+                    const fragment = document.createDocumentFragment();
+                    reportData.sectionsOrder.forEach((sectionId, index) => {
+                        const config = reportData.sectionsConfig[sectionId];
+                        if (!config) {
+                            console.warn(`Config not found for section ID: ${sectionId}. Skipping render.`);
+                            return;
+                        }
+                        const isVisible = reportData.sectionsVisibility[sectionId] !== false;
+                        const isCore = !config.canMove && !config.canRemove;
+                        const sectionItem = document.createElement('div');
+                        sectionItem.classList.add('section-item');
+                        sectionItem.dataset.section = sectionId;
+                        if (sectionId === activeSectionId) sectionItem.classList.add('active');
+                        if (!isVisible) sectionItem.classList.add('hidden-section');
+                        sectionItem.setAttribute('draggable', config.canMove ? 'true' : 'false');
+                        const visibilityIconClass = isVisible ? 'fa-eye' : 'fa-eye-slash';
+                        const visibilityTitle = isVisible ? 'Hide Section' : 'Show Section';
+                        sectionItem.innerHTML = `
+                            <div class="section-item-name">
+                                ${config.canHide ? `<i class="fas ${visibilityIconClass} visibility-toggle" title="${visibilityTitle}"></i>` : '<i class="fas fa-eye placeholder-icon"></i>'}
+                                <i class="fas ${config.icon || 'fa-file-alt'} section-icon"></i>
+                                <span class="section-text">${config.name}</span>
+                                ${isCore ? '<span class="tag">Core</span>' : ''}
+                            </div>
+                            <div class="section-actions">
+                                ${config.canMove ? '<i class="fas fa-grip-vertical action-btn drag-handle" title="Drag to reorder"></i>' : ''}
+                                ${config.canRemove ? '<i class="fas fa-trash-alt action-btn remove-section" title="Remove Section"></i>' : ''}
+                            </div>
+                        `;
+                        sectionItem.addEventListener('click', (e) => {
+                            if (!e.target.classList.contains('action-btn') && !e.target.classList.contains('visibility-toggle')) {
+                                setActiveSection(sectionId);
+                            }
+                        });
+                        if (config.canHide) {
+                            sectionItem.querySelector('.visibility-toggle')?.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                toggleSectionVisibility(sectionId);
+                            });
+                        }
+                        if (config.canRemove) {
+                            sectionItem.querySelector('.remove-section')?.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                removeSection(sectionId);
+                            });
+                        }
+                        if (config.canMove) {
+                            sectionItem.addEventListener('dragstart', handleDragStart);
+                            sectionItem.addEventListener('dragover', handleDragOver);
+                            sectionItem.addEventListener('dragleave', handleDragLeave);
+                            sectionItem.addEventListener('drop', handleDrop);
+                            sectionItem.addEventListener('dragend', handleDragEnd);
+                        }
+                        fragment.appendChild(sectionItem);
+                    });
+                    sectionsList.appendChild(fragment);
+                };
+                const setActiveSection = (sectionId) => {
+                    if (!sectionId || !reportData.sectionsConfig[sectionId]) {
+                        console.warn(`Attempted to set invalid section ID: ${sectionId}. Falling back to cover page.`);
+                        sectionId = 'cover-page';
+                    }
+                    if (activeSectionId && activeSectionId !== sectionId) {
+                        saveCurrentSectionContent(false);
+                    }
+                    activeSectionId = sectionId;
+                    document.querySelectorAll('.section-item.active').forEach(item => item.classList.remove('active'));
+                    document.querySelector(`.section-item[data-section="${sectionId}"]`)?.classList.add('active');
+                    const config = reportData.sectionsConfig[sectionId];
+                    currentSectionTitle.textContent = config?.name || 'Unknown Section';
+                    currentSectionIcon.className = `fas ${config?.icon || 'fa-file-alt'}`;
+                    if (sectionId === 'cover-page') {
+                        switchTab('form');
+                        loadCoverPageData();
+                    } else if (sectionId === 'references-section') {
+                        switchTab('references');
+                        renderReferences();
+                    } else {
+                        switchTab('editor');
+                        loadSectionContent(); 
+                    }
+                    updateEditorModeView(); 
+                };
+                const addSection = () => {
+                    const name = newSectionNameInput.value.trim();
+                    if (!name) {
+                        showNotification('Please enter a section name.', 'warning');
+                        return;
+                    }
+                    const newSectionId = generateId();
+                    const newSectionConfig = { name: name, icon: 'fa-file-alt', canRemove: true, canHide: true, canMove: true };
+                    reportData.sectionsConfig[newSectionId] = newSectionConfig;
+                    reportData.sectionsContent[newSectionId] = '';
+                    reportData.sectionsVisibility[newSectionId] = true;
+                    const refIndex = reportData.sectionsOrder.indexOf('references-section');
+                    if (refIndex > -1) {
+                        reportData.sectionsOrder.splice(refIndex, 0, newSectionId);
+                    } else {
+                        reportData.sectionsOrder.push(newSectionId);
+                    }
+                    renderSections();
+                    setActiveSection(newSectionId);
+                    hideModal(addSectionModal);
+                    newSectionNameInput.value = '';
+                    saveData();
+                    showNotification(`Section "${name}" added.`, 'success');
+                };
+                const removeSection = (sectionId) => {
+                    const config = reportData.sectionsConfig[sectionId];
+                    if (!config || !config.canRemove) return;
+                    if (confirm(`Are you sure you want to remove the section "${config.name}"? This cannot be undone.`)) {
+                        reportData.sectionsOrder = reportData.sectionsOrder.filter(id => id !== sectionId);
+                        delete reportData.sectionsContent[sectionId];
+                        delete reportData.sectionsConfig[sectionId];
+                        delete reportData.sectionsVisibility[sectionId];
+                        if (activeSectionId === sectionId) {
+                            const currentIndex = reportData.sectionsOrder.indexOf(sectionId);
+                            const newActiveIndex = Math.max(0, currentIndex -1);
+                             setActiveSection(reportData.sectionsOrder[newActiveIndex] || 'cover-page');
+                        }
+                        renderSections();
+                        saveData();
+                        showNotification(`Section "${config.name}" removed.`, 'success');
+                    }
+                };
+                const toggleSectionVisibility = (sectionId) => {
+                    const config = reportData.sectionsConfig[sectionId];
+                     if (!config || !config.canHide) return;
+                    reportData.sectionsVisibility[sectionId] = !reportData.sectionsVisibility[sectionId];
+                    const sectionItem = document.querySelector(`.section-item[data-section="${sectionId}"]`);
+                    if (sectionItem) {
+                        const isVisible = reportData.sectionsVisibility[sectionId];
+                        sectionItem.classList.toggle('hidden-section', !isVisible);
+                        const icon = sectionItem.querySelector('.visibility-toggle');
+                        if (icon) {
+                            icon.className = `fas ${isVisible ? 'fa-eye' : 'fa-eye-slash'} visibility-toggle`;
+                            icon.title = isVisible ? 'Hide Section' : 'Show Section';
+                        }
+                    }
+                    saveData();
+                    showNotification(`Section "${config.name}" ${reportData.sectionsVisibility[sectionId] ? 'shown' : 'hidden'}.`, 'info');
+                };
+                function handleDragStart(e) {
+                    if (e.target.classList.contains('section-item') && e.target.draggable) {
+                        dragSrcElement = e.target;
+                        e.dataTransfer.effectAllowed = 'move';
+                        e.dataTransfer.setData('text/plain', e.target.dataset.section);
+                        e.target.classList.add('dragging');
+                    } else {
+                        e.preventDefault();
+                    }
+                }
+                function handleDragOver(e) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    const targetElement = e.target.closest('.section-item');
+                    if (targetElement && targetElement !== dragSrcElement && targetElement.draggable) {
+                         targetElement.style.borderTop = '2px dashed var(--primary-color)';
+                    }
+                }
+                function handleDragLeave(e) {
+                   const targetElement = e.target.closest('.section-item');
+                    if (targetElement) {
+                        targetElement.style.borderTop = '';
+                    }
+                }
+                function handleDrop(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const targetElement = e.target.closest('.section-item');
+                     if (targetElement) {
+                        targetElement.style.borderTop = '';
+                    }
+                    if (dragSrcElement && targetElement && dragSrcElement !== targetElement && targetElement.draggable) {
+                        const sourceId = dragSrcElement.dataset.section;
+                        const targetId = targetElement.dataset.section;
+                        const sourceIndex = reportData.sectionsOrder.indexOf(sourceId);
+                        let targetIndex = reportData.sectionsOrder.indexOf(targetId);
+                        if (sourceIndex > -1 && targetIndex > -1) {
+                            reportData.sectionsOrder.splice(sourceIndex, 1);
+                             targetIndex = reportData.sectionsOrder.indexOf(targetId);
+                            reportData.sectionsOrder.splice(targetIndex, 0, sourceId);
+                            renderSections();
+                            saveData();
+                            showNotification('Section order updated.', 'info');
+                        } else {
+                             console.error("Drag/Drop Error: Section ID not found in order array.");
+                        }
+                    }
+                }
+                function handleDragEnd(e) {
+                    this.classList.remove('dragging');
+                    document.querySelectorAll('.section-item').forEach(item => {
+                        item.style.borderTop = '';
+                    });
+                    dragSrcElement = null;
+                }
+                const switchTab = (tabId) => {
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    tabButtons.forEach(button => button.classList.remove('active'));
+                    document.getElementById(`${tabId}-tab`)?.classList.add('active');
+                    document.querySelector(`.tab-btn[data-tab="${tabId}"]`)?.classList.add('active');
+                    const editorTabContent = document.getElementById('editor-tab');
+                    const editorTabButton = document.querySelector('.tab-btn[data-tab="editor"]');
+                    if (activeSectionId === 'cover-page' || activeSectionId === 'references-section') {
+                        editorTabContent?.classList.add('hidden');
+                        editorTabButton?.classList.add('hidden');
+                    } else {
+                        editorTabContent?.classList.remove('hidden');
+                        editorTabButton?.classList.remove('hidden');
+                    }
+                    const formTabContent = document.getElementById('form-tab');
+                    const formTabButton = document.querySelector('.tab-btn[data-tab="form"]');
+                     if (activeSectionId !== 'cover-page') {
+                        formTabContent?.classList.add('hidden');
+                        formTabButton?.classList.add('hidden');
+                    } else {
+                        formTabContent?.classList.remove('hidden');
+                        formTabButton?.classList.remove('hidden');
+                    }
+                    const referencesTabContent = document.getElementById('references-tab');
+                    const referencesTabButton = document.querySelector('.tab-btn[data-tab="references"]');
+                     if (activeSectionId !== 'references-section') {
+                        referencesTabContent?.classList.add('hidden');
+                        referencesTabButton?.classList.add('hidden');
+                    } else {
+                        referencesTabContent?.classList.remove('hidden');
+                        referencesTabButton?.classList.remove('hidden');
+                    }
+                    if (document.querySelector('.tab-btn.active.hidden')) {
+                         if (activeSectionId === 'cover-page') {
+                             document.querySelector('.tab-btn[data-tab="form"]')?.classList.add('active');
+                             document.getElementById('form-tab')?.classList.add('active');
+                         } else if (activeSectionId === 'references-section') {
+                             document.querySelector('.tab-btn[data-tab="references"]')?.classList.add('active');
+                             document.getElementById('references-tab')?.classList.add('active');
+                         } else {
+                             document.querySelector('.tab-btn[data-tab="editor"]')?.classList.add('active');
+                             document.getElementById('editor-tab')?.classList.add('active');
                          }
                     }
-                    if (reportData.sectionsVisibility[coreId] === undefined) {
-                        reportData.sectionsVisibility[coreId] = true;
-                    }
-                });
-                reportData.sectionsOrder.forEach(id => {
-                    if (reportData.sectionsContent[id] === undefined) {
-                        reportData.sectionsContent[id] = (id === 'cover-page' ? {} : (id === 'references-section' ? [] : ''));
-                    }
-                });
-
-            } else {
-                reportData = JSON.parse(JSON.stringify(defaultReportData));
-            }
-
-            currentTheme = savedTheme || 'light';
-            isFocusMode = savedFocusMode === 'true';
-            editorMode = reportData.editorMode || 'tinymce'; // Load editor mode, default to tinymce
-
-        } catch (error) {
-            console.error('Error loading data from localStorage:', error);
-            showNotification('Error loading saved data. Using defaults.', 'error');
-            reportData = JSON.parse(JSON.stringify(defaultReportData));
-            currentTheme = 'light';
-            isFocusMode = false;
-            editorMode = 'tinymce';
-        }
-    };
-
-    const clearData = () => {
-        if (confirm('Are you sure you want to clear ALL saved data? This cannot be undone.')) {
-            localStorage.removeItem('elysianReportData');
-            localStorage.removeItem('elysianTheme');
-            localStorage.removeItem('elysianFocusMode');
-            showNotification('All saved data cleared.', 'success');
-            window.location.reload();
-        }
-    };
-
-    // --- Theme & Focus Mode ---
-    const applyTheme = () => {
-        document.body.classList.toggle('theme-dark', currentTheme === 'dark');
-        themeToggleBtn.innerHTML = `<i class="fas ${currentTheme === 'dark' ? 'fa-moon' : 'fa-sun'}"></i>`;
-        // TinyMCE skin can be adapted too if needed via init config or CSS overrides
-    };
-
-    const toggleTheme = () => {
-        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-        applyTheme();
-        saveData(false);
-    };
-
-    const applyFocusMode = () => {
-        appLayout.classList.toggle('focus-mode', isFocusMode);
-        focusToggleBtn.innerHTML = `<i class="fas ${isFocusMode ? 'fa-compress-alt' : 'fa-expand-alt'}"></i>`;
-    };
-
-    const toggleFocusMode = () => {
-        isFocusMode = !isFocusMode;
-        applyFocusMode();
-        saveData(false);
-    };
-
-    // --- Template Selection ---
-    const applyTemplate = (templateId) => {
-        if (!defaultSections[templateId]) {
-            console.error(`Template ${templateId} not found.`);
-            showNotification(`Template ${templateId} not found.`, 'error');
-            return;
-        }
-
-        reportData.template = templateId;
-        const templateSections = defaultSections[templateId];
-        reportData.sectionsOrder = templateSections.map(s => s.id);
-        reportData.sectionsConfig = templateSections.reduce((acc, s) => {
-            acc[s.id] = { name: s.name, icon: s.icon, canRemove: s.canRemove, canHide: s.canHide, canMove: s.canMove };
-            return acc;
-        }, {});
-        reportData.sectionsVisibility = templateSections.reduce((acc, s) => {
-            acc[s.id] = true;
-            return acc;
-        }, {});
-
-        const newContent = {
-            'cover-page': reportData.sectionsContent['cover-page'] || {},
-            'references-section': reportData.sectionsContent['references-section'] || []
-        };
-        reportData.sectionsOrder.forEach(id => {
-            if (id !== 'cover-page' && id !== 'references-section') {
-                newContent[id] = reportData.sectionsContent[id] !== undefined ? reportData.sectionsContent[id] : '';
-            }
-        });
-        reportData.sectionsContent = newContent;
-
-        document.querySelectorAll('.template-card.active').forEach(card => card.classList.remove('active'));
-        document.querySelector(`.template-card[data-template="${templateId}"]`)?.classList.add('active');
-
-        renderSections();
-        setActiveSection('cover-page');
-        saveData();
-        showNotification(`Switched to ${templateId} template.`, 'success');
-    };
-
-    // --- Section Management ---
-    const renderSections = () => {
-        sectionsList.innerHTML = '';
-        const fragment = document.createDocumentFragment();
-
-        reportData.sectionsOrder.forEach((sectionId, index) => {
-            const config = reportData.sectionsConfig[sectionId];
-            if (!config) {
-                console.warn(`Config not found for section ID: ${sectionId}. Skipping render.`);
-                return;
-            }
-            const isVisible = reportData.sectionsVisibility[sectionId] !== false;
-            const isCore = !config.canMove && !config.canRemove;
-
-            const sectionItem = document.createElement('div');
-            sectionItem.classList.add('section-item');
-            sectionItem.dataset.section = sectionId;
-            if (sectionId === activeSectionId) sectionItem.classList.add('active');
-            if (!isVisible) sectionItem.classList.add('hidden-section');
-
-            sectionItem.setAttribute('draggable', config.canMove ? 'true' : 'false');
-
-            const visibilityIconClass = isVisible ? 'fa-eye' : 'fa-eye-slash';
-            const visibilityTitle = isVisible ? 'Hide Section' : 'Show Section';
-
-            sectionItem.innerHTML = `
-                <div class="section-item-name">
-                    ${config.canHide ? `<i class="fas ${visibilityIconClass} visibility-toggle" title="${visibilityTitle}"></i>` : '<i class="fas fa-eye placeholder-icon"></i>'}
-                    <i class="fas ${config.icon || 'fa-file-alt'} section-icon"></i>
-                    <span class="section-text">${config.name}</span>
-                    ${isCore ? '<span class="tag">Core</span>' : ''}
-                </div>
-                <div class="section-actions">
-                    ${config.canMove ? '<i class="fas fa-grip-vertical action-btn drag-handle" title="Drag to reorder"></i>' : ''}
-                    ${config.canRemove ? '<i class="fas fa-trash-alt action-btn remove-section" title="Remove Section"></i>' : ''}
-                </div>
-            `;
-
-            sectionItem.addEventListener('click', (e) => {
-                if (!e.target.classList.contains('action-btn') && !e.target.classList.contains('visibility-toggle')) {
-                    setActiveSection(sectionId);
-                }
-            });
-
-            if (config.canHide) {
-                sectionItem.querySelector('.visibility-toggle')?.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    toggleSectionVisibility(sectionId);
-                });
-            }
-
-            if (config.canRemove) {
-                sectionItem.querySelector('.remove-section')?.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    removeSection(sectionId);
-                });
-            }
-
-            if (config.canMove) {
-                sectionItem.addEventListener('dragstart', handleDragStart);
-                sectionItem.addEventListener('dragover', handleDragOver);
-                sectionItem.addEventListener('dragleave', handleDragLeave);
-                sectionItem.addEventListener('drop', handleDrop);
-                sectionItem.addEventListener('dragend', handleDragEnd);
-            }
-
-            fragment.appendChild(sectionItem);
-        });
-        sectionsList.appendChild(fragment);
-    };
-
-    const setActiveSection = (sectionId) => {
-        if (!sectionId || !reportData.sectionsConfig[sectionId]) {
-            console.warn(`Attempted to set invalid section ID: ${sectionId}. Falling back to cover page.`);
-            sectionId = 'cover-page';
-        }
-
-        if (activeSectionId && activeSectionId !== sectionId) {
-            saveCurrentSectionContent(false);
-        }
-
-        activeSectionId = sectionId;
-
-        document.querySelectorAll('.section-item.active').forEach(item => item.classList.remove('active'));
-        document.querySelector(`.section-item[data-section="${sectionId}"]`)?.classList.add('active');
-
-        const config = reportData.sectionsConfig[sectionId];
-        currentSectionTitle.textContent = config?.name || 'Unknown Section';
-        currentSectionIcon.className = `fas ${config?.icon || 'fa-file-alt'}`;
-
-        if (sectionId === 'cover-page') {
-            switchTab('form');
-            loadCoverPageData();
-        } else if (sectionId === 'references-section') {
-            switchTab('references');
-            renderReferences();
-        } else {
-            switchTab('editor');
-            loadSectionContent(); // This will handle loading content into TinyMCE or Markdown
-        }
-
-        updateEditorModeView(); // Ensure correct editor view is shown
-    };
-
-    const addSection = () => {
-        const name = newSectionNameInput.value.trim();
-        if (!name) {
-            showNotification('Please enter a section name.', 'warning');
-            return;
-        }
-
-        const newSectionId = generateId();
-        const newSectionConfig = { name: name, icon: 'fa-file-alt', canRemove: true, canHide: true, canMove: true };
-
-        reportData.sectionsConfig[newSectionId] = newSectionConfig;
-        reportData.sectionsContent[newSectionId] = '';
-        reportData.sectionsVisibility[newSectionId] = true;
-
-        const refIndex = reportData.sectionsOrder.indexOf('references-section');
-        if (refIndex > -1) {
-            reportData.sectionsOrder.splice(refIndex, 0, newSectionId);
-        } else {
-            reportData.sectionsOrder.push(newSectionId);
-        }
-
-        renderSections();
-        setActiveSection(newSectionId);
-        hideModal(addSectionModal);
-        newSectionNameInput.value = '';
-        saveData();
-        showNotification(`Section "${name}" added.`, 'success');
-    };
-
-    const removeSection = (sectionId) => {
-        const config = reportData.sectionsConfig[sectionId];
-        if (!config || !config.canRemove) return;
-
-        if (confirm(`Are you sure you want to remove the section "${config.name}"? This cannot be undone.`)) {
-            reportData.sectionsOrder = reportData.sectionsOrder.filter(id => id !== sectionId);
-            delete reportData.sectionsContent[sectionId];
-            delete reportData.sectionsConfig[sectionId];
-            delete reportData.sectionsVisibility[sectionId];
-
-            if (activeSectionId === sectionId) {
-                const currentIndex = reportData.sectionsOrder.indexOf(sectionId);
-                const newActiveIndex = Math.max(0, currentIndex -1);
-                 setActiveSection(reportData.sectionsOrder[newActiveIndex] || 'cover-page');
-            }
-
-            renderSections();
-            saveData();
-            showNotification(`Section "${config.name}" removed.`, 'success');
-        }
-    };
-
-    const toggleSectionVisibility = (sectionId) => {
-        const config = reportData.sectionsConfig[sectionId];
-         if (!config || !config.canHide) return;
-
-        reportData.sectionsVisibility[sectionId] = !reportData.sectionsVisibility[sectionId];
-
-        const sectionItem = document.querySelector(`.section-item[data-section="${sectionId}"]`);
-        if (sectionItem) {
-            const isVisible = reportData.sectionsVisibility[sectionId];
-            sectionItem.classList.toggle('hidden-section', !isVisible);
-            const icon = sectionItem.querySelector('.visibility-toggle');
-            if (icon) {
-                icon.className = `fas ${isVisible ? 'fa-eye' : 'fa-eye-slash'} visibility-toggle`;
-                icon.title = isVisible ? 'Hide Section' : 'Show Section';
-            }
-        }
-
-        saveData();
-        showNotification(`Section "${config.name}" ${reportData.sectionsVisibility[sectionId] ? 'shown' : 'hidden'}.`, 'info');
-    };
-
-    // --- Drag and Drop Section Reordering ---
-    function handleDragStart(e) {
-        if (e.target.classList.contains('section-item') && e.target.draggable) {
-            dragSrcElement = e.target;
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/plain', e.target.dataset.section);
-            e.target.classList.add('dragging');
-        } else {
-            e.preventDefault();
-        }
-    }
-    function handleDragOver(e) {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        const targetElement = e.target.closest('.section-item');
-        if (targetElement && targetElement !== dragSrcElement && targetElement.draggable) {
-             targetElement.style.borderTop = '2px dashed var(--primary-color)';
-        }
-    }
-    function handleDragLeave(e) {
-       const targetElement = e.target.closest('.section-item');
-        if (targetElement) {
-            targetElement.style.borderTop = '';
-        }
-    }
-    function handleDrop(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        const targetElement = e.target.closest('.section-item');
-         if (targetElement) {
-            targetElement.style.borderTop = '';
-        }
-        if (dragSrcElement && targetElement && dragSrcElement !== targetElement && targetElement.draggable) {
-            const sourceId = dragSrcElement.dataset.section;
-            const targetId = targetElement.dataset.section;
-            const sourceIndex = reportData.sectionsOrder.indexOf(sourceId);
-            let targetIndex = reportData.sectionsOrder.indexOf(targetId);
-            if (sourceIndex > -1 && targetIndex > -1) {
-                reportData.sectionsOrder.splice(sourceIndex, 1);
-                 targetIndex = reportData.sectionsOrder.indexOf(targetId);
-                reportData.sectionsOrder.splice(targetIndex, 0, sourceId);
-                renderSections();
-                saveData();
-                showNotification('Section order updated.', 'info');
-            } else {
-                 console.error("Drag/Drop Error: Section ID not found in order array.");
-            }
-        }
-    }
-    function handleDragEnd(e) {
-        this.classList.remove('dragging');
-        document.querySelectorAll('.section-item').forEach(item => {
-            item.style.borderTop = '';
-        });
-        dragSrcElement = null;
-    }
-
-    // --- Tab Switching ---
-    const switchTab = (tabId) => {
-        tabContents.forEach(content => content.classList.remove('active'));
-        tabButtons.forEach(button => button.classList.remove('active'));
-
-        document.getElementById(`${tabId}-tab`)?.classList.add('active');
-        document.querySelector(`.tab-btn[data-tab="${tabId}"]`)?.classList.add('active');
-
-        const editorTabContent = document.getElementById('editor-tab');
-        const editorTabButton = document.querySelector('.tab-btn[data-tab="editor"]');
-        if (activeSectionId === 'cover-page' || activeSectionId === 'references-section') {
-            editorTabContent?.classList.add('hidden');
-            editorTabButton?.classList.add('hidden');
-        } else {
-            editorTabContent?.classList.remove('hidden');
-            editorTabButton?.classList.remove('hidden');
-        }
-        const formTabContent = document.getElementById('form-tab');
-        const formTabButton = document.querySelector('.tab-btn[data-tab="form"]');
-         if (activeSectionId !== 'cover-page') {
-            formTabContent?.classList.add('hidden');
-            formTabButton?.classList.add('hidden');
-        } else {
-            formTabContent?.classList.remove('hidden');
-            formTabButton?.classList.remove('hidden');
-        }
-        const referencesTabContent = document.getElementById('references-tab');
-        const referencesTabButton = document.querySelector('.tab-btn[data-tab="references"]');
-         if (activeSectionId !== 'references-section') {
-            referencesTabContent?.classList.add('hidden');
-            referencesTabButton?.classList.add('hidden');
-        } else {
-            referencesTabContent?.classList.remove('hidden');
-            referencesTabButton?.classList.remove('hidden');
-        }
-
-        if (document.querySelector('.tab-btn.active.hidden')) {
-             if (activeSectionId === 'cover-page') {
-                 document.querySelector('.tab-btn[data-tab="form"]')?.classList.add('active');
-                 document.getElementById('form-tab')?.classList.add('active');
-             } else if (activeSectionId === 'references-section') {
-                 document.querySelector('.tab-btn[data-tab="references"]')?.classList.add('active');
-                 document.getElementById('references-tab')?.classList.add('active');
-             } else {
-                 document.querySelector('.tab-btn[data-tab="editor"]')?.classList.add('active');
-                 document.getElementById('editor-tab')?.classList.add('active');
-             }
-        }
-    };
-
-    // --- Cover Page Handling ---
-    const loadCoverPageData = () => {
-        const coverData = reportData.sectionsContent['cover-page'] || {};
-        coverPageForm.querySelectorAll('input[type="text"], input[type="url"], input[type="date"], input[type="email"], input[type="tel"]').forEach(input => {
-            const key = input.id.replace('cover-', '').replace(/-/g, '_');
-            input.value = coverData[key] || '';
-        });
-    };
-
-    const saveCoverPageData = () => {
-        const coverData = reportData.sectionsContent['cover-page'] || {};
-        coverPageForm.querySelectorAll('input[type="text"], input[type="url"], input[type="date"], input[type="email"], input[type="tel"]').forEach(input => {
-            const key = input.id.replace('cover-', '').replace(/-/g, '_');
-            coverData[key] = input.value.trim();
-        });
-        reportData.sectionsContent['cover-page'] = coverData;
-        debounce(saveData, 1000);
-        updateSaveStatus('unsaved');
-    };
-
-    // --- Editor (TinyMCE & Markdown) ---
-
-    // TinyMCE Initialization Function
-    const initializeTinyMCE = (initialContent = '') => {
-        // Check if TinyMCE library is loaded
-        if (typeof tinymce === 'undefined') {
-            console.error("TinyMCE library not loaded!");
-            showNotification("Editor library (TinyMCE) not found.", "error");
-            if (tinymceEditorArea) tinymceEditorArea.innerHTML = '<p style="color: red;">Error: TinyMCE library not found.</p>';
-            return;
-        }
-
-        // Remove existing instance if present (important for switching sections/modes)
-        if (tinymce.get('editor-tinymce')) {
-            tinymce.get('editor-tinymce').remove();
-        }
-
-        tinymce.init({
-            selector: '#editor-tinymce',
-            plugins: 'preview powerpaste casechange importcss searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker help formatpainter permanentpen pageembed linkchecker emoticons advtable export',
-            toolbar: 'undo redo | blocks | bold italic strikethrough | bullist numlist | blockquote | link image table | code | removeformat | wordcount',
-            height: 450,
-            menubar: 'file edit view insert format tools table help',
-            placeholder: 'Start writing your section content here...',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }', // Basic styling
-            init_instance_callback: function (editor) {
-                // Set initial content *after* init
-                if (initialContent) {
-                    editor.setContent(initialContent);
-                }
-                updateWordCount(); // Initial word count
-                updateSaveStatus('saved'); // Assume loaded content is saved initially
-            },
-            setup: function (editor) {
-                editor.on('change input undo redo SetContent', function () {
-                    updateWordCount();
+                };
+                const loadCoverPageData = () => {
+                    const coverData = reportData.sectionsContent['cover-page'] || {};
+                    coverPageForm.querySelectorAll('input[type="text"], input[type="url"], input[type="date"], input[type="email"], input[type="tel"]').forEach(input => {
+                        const key = input.id.replace('cover-', '').replace(/-/g, '_');
+                        input.value = coverData[key] || '';
+                    });
+                };
+                const saveCoverPageData = () => {
+                    const coverData = reportData.sectionsContent['cover-page'] || {};
+                    coverPageForm.querySelectorAll('input[type="text"], input[type="url"], input[type="date"], input[type="email"], input[type="tel"]').forEach(input => {
+                        const key = input.id.replace('cover-', '').replace(/-/g, '_');
+                        coverData[key] = input.value.trim();
+                    });
+                    reportData.sectionsContent['cover-page'] = coverData;
+                    debounce(saveData, 1000);
                     updateSaveStatus('unsaved');
-                    debounce(saveCurrentSectionContent, 1500); // Auto-save
-                });
-            },
-            // Optional: Configure image handling if needed
-            // images_upload_handler: ...,
-            // automatic_uploads: true,
-            // file_picker_types: 'image',
-        }).catch(error => {
-            console.error("Error initializing TinyMCE:", error);
-            showNotification("Failed to initialize the editor.", "error");
-        });
-    };
-
-    const loadSectionContent = () => {
-        if (!activeSectionId || activeSectionId === 'cover-page' || activeSectionId === 'references-section') {
-            // Clear editors if no valid section selected or if it's cover/refs
-            if (editorMode === 'tinymce' && typeof tinymce !== 'undefined' && tinymce.get('editor-tinymce')) {
-                tinymce.get('editor-tinymce').setContent('');
-            }
-            markdownEditor.value = '';
-            updateMarkdownPreview();
-            updateWordCount();
-            return;
-        }
-
-        const content = reportData.sectionsContent[activeSectionId] || '';
-        let contentForEditor = '';
-
-        // --- Content Conversion Logic (Decide based on current editor mode) ---
-        if (editorMode === 'tinymce') {
-            // Target is TinyMCE (expects HTML)
-            if (isLikelyMarkdown(content) && window.marked) {
-                try {
-                    contentForEditor = marked.parse(content); // Convert MD to HTML
-                } catch (e) {
-                    console.error("Error parsing Markdown for TinyMCE:", e);
-                    contentForEditor = content; // Load as is on error
-                }
-            } else {
-                contentForEditor = content; // Assume already HTML
-            }
-        } else { // editorMode === 'markdown'
-            // Target is Markdown editor (expects Markdown)
-            if (!isLikelyMarkdown(content) && window.TurndownService) {
-                 if (!turndownService) turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '*' });
-                 try {
-                     contentForEditor = turndownService.turndown(content); // Convert HTML to MD
-                 } catch(e) {
-                     console.error("Error converting HTML to Markdown:", e);
-                     contentForEditor = content; // Load as is on error
-                 }
-            } else {
-                 contentForEditor = content; // Assume already Markdown
-            }
-        }
-
-        // --- Load content into the correct editor ---
-        if (editorMode === 'tinymce') {
-            // Ensure TinyMCE is initialized for the editor tab
-            if (document.getElementById('editor-tinymce')) {
-                const editor = tinymce.get('editor-tinymce');
-                if (editor) {
-                    editor.setContent(contentForEditor || ''); // Set content if already initialized
-                    editor.undoManager.clear(); // Clear undo history after loading new content
-                    editor.nodeChanged(); // Trigger UI update
-                } else {
-                    initializeTinyMCE(contentForEditor); // Initialize with the content
-                }
-            }
-            markdownEditor.value = ''; // Clear markdown editor
-            updateMarkdownPreview();
-        } else { // Markdown mode
-            // Destroy TinyMCE instance if switching away
-            if (typeof tinymce !== 'undefined' && tinymce.get('editor-tinymce')) {
-                tinymce.get('editor-tinymce').remove();
-            }
-            markdownEditor.value = contentForEditor; // Load into markdown editor
-            updateMarkdownPreview();
-        }
-
-        updateWordCount();
-        updateSaveStatus('saved'); // Assume loaded content is saved
-    };
-
-    const saveCurrentSectionContent = (showStatus = true) => {
-        if (!activeSectionId || !reportData.sectionsContent || activeSectionId === 'cover-page' || activeSectionId === 'references-section') {
-            if (activeSectionId === 'cover-page') saveCoverPageData();
-            return;
-        }
-
-        let contentToSave = '';
-        const editor = (typeof tinymce !== 'undefined') ? tinymce.get('editor-tinymce') : null;
-
-        if (editorMode === 'tinymce' && editor) {
-            contentToSave = editor.getContent();
-        } else if (editorMode === 'markdown') {
-            contentToSave = markdownEditor.value;
-            // Storing as Markdown when in Markdown mode. loadSectionContent handles conversion.
-        }
-
-        if (reportData.sectionsContent[activeSectionId] !== contentToSave) {
-            reportData.sectionsContent[activeSectionId] = contentToSave;
-            debounce(() => saveData(showStatus), 500);
-            if (showStatus) updateSaveStatus('saving');
-        } else {
-            if (showStatus) updateSaveStatus('saved');
-        }
-    };
-
-    const updateWordCount = () => {
-        let count = 0;
-        const editor = (typeof tinymce !== 'undefined') ? tinymce.get('editor-tinymce') : null;
-
-        if (editorMode === 'tinymce' && editor && editor.plugins && editor.plugins.wordcount) {
-            count = editor.plugins.wordcount.getCount();
-        } else if (editorMode === 'markdown') {
-            const text = markdownEditor.value.trim();
-            count = text ? text.split(/\s+/).length : 0;
-        }
-        wordCountEl.textContent = `Words: ${count}`;
-    };
-
-    const updateSaveStatus = (status) => { // 'unsaved', 'saving', 'saved', 'error'
-        saveStatusEl.classList.remove('visible', 'unsaved', 'saving', 'saved', 'error');
-        if (status !== 'hidden') {
-            saveStatusEl.classList.add('visible', status);
-            let iconClass = 'fa-check-circle';
-            let text = 'Saved';
-            switch (status) {
-                case 'unsaved': iconClass = 'fa-edit'; text = 'Unsaved'; break;
-                case 'saving': iconClass = 'fa-spinner fa-spin'; text = 'Saving...'; break;
-                case 'error': iconClass = 'fa-exclamation-circle'; text = 'Error'; break;
-                case 'saved': iconClass = 'fa-check-circle'; text = 'Saved'; break;
-            }
-            saveStatusEl.innerHTML = `<i class="fas ${iconClass}"></i> <span>${text}</span>`;
-        }
-    };
-
-    const toggleEditorMode = () => {
-        saveCurrentSectionContent(false); // Save before switching
-
-        const newMode = (editorMode === 'tinymce') ? 'markdown' : 'tinymce';
-        editorMode = newMode;
-        reportData.editorMode = editorMode;
-        saveData(false);
-
-        updateEditorModeView(); // Update visibility of containers
-        loadSectionContent(); // Reload content into the correct editor
-
-        toggleEditorModeBtn.querySelector('.mode-indicator').textContent = `(${(editorMode === 'tinymce' ? 'Rich Text' : 'Markdown')})`;
-        showNotification(`Switched to ${editorMode === 'tinymce' ? 'Rich Text' : 'Markdown'} editor mode.`, 'info');
-    };
-
-    const updateEditorModeView = () => {
-         if (editorMode === 'tinymce') {
-            if (tinymceEditorArea) tinymceEditorArea.classList.remove('hidden');
-            markdownEditorArea.classList.add('hidden');
-            // TinyMCE initialization/visibility is handled in loadSectionContent
-        } else { // Markdown mode
-            if (tinymceEditorArea) tinymceEditorArea.classList.add('hidden');
-            markdownEditorArea.classList.remove('hidden');
-            // Destroy TinyMCE instance when switching to Markdown
-            if (typeof tinymce !== 'undefined' && tinymce.get('editor-tinymce')) {
-                tinymce.get('editor-tinymce').remove();
-            }
-        }
-    };
-
-    const updateMarkdownPreview = () => {
-        if (window.marked && markdownPreview) {
-            try {
-                markdownPreview.innerHTML = marked.parse(markdownEditor.value || '');
-                if (window.Prism) {
-                    Prism.highlightAllUnder(markdownPreview);
-                }
-            } catch (e) {
-                markdownPreview.innerHTML = `<p style="color: red;">Error rendering Markdown preview.</p>`;
-                console.error("Markdown Preview Error:", e);
-            }
-        }
-    };
-
-    // Helper to check if a string looks like Markdown
-    const isLikelyMarkdown = (text) => {
-        if (!text || typeof text !== 'string') return false;
-        return /^(#+\s|\*\s|-\s|\d+\.\s|`{3}|>|\[.*\]\(.*\))/.test(text.trim()) ||
-               /\n\n/.test(text) ||
-               /(\*\*|__|\*|_|`|~~)/.test(text);
-    };
-
-    // --- Reference Management --- (Keep existing functions: updateRefFormFields, clearRefForm, addReference, editReference, updateReference, deleteReference, renderReferences)
-    const updateRefFormFields = () => {
-        const selectedType = refTypeSelect.value;
-        refFields.forEach(field => {
-            const hasTypeClass = Array.from(field.classList).some(cls => ['journal', 'book', 'website', 'other'].includes(cls));
-            if (!hasTypeClass || field.classList.contains(selectedType)) {
-                field.style.display = 'block';
-            } else {
-                field.style.display = 'none';
-            }
-        });
-         document.querySelectorAll('#reference-form .form-group').forEach(group => {
-             const input = group.querySelector('input, select, textarea');
-             if (!input) return;
-             const id = input.id;
-             let show = false;
-             switch (selectedType) {
-                 case 'journal':
-                     show = ['ref-key', 'ref-authors', 'ref-year', 'ref-title', 'ref-source', 'ref-volume', 'ref-pages'].includes(id);
-                     if (id === 'ref-source') group.querySelector('label').textContent = 'Journal Name';
-                     if (id === 'ref-pages') group.querySelector('label').textContent = 'Pages / DOI';
-                     break;
-                 case 'book':
-                     show = ['ref-key', 'ref-authors', 'ref-year', 'ref-title', 'ref-source', 'ref-pages'].includes(id);
-                      if (id === 'ref-source') group.querySelector('label').textContent = 'Publisher / City';
-                      if (id === 'ref-pages') group.querySelector('label').textContent = 'Pages / Edition';
-                     break;
-                 case 'website':
-                     show = ['ref-key', 'ref-authors', 'ref-year', 'ref-title', 'ref-url', 'ref-access-date'].includes(id);
-                     break;
-                 case 'other':
-                     show = ['ref-key', 'ref-authors', 'ref-year', 'ref-title', 'ref-details'].includes(id);
-                     break;
-             }
-             group.style.display = show ? 'block' : 'none';
-         });
-         document.getElementById('ref-type').closest('.form-group').style.display = 'block';
-    };
-    const clearRefForm = () => {
-        refForm.querySelectorAll('input[type="text"], input[type="number"], input[type="url"], input[type="date"], textarea').forEach(input => input.value = '');
-        refTypeSelect.value = 'journal';
-        updateRefFormFields();
-        currentEditingRefId = null;
-        addReferenceBtn.classList.remove('hidden');
-        updateReferenceBtn.classList.add('hidden');
-        cancelEditReferenceBtn.classList.add('hidden');
-        refForm.querySelector('h4').textContent = 'Add New Reference';
-    };
-    const addReference = () => {
-        const newRef = {
-            id: generateId(), type: refTypeSelect.value, key: document.getElementById('ref-key').value.trim(),
-            authors: document.getElementById('ref-authors').value.trim(), year: document.getElementById('ref-year').value.trim(),
-            title: document.getElementById('ref-title').value.trim(),
-        };
-        if (!newRef.key || !newRef.authors || !newRef.year || !newRef.title) {
-            showNotification('Please fill in required reference fields (Key, Authors, Year, Title).', 'warning'); return;
-        }
-        switch (newRef.type) {
-            case 'journal':
-                newRef.source = document.getElementById('ref-source').value.trim(); newRef.volume = document.getElementById('ref-volume').value.trim();
-                newRef.pages = document.getElementById('ref-pages').value.trim(); break;
-            case 'book':
-                newRef.source = document.getElementById('ref-source').value.trim(); newRef.pages = document.getElementById('ref-pages').value.trim(); break;
-            case 'website':
-                newRef.url = document.getElementById('ref-url').value.trim(); newRef.accessDate = document.getElementById('ref-access-date').value; break;
-            case 'other':
-                newRef.details = document.getElementById('ref-details').value.trim(); break;
-        }
-        if (!Array.isArray(reportData.sectionsContent['references-section'])) reportData.sectionsContent['references-section'] = [];
-        reportData.sectionsContent['references-section'].push(newRef);
-        renderReferences(); clearRefForm(); saveData(); showNotification('Reference added successfully.', 'success');
-    };
-    const editReference = (refId) => {
-        const ref = reportData.sectionsContent['references-section'].find(r => r.id === refId); if (!ref) return;
-        currentEditingRefId = refId;
-        refTypeSelect.value = ref.type; document.getElementById('ref-key').value = ref.key || '';
-        document.getElementById('ref-authors').value = ref.authors || ''; document.getElementById('ref-year').value = ref.year || '';
-        document.getElementById('ref-title').value = ref.title || ''; document.getElementById('ref-source').value = ref.source || '';
-        document.getElementById('ref-volume').value = ref.volume || ''; document.getElementById('ref-pages').value = ref.pages || '';
-        document.getElementById('ref-url').value = ref.url || ''; document.getElementById('ref-access-date').value = ref.accessDate || '';
-        document.getElementById('ref-details').value = ref.details || '';
-        updateRefFormFields();
-        addReferenceBtn.classList.add('hidden'); updateReferenceBtn.classList.remove('hidden'); cancelEditReferenceBtn.classList.remove('hidden');
-        refForm.querySelector('h4').textContent = 'Edit Reference'; refForm.scrollIntoView({ behavior: 'smooth' });
-    };
-    const updateReference = () => {
-        if (!currentEditingRefId) return;
-        const refIndex = reportData.sectionsContent['references-section'].findIndex(r => r.id === currentEditingRefId); if (refIndex === -1) return;
-        const updatedRef = {
-            id: currentEditingRefId, type: refTypeSelect.value, key: document.getElementById('ref-key').value.trim(),
-            authors: document.getElementById('ref-authors').value.trim(), year: document.getElementById('ref-year').value.trim(),
-            title: document.getElementById('ref-title').value.trim(),
-        };
-        if (!updatedRef.key || !updatedRef.authors || !updatedRef.year || !updatedRef.title) {
-            showNotification('Please fill in required reference fields (Key, Authors, Year, Title).', 'warning'); return;
-        }
-        switch (updatedRef.type) {
-            case 'journal': updatedRef.source = document.getElementById('ref-source').value.trim(); updatedRef.volume = document.getElementById('ref-volume').value.trim(); updatedRef.pages = document.getElementById('ref-pages').value.trim(); break;
-            case 'book': updatedRef.source = document.getElementById('ref-source').value.trim(); updatedRef.pages = document.getElementById('ref-pages').value.trim(); break;
-            case 'website': updatedRef.url = document.getElementById('ref-url').value.trim(); updatedRef.accessDate = document.getElementById('ref-access-date').value; break;
-            case 'other': updatedRef.details = document.getElementById('ref-details').value.trim(); break;
-        }
-        reportData.sectionsContent['references-section'][refIndex] = updatedRef;
-        renderReferences(); clearRefForm(); saveData(); showNotification('Reference updated successfully.', 'success');
-    };
-    const deleteReference = (refId) => {
-        if (confirm('Are you sure you want to delete this reference?')) {
-            reportData.sectionsContent['references-section'] = reportData.sectionsContent['references-section'].filter(r => r.id !== refId);
-            renderReferences(); if (currentEditingRefId === refId) clearRefForm();
-            saveData(); showNotification('Reference deleted.', 'success');
-        }
-    };
-    const renderReferences = () => {
-        const references = reportData.sectionsContent['references-section'] || [];
-        referencesListContainer.innerHTML = '';
-        if (references.length === 0) { referencesListContainer.innerHTML = '<p>No references added yet.</p>'; return; }
-        references.sort((a, b) => (a.key || '').localeCompare(b.key || ''));
-        references.forEach(ref => {
-            const item = document.createElement('div'); item.className = 'reference-item'; item.dataset.refId = ref.id;
-            let detailsHtml = `<strong>[${ref.key || 'No Key'}]</strong> ${ref.authors || 'N/A'} (${ref.year || 'N/A'}). <em>${ref.title || 'N/A'}</em>.`;
-            switch (ref.type) {
-                case 'journal': detailsHtml += ` ${ref.source || ''}. ${ref.volume || ''}: ${ref.pages || ''}.`; break;
-                case 'book': detailsHtml += ` ${ref.source || ''}. ${ref.pages ? `pp. ${ref.pages}` : ''}.`; break;
-                case 'website': detailsHtml += ` Retrieved from <a href="${ref.url || '#'}" target="_blank">${ref.url || 'N/A'}</a>${ref.accessDate ? ` (Accessed: ${formatDate(ref.accessDate)})` : ''}.`; break;
-                case 'other': detailsHtml += ` ${ref.details || ''}.`; break;
-            }
-            item.innerHTML = `<div class="reference-details">${detailsHtml}</div> <div class="reference-actions"> <button class="btn btn-secondary btn-sm edit-ref-btn"><i class="fas fa-edit"></i> Edit</button> <button class="btn btn-danger btn-sm delete-ref-btn"><i class="fas fa-trash"></i> Delete</button> </div>`;
-            item.querySelector('.edit-ref-btn').addEventListener('click', () => editReference(ref.id));
-            item.querySelector('.delete-ref-btn').addEventListener('click', () => deleteReference(ref.id));
-            referencesListContainer.appendChild(item);
-        });
-    };
-
-    // --- Version History --- (Keep existing functions: saveVersion, renderVersionHistory, promptRestoreVersion, restoreVersion, updateTemplateCardSelection)
-    const MAX_VERSIONS = 10;
-    const saveVersion = () => {
-        const currentDataSnapshot = JSON.stringify(reportData); const timestamp = Date.now();
-        const lastVersion = reportData.versions[reportData.versions.length - 1];
-        if (lastVersion && lastVersion.data === currentDataSnapshot) { showNotification('No changes detected since last saved version.', 'info'); return; }
-        reportData.versions.push({ timestamp: timestamp, data: currentDataSnapshot });
-        if (reportData.versions.length > MAX_VERSIONS) reportData.versions.shift();
-        renderVersionHistory(); saveData(); showNotification(`Version saved at ${formatDateTime(timestamp)}.`, 'success');
-    };
-    const renderVersionHistory = () => {
-        versionHistoryList.innerHTML = ''; if (!reportData.versions || reportData.versions.length === 0) { versionHistoryList.innerHTML = '<p>No versions saved yet.</p>'; return; }
-        [...reportData.versions].reverse().forEach(version => {
-            const item = document.createElement('div'); item.className = 'version-item';
-            item.innerHTML = `<span>${formatDateTime(version.timestamp)}</span> <button class="btn btn-subtle btn-sm restore-version-btn" data-timestamp="${version.timestamp}"><i class="fas fa-undo"></i> Restore</button>`;
-            item.querySelector('.restore-version-btn').addEventListener('click', () => promptRestoreVersion(version.timestamp));
-            versionHistoryList.appendChild(item);
-        });
-    };
-    const promptRestoreVersion = (timestamp) => { versionToRestore = timestamp; restoreVersionTimestampEl.textContent = formatDateTime(timestamp); showModal(restoreVersionModal); };
-    const restoreVersion = () => {
-        if (!versionToRestore) return;
-        const versionData = reportData.versions.find(v => v.timestamp === versionToRestore);
-        if (!versionData || !versionData.data) { showNotification('Error finding version data to restore.', 'error'); hideModal(restoreVersionModal); return; }
-        try {
-            const restoredReportData = JSON.parse(versionData.data); reportData = restoredReportData;
-            applyTheme(); applyFocusMode(); renderSections(); renderReferences(); renderVersionHistory();
-            editorMode = reportData.editorMode || 'tinymce'; // Ensure editor mode is restored
-            updateEditorModeView(); // Update view based on restored mode
-            toggleEditorModeBtn.querySelector('.mode-indicator').textContent = `(${(editorMode === 'tinymce' ? 'Rich Text' : 'Markdown')})`;
-            setActiveSection(reportData.sectionsOrder[0] || 'cover-page');
-            updateTemplateCardSelection();
-            saveData(); hideModal(restoreVersionModal); showNotification(`Report restored to version from ${formatDateTime(versionToRestore)}.`, 'success');
-            versionToRestore = null;
-        } catch (error) {
-            console.error('Error parsing or applying restored version:', error); showNotification('Error restoring version. Data might be corrupted.', 'error');
-            hideModal(restoreVersionModal); versionToRestore = null;
-        }
-    };
-     const updateTemplateCardSelection = () => {
-        document.querySelectorAll('.template-card.active').forEach(card => card.classList.remove('active'));
-        const currentTemplateCard = document.querySelector(`.template-card[data-template="${reportData.template}"]`);
-        if (currentTemplateCard) currentTemplateCard.classList.add('active');
-    };
-
-    // --- Export Functionality --- (Keep existing functions: generateReportHTMLForPreview, showPreview, downloadPDF, downloadMarkdown, downloadHTML)
-    // Note: generateReportHTMLForPreview needs to handle content potentially being Markdown
-    const generateReportHTMLForPreview = (forPDF = false) => {
-        let html = '';
-        const coverData = reportData.sectionsContent['cover-page'] || {};
-        const references = reportData.sectionsContent['references-section'] || [];
-        const visibleSections = reportData.sectionsOrder.filter(id => reportData.sectionsVisibility[id] !== false);
-
-        // 1. Cover Page (same as before)
-        if (reportData.sectionsVisibility['cover-page'] !== false) {
-            html += `<div class="report-section cover-page" id="preview-cover-page"><div class="cover-page-content">`;
-            html += `<div class="cover-page-top">`;
-            if (coverData.logo_url) html += `<img src="${coverData.logo_url}" alt="${coverData.institution_name || 'Institution'} Logo" class="institution-logo">`;
-            if (coverData.institution_name) html += `<p class="institution-name" style="font-size: 14pt; margin-bottom: 2cm;">${coverData.institution_name}</p>`;
-            html += `</div>`; // end top
-            html += `<div class="cover-page-middle">`;
-            if (coverData.report_title) html += `<h1 class="report-title">${coverData.report_title}</h1>`;
-            if (coverData.report_subtitle) html += `<h2 class="report-subtitle">${coverData.report_subtitle}</h2>`;
-            html += `</div>`; // end middle
-            html += `<div class="cover-page-bottom">`;
-            html += `<div class="author-info" style="margin-bottom: 1.5cm;">`;
-            if (coverData.author_name) html += `<p class="author-name">${coverData.author_name}</p>`;
-            if (coverData.student_id) html += `<p>Student ID: ${coverData.student_id}</p>`;
-            if (coverData.department) html += `<p>Department: ${coverData.department}</p>`;
-            if (coverData.semester) html += `<p>Semester: ${coverData.semester}</p>`;
-            html += `</div>`; // end author-info
-            html += `<div class="submission-info">`;
-            if (coverData.course_name || coverData.course_code) html += `<p><strong>${coverData.course_name || ''}</strong> ${coverData.course_code ? `(${coverData.course_code})` : ''}</p>`;
-            if (coverData.lab_section) html += `<p>Lab Section: ${coverData.lab_section}</p>`;
-            if (coverData.assignment_number) html += `<p>Assignment: ${coverData.assignment_number}</p>`;
-            if (coverData.instructor_name) {
-                html += `<p style="margin-top: 1cm;">Submitted to:</p><p><strong>${coverData.instructor_name}</strong></p>`;
-                if (coverData.instructor_designation) html += `<p>${coverData.instructor_designation}</p>`;
-                if (coverData.instructor_department) html += `<p>${coverData.instructor_department}</p>`;
-            }
-            if (coverData.experiment_date) html += `<p style="margin-top: 0.5cm;">Date of Experiment: ${formatDate(coverData.experiment_date)}</p>`;
-            if (coverData.submission_date) html += `<p>Date of Submission: ${formatDate(coverData.submission_date)}</p>`;
-            html += `</div></div></div></div>`; // end submission, bottom, content, cover-page
-        }
-
-        // 2. Body Sections
-        visibleSections.forEach(sectionId => {
-            if (sectionId === 'cover-page' || sectionId === 'references-section') return;
-            const config = reportData.sectionsConfig[sectionId];
-            let content = reportData.sectionsContent[sectionId] || '';
-
-            // Convert Markdown to HTML if necessary for the preview
-            if (isLikelyMarkdown(content) && window.marked) {
-                 try { content = marked.parse(content); } catch(e) { console.error(`MD parse error in preview for ${sectionId}:`, e); }
-            }
-
-            html += `<div class="report-section" id="preview-${sectionId}">`;
-            if (config?.name) html += `<h2 class="report-section-title">${config.name}</h2>`;
-            content = content.replace(/<table/g, '<table class="report-table"');
-            content = content.replace(/<img/g, '<img class="report-image"');
-            html += `<div class="section-content-wrapper">${content || '<p><i>Section is empty.</i></p>'}</div>`;
-            html += `</div>`;
-        });
-
-        // 3. References Section (same as before)
-        if (reportData.sectionsVisibility['references-section'] !== false && references.length > 0) {
-            html += `<div class="report-section references-section" id="preview-references-section">`;
-            html += `<h2 class="report-section-title">References</h2>`;
-            html += `<ol class="references-list-preview">`;
-            references.sort((a, b) => (a.key || '').localeCompare(b.key || ''));
-            references.forEach(ref => {
-                let refHtml = `<li><strong>[${ref.key || 'No Key'}]</strong> ${ref.authors || 'N/A'} (${ref.year || 'N/A'}). <em>${ref.title || 'N/A'}</em>.`;
-                 switch (ref.type) {
-                    case 'journal': refHtml += ` ${ref.source || ''}. ${ref.volume || ''}: ${ref.pages || ''}.`; break;
-                    case 'book': refHtml += ` ${ref.source || ''}. ${ref.pages ? `pp. ${ref.pages}` : ''}.`; break;
-                    case 'website': refHtml += ` Retrieved from <a href="${ref.url || '#'}" target="_blank">${ref.url || 'N/A'}</a>${ref.accessDate ? ` (Accessed: ${formatDate(ref.accessDate)})` : ''}.`; break;
-                    case 'other': refHtml += ` ${ref.details || ''}.`; break;
-                }
-                refHtml += `</li>`; html += refHtml;
+                };
+                const initializeTinyMCE = (initialContent = '') => {
+                    if (typeof tinymce === 'undefined') {
+                        console.error("TinyMCE library not loaded!");
+                        showNotification("Editor library (TinyMCE) not found.", "error");
+                        if (tinymceEditorArea) tinymceEditorArea.innerHTML = '<p style="color: red;">Error: TinyMCE library not found.</p>';
+                        return;
+                    }
+                    if (tinymce.get('editor-tinymce')) {
+                        tinymce.get('editor-tinymce').remove();
+                    }
+                    tinymce.init({
+                        selector: '#editor-tinymce',
+                        plugins: 'preview powerpaste casechange importcss searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker help formatpainter permanentpen pageembed linkchecker emoticons advtable export',
+                        toolbar: 'undo redo | blocks | bold italic strikethrough | bullist numlist | blockquote | link image table | code | removeformat | wordcount',
+                        height: 450,
+                        menubar: 'file edit view insert format tools table help',
+                        placeholder: 'Start writing your section content here...',
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }', 
+                        init_instance_callback: function (editor) {
+                            if (initialContent) {
+                                editor.setContent(initialContent);
+                            }
+                            updateWordCount(); 
+                            updateSaveStatus('saved'); 
+                        },
+                        setup: function (editor) {
+                            editor.on('change input undo redo SetContent', function () {
+                                updateWordCount();
+                                updateSaveStatus('unsaved');
+                                debounce(saveCurrentSectionContent, 1500); 
+                            });
+                        },
+                    }).catch(error => {
+                        console.error("Error initializing TinyMCE:", error);
+                        showNotification("Failed to initialize the editor.", "error");
+                    });
+                };
+                const loadSectionContent = () => {
+                    if (!activeSectionId || activeSectionId === 'cover-page' || activeSectionId === 'references-section') {
+                        if (editorMode === 'tinymce' && typeof tinymce !== 'undefined' && tinymce.get('editor-tinymce')) {
+                            tinymce.get('editor-tinymce').setContent('');
+                        }
+                        markdownEditor.value = '';
+                        updateMarkdownPreview();
+                        updateWordCount();
+                        return;
+                    }
+                    const content = reportData.sectionsContent[activeSectionId] || '';
+                    let contentForEditor = '';
+                    if (editorMode === 'tinymce') {
+                        if (isLikelyMarkdown(content) && window.marked) {
+                            try {
+                                contentForEditor = marked.parse(content); 
+                            } catch (e) {
+                                console.error("Error parsing Markdown for TinyMCE:", e);
+                                contentForEditor = content; 
+                            }
+                        } else {
+                            contentForEditor = content; 
+                        }
+                    } else { 
+                        if (!isLikelyMarkdown(content) && window.TurndownService) {
+                             if (!turndownService) turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '*' });
+                             try {
+                                 contentForEditor = turndownService.turndown(content); 
+                             } catch(e) {
+                                 console.error("Error converting HTML to Markdown:", e);
+                                 contentForEditor = content; 
+                             }
+                        } else {
+                             contentForEditor = content; 
+                        }
+                    }
+                    if (editorMode === 'tinymce') {
+                        if (document.getElementById('editor-tinymce')) {
+                            const editor = tinymce.get('editor-tinymce');
+                            if (editor) {
+                                editor.setContent(contentForEditor || ''); 
+                                editor.undoManager.clear(); 
+                                editor.nodeChanged(); 
+                            } else {
+                                initializeTinyMCE(contentForEditor); 
+                            }
+                        }
+                        markdownEditor.value = ''; 
+                        updateMarkdownPreview();
+                    } else { 
+                        if (typeof tinymce !== 'undefined' && tinymce.get('editor-tinymce')) {
+                            tinymce.get('editor-tinymce').remove();
+                        }
+                        markdownEditor.value = contentForEditor; 
+                        updateMarkdownPreview();
+                    }
+                    updateWordCount();
+                    updateSaveStatus('saved'); 
+                };
+                const saveCurrentSectionContent = (showStatus = true) => {
+                    if (!activeSectionId || !reportData.sectionsContent || activeSectionId === 'cover-page' || activeSectionId === 'references-section') {
+                        if (activeSectionId === 'cover-page') saveCoverPageData();
+                        return;
+                    }
+                    let contentToSave = '';
+                    const editor = (typeof tinymce !== 'undefined') ? tinymce.get('editor-tinymce') : null;
+                    if (editorMode === 'tinymce' && editor) {
+                        contentToSave = editor.getContent();
+                    } else if (editorMode === 'markdown') {
+                        contentToSave = markdownEditor.value;
+                    }
+                    if (reportData.sectionsContent[activeSectionId] !== contentToSave) {
+                        reportData.sectionsContent[activeSectionId] = contentToSave;
+                        debounce(() => saveData(showStatus), 500);
+                        if (showStatus) updateSaveStatus('saving');
+                    } else {
+                        if (showStatus) updateSaveStatus('saved');
+                    }
+                };
+                const updateWordCount = () => {
+                    let count = 0;
+                    const editor = (typeof tinymce !== 'undefined') ? tinymce.get('editor-tinymce') : null;
+                    if (editorMode === 'tinymce' && editor && editor.plugins && editor.plugins.wordcount) {
+                        count = editor.plugins.wordcount.getCount();
+                    } else if (editorMode === 'markdown') {
+                        const text = markdownEditor.value.trim();
+                        count = text ? text.split(/\s+/).length : 0;
+                    }
+                    wordCountEl.textContent = `Words: ${count}`;
+                };
+                const updateSaveStatus = (status) => { 
+                    saveStatusEl.classList.remove('visible', 'unsaved', 'saving', 'saved', 'error');
+                    if (status !== 'hidden') {
+                        saveStatusEl.classList.add('visible', status);
+                        let iconClass = 'fa-check-circle';
+                        let text = 'Saved';
+                        switch (status) {
+                            case 'unsaved': iconClass = 'fa-edit'; text = 'Unsaved'; break;
+                            case 'saving': iconClass = 'fa-spinner fa-spin'; text = 'Saving...'; break;
+                            case 'error': iconClass = 'fa-exclamation-circle'; text = 'Error'; break;
+                            case 'saved': iconClass = 'fa-check-circle'; text = 'Saved'; break;
+                        }
+                        saveStatusEl.innerHTML = `<i class="fas ${iconClass}"></i> <span>${text}</span>`;
+                    }
+                };
+                const toggleEditorMode = () => {
+                    saveCurrentSectionContent(false); 
+                    const newMode = (editorMode === 'tinymce') ? 'markdown' : 'tinymce';
+                    editorMode = newMode;
+                    reportData.editorMode = editorMode;
+                    saveData(false);
+                    updateEditorModeView(); 
+                    loadSectionContent(); 
+                    toggleEditorModeBtn.querySelector('.mode-indicator').textContent = `(${(editorMode === 'tinymce' ? 'Rich Text' : 'Markdown')})`;
+                    showNotification(`Switched to ${editorMode === 'tinymce' ? 'Rich Text' : 'Markdown'} editor mode.`, 'info');
+                };
+                const updateEditorModeView = () => {
+                     if (editorMode === 'tinymce') {
+                        if (tinymceEditorArea) tinymceEditorArea.classList.remove('hidden');
+                        markdownEditorArea.classList.add('hidden');
+                    } else { 
+                        if (tinymceEditorArea) tinymceEditorArea.classList.add('hidden');
+                        markdownEditorArea.classList.remove('hidden');
+                        if (typeof tinymce !== 'undefined' && tinymce.get('editor-tinymce')) {
+                            tinymce.get('editor-tinymce').remove();
+                        }
+                    }
+                };
+                const updateMarkdownPreview = () => {
+                    if (window.marked && markdownPreview) {
+                        try {
+                            markdownPreview.innerHTML = marked.parse(markdownEditor.value || '');
+                            if (window.Prism) {
+                                Prism.highlightAllUnder(markdownPreview);
+                            }
+                        } catch (e) {
+                            markdownPreview.innerHTML = `<p style="color: red;">Error rendering Markdown preview.</p>`;
+                            console.error("Markdown Preview Error:", e);
+                        }
+                    }
+                };
+                const isLikelyMarkdown = (text) => {
+                    if (!text || typeof text !== 'string') return false;
+                    return /^(#+\s|\*\s|-\s|\d+\.\s|`{3}|>|\[.*\]\(.*\))/.test(text.trim()) ||
+                           /\n\n/.test(text) ||
+                           /(\*\*|__|\*|_|`|~~)/.test(text);
+                };
+                const updateRefFormFields = () => {
+                    const selectedType = refTypeSelect.value;
+                    refFields.forEach(field => {
+                        const hasTypeClass = Array.from(field.classList).some(cls => ['journal', 'book', 'website', 'other'].includes(cls));
+                        if (!hasTypeClass || field.classList.contains(selectedType)) {
+                            field.style.display = 'block';
+                        } else {
+                            field.style.display = 'none';
+                        }
+                    });
+                     document.querySelectorAll('#reference-form .form-group').forEach(group => {
+                         const input = group.querySelector('input, select, textarea');
+                         if (!input) return;
+                         const id = input.id;
+                         let show = false;
+                         switch (selectedType) {
+                             case 'journal':
+                                 show = ['ref-key', 'ref-authors', 'ref-year', 'ref-title', 'ref-source', 'ref-volume', 'ref-pages'].includes(id);
+                                 if (id === 'ref-source') group.querySelector('label').textContent = 'Journal Name';
+                                 if (id === 'ref-pages') group.querySelector('label').textContent = 'Pages / DOI';
+                                 break;
+                             case 'book':
+                                 show = ['ref-key', 'ref-authors', 'ref-year', 'ref-title', 'ref-source', 'ref-pages'].includes(id);
+                                  if (id === 'ref-source') group.querySelector('label').textContent = 'Publisher / City';
+                                  if (id === 'ref-pages') group.querySelector('label').textContent = 'Pages / Edition';
+                                 break;
+                             case 'website':
+                                 show = ['ref-key', 'ref-authors', 'ref-year', 'ref-title', 'ref-url', 'ref-access-date'].includes(id);
+                                 break;
+                             case 'other':
+                                 show = ['ref-key', 'ref-authors', 'ref-year', 'ref-title', 'ref-details'].includes(id);
+                                 break;
+                         }
+                         group.style.display = show ? 'block' : 'none';
+                     });
+                     document.getElementById('ref-type').closest('.form-group').style.display = 'block';
+                };
+                const clearRefForm = () => {
+                    refForm.querySelectorAll('input[type="text"], input[type="number"], input[type="url"], input[type="date"], textarea').forEach(input => input.value = '');
+                    refTypeSelect.value = 'journal';
+                    updateRefFormFields();
+                    currentEditingRefId = null;
+                    addReferenceBtn.classList.remove('hidden');
+                    updateReferenceBtn.classList.add('hidden');
+                    cancelEditReferenceBtn.classList.add('hidden');
+                    refForm.querySelector('h4').textContent = 'Add New Reference';
+                };
+                const addReference = () => {
+                    const newRef = {
+                        id: generateId(), type: refTypeSelect.value, key: document.getElementById('ref-key').value.trim(),
+                        authors: document.getElementById('ref-authors').value.trim(), year: document.getElementById('ref-year').value.trim(),
+                        title: document.getElementById('ref-title').value.trim(),
+                    };
+                    if (!newRef.key || !newRef.authors || !newRef.year || !newRef.title) {
+                        showNotification('Please fill in required reference fields (Key, Authors, Year, Title).', 'warning'); return;
+                    }
+                    switch (newRef.type) {
+                        case 'journal':
+                            newRef.source = document.getElementById('ref-source').value.trim(); newRef.volume = document.getElementById('ref-volume').value.trim();
+                            newRef.pages = document.getElementById('ref-pages').value.trim(); break;
+                        case 'book':
+                            newRef.source = document.getElementById('ref-source').value.trim(); newRef.pages = document.getElementById('ref-pages').value.trim(); break;
+                        case 'website':
+                            newRef.url = document.getElementById('ref-url').value.trim(); newRef.accessDate = document.getElementById('ref-access-date').value; break;
+                        case 'other':
+                            newRef.details = document.getElementById('ref-details').value.trim(); break;
+                    }
+                    if (!Array.isArray(reportData.sectionsContent['references-section'])) reportData.sectionsContent['references-section'] = [];
+                    reportData.sectionsContent['references-section'].push(newRef);
+                    renderReferences(); clearRefForm(); saveData(); showNotification('Reference added successfully.', 'success');
+                };
+                const editReference = (refId) => {
+                    const ref = reportData.sectionsContent['references-section'].find(r => r.id === refId); if (!ref) return;
+                    currentEditingRefId = refId;
+                    refTypeSelect.value = ref.type; document.getElementById('ref-key').value = ref.key || '';
+                    document.getElementById('ref-authors').value = ref.authors || ''; document.getElementById('ref-year').value = ref.year || '';
+                    document.getElementById('ref-title').value = ref.title || ''; document.getElementById('ref-source').value = ref.source || '';
+                    document.getElementById('ref-volume').value = ref.volume || ''; document.getElementById('ref-pages').value = ref.pages || '';
+                    document.getElementById('ref-url').value = ref.url || ''; document.getElementById('ref-access-date').value = ref.accessDate || '';
+                    document.getElementById('ref-details').value = ref.details || '';
+                    updateRefFormFields();
+                    addReferenceBtn.classList.add('hidden'); updateReferenceBtn.classList.remove('hidden'); cancelEditReferenceBtn.classList.remove('hidden');
+                    refForm.querySelector('h4').textContent = 'Edit Reference'; refForm.scrollIntoView({ behavior: 'smooth' });
+                };
+                const updateReference = () => {
+                    if (!currentEditingRefId) return;
+                    const refIndex = reportData.sectionsContent['references-section'].findIndex(r => r.id === currentEditingRefId); if (refIndex === -1) return;
+                    const updatedRef = {
+                        id: currentEditingRefId, type: refTypeSelect.value, key: document.getElementById('ref-key').value.trim(),
+                        authors: document.getElementById('ref-authors').value.trim(), year: document.getElementById('ref-year').value.trim(),
+                        title: document.getElementById('ref-title').value.trim(),
+                    };
+                    if (!updatedRef.key || !updatedRef.authors || !updatedRef.year || !updatedRef.title) {
+                        showNotification('Please fill in required reference fields (Key, Authors, Year, Title).', 'warning'); return;
+                    }
+                    switch (updatedRef.type) {
+                        case 'journal': updatedRef.source = document.getElementById('ref-source').value.trim(); updatedRef.volume = document.getElementById('ref-volume').value.trim(); updatedRef.pages = document.getElementById('ref-pages').value.trim(); break;
+                        case 'book': updatedRef.source = document.getElementById('ref-source').value.trim(); updatedRef.pages = document.getElementById('ref-pages').value.trim(); break;
+                        case 'website': updatedRef.url = document.getElementById('ref-url').value.trim(); updatedRef.accessDate = document.getElementById('ref-access-date').value; break;
+                        case 'other': updatedRef.details = document.getElementById('ref-details').value.trim(); break;
+                    }
+                    reportData.sectionsContent['references-section'][refIndex] = updatedRef;
+                    renderReferences(); clearRefForm(); saveData(); showNotification('Reference updated successfully.', 'success');
+                };
+                const deleteReference = (refId) => {
+                    if (confirm('Are you sure you want to delete this reference?')) {
+                        reportData.sectionsContent['references-section'] = reportData.sectionsContent['references-section'].filter(r => r.id !== refId);
+                        renderReferences(); if (currentEditingRefId === refId) clearRefForm();
+                        saveData(); showNotification('Reference deleted.', 'success');
+                    }
+                };
+                const renderReferences = () => {
+                    const references = reportData.sectionsContent['references-section'] || [];
+                    referencesListContainer.innerHTML = '';
+                    if (references.length === 0) { referencesListContainer.innerHTML = '<p>No references added yet.</p>'; return; }
+                    references.sort((a, b) => (a.key || '').localeCompare(b.key || ''));
+                    references.forEach(ref => {
+                        const item = document.createElement('div'); item.className = 'reference-item'; item.dataset.refId = ref.id;
+                        let detailsHtml = `<strong>[${ref.key || 'No Key'}]</strong> ${ref.authors || 'N/A'} (${ref.year || 'N/A'}). <em>${ref.title || 'N/A'}</em>.`;
+                        switch (ref.type) {
+                            case 'journal': detailsHtml += ` ${ref.source || ''}. ${ref.volume || ''}: ${ref.pages || ''}.`; break;
+                            case 'book': detailsHtml += ` ${ref.source || ''}. ${ref.pages ? `pp. ${ref.pages}` : ''}.`; break;
+                            case 'website': detailsHtml += ` Retrieved from <a href="${ref.url || '#'}" target="_blank">${ref.url || 'N/A'}</a>${ref.accessDate ? ` (Accessed: ${formatDate(ref.accessDate)})` : ''}.`; break;
+                            case 'other': detailsHtml += ` ${ref.details || ''}.`; break;
+                        }
+                        item.innerHTML = `<div class="reference-details">${detailsHtml}</div> <div class="reference-actions"> <button class="btn btn-secondary btn-sm edit-ref-btn"><i class="fas fa-edit"></i> Edit</button> <button class="btn btn-danger btn-sm delete-ref-btn"><i class="fas fa-trash"></i> Delete</button> </div>`;
+                        item.querySelector('.edit-ref-btn').addEventListener('click', () => editReference(ref.id));
+                        item.querySelector('.delete-ref-btn').addEventListener('click', () => deleteReference(ref.id));
+                        referencesListContainer.appendChild(item);
+                    });
+                };
+                const MAX_VERSIONS = 10;
+                const saveVersion = () => {
+                    const currentDataSnapshot = JSON.stringify(reportData); const timestamp = Date.now();
+                    const lastVersion = reportData.versions[reportData.versions.length - 1];
+                    if (lastVersion && lastVersion.data === currentDataSnapshot) { showNotification('No changes detected since last saved version.', 'info'); return; }
+                    reportData.versions.push({ timestamp: timestamp, data: currentDataSnapshot });
+                    if (reportData.versions.length > MAX_VERSIONS) reportData.versions.shift();
+                    renderVersionHistory(); saveData(); showNotification(`Version saved at ${formatDateTime(timestamp)}.`, 'success');
+                };
+                const renderVersionHistory = () => {
+                    versionHistoryList.innerHTML = ''; if (!reportData.versions || reportData.versions.length === 0) { versionHistoryList.innerHTML = '<p>No versions saved yet.</p>'; return; }
+                    [...reportData.versions].reverse().forEach(version => {
+                        const item = document.createElement('div'); item.className = 'version-item';
+                        item.innerHTML = `<span>${formatDateTime(version.timestamp)}</span> <button class="btn btn-subtle btn-sm restore-version-btn" data-timestamp="${version.timestamp}"><i class="fas fa-undo"></i> Restore</button>`;
+                        item.querySelector('.restore-version-btn').addEventListener('click', () => promptRestoreVersion(version.timestamp));
+                        versionHistoryList.appendChild(item);
+                    });
+                };
+                const promptRestoreVersion = (timestamp) => { versionToRestore = timestamp; restoreVersionTimestampEl.textContent = formatDateTime(timestamp); showModal(restoreVersionModal); };
+                const restoreVersion = () => {
+                    if (!versionToRestore) return;
+                    const versionData = reportData.versions.find(v => v.timestamp === versionToRestore);
+                    if (!versionData || !versionData.data) { showNotification('Error finding version data to restore.', 'error'); hideModal(restoreVersionModal); return; }
+                    try {
+                        const restoredReportData = JSON.parse(versionData.data); reportData = restoredReportData;
+                        applyTheme(); applyFocusMode(); renderSections(); renderReferences(); renderVersionHistory();
+                        editorMode = reportData.editorMode || 'tinymce'; 
+                        updateEditorModeView(); 
+                        toggleEditorModeBtn.querySelector('.mode-indicator').textContent = `(${(editorMode === 'tinymce' ? 'Rich Text' : 'Markdown')})`;
+                        setActiveSection(reportData.sectionsOrder[0] || 'cover-page');
+                        updateTemplateCardSelection();
+                        saveData(); hideModal(restoreVersionModal); showNotification(`Report restored to version from ${formatDateTime(versionToRestore)}.`, 'success');
+                        versionToRestore = null;
+                    } catch (error) {
+                        console.error('Error parsing or applying restored version:', error); showNotification('Error restoring version. Data might be corrupted.', 'error');
+                        hideModal(restoreVersionModal); versionToRestore = null;
+                    }
+                };
+                 const updateTemplateCardSelection = () => {
+                    document.querySelectorAll('.template-card.active').forEach(card => card.classList.remove('active'));
+                    const currentTemplateCard = document.querySelector(`.template-card[data-template="${reportData.template}"]`);
+                    if (currentTemplateCard) currentTemplateCard.classList.add('active');
+                };
+                const generateReportHTMLForPreview = (forPDF = false) => {
+                    let html = '';
+                    const coverData = reportData.sectionsContent['cover-page'] || {};
+                    const references = reportData.sectionsContent['references-section'] || [];
+                    const visibleSections = reportData.sectionsOrder.filter(id => reportData.sectionsVisibility[id] !== false);
+                    if (reportData.sectionsVisibility['cover-page'] !== false) {
+                        html += `<div class="report-section cover-page" id="preview-cover-page"><div class="cover-page-content">`;
+                        html += `<div class="cover-page-top">`;
+                        if (coverData.logo_url) html += `<img src="${coverData.logo_url}" alt="${coverData.institution_name || 'Institution'} Logo" class="institution-logo">`;
+                        if (coverData.institution_name) html += `<p class="institution-name" style="font-size: 14pt; margin-bottom: 2cm;">${coverData.institution_name}</p>`;
+                        html += `</div>`; 
+                        html += `<div class="cover-page-middle">`;
+                        if (coverData.report_title) html += `<h1 class="report-title">${coverData.report_title}</h1>`;
+                        if (coverData.report_subtitle) html += `<h2 class="report-subtitle">${coverData.report_subtitle}</h2>`;
+                        html += `</div>`; 
+                        html += `<div class="cover-page-bottom">`;
+                        html += `<div class="author-info" style="margin-bottom: 1.5cm;">`;
+                        if (coverData.author_name) html += `<p class="author-name">${coverData.author_name}</p>`;
+                        if (coverData.student_id) html += `<p>Student ID: ${coverData.student_id}</p>`;
+                        if (coverData.department) html += `<p>Department: ${coverData.department}</p>`;
+                        if (coverData.semester) html += `<p>Semester: ${coverData.semester}</p>`;
+                        html += `</div>`; 
+                        html += `<div class="submission-info">`;
+                        if (coverData.course_name || coverData.course_code) html += `<p><strong>${coverData.course_name || ''}</strong> ${coverData.course_code ? `(${coverData.course_code})` : ''}</p>`;
+                        if (coverData.lab_section) html += `<p>Lab Section: ${coverData.lab_section}</p>`;
+                        if (coverData.assignment_number) html += `<p>Assignment: ${coverData.assignment_number}</p>`;
+                        if (coverData.instructor_name) {
+                            html += `<p style="margin-top: 1cm;">Submitted to:</p><p><strong>${coverData.instructor_name}</strong></p>`;
+                            if (coverData.instructor_designation) html += `<p>${coverData.instructor_designation}</p>`;
+                            if (coverData.instructor_department) html += `<p>${coverData.instructor_department}</p>`;
+                        }
+                        if (coverData.experiment_date) html += `<p style="margin-top: 0.5cm;">Date of Experiment: ${formatDate(coverData.experiment_date)}</p>`;
+                        if (coverData.submission_date) html += `<p>Date of Submission: ${formatDate(coverData.submission_date)}</p>`;
+                        html += `</div></div></div></div>`; 
+                    }
+                    visibleSections.forEach(sectionId => {
+                        if (sectionId === 'cover-page' || sectionId === 'references-section') return;
+                        const config = reportData.sectionsConfig[sectionId];
+                        let content = reportData.sectionsContent[sectionId] || '';
+                        if (isLikelyMarkdown(content) && window.marked) {
+                             try { content = marked.parse(content); } catch(e) { console.error(`MD parse error in preview for ${sectionId}:`, e); }
+                        }
+                        html += `<div class="report-section" id="preview-${sectionId}">`;
+                        if (config?.name) html += `<h2 class="report-section-title">${config.name}</h2>`;
+                        content = content.replace(/<table/g, '<table class="report-table"');
+                        content = content.replace(/<img/g, '<img class="report-image"');
+                        html += `<div class="section-content-wrapper">${content || '<p><i>Section is empty.</i></p>'}</div>`;
+                        html += `</div>`;
+                    });
+                    if (reportData.sectionsVisibility['references-section'] !== false && references.length > 0) {
+                        html += `<div class="report-section references-section" id="preview-references-section">`;
+                        html += `<h2 class="report-section-title">References</h2>`;
+                        html += `<ol class="references-list-preview">`;
+                        references.sort((a, b) => (a.key || '').localeCompare(b.key || ''));
+                        references.forEach(ref => {
+                            let refHtml = `<li><strong>[${ref.key || 'No Key'}]</strong> ${ref.authors || 'N/A'} (${ref.year || 'N/A'}). <em>${ref.title || 'N/A'}</em>.`;
+                             switch (ref.type) {
+                                case 'journal': refHtml += ` ${ref.source || ''}. ${ref.volume || ''}: ${ref.pages || ''}.`; break;
+                                case 'book': refHtml += ` ${ref.source || ''}. ${ref.pages ? `pp. ${ref.pages}` : ''}.`; break;
+                                case 'website': refHtml += ` Retrieved from <a href="${ref.url || '#'}" target="_blank">${ref.url || 'N/A'}</a>${ref.accessDate ? ` (Accessed: ${formatDate(ref.accessDate)})` : ''}.`; break;
+                                case 'other': refHtml += ` ${ref.details || ''}.`; break;
+                            }
+                            refHtml += `</li>`; html += refHtml;
+                        });
+                        html += `</ol></div>`;
+                    }
+                    return html;
+                };
+                const showPreview = () => {
+                    try {
+                        const previewHtml = generateReportHTMLForPreview(); previewContentArea.innerHTML = previewHtml;
+                        showModal(previewModal);
+                    } catch (error) { console.error("Error generating preview:", error); showNotification("Failed to generate preview.", "error"); }
+                };
+                const downloadPDF = async () => {
+                    if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') { showNotification('PDF generation libraries not loaded.', 'error'); console.error('jsPDF or html2canvas not found.'); return; }
+                    showLoading('Generating PDF...');
+                    const previewHtml = generateReportHTMLForPreview(true); previewContentArea.innerHTML = previewHtml;
+                    previewModal.style.display = 'block'; previewModal.style.opacity = '0'; previewModal.style.position = 'fixed'; previewModal.style.top = '-9999px';
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    try {
+                        const { jsPDF } = window.jspdf; const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts: true, floatPrecision: 16 });
+                        const canvas = await html2canvas(previewContentArea, { scale: 2, useCORS: true, logging: false });
+                        const imgData = canvas.toDataURL('image/png'); const imgProps = pdf.getImageProperties(imgData);
+                        const pdfWidth = pdf.internal.pageSize.getWidth(); const pdfHeight = pdf.internal.pageSize.getHeight();
+                        const imgWidth = pdfWidth - 36; const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+                        let heightLeft = imgHeight; let position = 0; const pageMargin = 20;
+                        pdf.addImage(imgData, 'PNG', 18, pageMargin, imgWidth, imgHeight); heightLeft -= (pdfHeight - 2 * pageMargin);
+                        while (heightLeft > 0) {
+                            position = heightLeft - imgHeight; pdf.addPage();
+                            pdf.addImage(imgData, 'PNG', 18, position + pageMargin, imgWidth, imgHeight); heightLeft -= (pdfHeight - 2 * pageMargin);
+                        }
+                        const pageCount = pdf.internal.getNumberOfPages();
+                        for (let i = 1; i <= pageCount; i++) { pdf.setPage(i); pdf.setFontSize(10); pdf.setTextColor(100); pdf.text(`Page ${i} of ${pageCount}`, pdfWidth / 2, pdfHeight - 10, { align: 'center' }); }
+                        const filename = (reportData.sectionsContent?.coverPage?.report_title || 'academic-report').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.pdf';
+                        pdf.save(filename); showNotification('PDF downloaded successfully.', 'success');
+                    } catch (error) { console.error('Error generating PDF:', error); showNotification('Failed to generate PDF. Check console.', 'error'); }
+                    finally { previewModal.style.display = 'none'; previewModal.style.opacity = ''; previewModal.style.position = ''; previewModal.style.top = ''; previewContentArea.innerHTML = ''; hideLoading(); }
+                };
+                const downloadMarkdown = () => {
+                    if (typeof TurndownService === 'undefined') { showNotification('Markdown conversion library not loaded.', 'error'); console.error('TurndownService not found.'); return; }
+                    if (!turndownService) turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '*' });
+                    let markdownOutput = ''; const coverData = reportData.sectionsContent['cover-page'] || {}; const references = reportData.sectionsContent['references-section'] || [];
+                    const visibleSections = reportData.sectionsOrder.filter(id => reportData.sectionsVisibility[id] !== false);
+                    markdownOutput += '---\n'; Object.entries(coverData).forEach(([key, value]) => { if (value) markdownOutput += `${key.replace(/_/g, '-')}: "${value}"\n`; }); markdownOutput += '---\n\n';
+                    visibleSections.forEach(sectionId => {
+                        if (sectionId === 'cover-page' || sectionId === 'references-section') return;
+                        const config = reportData.sectionsConfig[sectionId]; let content = reportData.sectionsContent[sectionId] || '';
+                        if (config?.name) markdownOutput += `## ${config.name}\n\n`;
+                        if (!isLikelyMarkdown(content)) {
+                             try { content = turndownService.turndown(content); } catch (e) { console.error(`Error converting HTML to MD for section ${sectionId}:`, e); content = `\n${content}`; }
+                        }
+                        markdownOutput += content + '\n\n';
+                    });
+                    if (reportData.sectionsVisibility['references-section'] !== false && references.length > 0) {
+                        markdownOutput += `## References\n\n`; references.sort((a, b) => (a.key || '').localeCompare(b.key || ''));
+                        references.forEach(ref => {
+                            markdownOutput += `*   **[${ref.key || 'No Key'}]** ${ref.authors || 'N/A'} (${ref.year || 'N/A'}). *${ref.title || 'N/A'}*.`;
+                             switch (ref.type) {
+                                case 'journal': markdownOutput += ` ${ref.source || ''}. ${ref.volume || ''}: ${ref.pages || ''}.`; break;
+                                case 'book': markdownOutput += ` ${ref.source || ''}. ${ref.pages ? `pp. ${ref.pages}` : ''}.`; break;
+                                case 'website': markdownOutput += ` Retrieved from [${ref.url || 'N/A'}](${ref.url || '#'}) ${ref.accessDate ? `(Accessed: ${formatDate(ref.accessDate)})` : ''}.`; break;
+                                case 'other': markdownOutput += ` ${ref.details || ''}.`; break;
+                            } markdownOutput += '\n';
+                        }); markdownOutput += '\n';
+                    }
+                    try {
+                        const blob = new Blob([markdownOutput], { type: 'text/markdown;charset=utf-8' }); const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a'); const filename = (coverData.report_title || 'academic-report').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.md';
+                        link.href = url; link.download = filename; document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
+                        showNotification('Markdown file downloaded.', 'success');
+                    } catch (error) { console.error("Error creating Markdown download:", error); showNotification("Failed to download Markdown file.", "error"); }
+                };
+                const downloadHTML = () => {
+                    try {
+                        const reportHtml = generateReportHTMLForPreview();
+                        const fullHtml = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${reportData.sectionsContent?.coverPage?.report_title || 'Academic Report'}</title><style>body { font-family: 'Times New Roman', Times, serif; line-height: 1.5; font-size: 12pt; margin: 0; padding: 0; background-color: #fff; color: #000; } .preview-content-area { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 20mm 18mm; box-sizing: border-box; background-color: #fff; page-break-after: always; } .report-section { margin-bottom: 0.5cm; page-break-inside: avoid; } .cover-page { text-align: center; min-height: calc(297mm - 40mm); display: flex; flex-direction: column; justify-content: space-between; align-items: center; border: none; padding: 0; margin: -20mm -18mm; width: 210mm; } .cover-page-content { padding: 20mm 18mm; width: 100%; display: flex; flex-direction: column; align-items: center; flex-grow: 1; justify-content: space-between; } .cover-page-top { margin-top: 1cm; } .cover-page-middle { margin: 3cm 0; } .cover-page-bottom { margin-bottom: 1cm; width: 80%; } .institution-logo { max-width: 120px; max-height: 100px; height: auto; margin-bottom: 1cm; } .report-title { font-size: 24pt; font-weight: bold; margin-bottom: 0.5cm; color: #000; border-bottom: none; } .report-subtitle { font-size: 18pt; margin-bottom: 2cm; color: #333; } .author-info { font-size: 12pt; line-height: 1.6; } .author-name { font-weight: bold; margin-bottom: 0.3cm; font-size: 14pt; } .submission-info { text-align: center; font-size: 11pt; color: #333; line-height: 1.5; } h1, h2, h3, h4 { font-family: 'Times New Roman', Times, serif; font-weight: bold; color: #000; margin-top: 1cm; margin-bottom: 0.5cm; line-height: 1.3; page-break-after: avoid; page-break-inside: avoid; } h1 { font-size: 20pt; text-align: center; } h2, .report-section-title { font-size: 16pt; border-bottom: 1px solid #aaa; padding-bottom: 0.2cm; margin-top: 1.5cm; margin-bottom: 0.7cm; } h3 { font-size: 14pt; } h4 { font-size: 12pt; font-style: italic; } p { margin-bottom: 0.4cm; text-align: justify; color: #000; } ul, ol { margin-left: 0.8cm; margin-bottom: 0.4cm; padding-left: 0.5cm; } li { margin-bottom: 0.2cm; } table.report-table { width: 100%; border-collapse: collapse; margin: 1cm auto; font-size: 10pt; border: 1px solid #888; page-break-inside: avoid; } table.report-table th, table.report-table td { border: 1px solid #aaa; padding: 0.25cm 0.35cm; text-align: left; vertical-align: top; } table.report-table th { background-color: #e8e8e8; font-weight: bold; color: #000; } img.report-image { max-width: 90%; height: auto; display: block; margin: 1cm auto; border: 1px solid #ccc; page-break-inside: avoid; } blockquote { border-left: 3px solid #ccc; padding-left: 1.5em; margin: 0.5cm 0; font-style: italic; color: #333; } a { color: #0000EE; text-decoration: underline; } .references-list-preview { list-style: none; padding-left: 0; } .references-list-preview li { margin-bottom: 0.3cm; } @media print { body { margin: 0; padding: 0; } .preview-content-area { width: auto; min-height: auto; margin: 0; padding: 0; box-shadow: none; border: none; page-break-after: auto; } .report-section { page-break-before: auto; } .cover-page { page-break-after: always; } }</style></head><body><div class="preview-content-area">${reportHtml}</div></body></html>`;
+                        const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' }); const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a'); const filename = (reportData.sectionsContent?.coverPage?.report_title || 'academic-report').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.html';
+                        link.href = url; link.download = filename; document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
+                        showNotification('HTML file downloaded.', 'success');
+                    } catch (error) { console.error("Error creating HTML download:", error); showNotification("Failed to download HTML file.", "error"); }
+                };
+                const init = () => {
+                    showLoading('Initializing Report Creator...');
+                    loadData(); 
+                    applyTheme();
+                    applyFocusMode();
+                    updateTemplateCardSelection();
+                    if (window.marked) {
+                        marked.setOptions({ breaks: true, gfm: true });
+                    } else { console.warn("Marked library not loaded."); }
+                    if (window.TurndownService) {
+                        turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '*' });
+                    } else { console.warn("Turndown library not loaded."); }
+                    renderSections();
+                    renderReferences();
+                    renderVersionHistory();
+                    const initialSection = reportData.sectionsOrder.includes(activeSectionId) ? activeSectionId : (reportData.sectionsOrder[0] || 'cover-page');
+                    updateEditorModeView();
+                    toggleEditorModeBtn.querySelector('.mode-indicator').textContent = `(${(editorMode === 'tinymce' ? 'Rich Text' : 'Markdown')})`;
+                    setActiveSection(initialSection); 
+                    themeToggleBtn.addEventListener('click', toggleTheme);
+                    focusToggleBtn.addEventListener('click', toggleFocusMode);
+                    clearStorageBtn.addEventListener('click', clearData);
+                    templateCards.forEach(card => {
+                        card.addEventListener('click', () => applyTemplate(card.dataset.template));
+                        card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') applyTemplate(card.dataset.template); });
+                    });
+                    addSectionBtn.addEventListener('click', () => showModal(addSectionModal));
+                    confirmAddSectionBtn.addEventListener('click', addSection);
+                    cancelAddSectionBtn.addEventListener('click', () => hideModal(addSectionModal));
+                    addSectionModal.addEventListener('click', (e) => { if (e.target === addSectionModal) hideModal(addSectionModal); });
+                    saveVersionBtn.addEventListener('click', saveVersion);
+                    confirmRestoreVersionBtn.addEventListener('click', restoreVersion);
+                    cancelRestoreVersionBtn.addEventListener('click', () => { hideModal(restoreVersionModal); versionToRestore = null; });
+                    restoreVersionModal.addEventListener('click', (e) => { if (e.target === restoreVersionModal) { hideModal(restoreVersionModal); versionToRestore = null; } });
+                    tabButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const targetTab = button.dataset.tab;
+                             if ((activeSectionId === 'cover-page' && targetTab === 'form') ||
+                                (activeSectionId === 'references-section' && targetTab === 'references') ||
+                                (activeSectionId !== 'cover-page' && activeSectionId !== 'references-section' && targetTab === 'editor'))
+                             { switchTab(targetTab); }
+                        });
+                    });
+                    coverPageForm.addEventListener('input', saveCoverPageData);
+                    saveSectionBtn.addEventListener('click', () => saveCurrentSectionContent(true));
+                    toggleEditorModeBtn.addEventListener('click', toggleEditorMode);
+                    markdownEditor.addEventListener('input', () => {
+                        updateMarkdownPreview(); updateWordCount(); updateSaveStatus('unsaved');
+                        debounce(saveCurrentSectionContent, 1500);
+                    });
+                    refTypeSelect.addEventListener('change', updateRefFormFields);
+                    addReferenceBtn.addEventListener('click', addReference);
+                    updateReferenceBtn.addEventListener('click', updateReference);
+                    cancelEditReferenceBtn.addEventListener('click', clearRefForm);
+                    updateRefFormFields();
+                    previewBtn.addEventListener('click', showPreview);
+                    previewCloseBtn.addEventListener('click', () => hideModal(previewModal));
+                    previewModal.addEventListener('click', (e) => { if (e.target === previewModal) hideModal(previewModal); });
+                    downloadPdfBtn.addEventListener('click', downloadPDF);
+                    downloadMdBtn.addEventListener('click', downloadMarkdown);
+                    downloadHtmlBtn.addEventListener('click', downloadHTML);
+                    updateSaveStatus('saved'); 
+                    hideLoading();
+                    showNotification('Report Creator Ready!', 'success', 2000);
+                };
+                init();
             });
-            html += `</ol></div>`;
-        }
-        return html;
-    };
-    const showPreview = () => {
-        try {
-            const previewHtml = generateReportHTMLForPreview(); previewContentArea.innerHTML = previewHtml;
-            showModal(previewModal);
-        } catch (error) { console.error("Error generating preview:", error); showNotification("Failed to generate preview.", "error"); }
-    };
-    const downloadPDF = async () => {
-        if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') { showNotification('PDF generation libraries not loaded.', 'error'); console.error('jsPDF or html2canvas not found.'); return; }
-        showLoading('Generating PDF...');
-        const previewHtml = generateReportHTMLForPreview(true); previewContentArea.innerHTML = previewHtml;
-        previewModal.style.display = 'block'; previewModal.style.opacity = '0'; previewModal.style.position = 'fixed'; previewModal.style.top = '-9999px';
-        await new Promise(resolve => setTimeout(resolve, 100));
-        try {
-            const { jsPDF } = window.jspdf; const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts: true, floatPrecision: 16 });
-            const canvas = await html2canvas(previewContentArea, { scale: 2, useCORS: true, logging: false });
-            const imgData = canvas.toDataURL('image/png'); const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth(); const pdfHeight = pdf.internal.pageSize.getHeight();
-            const imgWidth = pdfWidth - 36; const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-            let heightLeft = imgHeight; let position = 0; const pageMargin = 20;
-            pdf.addImage(imgData, 'PNG', 18, pageMargin, imgWidth, imgHeight); heightLeft -= (pdfHeight - 2 * pageMargin);
-            while (heightLeft > 0) {
-                position = heightLeft - imgHeight; pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 18, position + pageMargin, imgWidth, imgHeight); heightLeft -= (pdfHeight - 2 * pageMargin);
-            }
-            const pageCount = pdf.internal.getNumberOfPages();
-            for (let i = 1; i <= pageCount; i++) { pdf.setPage(i); pdf.setFontSize(10); pdf.setTextColor(100); pdf.text(`Page ${i} of ${pageCount}`, pdfWidth / 2, pdfHeight - 10, { align: 'center' }); }
-            const filename = (reportData.sectionsContent?.coverPage?.report_title || 'academic-report').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.pdf';
-            pdf.save(filename); showNotification('PDF downloaded successfully.', 'success');
-        } catch (error) { console.error('Error generating PDF:', error); showNotification('Failed to generate PDF. Check console.', 'error'); }
-        finally { previewModal.style.display = 'none'; previewModal.style.opacity = ''; previewModal.style.position = ''; previewModal.style.top = ''; previewContentArea.innerHTML = ''; hideLoading(); }
-    };
-    const downloadMarkdown = () => {
-        if (typeof TurndownService === 'undefined') { showNotification('Markdown conversion library not loaded.', 'error'); console.error('TurndownService not found.'); return; }
-        if (!turndownService) turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '*' });
-        let markdownOutput = ''; const coverData = reportData.sectionsContent['cover-page'] || {}; const references = reportData.sectionsContent['references-section'] || [];
-        const visibleSections = reportData.sectionsOrder.filter(id => reportData.sectionsVisibility[id] !== false);
-        markdownOutput += '---\n'; Object.entries(coverData).forEach(([key, value]) => { if (value) markdownOutput += `${key.replace(/_/g, '-')}: "${value}"\n`; }); markdownOutput += '---\n\n';
-        visibleSections.forEach(sectionId => {
-            if (sectionId === 'cover-page' || sectionId === 'references-section') return;
-            const config = reportData.sectionsConfig[sectionId]; let content = reportData.sectionsContent[sectionId] || '';
-            if (config?.name) markdownOutput += `## ${config.name}\n\n`;
-            // Convert HTML to Markdown if it wasn't stored as Markdown
-            if (!isLikelyMarkdown(content)) {
-                 try { content = turndownService.turndown(content); } catch (e) { console.error(`Error converting HTML to MD for section ${sectionId}:`, e); content = `<!-- Error converting content -->\n${content}`; }
-            }
-            markdownOutput += content + '\n\n';
-        });
-        if (reportData.sectionsVisibility['references-section'] !== false && references.length > 0) {
-            markdownOutput += `## References\n\n`; references.sort((a, b) => (a.key || '').localeCompare(b.key || ''));
-            references.forEach(ref => {
-                markdownOutput += `*   **[${ref.key || 'No Key'}]** ${ref.authors || 'N/A'} (${ref.year || 'N/A'}). *${ref.title || 'N/A'}*.`;
-                 switch (ref.type) {
-                    case 'journal': markdownOutput += ` ${ref.source || ''}. ${ref.volume || ''}: ${ref.pages || ''}.`; break;
-                    case 'book': markdownOutput += ` ${ref.source || ''}. ${ref.pages ? `pp. ${ref.pages}` : ''}.`; break;
-                    case 'website': markdownOutput += ` Retrieved from [${ref.url || 'N/A'}](${ref.url || '#'}) ${ref.accessDate ? `(Accessed: ${formatDate(ref.accessDate)})` : ''}.`; break;
-                    case 'other': markdownOutput += ` ${ref.details || ''}.`; break;
-                } markdownOutput += '\n';
-            }); markdownOutput += '\n';
-        }
-        try {
-            const blob = new Blob([markdownOutput], { type: 'text/markdown;charset=utf-8' }); const url = URL.createObjectURL(blob);
-            const link = document.createElement('a'); const filename = (coverData.report_title || 'academic-report').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.md';
-            link.href = url; link.download = filename; document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
-            showNotification('Markdown file downloaded.', 'success');
-        } catch (error) { console.error("Error creating Markdown download:", error); showNotification("Failed to download Markdown file.", "error"); }
-    };
-    const downloadHTML = () => {
-        try {
-            const reportHtml = generateReportHTMLForPreview();
-            const fullHtml = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${reportData.sectionsContent?.coverPage?.report_title || 'Academic Report'}</title><style>body { font-family: 'Times New Roman', Times, serif; line-height: 1.5; font-size: 12pt; margin: 0; padding: 0; background-color: #fff; color: #000; } .preview-content-area { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 20mm 18mm; box-sizing: border-box; background-color: #fff; page-break-after: always; } .report-section { margin-bottom: 0.5cm; page-break-inside: avoid; } .cover-page { text-align: center; min-height: calc(297mm - 40mm); display: flex; flex-direction: column; justify-content: space-between; align-items: center; border: none; padding: 0; margin: -20mm -18mm; width: 210mm; } .cover-page-content { padding: 20mm 18mm; width: 100%; display: flex; flex-direction: column; align-items: center; flex-grow: 1; justify-content: space-between; } .cover-page-top { margin-top: 1cm; } .cover-page-middle { margin: 3cm 0; } .cover-page-bottom { margin-bottom: 1cm; width: 80%; } .institution-logo { max-width: 120px; max-height: 100px; height: auto; margin-bottom: 1cm; } .report-title { font-size: 24pt; font-weight: bold; margin-bottom: 0.5cm; color: #000; border-bottom: none; } .report-subtitle { font-size: 18pt; margin-bottom: 2cm; color: #333; } .author-info { font-size: 12pt; line-height: 1.6; } .author-name { font-weight: bold; margin-bottom: 0.3cm; font-size: 14pt; } .submission-info { text-align: center; font-size: 11pt; color: #333; line-height: 1.5; } h1, h2, h3, h4 { font-family: 'Times New Roman', Times, serif; font-weight: bold; color: #000; margin-top: 1cm; margin-bottom: 0.5cm; line-height: 1.3; page-break-after: avoid; page-break-inside: avoid; } h1 { font-size: 20pt; text-align: center; } h2, .report-section-title { font-size: 16pt; border-bottom: 1px solid #aaa; padding-bottom: 0.2cm; margin-top: 1.5cm; margin-bottom: 0.7cm; } h3 { font-size: 14pt; } h4 { font-size: 12pt; font-style: italic; } p { margin-bottom: 0.4cm; text-align: justify; color: #000; } ul, ol { margin-left: 0.8cm; margin-bottom: 0.4cm; padding-left: 0.5cm; } li { margin-bottom: 0.2cm; } table.report-table { width: 100%; border-collapse: collapse; margin: 1cm auto; font-size: 10pt; border: 1px solid #888; page-break-inside: avoid; } table.report-table th, table.report-table td { border: 1px solid #aaa; padding: 0.25cm 0.35cm; text-align: left; vertical-align: top; } table.report-table th { background-color: #e8e8e8; font-weight: bold; color: #000; } img.report-image { max-width: 90%; height: auto; display: block; margin: 1cm auto; border: 1px solid #ccc; page-break-inside: avoid; } blockquote { border-left: 3px solid #ccc; padding-left: 1.5em; margin: 0.5cm 0; font-style: italic; color: #333; } a { color: #0000EE; text-decoration: underline; } .references-list-preview { list-style: none; padding-left: 0; } .references-list-preview li { margin-bottom: 0.3cm; } @media print { body { margin: 0; padding: 0; } .preview-content-area { width: auto; min-height: auto; margin: 0; padding: 0; box-shadow: none; border: none; page-break-after: auto; } .report-section { page-break-before: auto; } .cover-page { page-break-after: always; } }</style></head><body><div class="preview-content-area">${reportHtml}</div></body></html>`;
-            const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' }); const url = URL.createObjectURL(blob);
-            const link = document.createElement('a'); const filename = (reportData.sectionsContent?.coverPage?.report_title || 'academic-report').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.html';
-            link.href = url; link.download = filename; document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
-            showNotification('HTML file downloaded.', 'success');
-        } catch (error) { console.error("Error creating HTML download:", error); showNotification("Failed to download HTML file.", "error"); }
-    };
-
-    // --- Initialization ---
-    const init = () => {
-        showLoading('Initializing Report Creator...');
-        loadData(); // Load saved data first
-
-        applyTheme();
-        applyFocusMode();
-        updateTemplateCardSelection();
-
-        // Initialize Markdown Previewer and Converter
-        if (window.marked) {
-            marked.setOptions({ breaks: true, gfm: true });
-        } else { console.warn("Marked library not loaded."); }
-        if (window.TurndownService) {
-            turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '*' });
-        } else { console.warn("Turndown library not loaded."); }
-
-        renderSections();
-        renderReferences();
-        renderVersionHistory();
-
-        // Set initial active section and editor mode (already loaded in loadData)
-        const initialSection = reportData.sectionsOrder.includes(activeSectionId) ? activeSectionId : (reportData.sectionsOrder[0] || 'cover-page');
-
-        // Initial UI setup based on mode BEFORE setting active section
-        updateEditorModeView();
-        toggleEditorModeBtn.querySelector('.mode-indicator').textContent = `(${(editorMode === 'tinymce' ? 'Rich Text' : 'Markdown')})`;
-
-        setActiveSection(initialSection); // This will call loadSectionContent which initializes TinyMCE if needed
-
-        // Set up event listeners
-        themeToggleBtn.addEventListener('click', toggleTheme);
-        focusToggleBtn.addEventListener('click', toggleFocusMode);
-        clearStorageBtn.addEventListener('click', clearData);
-
-        templateCards.forEach(card => {
-            card.addEventListener('click', () => applyTemplate(card.dataset.template));
-            card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') applyTemplate(card.dataset.template); });
-        });
-
-        addSectionBtn.addEventListener('click', () => showModal(addSectionModal));
-        confirmAddSectionBtn.addEventListener('click', addSection);
-        cancelAddSectionBtn.addEventListener('click', () => hideModal(addSectionModal));
-        addSectionModal.addEventListener('click', (e) => { if (e.target === addSectionModal) hideModal(addSectionModal); });
-
-        saveVersionBtn.addEventListener('click', saveVersion);
-        confirmRestoreVersionBtn.addEventListener('click', restoreVersion);
-        cancelRestoreVersionBtn.addEventListener('click', () => { hideModal(restoreVersionModal); versionToRestore = null; });
-        restoreVersionModal.addEventListener('click', (e) => { if (e.target === restoreVersionModal) { hideModal(restoreVersionModal); versionToRestore = null; } });
-
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const targetTab = button.dataset.tab;
-                 if ((activeSectionId === 'cover-page' && targetTab === 'form') ||
-                    (activeSectionId === 'references-section' && targetTab === 'references') ||
-                    (activeSectionId !== 'cover-page' && activeSectionId !== 'references-section' && targetTab === 'editor'))
-                 { switchTab(targetTab); }
-            });
-        });
-
-        coverPageForm.addEventListener('input', saveCoverPageData);
-        saveSectionBtn.addEventListener('click', () => saveCurrentSectionContent(true));
-        toggleEditorModeBtn.addEventListener('click', toggleEditorMode);
-        markdownEditor.addEventListener('input', () => {
-            updateMarkdownPreview(); updateWordCount(); updateSaveStatus('unsaved');
-            debounce(saveCurrentSectionContent, 1500);
-        });
-
-        refTypeSelect.addEventListener('change', updateRefFormFields);
-        addReferenceBtn.addEventListener('click', addReference);
-        updateReferenceBtn.addEventListener('click', updateReference);
-        cancelEditReferenceBtn.addEventListener('click', clearRefForm);
-        updateRefFormFields();
-
-        previewBtn.addEventListener('click', showPreview);
-        previewCloseBtn.addEventListener('click', () => hideModal(previewModal));
-        previewModal.addEventListener('click', (e) => { if (e.target === previewModal) hideModal(previewModal); });
-        downloadPdfBtn.addEventListener('click', downloadPDF);
-        downloadMdBtn.addEventListener('click', downloadMarkdown);
-        downloadHtmlBtn.addEventListener('click', downloadHTML);
-
-        updateSaveStatus('saved'); // Initial save status
-
-        hideLoading();
-        showNotification('Report Creator Ready!', 'success', 2000);
-    };
-
-    // --- Run Initialization ---
-    init();
-
-});
-</script>
+        </script>
     </body>
 </html>
